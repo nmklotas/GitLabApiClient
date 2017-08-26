@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GitLabApiClient.Models;
+using GitLabApiClient.Models.Users;
 
 namespace GitLabApiClient.Http
 {
-    internal class GitlabHttpFacade
+    internal class GitLabHttpFacade
     {
         private const string PrivateToken = "PRIVATE-TOKEN";
 
@@ -14,7 +14,7 @@ namespace GitLabApiClient.Http
         private readonly HttpClient _httpClient;
         private readonly HttpRequestor _requestor;
 
-        public GitlabHttpFacade(string hostUrl, string authenticationToken = "")
+        public GitLabHttpFacade(string hostUrl, string authenticationToken = "")
         {
             _httpClient = new HttpClient
             {

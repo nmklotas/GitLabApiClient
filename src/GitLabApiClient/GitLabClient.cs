@@ -1,16 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GitLabApiClient.Http;
-using GitLabApiClient.Models;
+using GitLabApiClient.Models.Users;
 
 namespace GitLabApiClient
 {
     public class GitLabClient
     {
-        private readonly GitlabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
 
         public GitLabClient(string hostUrl, string authenticationToken = "")
         {
-            _httpFacade = new GitlabHttpFacade(hostUrl, authenticationToken);
+            _httpFacade = new GitLabHttpFacade(
+                hostUrl ?? throw new ArgumentNullException(nameof(hostUrl)), 
+                authenticationToken ?? throw new ArgumentNullException(nameof(authenticationToken)));
+
             Issues = new IssuesClient(_httpFacade);
             MergeRequests = new MergeRequestsClient(_httpFacade);
             Projects = new ProjectsClient(_httpFacade);

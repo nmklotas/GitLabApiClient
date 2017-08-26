@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GitLabApiClient.Models.Users;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Issues

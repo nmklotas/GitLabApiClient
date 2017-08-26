@@ -2,19 +2,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 using GitLabApiClient.Http;
-using GitLabApiClient.Models;
 using GitLabApiClient.Models.Users;
 
 namespace GitLabApiClient
 {
     public class UsersClient
     {
-        private readonly GitlabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
 
-        internal UsersClient(GitlabHttpFacade httpFacade) => 
+        internal UsersClient(GitLabHttpFacade httpFacade) => 
             _httpFacade = httpFacade;
 
-        public async Task<IEnumerable<User>> GetAsync() => 
+        public async Task<IList<User>> GetAsync() => 
             await _httpFacade.GetAll<User>("/users");
 
         public async Task<User> GetAsync(string name) =>

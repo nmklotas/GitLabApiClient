@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitLabApiClient", "GitLabApiClient\GitLabApiClient.csproj", "{92D1EE01-7A8D-4EFC-B856-54C0E0645454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitLabApiClient", "src\GitLabApiClient\GitLabApiClient.csproj", "{92D1EE01-7A8D-4EFC-B856-54C0E0645454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitLabApiClient.Test", "test\GitLabApiClient.Test\GitLabApiClient.Test.csproj", "{11F0436A-3BAC-4C3F-9E59-2F271730A5C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{92D1EE01-7A8D-4EFC-B856-54C0E0645454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92D1EE01-7A8D-4EFC-B856-54C0E0645454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92D1EE01-7A8D-4EFC-B856-54C0E0645454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F0436A-3BAC-4C3F-9E59-2F271730A5C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F0436A-3BAC-4C3F-9E59-2F271730A5C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F0436A-3BAC-4C3F-9E59-2F271730A5C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F0436A-3BAC-4C3F-9E59-2F271730A5C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

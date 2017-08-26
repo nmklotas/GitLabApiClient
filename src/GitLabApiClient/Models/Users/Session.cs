@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace GitLabApiClient.Models
+namespace GitLabApiClient.Models.Users
 {
     public class Session
     {
@@ -37,7 +37,7 @@ namespace GitLabApiClient.Models
         public string Skype { get; set; }
 
         [JsonProperty("identities")]
-        public List<string> Identities { get; } = new List<string>();
+        public List<Identity> Identities { get; } = new List<Identity>();
 
         [JsonProperty("id")]
         public long Id { get; set; }

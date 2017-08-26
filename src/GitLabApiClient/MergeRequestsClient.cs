@@ -8,9 +8,9 @@ namespace GitLabApiClient
 {
     public class MergeRequestsClient
     {
-        private readonly GitlabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
 
-        internal MergeRequestsClient(GitlabHttpFacade httpFacade) => 
+        internal MergeRequestsClient(GitLabHttpFacade httpFacade) => 
             _httpFacade = httpFacade;
 
         public async Task<IList<MergeRequest>> GetAsync(int projectId) => 
@@ -25,14 +25,18 @@ namespace GitLabApiClient
         public async Task<MergeRequest> UpdateAsync(EditMergeRequest request) => 
             await _httpFacade.Put<MergeRequest>($"/projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
 
-        public async Task<MergeRequest> AcceptAsync(int projectId, int mergeRequestId, string message) => 
-            await _httpFacade.Put<MergeRequest>($"/projects/{projectId}/merge_requests/{mergeRequestId}/merge", 
-                new MergeCommitMessage
-                {
-                    Message = message
-                });
+        public async Task<MergeRequest> AcceptAsync(int projectId, int mergeRequestId, string message)
+        {
+            var commitMessage = new MergeCommitMessage
+            {
+                Message = message
+            };
 
-        public async Task DeleteAsync(int projectId, int mergeRequestId) =>
+            return await _httpFacade.Put<MergeRequest>(
+                $"/projects/{projectId}/merge_requests/{mergeRequestId}/merge", commitMessage);
+        }
+
+        public async Task DeleteAsync(int projectId, long mergeRequestId) =>
             await _httpFacade.Delete($"/projects/{projectId}/merge_requests/{mergeRequestId}");
 
         private class MergeCommitMessage

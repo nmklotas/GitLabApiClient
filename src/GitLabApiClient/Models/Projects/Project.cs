@@ -57,7 +57,7 @@ namespace GitLabApiClient.Models.Projects
         public Owner Owner { get; set; }
 
         [JsonProperty("shared_with_groups")]
-        public List<string> SharedWithGroups { get; } = new List<string>();
+        public List<Group> SharedWithGroups { get; } = new List<Group>();
 
         [JsonProperty("namespace")]
         public Namespace Namespace { get; set; }

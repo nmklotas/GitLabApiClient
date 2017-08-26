@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace GitLabApiClient
+namespace GitLabApiClient.Http
 {
     internal class HttpRequestor
     {
@@ -111,13 +111,13 @@ namespace GitLabApiClient
 
         private static string GetAPIUrl(string url)
         {
-            if (!tailAPIUrl.StartsWith("/", StringComparison.OrdinalIgnoreCase))
-                tailAPIUrl = "/" + tailAPIUrl;
+            if (!url.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+                url = "/" + url;
 
-            if (!tailAPIUrl.StartsWith("/api/v4", StringComparison.OrdinalIgnoreCase))
-                tailAPIUrl = "/api/v4" + tailAPIUrl;
+            if (!url.StartsWith("/api/v4", StringComparison.OrdinalIgnoreCase))
+                url = "/api/v4" + url;
 
-            return tailAPIUrl;
+            return url;
         }
     }
 }

@@ -7,15 +7,15 @@ namespace GitLabApiClient
 {
     public class IssuesClient
     {
-        private readonly GitlabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
 
-        internal IssuesClient(GitlabHttpFacade httpFacade) =>
+        internal IssuesClient(GitLabHttpFacade httpFacade) =>
             _httpFacade = httpFacade;
 
         public async Task<IList<Issue>> GetAsync(int projectId) => 
             await _httpFacade.GetAll<Issue>($"/projects/{projectId}/issues");
 
-        public async Task<Issue> GetAsync(int projectId, int issueId) => 
+        public async Task<Issue> GetAsync(int projectId, long issueId) => 
             await _httpFacade.Get<Issue>($"/projects/{projectId}/issues/{issueId}");
 
         public async Task<IList<Issue>> GetOwnedAsync() =>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace GitLabApiClient.Models
+namespace GitLabApiClient.Models.Users
 {
     public class Assignee
     {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GitLabApiClient.Models.Users;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Merges
@@ -45,7 +46,7 @@ namespace GitLabApiClient.Models.Merges
         public long ProjectId { get; set; }
 
         [JsonProperty("should_remove_source_branch")]
-        public bool ShouldRemoveSourceBranch { get; set; }
+        public bool? ShouldRemoveSourceBranch { get; set; }
 
         [JsonProperty("target_project_id")]
         public long TargetProjectId { get; set; }
