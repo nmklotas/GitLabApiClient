@@ -8,6 +8,8 @@ namespace GitLabApiClient.Http
 {
     internal class GitLabApiPagedRequestor
     {
+        private const int MaxItemsPerPage = 100;
+
         private readonly GitLabApiRequestor _requestor;
 
         public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
@@ -16,7 +18,8 @@ namespace GitLabApiClient.Http
         {
             var result = new List<T>();
 
-            var responseMessage = await _requestor.GetWithHeaders<IList<T>>(url);
+            //make first request and it will get available pages in the headers
+            var responseMessage = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
             result.AddRange(responseMessage.Item1);
 
             //get paged urls
@@ -40,7 +43,7 @@ namespace GitLabApiClient.Http
             return result;
         }
 
-        private List<string> GetPagedUrls(string url, HttpResponseHeaders headers)
+        private static List<string> GetPagedUrls(string originalUrl, HttpResponseHeaders headers)
         {
             if (!headers.TryGetValues("X-Total-Pages", out IEnumerable<string> totalPagesValue))
                 return new List<string>();
@@ -56,14 +59,20 @@ namespace GitLabApiClient.Http
                 //one page was already retrieved by the first request
                 return new List<string>();
 
-            const int maxItemsPerPage = 100;
-            int pagesCount = (int)Math.Ceiling((double)totalPagesCount / maxItemsPerPage);
+            //1 less page because it was already requested by the first request
+            int pagesCount = totalPagesCount - 1;
 
             var pagedUrls = new List<string>();
             for (int i = 0; i < pagesCount; i++)
-                pagedUrls.Add($"{url}?per_page={maxItemsPerPage}&page={2 + i}");
+                pagedUrls.Add(GetPagedUrl(originalUrl, 2 + i));
 
             return pagedUrls;
+        }
+
+        private static string GetPagedUrl(string url, int pageNumber)
+        {
+            string parameterSymbol = url.Contains("?") ? "&" : "?";
+            return $"{url}{parameterSymbol}per_page={MaxItemsPerPage}&page={pageNumber}";
         }
     }
 }
