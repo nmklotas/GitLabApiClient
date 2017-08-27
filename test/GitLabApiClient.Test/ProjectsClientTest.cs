@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 using static GitLabApiClient.Test.GitLabApiHelper;
@@ -21,6 +22,13 @@ namespace GitLabApiClient.Test
         {
             var users = await _sut.GetUsers(TestProjectId);
             users.Should().NotBeEmpty();
+        }
+
+        [Fact]
+        public async Task ProjectRetrievedByName()
+        {
+            var project = (await _sut.GetAsync("test-gitlabapiclient")).Single();
+            project.Id.Should().Be(TestProjectId);
         }
     }
 }

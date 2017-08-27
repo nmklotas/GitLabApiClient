@@ -19,6 +19,9 @@ namespace GitLabApiClient
         public async Task<Project> GetAsync(int projectId) =>
             await _httpFacade.Get<Project>($"/projects/{projectId}");
 
+        public async Task<IList<Project>> GetAsync(string name) =>
+            await _httpFacade.GetPagedList<Project>($"/projects/?search={name}");
+
         public async Task<IList<Project>> GetByUserIdAsync(int userId) =>
             await _httpFacade.GetPagedList<Project>($"/users/{userId}/projects");
 
