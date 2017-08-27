@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -8,16 +6,16 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Http
 {
-    internal class HttpRequestor
+    internal class GitLabApiRequestor
     {
         private readonly HttpClient _client;
 
-        public HttpRequestor(HttpClient client) => _client = client;
+        public GitLabApiRequestor(HttpClient client) => _client = client;
 
         public async Task<T> Put<T>(string url, object data)
         {
             StringContent content = SerializeToString(data, false);
-            var responseMessage = await _client.PutAsync(GetAPIUrl(url), content);
+            var responseMessage = await _client.PutAsync(TryFixApiUrl(url), content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
@@ -25,55 +23,29 @@ namespace GitLabApiClient.Http
         public async Task<T> Post<T>(string url, object data = null)
         {
             StringContent content = SerializeToString(data, true);
-            var responseMessage = await _client.PostAsync(GetAPIUrl(url), content);
+            var responseMessage = await _client.PostAsync(TryFixApiUrl(url), content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
 
         public async Task Delete(string url)
         {
-            var responseMessage = await _client.DeleteAsync(GetAPIUrl(url));
+            var responseMessage = await _client.DeleteAsync(TryFixApiUrl(url));
             await EnsureSuccessStatusCode(responseMessage);
         }
 
         public async Task<T> Get<T>(string url)
         {
-            var responseMessage = await _client.GetAsync(GetAPIUrl(url));
+            var responseMessage = await _client.GetAsync(TryFixApiUrl(url));
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
 
-        public async Task<IList<T>> GetAll<T>(string url)
+        public async Task<Tuple<T, HttpResponseHeaders>> GetWithHeaders<T>(string url)
         {
-            var result = new List<T>();
-
-            string nextUrlToLoad = GetAPIUrl(url);
-            while (nextUrlToLoad != null)
-            {
-                var responseMessage = await _client.GetAsync(nextUrlToLoad);
-                await EnsureSuccessStatusCode(responseMessage);
-
-                if (responseMessage.Headers.TryGetValues("Link", out IEnumerable<string> links))
-                {
-                    string link = links.FirstOrDefault();
-                    string[] nextLink = null;
-
-                    if (!string.IsNullOrEmpty(link))
-                        nextLink = link.Split(',').
-                            Select(l => l.Split(';')).
-                            FirstOrDefault(pair => pair[1].Contains("next"));
-
-                    nextUrlToLoad = nextLink?[0].Trim('<', '>', ' ');
-                }
-                else
-                {
-                    nextUrlToLoad = null;
-                }
-
-                result.AddRange(await ReadResponse<List<T>>(responseMessage));
-            }
-
-            return result;
+            var responseMessage = await _client.GetAsync(TryFixApiUrl(url));
+            await EnsureSuccessStatusCode(responseMessage);
+            return Tuple.Create(await ReadResponse<T>(responseMessage), responseMessage.Headers);
         }
 
         private static async Task EnsureSuccessStatusCode(HttpResponseMessage responseMessage)
@@ -109,7 +81,7 @@ namespace GitLabApiClient.Http
             return content;
         }
 
-        private static string GetAPIUrl(string url)
+        private static string TryFixApiUrl(string url)
         {
             if (!url.StartsWith("/", StringComparison.OrdinalIgnoreCase))
                 url = "/" + url;

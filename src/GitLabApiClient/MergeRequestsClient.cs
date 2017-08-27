@@ -14,10 +14,10 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
 
         public async Task<IList<MergeRequest>> GetAsync(int projectId) => 
-            await _httpFacade.GetAll<MergeRequest>($"/projects/{projectId}/merge_requests");
+            await _httpFacade.GetPagedList<MergeRequest>($"/projects/{projectId}/merge_requests");
 
         public async Task<IList<MergeRequest>> GetAsync(int projectId, MergeRequestState state) => 
-            await _httpFacade.GetAll<MergeRequest>($"/projects/{projectId}/merge_requests?state={state.ToString().ToLowerInvariant()}");
+            await _httpFacade.GetPagedList<MergeRequest>($"/projects/{projectId}/merge_requests?state={state.ToString().ToLowerInvariant()}");
 
         public async Task<MergeRequest> CreateAsync(CreateMergeRequest request) => 
             await _httpFacade.Post<MergeRequest>($"/projects/{request.ProjectId}/merge_requests", request);

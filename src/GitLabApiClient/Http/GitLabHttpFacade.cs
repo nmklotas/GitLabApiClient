@@ -12,7 +12,8 @@ namespace GitLabApiClient.Http
 
         private readonly object _locker = new object();
         private readonly HttpClient _httpClient;
-        private readonly HttpRequestor _requestor;
+        private readonly GitLabApiRequestor _requestor;
+        private readonly GitLabApiPagedRequestor _pagedRequestor;
 
         public GitLabHttpFacade(string hostUrl, string authenticationToken = "")
         {
@@ -22,11 +23,12 @@ namespace GitLabApiClient.Http
             };
 
             _httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
-            _requestor = new HttpRequestor(_httpClient);
+            _requestor = new GitLabApiRequestor(_httpClient);
+            _pagedRequestor = new GitLabApiPagedRequestor(_requestor);
         }
 
-        public Task<IList<T>> GetAll<T>(string uri) =>
-            _requestor.GetAll<T>(uri);
+        public Task<IList<T>> GetPagedList<T>(string uri) =>
+            _pagedRequestor.GetPagedList<T>(uri);
 
         public Task<T> Get<T>(string uri) =>
             _requestor.Get<T>(uri);

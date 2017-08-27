@@ -14,7 +14,7 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
 
         public async Task<IList<User>> GetAsync() => 
-            await _httpFacade.GetAll<User>("/users");
+            await _httpFacade.GetPagedList<User>("/users");
 
         public async Task<User> GetAsync(string name) =>
             (await _httpFacade.Get<List<User>>($"/users?username={name}")).FirstOrDefault();
