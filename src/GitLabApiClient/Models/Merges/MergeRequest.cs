@@ -13,7 +13,7 @@ namespace GitLabApiClient.Models.Merges
         public string SourceBranch { get; set; }
 
         [JsonProperty("downvotes")]
-        public long Downvotes { get; set; }
+        public int Downvotes { get; set; }
 
         [JsonProperty("author")]
         public Assignee Author { get; set; }
@@ -43,25 +43,25 @@ namespace GitLabApiClient.Models.Merges
         public string Sha { get; set; }
 
         [JsonProperty("project_id")]
-        public long ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
         [JsonProperty("should_remove_source_branch")]
         public bool? ShouldRemoveSourceBranch { get; set; }
 
         [JsonProperty("target_project_id")]
-        public long TargetProjectId { get; set; }
+        public int TargetProjectId { get; set; }
 
         [JsonProperty("state")]
         public string State { get; set; }
 
         [JsonProperty("source_project_id")]
-        public long SourceProjectId { get; set; }
+        public int SourceProjectId { get; set; }
 
         [JsonProperty("target_branch")]
         public string TargetBranch { get; set; }
 
         [JsonProperty("upvotes")]
-        public long Upvotes { get; set; }
+        public int Upvotes { get; set; }
 
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
@@ -70,7 +70,7 @@ namespace GitLabApiClient.Models.Merges
         public string Title { get; set; }
 
         [JsonProperty("user_notes_count")]
-        public long UserNotesCount { get; set; }
+        public int UserNotesCount { get; set; }
 
         [JsonProperty("work_in_progress")]
         public bool WorkInProgress { get; set; }

@@ -36,7 +36,7 @@ namespace GitLabApiClient
                 $"/projects/{projectId}/merge_requests/{mergeRequestId}/merge", commitMessage);
         }
 
-        public async Task DeleteAsync(int projectId, long mergeRequestId) =>
+        public async Task DeleteAsync(int projectId, int mergeRequestId) =>
             await _httpFacade.Delete($"/projects/{projectId}/merge_requests/{mergeRequestId}");
 
         private class MergeCommitMessage

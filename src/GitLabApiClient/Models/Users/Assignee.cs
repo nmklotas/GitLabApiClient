@@ -6,7 +6,7 @@ namespace GitLabApiClient.Models.Users
     public class Assignee
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("state")]
         public string State { get; set; }

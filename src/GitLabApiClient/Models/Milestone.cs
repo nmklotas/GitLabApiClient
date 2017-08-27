@@ -11,7 +11,7 @@ namespace GitLabApiClient.Models
         public string DueDate { get; set; }
 
         [JsonProperty("project_id")]
-        public long ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

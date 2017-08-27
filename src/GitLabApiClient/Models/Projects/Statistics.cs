@@ -5,18 +5,18 @@ namespace GitLabApiClient.Models.Projects
     public class Statistics
     {
         [JsonProperty("job_artifacts_size")]
-        public long JobArtifactsSize { get; set; }
+        public int JobArtifactsSize { get; set; }
 
         [JsonProperty("repository_size")]
-        public long RepositorySize { get; set; }
+        public int RepositorySize { get; set; }
 
         [JsonProperty("commit_count")]
-        public long CommitCount { get; set; }
+        public int CommitCount { get; set; }
 
         [JsonProperty("lfs_objects_size")]
-        public long LfsObjectsSize { get; set; }
+        public int LfsObjectsSize { get; set; }
 
         [JsonProperty("storage_size")]
-        public long StorageSize { get; set; }
+        public int StorageSize { get; set; }
     }
 }

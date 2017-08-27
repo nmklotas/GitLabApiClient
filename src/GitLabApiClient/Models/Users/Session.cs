@@ -25,7 +25,7 @@ namespace GitLabApiClient.Models.Users
         public DateTime CreatedAt { get; set; }
 
         [JsonProperty("color_scheme_id")]
-        public long ColorSchemeId { get; set; }
+        public int ColorSchemeId { get; set; }
 
         [JsonProperty("current_sign_in_at")]
         public string CurrentSignInAt { get; set; }
@@ -40,7 +40,7 @@ namespace GitLabApiClient.Models.Users
         public List<Identity> Identities { get; } = new List<Identity>();
 
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("is_admin")]
         public bool IsAdmin { get; set; }
@@ -52,7 +52,7 @@ namespace GitLabApiClient.Models.Users
         public string Name { get; set; }
 
         [JsonProperty("projects_limit")]
-        public long ProjectsLimit { get; set; }
+        public int ProjectsLimit { get; set; }
 
         [JsonProperty("twitter")]
         public string Twitter { get; set; }

@@ -5,7 +5,7 @@ namespace GitLabApiClient.Models.Projects
     public class Namespace
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

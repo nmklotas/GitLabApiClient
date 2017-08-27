@@ -7,7 +7,7 @@ namespace GitLabApiClient.Models.Issues
     public class CreateIssueRequest
     {
         [JsonProperty("id")]
-        public long ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

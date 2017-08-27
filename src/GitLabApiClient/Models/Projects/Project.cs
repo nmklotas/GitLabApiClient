@@ -24,7 +24,7 @@ namespace GitLabApiClient.Models.Projects
         public string AvatarUrl { get; set; }
 
         [JsonProperty("creator_id")]
-        public long CreatorId { get; set; }
+        public int CreatorId { get; set; }
 
         [JsonProperty("created_at")]
         public string CreatedAt { get; set; }
@@ -39,10 +39,10 @@ namespace GitLabApiClient.Models.Projects
         public string HttpUrlToRepo { get; set; }
 
         [JsonProperty("forks_count")]
-        public long ForksCount { get; set; }
+        public int ForksCount { get; set; }
 
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("issues_enabled")]
         public bool IssuesEnabled { get; set; }
@@ -78,7 +78,7 @@ namespace GitLabApiClient.Models.Projects
         public bool OnlyAllowMergeIfAllDiscussionsAreResolved { get; set; }
 
         [JsonProperty("open_issues_count")]
-        public long OpenIssuesCount { get; set; }
+        public int OpenIssuesCount { get; set; }
 
         [JsonProperty("public_jobs")]
         public bool PublicJobs { get; set; }
@@ -111,7 +111,7 @@ namespace GitLabApiClient.Models.Projects
         public bool SnippetsEnabled { get; set; }
 
         [JsonProperty("star_count")]
-        public long StarCount { get; set; }
+        public int StarCount { get; set; }
 
         [JsonProperty("visibility")]
         public string Visibility { get; set; }

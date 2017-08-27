@@ -15,7 +15,7 @@ namespace GitLabApiClient
         public async Task<IList<Issue>> GetAsync(int projectId) => 
             await _httpFacade.GetPagedList<Issue>($"/projects/{projectId}/issues");
 
-        public async Task<Issue> GetAsync(int projectId, long issueId) => 
+        public async Task<Issue> GetAsync(int projectId, int issueId) => 
             await _httpFacade.Get<Issue>($"/projects/{projectId}/issues/{issueId}");
 
         public async Task<IList<Issue>> GetOwnedAsync() =>

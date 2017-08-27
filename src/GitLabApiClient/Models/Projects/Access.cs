@@ -5,9 +5,9 @@ namespace GitLabApiClient.Models.Projects
     public class Access
     {
         [JsonProperty("access_level")]
-        public long AccessLevel { get; set; }
+        public int AccessLevel { get; set; }
 
         [JsonProperty("notification_level")]
-        public long NotificationLevel { get; set; }
+        public int NotificationLevel { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace GitLabApiClient.Models.Projects
     public class CreateProjectRequest
     {
         [JsonProperty("user_id")]
-        public long UserId { get; set; }
+        public int UserId { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

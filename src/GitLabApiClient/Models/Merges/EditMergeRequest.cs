@@ -5,10 +5,10 @@ namespace GitLabApiClient.Models.Merges
     public class EditMergeRequest
     {
         [JsonProperty("id")]
-        public long ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
         [JsonProperty("merge_request_iid")]
-        public long MergeRequestId { get; set; }
+        public int MergeRequestId { get; set; }
 
         [JsonProperty("target_branch")]
         public string TargetBranch { get; set; }
