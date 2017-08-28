@@ -19,11 +19,11 @@ namespace GitLabApiClient
         public async Task<User> GetAsync(string name) =>
             (await _httpFacade.Get<List<User>>($"/users?username={name}")).FirstOrDefault();
 
-        public async Task<User> CreateAsync(CreateOrUpdateUserRequest request) => 
+        public async Task<User> CreateAsync(CreateUserRequest request) => 
             await _httpFacade.Post<User>("/users", request);
 
-        public async Task<User> UpdateAsync(int id, CreateOrUpdateUserRequest request) => 
-            await _httpFacade.Put<User>($"/users/{id}", request);
+        public async Task<User> UpdateAsync(UpdateUserRequest request) => 
+            await _httpFacade.Put<User>($"/users/{request.UserId}", request);
 
         public async Task<Session> GetCurrentSessionAsync() =>
             await _httpFacade.Get<Session>("/user");

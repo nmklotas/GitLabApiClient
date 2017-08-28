@@ -1,18 +1,39 @@
 ﻿using System.Collections.Generic;
+using GitLabApiClient.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
     public class CreateProjectRequest
     {
-        [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public static CreateProjectRequest FromPath(string path)
+        {
+            Guard.NotEmpty(path, nameof(path));
+            return new CreateProjectRequest
+            {
+                Path = path
+            };
+        }
+
+        public static CreateProjectRequest FromName(string name)
+        {
+            Guard.NotEmpty(name, nameof(name));
+            return new CreateProjectRequest
+            {
+                Name = name
+            };
+        }
+
+        private CreateProjectRequest() { }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         [JsonProperty("path")]
-        public string Path { get; set; }
+        public string Path { get; private set; }
+
+        [JsonProperty("user_id")]
+        public int UserId { get; set; }
 
         [JsonProperty("default_branch")]
         public string DefaultBranch { get; set; }

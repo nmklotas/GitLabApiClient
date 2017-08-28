@@ -22,7 +22,7 @@ namespace GitLabApiClient
         public async Task<MergeRequest> CreateAsync(CreateMergeRequest request) => 
             await _httpFacade.Post<MergeRequest>($"/projects/{request.ProjectId}/merge_requests", request);
 
-        public async Task<MergeRequest> UpdateAsync(EditMergeRequest request) => 
+        public async Task<MergeRequest> UpdateAsync(UpdateMergeRequest request) => 
             await _httpFacade.Put<MergeRequest>($"/projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
 
         public async Task<MergeRequest> AcceptAsync(int projectId, int mergeRequestId, string message)

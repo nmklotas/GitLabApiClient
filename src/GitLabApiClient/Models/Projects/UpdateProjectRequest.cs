@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
+using GitLabApiClient.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class EditProjectRequest
+    public class UpdateProjectRequest
     {
+        public UpdateProjectRequest(int projectId, string name)
+        {
+            Guard.NotEmpty(name, nameof(name));
+            ProjectId = projectId;
+            Name = name;
+        }
+
         [JsonProperty("id")]
-        public int ProjectId { get; set; }
+        public int ProjectId { get; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; }
 
         [JsonProperty("path")]
         public string Path { get; set; }

@@ -2,13 +2,19 @@
 
 namespace GitLabApiClient.Models.Merges
 {
-    public class EditMergeRequest
+    public class UpdateMergeRequest
     {
+        public UpdateMergeRequest(int projectId, int mergeRequestId)
+        {
+            ProjectId = projectId;
+            MergeRequestId = mergeRequestId;
+        }
+
         [JsonProperty("id")]
-        public int ProjectId { get; set; }
+        public int ProjectId { get; }
 
         [JsonProperty("merge_request_iid")]
-        public int MergeRequestId { get; set; }
+        public int MergeRequestId { get; }
 
         [JsonProperty("target_branch")]
         public string TargetBranch { get; set; }

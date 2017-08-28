@@ -19,12 +19,10 @@ namespace GitLabApiClient.Test
             //arrange
             string title = Guid.NewGuid().ToString();
 
-            var issue = await _sut.CreateAsync(new CreateIssueRequest
+            var issue = await _sut.CreateAsync(new CreateIssueRequest(TestProjectId, title)
             {
-                ProjectId = TestProjectId,
                 Assignees = new List<int> { 1 },
                 Confidential = true,
-                Title = title,
                 Description = "Description",
                 Labels = "Label1"
             });

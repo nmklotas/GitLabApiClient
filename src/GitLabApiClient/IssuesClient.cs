@@ -24,7 +24,7 @@ namespace GitLabApiClient
         public async Task<Issue> CreateAsync(CreateIssueRequest request) => 
             await _httpFacade.Post<Issue>($"/projects/{request.ProjectId}/issues", request);
 
-        public async Task<Issue> EditAsync(EditIssueRequest request) =>
+        public async Task<Issue> EditAsync(UpdateIssueRequest request) =>
             await _httpFacade.Put<Issue>($"/projects/{request.ProjectId}/issues/{request.IssueId}", request);
     }
 }

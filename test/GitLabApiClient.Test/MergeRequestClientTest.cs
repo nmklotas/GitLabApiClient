@@ -16,20 +16,15 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()
         {
-            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest
+            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest(TestProjectId, "sourceBranch", "master", "Title")
             {
-                Title = "Title",
                 Description = "Description",
-                Labels = "Label1",
-                ProjectId = TestProjectId,
-                SourceBranch = "sourceBranch",
-                TargetBranch = "master"
+                Labels = "Label1"
             });
 
             mergeRequest.Should().Match(Assert());
 
-            var retrievedMergeRequest = (
-                await _sut.GetAsync(TestProjectId, MergeRequestState.Opened)).Single();
+            var retrievedMergeRequest = (await _sut.GetAsync(TestProjectId, MergeRequestState.Opened)).Single();
 
             retrievedMergeRequest.Should().Match(Assert());
 

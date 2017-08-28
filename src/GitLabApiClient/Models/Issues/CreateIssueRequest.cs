@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using GitLabApiClient.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Issues
 {
     public class CreateIssueRequest
     {
+        public CreateIssueRequest(int projectId, string title)
+        {
+            Guard.NotEmpty(title, nameof(title));
+            ProjectId = projectId;
+            Title = title;
+        }
+
         [JsonProperty("id")]
-        public int ProjectId { get; set; }
+        public int ProjectId { get; }
 
         [JsonProperty("title")]
-        public string Title { get; set; }
+        public string Title { get; }
 
         [JsonProperty("description")]
         public string Description { get; set; }

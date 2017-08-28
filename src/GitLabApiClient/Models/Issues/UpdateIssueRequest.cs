@@ -4,13 +4,19 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Issues
 {
-    public class EditIssueRequest
+    public class UpdateIssueRequest
     {
+        public UpdateIssueRequest(int projectId, int issueId)
+        {
+            ProjectId = projectId;
+            IssueId = issueId;
+        }
+
         [JsonProperty("id")]
-        public int ProjectId { get; set; }
+        public int ProjectId { get; }
 
         [JsonProperty("issue_iid")]
-        public int IssueId { get; set; }
+        public int IssueId { get; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

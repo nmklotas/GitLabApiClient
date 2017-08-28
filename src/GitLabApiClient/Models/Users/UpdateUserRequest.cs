@@ -2,8 +2,12 @@
 
 namespace GitLabApiClient.Models.Users
 {
-    public class CreateOrUpdateUserRequest
+    public class UpdateUserRequest
     {
+        public UpdateUserRequest(int userId) => UserId = userId;
+
+        public int UserId { get; }
+
         [JsonProperty("email")]
         public string Email { get; set; }
 
