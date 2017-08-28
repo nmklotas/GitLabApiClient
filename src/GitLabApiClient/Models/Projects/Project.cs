@@ -72,10 +72,10 @@ namespace GitLabApiClient.Models.Projects
         public string NameWithNamespace { get; set; }
 
         [JsonProperty("only_allow_merge_if_pipeline_succeeds")]
-        public bool OnlyAllowMergeIfPipelineSucceeds { get; set; }
+        public bool? OnlyAllowMergeIfPipelineSucceeds { get; set; }
 
         [JsonProperty("only_allow_merge_if_all_discussions_are_resolved")]
-        public bool OnlyAllowMergeIfAllDiscussionsAreResolved { get; set; }
+        public bool? OnlyAllowMergeIfAllDiscussionsAreResolved { get; set; }
 
         [JsonProperty("open_issues_count")]
         public int OpenIssuesCount { get; set; }
