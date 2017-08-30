@@ -15,9 +15,10 @@ namespace GitLabApiClient
                 hostUrl ?? throw new ArgumentNullException(nameof(hostUrl)), 
                 authenticationToken ?? throw new ArgumentNullException(nameof(authenticationToken)));
 
+            var projectQueryBuilder = new ProjectsQueryBuilder();
             Issues = new IssuesClient(_httpFacade);
             MergeRequests = new MergeRequestsClient(_httpFacade);
-            Projects = new ProjectsClient(_httpFacade);
+            Projects = new ProjectsClient(_httpFacade, projectQueryBuilder);
             Users = new UsersClient(_httpFacade);
         }
 

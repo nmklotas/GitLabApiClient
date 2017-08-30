@@ -8,7 +8,9 @@ namespace GitLabApiClient.Test
 {
     public class ProjectsClientTest
     {
-        private readonly ProjectsClient _sut = new ProjectsClient(GetFacade());
+        private readonly ProjectsClient _sut = new ProjectsClient(
+            GetFacade(),
+            new ProjectsQueryBuilder());
 
         [Fact]
         public async Task ProjectRetrieved()
@@ -27,7 +29,9 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectRetrievedByName()
         {
-            var project = (await _sut.GetAsync("test-gitlabapiclient")).Single();
+            var project = (await _sut.GetAsync(
+                o => o.Filter = "test-gitlabapiclient")).Single();
+
             project.Id.Should().Be(TestProjectId);
         }
     }
