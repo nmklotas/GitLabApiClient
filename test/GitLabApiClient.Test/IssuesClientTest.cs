@@ -29,7 +29,7 @@ namespace GitLabApiClient.Test
 
             //act
             var issueById = await _sut.GetAsync(TestProjectId, issue.Iid);
-            var issueByProjectId = (await _sut.GetAsync(TestProjectId)).FirstOrDefault(i => i.Title == title);
+            var issueByProjectId = (await _sut.GetAsync(o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
             var ownedIssue = (await _sut.GetAsync(o => o.Scope = IssueScope.AssignedToMe)).FirstOrDefault(i => i.Title == title);
 
             //assert
