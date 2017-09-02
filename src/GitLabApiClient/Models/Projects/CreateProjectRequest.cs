@@ -87,7 +87,7 @@ namespace GitLabApiClient.Models.Projects
         public bool EnableRequestAccess { get; set; }
 
         [JsonProperty("tag_list")]
-        public List<string> Tags { get; } = new List<string>();
+        public List<string> Tags { get; set; } = new List<string>();
 
         [JsonProperty("printing_merge_request_link_enabled")]
         public bool EnablePrintingMergeRequestLink { get; set; }

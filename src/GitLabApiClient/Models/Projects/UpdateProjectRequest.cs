@@ -71,7 +71,7 @@ namespace GitLabApiClient.Models.Projects
         public bool EnableRequestAccess { get; set; }
 
         [JsonProperty("tag_list")]
-        public List<string> Tags { get; } = new List<string>();
+        public List<string> Tags { get; set; } = new List<string>();
 
         [JsonProperty("ci_config_path")]
         public string CiConfigPath { get; set; }

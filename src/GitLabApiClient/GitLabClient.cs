@@ -11,12 +11,20 @@ namespace GitLabApiClient
 
         public GitLabClient(string hostUrl, string authenticationToken = "")
         {
+            if (string.IsNullOrEmpty(hostUrl))
+                throw new ArgumentException(nameof(hostUrl));
+
+            if (authenticationToken == null)
+                throw new ArgumentNullException(nameof(authenticationToken));
+
             _httpFacade = new GitLabHttpFacade(
-                hostUrl ?? throw new ArgumentNullException(nameof(hostUrl)), 
-                authenticationToken ?? throw new ArgumentNullException(nameof(authenticationToken)));
+                hostUrl,
+                authenticationToken);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
-            Issues = new IssuesClient(_httpFacade);
+            var issuesQueryBuilder = new IssuesQueryBuilder();
+
+            Issues = new IssuesClient(_httpFacade, issuesQueryBuilder);
             MergeRequests = new MergeRequestsClient(_httpFacade);
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder);
             Users = new UsersClient(_httpFacade);
@@ -30,7 +38,7 @@ namespace GitLabApiClient
 
         public UsersClient Users { get; }
 
-        public Task<Session> LoginAsync(string username, string password) => 
+        public Task<Session> LoginAsync(string username, string password) =>
             _httpFacade.LoginAsync(username, password);
     }
 }

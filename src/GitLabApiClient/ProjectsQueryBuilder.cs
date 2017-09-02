@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Linq;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Projects;
 using GitLabApiClient.Utilities;
-using static System.Web.HttpUtility;
 
 namespace GitLabApiClient
 {
-    public class ProjectsQueryBuilder
+    internal sealed class ProjectsQueryBuilder : QueryBuilder<ProjectQueryOptions>
     {
-        public string Build(string baseUrl, ProjectQueryOptions options)
+        protected override void BuildCore(NameValueCollection nameValues, ProjectQueryOptions options)
         {
-            var nameValues = new NameValueCollection();
-
             if (!options.UserId.IsNullOrEmpty())
                 nameValues.Add("user_id", options.UserId);
 
@@ -51,18 +47,6 @@ namespace GitLabApiClient
 
             if (options.WithMergeRequestsEnabled)
                 nameValues.Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled.ToLowerCaseString());
-
-            return baseUrl + ToQueryString(nameValues);
-        }
-
-        private static string ToQueryString(NameValueCollection nvc)
-        {
-            var array =
-                from key in nvc.AllKeys
-                from value in nvc.GetValues(key)
-                select string.Format("{0}={1}", UrlEncode(key), UrlEncode(value));
-
-            return "?" + string.Join("&", array);
         }
 
         private static string GetProjectOrderQueryValue(ProjectsOrder order)
@@ -81,19 +65,6 @@ namespace GitLabApiClient
                     return "name";
                 case ProjectsOrder.Path:
                     return "path";
-                default:
-                    throw new NotSupportedException($"Order {order} not supported");
-            }
-        }
-
-        private static string GetSortOrderQueryValue(SortOrder order)
-        {
-            switch (order)
-            {
-                case SortOrder.Ascending:
-                    return "asc";
-                case SortOrder.Descending:
-                    return "desc";
                 default:
                     throw new NotSupportedException($"Order {order} not supported");
             }

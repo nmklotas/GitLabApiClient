@@ -11,7 +11,7 @@ namespace GitLabApiClient.Test
 {
     public class IssuesClientTest
     {
-        private readonly IssuesClient _sut = new IssuesClient(GetFacade());
+        private readonly IssuesClient _sut = new IssuesClient(GetFacade(), new IssuesQueryBuilder());
 
         [Fact]
         public async Task CreatedIssueCanBeRetrieved()
@@ -30,7 +30,7 @@ namespace GitLabApiClient.Test
             //act
             var issueById = await _sut.GetAsync(TestProjectId, issue.Iid);
             var issueByProjectId = (await _sut.GetAsync(TestProjectId)).FirstOrDefault(i => i.Title == title);
-            var ownedIssue = (await _sut.GetOwnedAsync()).FirstOrDefault(i => i.Title == title);
+            var ownedIssue = (await _sut.GetAsync(o => o.Scope = IssueScope.AssignedToMe)).FirstOrDefault(i => i.Title == title);
 
             //assert
             issue.Should().Match<Issue>(i => 
