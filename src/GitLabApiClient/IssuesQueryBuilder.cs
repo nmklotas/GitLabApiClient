@@ -57,21 +57,6 @@ namespace GitLabApiClient
             }
         }
 
-        private static string GetScopeQueryValue(IssueScope scope)
-        {
-            switch (scope)
-            {
-                case IssueScope.CreatedByMe:
-                    return "created-by-me";
-                case IssueScope.AssignedToMe:
-                    return "assigned-to-me";
-                case IssueScope.All:
-                    return "all";
-                default:
-                    throw new NotSupportedException($"Scope {scope} is not supported");
-            }
-        }
-
         private static string GetIssuesOrderQueryValue(IssuesOrder order)
         {
             switch (order)

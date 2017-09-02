@@ -1,6 +1,6 @@
-﻿namespace GitLabApiClient.Models.Issues
+﻿namespace GitLabApiClient.Models
 {
-    public enum IssueScope
+    public enum Scope
     {
         CreatedByMe,
         AssignedToMe,

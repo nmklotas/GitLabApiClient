@@ -5,6 +5,8 @@ namespace GitLabApiClient.Models
 {
     public class ModifiableObject
     {
+        internal ModifiableObject() { }
+
         [JsonProperty("iid")]
         public int Iid { get; set; }
 

@@ -22,7 +22,7 @@ namespace GitLabApiClient.Test
                     State = IssueState.Opened,
                     Labels = { "label1", "label2" },
                     MilestoneTitle = "milestone1",
-                    Scope = IssueScope.All,
+                    Scope = Scope.All,
                     AuthorId = 1,
                     AssigneeId = 2,
                     IssueIds = { 3, 4 },

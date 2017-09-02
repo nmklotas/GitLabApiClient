@@ -35,6 +35,21 @@ namespace GitLabApiClient
             }
         }
 
+        protected static string GetScopeQueryValue(Scope scope)
+        {
+            switch (scope)
+            {
+                case Scope.CreatedByMe:
+                    return "created-by-me";
+                case Scope.AssignedToMe:
+                    return "assigned-to-me";
+                case Scope.All:
+                    return "all";
+                default:
+                    throw new NotSupportedException($"Scope {scope} is not supported");
+            }
+        }
+
         private static string ToQueryString(NameValueCollection nvc)
         {
             var array =

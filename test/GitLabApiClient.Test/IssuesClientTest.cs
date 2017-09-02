@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Issues;
 using Xunit;
 using static GitLabApiClient.Test.GitLabApiHelper;
@@ -30,7 +31,7 @@ namespace GitLabApiClient.Test
             //act
             var issueById = await _sut.GetAsync(TestProjectId, issue.Iid);
             var issueByProjectId = (await _sut.GetAsync(o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
-            var ownedIssue = (await _sut.GetAsync(o => o.Scope = IssueScope.AssignedToMe)).FirstOrDefault(i => i.Title == title);
+            var ownedIssue = (await _sut.GetAsync(o => o.Scope = Scope.AssignedToMe)).FirstOrDefault(i => i.Title == title);
 
             //assert
             issue.Should().Match<Issue>(i => 

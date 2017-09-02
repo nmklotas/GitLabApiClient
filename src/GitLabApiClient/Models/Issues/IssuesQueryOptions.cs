@@ -7,9 +7,7 @@ namespace GitLabApiClient.Models.Issues
     /// </summary>
     public class IssuesQueryOptions
     {
-        internal IssuesQueryOptions()
-        {
-        }
+        internal IssuesQueryOptions() {}
 
         /// <summary>
         /// Return all issues or just those that are opened or closed.
@@ -33,7 +31,7 @@ namespace GitLabApiClient.Models.Issues
         /// Defaults to issues created by current user (Introduced in GitLab 9.5).
         /// Combine with <see cref="Scope"/>
         /// </summary>
-        public IssueScope Scope { get; set; }
+        public Scope Scope { get; set; }
 
         /// <summary>
         /// Return issues created by the given user id.
