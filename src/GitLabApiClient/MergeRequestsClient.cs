@@ -1,23 +1,51 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using GitLabApiClient.Http;
 using GitLabApiClient.Models.Merges;
+using GitLabApiClient.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient
 {
-    public class MergeRequestsClient
+    public sealed class MergeRequestsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
+        private readonly MergeRequestsQueryBuilder _mergeRequestsQueryBuilder;
+        private readonly ProjectMergeRequestsQueryBuilder _projectMergeRequestsQueryBuilder;
 
-        internal MergeRequestsClient(GitLabHttpFacade httpFacade) => 
+        internal MergeRequestsClient(
+            GitLabHttpFacade httpFacade,
+            MergeRequestsQueryBuilder mergeRequestsQueryBuilder,
+            ProjectMergeRequestsQueryBuilder projectMergeRequestsQueryBuilder)
+        {
             _httpFacade = httpFacade;
+            _mergeRequestsQueryBuilder = mergeRequestsQueryBuilder;
+            _projectMergeRequestsQueryBuilder = projectMergeRequestsQueryBuilder;
+        }
 
-        public async Task<IList<MergeRequest>> GetAsync(int projectId) => 
-            await _httpFacade.GetPagedList<MergeRequest>($"/projects/{projectId}/merge_requests");
+        public async Task<IList<MergeRequest>> GetAsync(int projectId, Action<ProjectMergeRequestsQueryOptions> options = null)
+        {
+            var projectMergeRequestOptions = new ProjectMergeRequestsQueryOptions(projectId);
+            options?.Invoke(projectMergeRequestOptions);
 
-        public async Task<IList<MergeRequest>> GetAsync(int projectId, MergeRequestState state) => 
-            await _httpFacade.GetPagedList<MergeRequest>($"/projects/{projectId}/merge_requests?state={state.ToString().ToLowerInvariant()}");
+            string query = _mergeRequestsQueryBuilder.
+                Build($"/projects/{projectId}/merge_requests", projectMergeRequestOptions);
+
+            return await _httpFacade.GetPagedList<MergeRequest>(query);
+        }
+
+        public async Task<IList<MergeRequest>> GetAsync(Action<MergeRequestsQueryOptions> options = null)
+        {
+            var projectMergeRequestOptions = new MergeRequestsQueryOptions();
+            options?.Invoke(projectMergeRequestOptions);
+
+            string query = _projectMergeRequestsQueryBuilder.
+                Build("/merge_requests", projectMergeRequestOptions);
+
+            return await _httpFacade.GetPagedList<MergeRequest>(query);
+        }
 
         public async Task<MergeRequest> CreateAsync(CreateMergeRequest request) => 
             await _httpFacade.Post<MergeRequest>($"/projects/{request.ProjectId}/merge_requests", request);
@@ -25,11 +53,13 @@ namespace GitLabApiClient
         public async Task<MergeRequest> UpdateAsync(UpdateMergeRequest request) => 
             await _httpFacade.Put<MergeRequest>($"/projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
 
-        public async Task<MergeRequest> AcceptAsync(int projectId, int mergeRequestId, string message)
+        public async Task<MergeRequest> AcceptAsync(int projectId, int mergeRequestId, string mergeCommitMessage)
         {
+            Guard.NotEmpty(mergeCommitMessage, nameof(mergeCommitMessage));
+
             var commitMessage = new MergeCommitMessage
             {
-                Message = message
+                Message = mergeCommitMessage
             };
 
             return await _httpFacade.Put<MergeRequest>(
