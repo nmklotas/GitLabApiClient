@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Statistics
+    public sealed class Statistics
     {
         [JsonProperty("job_artifacts_size")]
         public int JobArtifactsSize { get; set; }

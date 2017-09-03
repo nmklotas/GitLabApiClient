@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Links
+    public sealed class Links
     {
         [JsonProperty("members")]
         public string Members { get; set; }

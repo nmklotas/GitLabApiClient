@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Access
+    public sealed class Access
     {
         [JsonProperty("access_level")]
         public int AccessLevel { get; set; }

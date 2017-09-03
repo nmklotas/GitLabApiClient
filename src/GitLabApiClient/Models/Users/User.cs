@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Users
 {
-    public class User
+    public sealed class User
     {
         [JsonProperty("current_sign_in_at")]
         public string CurrentSignInAt { get; set; }

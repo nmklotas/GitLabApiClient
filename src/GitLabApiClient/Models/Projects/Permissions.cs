@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Permissions
+    public sealed class Permissions
     {
         [JsonProperty("group_access")]
         public Access GroupAccess { get; set; }

@@ -3,8 +3,10 @@
     /// <summary>
     /// Options for projects listing
     /// </summary>
-    public class ProjectQueryOptions
+    public sealed class ProjectQueryOptions
     {
+        internal ProjectQueryOptions() { }
+
         /// <summary>
         /// The ID or username of the user
         /// </summary>
@@ -18,7 +20,7 @@
         /// <summary>
         /// Limit by visibility. Default is Public.
         /// </summary>
-        public VisibilityLevel Visibility { get; set; } = VisibilityLevel.Public;
+        public VisibilityLevel Visibility { get; set; }
 
         /// <summary>
         /// Specifies project order. Default is Creation time.

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Users
 {
-    public class Session
+    public sealed class Session
     {
         [JsonProperty("email")]
         public string Email { get; set; }

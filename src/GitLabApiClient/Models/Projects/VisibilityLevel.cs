@@ -2,8 +2,9 @@
 {
     public enum VisibilityLevel
     {
-        Private = 0,
-        Internal = 10,
-        Public = 20
+        All,
+        Private,
+        Internal,
+        Public
     }
 }

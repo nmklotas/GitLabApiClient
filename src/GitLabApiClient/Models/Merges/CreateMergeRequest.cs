@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Merges
 {
-    public class CreateMergeRequest
+    public sealed class CreateMergeRequest
     {
         public CreateMergeRequest(int projectId, string sourceBranch, string targetBranch, string title)
         {

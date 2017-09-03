@@ -16,7 +16,7 @@ namespace GitLabApiClient
             if (options.Archived)
                 nameValues.Add("archived", options.Archived.ToLowerCaseString());
 
-            nameValues.Add("visibility", options.Visibility.ToLowerCaseString());
+            nameValues.Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
             if (options.Order != ProjectsOrder.CreatedAt)
                 nameValues.Add("order_by", GetProjectOrderQueryValue(options.Order));
@@ -67,6 +67,23 @@ namespace GitLabApiClient
                     return "path";
                 default:
                     throw new NotSupportedException($"Order {order} not supported");
+            }
+        }
+
+        private static string GetVisibilityQueryValue(VisibilityLevel visibility)
+        {
+            switch (visibility)
+            {
+                case VisibilityLevel.Private:
+                    return "private";
+                case VisibilityLevel.Internal:
+                    return "internal";
+                case VisibilityLevel.Public:
+                    return "public";
+                case VisibilityLevel.All:
+                    return "";
+                default:
+                    throw new NotSupportedException($"Visibility {visibility} not supported");
             }
         }
     }

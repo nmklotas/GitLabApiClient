@@ -11,7 +11,8 @@ namespace GitLabApiClient.Test
 {
     public class MergeRequestClientTest : IAsyncLifetime
     {
-        private readonly MergeRequestsClient _sut = new MergeRequestsClient(GetFacade());
+        private readonly MergeRequestsClient _sut = new MergeRequestsClient(
+            GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder());
 
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()
@@ -24,7 +25,7 @@ namespace GitLabApiClient.Test
 
             mergeRequest.Should().Match(Assert());
 
-            var retrievedMergeRequest = (await _sut.GetAsync(TestProjectId, MergeRequestState.Opened)).Single();
+            var retrievedMergeRequest = (await _sut.GetAsync(TestProjectId)).Single();
 
             retrievedMergeRequest.Should().Match(Assert());
 

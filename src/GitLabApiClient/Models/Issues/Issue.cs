@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Issues
 {
-    public class Issue : ModifiableObject
+    public sealed class Issue : ModifiableObject
     {
         [JsonProperty("confidential")]
         public bool Confidential { get; set; }

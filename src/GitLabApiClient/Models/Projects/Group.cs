@@ -2,7 +2,7 @@
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Group
+    public sealed class Group
     {
         [JsonProperty("full_path")]
         public string FullPath { get; set; }

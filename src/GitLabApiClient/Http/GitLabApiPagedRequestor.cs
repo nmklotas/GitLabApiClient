@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitLabApiClient.Http
 {
-    internal class GitLabApiPagedRequestor
+    internal sealed class GitLabApiPagedRequestor
     {
         private const int MaxItemsPerPage = 100;
 

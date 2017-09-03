@@ -2,8 +2,8 @@
 {
     public enum Scope
     {
+        All,
         CreatedByMe,
-        AssignedToMe,
-        All
+        AssignedToMe
     }
 }

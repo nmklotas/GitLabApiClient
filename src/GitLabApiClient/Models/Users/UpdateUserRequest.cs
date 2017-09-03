@@ -2,7 +2,7 @@
 
 namespace GitLabApiClient.Models.Users
 {
-    public class UpdateUserRequest
+    public sealed class UpdateUserRequest
     {
         public UpdateUserRequest(int userId) => UserId = userId;
 

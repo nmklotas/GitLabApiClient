@@ -2,7 +2,7 @@
 
 namespace GitLabApiClient.Models.Merges
 {
-    public class UpdateMergeRequest
+    public sealed class UpdateMergeRequest
     {
         public UpdateMergeRequest(int projectId, int mergeRequestId)
         {

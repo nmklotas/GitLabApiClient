@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Owner
+    public sealed class Owner
     {
         [JsonProperty("id")]
         public int Id { get; set; }

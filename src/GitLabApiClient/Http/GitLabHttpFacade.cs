@@ -6,7 +6,7 @@ using GitLabApiClient.Models.Users;
 
 namespace GitLabApiClient.Http
 {
-    internal class GitLabHttpFacade
+    internal sealed class GitLabHttpFacade
     {
         private const string PrivateToken = "PRIVATE-TOKEN";
 

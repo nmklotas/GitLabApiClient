@@ -2,7 +2,7 @@
 
 namespace GitLabApiClient.Models
 {
-    public class Milestone : ModifiableObject
+    public sealed class Milestone : ModifiableObject
     {
         [JsonProperty("description")]
         public string Description { get; set; }

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Merges
 {
-    public class MergeRequest : ModifiableObject
+    public sealed class MergeRequest : ModifiableObject
     {
         [JsonProperty("labels")]
         public List<string> Labels { get; } = new List<string>();

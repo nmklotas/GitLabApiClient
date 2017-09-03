@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Issues
 {
-    public class UpdateIssueRequest
+    public sealed class UpdateIssueRequest
     {
         public UpdateIssueRequest(int projectId, int issueId)
         {

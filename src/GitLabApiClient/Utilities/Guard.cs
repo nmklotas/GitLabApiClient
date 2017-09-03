@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace GitLabApiClient.Utilities
 {
@@ -16,11 +15,13 @@ namespace GitLabApiClient.Utilities
 
         public static void NotEmpty(string arg, string argName, string message = null)
         {
-            if (string.IsNullOrEmpty(arg))
-                if (string.IsNullOrEmpty(message))
-                    throw new ArgumentException($"ArgumentException: {argName} string not valid.");
-                else
-                    throw new ArgumentException($"{message}");
+            if (!string.IsNullOrEmpty(arg))
+                return;
+
+            if (string.IsNullOrEmpty(message))
+                throw new ArgumentException($"ArgumentException: {argName} string not valid.");
+
+            throw new ArgumentException($"{message}");
         }
 
         public static void NotEmpty<T>(IEnumerable<T> arg, string argName)

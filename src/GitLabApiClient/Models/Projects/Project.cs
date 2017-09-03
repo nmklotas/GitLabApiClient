@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Project
+    public sealed class Project
     {
         [JsonProperty("last_activity_at")]
         public string LastActivityAt { get; set; }

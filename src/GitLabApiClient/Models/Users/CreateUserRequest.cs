@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Users
 {
-    public class CreateUserRequest
+    public sealed class CreateUserRequest
     {
         public CreateUserRequest(string name, string username, string email)
         {

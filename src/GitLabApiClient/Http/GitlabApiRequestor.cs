@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Http
 {
-    internal class GitLabApiRequestor
+    internal sealed class GitLabApiRequestor
     {
         private readonly HttpClient _client;
 
@@ -15,7 +15,7 @@ namespace GitLabApiClient.Http
         public async Task<T> Put<T>(string url, object data)
         {
             StringContent content = SerializeToString(data, false);
-            var responseMessage = await _client.PutAsync(TryFixApiUrl(url), content);
+            var responseMessage = await _client.PutAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
@@ -23,27 +23,27 @@ namespace GitLabApiClient.Http
         public async Task<T> Post<T>(string url, object data = null)
         {
             StringContent content = SerializeToString(data, true);
-            var responseMessage = await _client.PostAsync(TryFixApiUrl(url), content);
+            var responseMessage = await _client.PostAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
 
         public async Task Delete(string url)
         {
-            var responseMessage = await _client.DeleteAsync(TryFixApiUrl(url));
+            var responseMessage = await _client.DeleteAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
         }
 
         public async Task<T> Get<T>(string url)
         {
-            var responseMessage = await _client.GetAsync(TryFixApiUrl(url));
+            var responseMessage = await _client.GetAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
 
         public async Task<Tuple<T, HttpResponseHeaders>> GetWithHeaders<T>(string url)
         {
-            var responseMessage = await _client.GetAsync(TryFixApiUrl(url));
+            var responseMessage = await _client.GetAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
             return Tuple.Create(await ReadResponse<T>(responseMessage), responseMessage.Headers);
         }
@@ -79,17 +79,6 @@ namespace GitLabApiClient.Http
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return content;
-        }
-
-        private static string TryFixApiUrl(string url)
-        {
-            if (!url.StartsWith("/", StringComparison.OrdinalIgnoreCase))
-                url = "/" + url;
-
-            if (!url.StartsWith("/api/v4", StringComparison.OrdinalIgnoreCase))
-                url = "/api/v4" + url;
-
-            return url;
         }
     }
 }

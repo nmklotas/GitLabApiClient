@@ -28,8 +28,7 @@ namespace GitLabApiClient.Models.Issues
 
         /// <summary>
         /// Return issues for the given scope.
-        /// Defaults to issues created by current user (Introduced in GitLab 9.5).
-        /// Combine with <see cref="Scope"/>
+        /// Defaults to issues created by anyone. (Introduced in GitLab 9.5).
         /// </summary>
         public Scope Scope { get; set; }
 

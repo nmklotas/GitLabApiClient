@@ -3,7 +3,7 @@
 namespace GitLabApiClient
 {
     [Serializable]
-    public class GitLabException : Exception
+    public sealed class GitLabException : Exception
     {
         public GitLabException()
         {

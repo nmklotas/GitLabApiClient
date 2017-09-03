@@ -53,7 +53,7 @@ namespace GitLabApiClient.Models.Merges
 
         /// <summary>
         /// Return merge requests for the given scope.
-        /// Defaults to created by current user scope.
+        /// Defaults to merge requests created by anyone.
         /// </summary>
         public Scope Scope { get; set; }
 

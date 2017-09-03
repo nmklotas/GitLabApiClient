@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects
 {
-    public class Namespace
+    public sealed class Namespace
     {
         [JsonProperty("id")]
         public int Id { get; set; }
