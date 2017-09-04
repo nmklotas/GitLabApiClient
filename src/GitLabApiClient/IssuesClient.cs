@@ -33,7 +33,7 @@ namespace GitLabApiClient
         /// Retrieves project issue.
         /// </summary>
         public async Task<Issue> GetAsync(int projectId, int issueId) => 
-            await _httpFacade.Get<Issue>($"/projects/{projectId}/issues/{issueId}");
+            await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}");
 
         /// <summary>
         /// Retrieves issues from a project.
@@ -47,7 +47,7 @@ namespace GitLabApiClient
             var queryOptions = new ProjectIssuesQueryOptions(projectId);
             options?.Invoke(queryOptions);
 
-            string url = _projectIssuesQueryBuilder.Build("/issues", queryOptions);
+            string url = _projectIssuesQueryBuilder.Build("issues", queryOptions);
             return await _httpFacade.GetPagedList<Issue>(url);
         }
 
@@ -62,7 +62,7 @@ namespace GitLabApiClient
             var queryOptions = new IssuesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryBuilder.Build("/issues", queryOptions);
+            string url = _queryBuilder.Build("issues", queryOptions);
             return await _httpFacade.GetPagedList<Issue>(url);
         }
 
@@ -71,13 +71,13 @@ namespace GitLabApiClient
         /// </summary>
         /// <returns>The newly created issue.</returns>
         public async Task<Issue> CreateAsync(CreateIssueRequest request) => 
-            await _httpFacade.Post<Issue>($"/projects/{request.ProjectId}/issues", request);
+            await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request);
 
         /// <summary>
         /// Updated existing issue.
         /// </summary>
         /// <returns>The updated issue.</returns>
         public async Task<Issue> UpdateAsync(UpdateIssueRequest request) =>
-            await _httpFacade.Put<Issue>($"/projects/{request.ProjectId}/issues/{request.IssueId}", request);
+            await _httpFacade.Put<Issue>($"projects/{request.ProjectId}/issues/{request.IssueId}", request);
     }
 }

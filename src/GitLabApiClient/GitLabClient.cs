@@ -24,7 +24,7 @@ namespace GitLabApiClient
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
 
             _httpFacade = new GitLabHttpFacade(
-                PrefixBaseUrl(hostUrl),
+                FixBaseUrl(hostUrl),
                 authenticationToken);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
@@ -69,15 +69,15 @@ namespace GitLabApiClient
             return _httpFacade.LoginAsync(username, password);
         }
 
-        private static string PrefixBaseUrl(string url)
+        private static string FixBaseUrl(string url)
         {
             if (!url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
-                url = url + "/";
+                url += "/";
 
-            if (!url.EndsWith("/api/v4", StringComparison.OrdinalIgnoreCase))
-                url = url + "/api/v4/";
+            if (!url.EndsWith("/api/v4/", StringComparison.OrdinalIgnoreCase))
+                url += "/api/v4/";
 
-            return url;
+            return url.Replace("//", "/");
         }
     }
 }

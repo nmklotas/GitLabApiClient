@@ -4,8 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Http;
 using GitLabApiClient.Models.Merges;
-using GitLabApiClient.Utilities;
-using Newtonsoft.Json;
 
 namespace GitLabApiClient
 {
@@ -44,7 +42,7 @@ namespace GitLabApiClient
             options?.Invoke(projectMergeRequestOptions);
 
             string query = _mergeRequestsQueryBuilder.
-                Build($"/projects/{projectId}/merge_requests", projectMergeRequestOptions);
+                Build($"projects/{projectId}/merge_requests", projectMergeRequestOptions);
 
             return await _httpFacade.GetPagedList<MergeRequest>(query);
         }
@@ -61,7 +59,7 @@ namespace GitLabApiClient
             options?.Invoke(projectMergeRequestOptions);
 
             string query = _projectMergeRequestsQueryBuilder.
-                Build("/merge_requests", projectMergeRequestOptions);
+                Build("merge_requests", projectMergeRequestOptions);
 
             return await _httpFacade.GetPagedList<MergeRequest>(query);
         }
@@ -71,42 +69,29 @@ namespace GitLabApiClient
         /// </summary>
         /// <returns>The newly created merge request.</returns>
         public async Task<MergeRequest> CreateAsync(CreateMergeRequest request) => 
-            await _httpFacade.Post<MergeRequest>($"/projects/{request.ProjectId}/merge_requests", request);
+            await _httpFacade.Post<MergeRequest>($"projects/{request.ProjectId}/merge_requests", request);
 
         /// <summary>
-        /// Updated merge request
+        /// Updates merge request.
         /// </summary>
-        /// <returns>The updated merge request</returns>
+        /// <returns>The updated merge request.</returns>
         public async Task<MergeRequest> UpdateAsync(UpdateMergeRequest request) => 
-            await _httpFacade.Put<MergeRequest>($"/projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
+            await _httpFacade.Put<MergeRequest>($"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
 
         /// <summary>
         /// Accepts merge request.
-        /// <returns>The accepted merge request.</returns>
         /// </summary>
-        public async Task<MergeRequest> AcceptAsync(int projectId, int mergeRequestId, string mergeCommitMessage)
+        /// <returns>The accepted merge request.</returns>
+        public async Task<MergeRequest> AcceptAsync(AcceptMergeRequest request)
         {
-            Guard.NotEmpty(mergeCommitMessage, nameof(mergeCommitMessage));
-
-            var commitMessage = new MergeCommitMessage
-            {
-                Message = mergeCommitMessage
-            };
-
             return await _httpFacade.Put<MergeRequest>(
-                $"/projects/{projectId}/merge_requests/{mergeRequestId}/merge", commitMessage);
+                $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}/merge", request);
         }
 
         /// <summary>
         /// Deletes merge request.
         /// </summary>
         public async Task DeleteAsync(int projectId, int mergeRequestId) =>
-            await _httpFacade.Delete($"/projects/{projectId}/merge_requests/{mergeRequestId}");
-
-        private class MergeCommitMessage
-        {
-            [JsonProperty("merge_commit_message")]
-            public string Message { get; set; }
-        }
+            await _httpFacade.Delete($"projects/{projectId}/merge_requests/{mergeRequestId}");
     }
 }

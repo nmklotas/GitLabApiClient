@@ -30,7 +30,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
         public async Task<Project> GetAsync(int projectId) =>
-            await _httpFacade.Get<Project>($"/projects/{projectId}");
+            await _httpFacade.Get<Project>($"projects/{projectId}");
 
         /// <summary>
         /// Get a list of visible projects for authenticated user. 
@@ -42,7 +42,7 @@ namespace GitLabApiClient
             var queryOptions = new ProjectQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryBuilder.Build("/projects", queryOptions);
+            string url = _queryBuilder.Build("projects", queryOptions);
             return await _httpFacade.GetPagedList<Project>(url);
         }
 
@@ -51,7 +51,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
         public async Task<IList<User>> GetUsers(int projectId) =>
-            await _httpFacade.GetPagedList<User>($"/projects/{projectId}/users");
+            await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
 
         /// <summary>
         /// Creates new project.
@@ -61,7 +61,7 @@ namespace GitLabApiClient
         public async Task<Project> CreateAsync(CreateProjectRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Post<Project>("/projects", request);
+            return await _httpFacade.Post<Project>("projects", request);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace GitLabApiClient
         public async Task<Project> UpdateAsync(UpdateProjectRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Project>("/projects", request);
+            return await _httpFacade.Put<Project>("projects", request);
         }
 
         /// <summary>
@@ -80,6 +80,6 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="id">Id of the project.</param>
         public async Task DeleteAsync(int id) => 
-            await _httpFacade.Delete($"/projects/{id}");
+            await _httpFacade.Delete($"projects/{id}");
     }
 }
