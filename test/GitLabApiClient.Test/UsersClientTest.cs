@@ -23,5 +23,12 @@ namespace GitLabApiClient.Test
             user.Username.Should().Be("test-gitlabapiclient");
             user.Name.Should().Be("test-gitlabapiclient");
         }
+
+        [Fact]
+        public async Task NonExistingUserRetrievedAsNull()
+        {
+            var user = await _sut.GetAsync("test-gixxxtlabapiclient");
+            user.Should().BeNull();
+        }
     }
 }

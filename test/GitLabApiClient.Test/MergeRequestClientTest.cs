@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Models.Merges;
@@ -17,10 +19,12 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()
         {
-            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest(TestProjectId, "sourceBranch", "master", "Title")
+            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest(TestProjectTextId, "sourceBranch", "master", "Title")
             {
+                AssigneeId = 1,
                 Description = "Description",
-                Labels = "Label1"
+                Labels = new[] { "Label1" },
+                RemoveSourceBranch = true,
             });
 
             mergeRequest.Should().Match(Assert());
@@ -32,14 +36,79 @@ namespace GitLabApiClient.Test
             Expression<Func<MergeRequest, bool>> Assert()
             {
                 return m =>
+                    m.Assignee.Id == 1 &&
+                    m.ForceRemoveSourceBranch == true &&
                     m.Title == "Title" &&
                     m.Description == "Description" &&
-                    m.Labels.Contains("Label1") &&
-                    m.ProjectId == TestProjectId &&
+                    m.Labels.SequenceEqual(new[] { "Label1" }) &&
+                    m.ProjectId == TestProjectTextId &&
                     m.SourceBranch == "sourceBranch" &&
-                    m.State == "opened" &&
+                    m.State == MergeRequestState.Opened &&
                     m.TargetBranch == "master";
             }
+        }
+
+        [Fact]
+        public async Task CreatedMergeRequestCanBeUpdated()
+        {
+            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(TestProjectTextId, "sourceBranch1", "master1", "Title1")
+            {
+                AssigneeId = 1,
+                Description = "Description1",
+                Labels = new[] { "Label1" },
+                MilestoneId = 1
+            });
+
+            var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(TestProjectTextId, createdMergeRequest.Iid)
+            {
+                AssigneeId = 11,
+                Description = "Description11",
+                Title = "Title11",
+                Labels = new[] { "Label11"},
+                MilestoneId = 11,
+                TargetBranch = "master11",
+                RemoveSourceBranch = true
+            });
+
+            updatedMergeRequest.Should().Match<MergeRequest>(
+                m => m.Assignee.Id == 11 &&
+                     m.Description == "Description11" &&
+                     m.Title == "Title11" &&
+                     m.Labels.SequenceEqual(new[] {"Label11"}) &&
+                     m.TargetBranch == "master11" &&
+                     m.ForceRemoveSourceBranch == true);
+        }
+
+        [Fact]
+        public async Task MergeRequestWithoutCommitsCannotBeAccepted()
+        {
+            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(TestProjectTextId, "sourcebranch1", "master", "Title1")
+            {
+                AssigneeId = 1,
+                Description = "Description1",
+                Labels = new[] { "Label1" },
+                MilestoneId = 1
+            });
+
+            Func<Task<MergeRequest>> acceptAction = () => 
+                _sut.AcceptAsync(new AcceptMergeRequest(TestProjectTextId, createdMergeRequest.Iid));
+
+            acceptAction.ShouldThrow<GitLabException>().
+                WithMessage("{\"message\":\"405 Method Not Allowed\"}").
+                Where(e => e.HttpStatusCode == HttpStatusCode.MethodNotAllowed);
+        }
+
+        [Fact]
+        public async Task MergeRequestCanBeClosed()
+        {
+            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(TestProjectTextId, "sourcebranch1", "master", "Title1"));
+
+            var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(TestProjectTextId, createdMergeRequest.Iid)
+            {
+                State = UpdateMergeRequestState.Close
+            });
+
+            updatedMergeRequest.State.Should().Be(MergeRequestState.Closed);
         }
 
         public Task InitializeAsync() => DeleteAllMergeRequests();
