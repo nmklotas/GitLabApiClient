@@ -44,7 +44,7 @@ namespace GitLabApiClient.Http
 
         public async Task<Session> LoginAsync(string username, string password)
         {
-            var session = await _requestor.Post<Session>($"/session?login={username}&password={password}");
+            var session = await _requestor.Post<Session>($"session?login={username}&password={password}");
 
             lock (_locker)
             {
