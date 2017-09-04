@@ -1,20 +1,24 @@
 ﻿using System;
+using System.Net;
 
 namespace GitLabApiClient
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Exception thrown when GitLab returns non success status code.
+    /// </summary>
     [Serializable]
     public sealed class GitLabException : Exception
     {
-        public GitLabException()
-        {
-        }
+        public GitLabException(HttpStatusCode statusCode) => HttpStatusCode = statusCode;
 
-        public GitLabException(string message) : base(message)
-        {
-        }
+        public GitLabException(HttpStatusCode statusCode, string message) : base(message) => HttpStatusCode = statusCode;
 
-        public GitLabException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+        public GitLabException(HttpStatusCode statusCode, string message, Exception innerException) : base(message, innerException) => HttpStatusCode = statusCode;
+
+        /// <summary>
+        /// Http status code of GitLab response.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode { get; }
     }
 }
