@@ -2,7 +2,9 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using GitLabApiClient.Http.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace GitLabApiClient.Http
 {
@@ -10,12 +12,26 @@ namespace GitLabApiClient.Http
     {
         private readonly HttpClient _client;
 
-        public GitLabApiRequestor(HttpClient client) => _client = client;
-
-        public async Task<T> Put<T>(string url, object data)
+        public GitLabApiRequestor(HttpClient client)
         {
-            StringContent content = SerializeToString(data, false);
-            var responseMessage = await _client.PutAsync(url, content);
+            _client = client;
+
+            JsonConvert.DefaultSettings = () =>
+            {
+                var settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ContractResolver = new EmptyCollectionContractResolver()
+                };
+
+                settings.Converters.Add(new StringEnumConverter());
+                return settings;
+            };
+        }
+
+        public async Task<T> Get<T>(string url)
+        {
+            var responseMessage = await _client.GetAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
@@ -28,17 +44,18 @@ namespace GitLabApiClient.Http
             return await ReadResponse<T>(responseMessage);
         }
 
+        public async Task<T> Put<T>(string url, object data)
+        {
+            StringContent content = SerializeToString(data, false);
+            var responseMessage = await _client.PutAsync(url, content);
+            await EnsureSuccessStatusCode(responseMessage);
+            return await ReadResponse<T>(responseMessage);
+        }
+
         public async Task Delete(string url)
         {
             var responseMessage = await _client.DeleteAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
-        }
-
-        public async Task<T> Get<T>(string url)
-        {
-            var responseMessage = await _client.GetAsync(url);
-            await EnsureSuccessStatusCode(responseMessage);
-            return await ReadResponse<T>(responseMessage);
         }
 
         public async Task<Tuple<T, HttpResponseHeaders>> GetWithHeaders<T>(string url)
@@ -54,7 +71,7 @@ namespace GitLabApiClient.Http
                 return;
 
             string errorResponse = await responseMessage.Content.ReadAsStringAsync();
-            throw new GitLabException(errorResponse ?? "");
+            throw new GitLabException(responseMessage.StatusCode, errorResponse ?? "");
         }
 
         private static async Task<T> ReadResponse<T>(HttpResponseMessage responseMessage)
