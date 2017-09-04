@@ -18,7 +18,7 @@ namespace GitLabApiClient.Test
                 new ProjectMergeRequestsQueryOptions(3)
                 {
                     MergeRequestsIds = new[] { 4, 5 },
-                    State = MergeRequestState.Opened,
+                    State = MergeRequestQueryState.Opened,
                     Order = MergeRequestsOrder.UpdatedAt,
                     SortOrder = SortOrder.Ascending,
                     MilestoneTitle = "milestone1",

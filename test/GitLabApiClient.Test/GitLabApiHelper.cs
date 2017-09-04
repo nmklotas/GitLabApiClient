@@ -7,10 +7,12 @@ namespace GitLabApiClient.Test
         public static GitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
-                "https://gitlab.com/api/v3", "yYZSLFnrKyFsG4uD1Wa6");
+                "https://gitlab.com/api/v4/", "yYZSLFnrKyFsG4uD1Wa6");
 
             return facade;
         }
+
+        public static string TestProjectTextId { get; set; } = "4006344";
 
         public static int TestProjectId { get; set; } = 4006344;
     }
