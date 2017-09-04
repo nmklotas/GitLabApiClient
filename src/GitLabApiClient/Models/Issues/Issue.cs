@@ -25,7 +25,7 @@ namespace GitLabApiClient.Models.Issues
         public string DueDate { get; set; }
 
         [JsonProperty("project_id")]
-        public int ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         [JsonProperty("labels")]
         public List<string> Labels { get; } = new List<string>();
@@ -40,7 +40,7 @@ namespace GitLabApiClient.Models.Issues
         public int UserNotesCount { get; set; }
 
         [JsonProperty("state")]
-        public string State { get; set; }
+        public IssueState State { get; set; }
 
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
