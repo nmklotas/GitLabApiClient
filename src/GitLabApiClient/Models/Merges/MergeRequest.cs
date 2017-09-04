@@ -31,10 +31,10 @@ namespace GitLabApiClient.Models.Merges
         public Milestone Milestone { get; set; }
 
         [JsonProperty("merge_status")]
-        public string MergeStatus { get; set; }
+        public MergeStatus Status { get; set; }
 
         [JsonProperty("merge_commit_sha")]
-        public object MergeCommitSha { get; set; }
+        public string MergeCommitSha { get; set; }
 
         [JsonProperty("merge_when_pipeline_succeeds")]
         public bool MergeWhenPipelineSucceeds { get; set; }
@@ -43,7 +43,7 @@ namespace GitLabApiClient.Models.Merges
         public string Sha { get; set; }
 
         [JsonProperty("project_id")]
-        public int ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         [JsonProperty("should_remove_source_branch")]
         public bool? ShouldRemoveSourceBranch { get; set; }
@@ -52,7 +52,7 @@ namespace GitLabApiClient.Models.Merges
         public int TargetProjectId { get; set; }
 
         [JsonProperty("state")]
-        public string State { get; set; }
+        public MergeRequestState State { get; set; }
 
         [JsonProperty("source_project_id")]
         public int SourceProjectId { get; set; }

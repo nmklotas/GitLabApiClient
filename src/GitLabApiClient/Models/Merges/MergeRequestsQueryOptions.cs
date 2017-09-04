@@ -13,7 +13,7 @@ namespace GitLabApiClient.Models.Merges
         /// <summary>
         /// Return all merge requests or just those that are opened, closed, or merged.
         /// </summary>
-        public MergeRequestState State { get; set; }
+        public MergeRequestQueryState State { get; set; }
 
         /// <summary>
         /// Return requests ordered by CreatedAt or UpdatedAt fields. 
