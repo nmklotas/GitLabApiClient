@@ -16,7 +16,8 @@ namespace GitLabApiClient
             if (options.Archived)
                 nameValues.Add("archived", options.Archived.ToLowerCaseString());
 
-            nameValues.Add("visibility", GetVisibilityQueryValue(options.Visibility));
+            if (options.Visibility != VisibilityLevel.All)
+                nameValues.Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
             if (options.Order != ProjectsOrder.CreatedAt)
                 nameValues.Add("order_by", GetProjectOrderQueryValue(options.Order));
