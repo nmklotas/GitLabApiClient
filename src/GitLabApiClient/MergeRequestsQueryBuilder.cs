@@ -45,17 +45,17 @@ namespace GitLabApiClient
                 nameValues.Add("assignee_id", options.AssigneeId.Value.ToString());
         }
 
-        private static string GetStateQueryValue(MergeRequestQueryState state)
+        private static string GetStateQueryValue(QueryMergeRequestState state)
         {
             switch (state)
             {
-                case MergeRequestQueryState.Opened:
+                case QueryMergeRequestState.Opened:
                     return "opened";
-                case MergeRequestQueryState.Closed:
+                case QueryMergeRequestState.Closed:
                     return "closed";
-                case MergeRequestQueryState.Merged:
+                case QueryMergeRequestState.Merged:
                     return "merged";
-                case MergeRequestQueryState.All:
+                case QueryMergeRequestState.All:
                     return "";
                 default:
                     throw new NotSupportedException($"State {state} is not supported");

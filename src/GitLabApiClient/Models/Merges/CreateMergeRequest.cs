@@ -87,6 +87,6 @@ namespace GitLabApiClient.Models.Merges
         /// Flag indicating if a merge request should remove the source branch when merging.
         /// </summary>
         [JsonProperty("remove_source_branch")]
-        public bool RemoveSourceBranch { get; set; }
+        public bool? RemoveSourceBranch { get; set; }
     }
 }

@@ -20,7 +20,7 @@
         /// <summary>
         /// Limit by visibility. Default is Public.
         /// </summary>
-        public VisibilityLevel Visibility { get; set; }
+        public QueryProjectVisibilityLevel Visibility { get; set; }
 
         /// <summary>
         /// Specifies project order. Default is Creation time.

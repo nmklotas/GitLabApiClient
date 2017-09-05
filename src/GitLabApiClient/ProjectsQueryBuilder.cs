@@ -16,7 +16,7 @@ namespace GitLabApiClient
             if (options.Archived)
                 nameValues.Add("archived", options.Archived.ToLowerCaseString());
 
-            if (options.Visibility != VisibilityLevel.All)
+            if (options.Visibility != QueryProjectVisibilityLevel.All)
                 nameValues.Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
             if (options.Order != ProjectsOrder.CreatedAt)
@@ -71,17 +71,17 @@ namespace GitLabApiClient
             }
         }
 
-        private static string GetVisibilityQueryValue(VisibilityLevel visibility)
+        private static string GetVisibilityQueryValue(QueryProjectVisibilityLevel visibility)
         {
             switch (visibility)
             {
-                case VisibilityLevel.Private:
+                case QueryProjectVisibilityLevel.Private:
                     return "private";
-                case VisibilityLevel.Internal:
+                case QueryProjectVisibilityLevel.Internal:
                     return "internal";
-                case VisibilityLevel.Public:
+                case QueryProjectVisibilityLevel.Public:
                     return "public";
-                case VisibilityLevel.All:
+                case QueryProjectVisibilityLevel.All:
                     return "";
                 default:
                     throw new NotSupportedException($"Visibility {visibility} not supported");

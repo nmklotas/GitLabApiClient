@@ -105,7 +105,7 @@ namespace GitLabApiClient.Test
 
             var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(TestProjectTextId, createdMergeRequest.Iid)
             {
-                State = UpdateMergeRequestState.Close
+                State = RequestedMergeRequestState.Close
             });
 
             updatedMergeRequest.State.Should().Be(MergeRequestState.Closed);

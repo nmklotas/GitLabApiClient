@@ -76,7 +76,7 @@ namespace GitLabApiClient.Models.Users
         /// Limit projects each user can create.
         /// </summary>
         [JsonProperty("projects_limit")]
-        public int ProjectsLimit { get; set; }
+        public int? ProjectsLimit { get; set; }
 
         /// <summary>
         /// External UID.
@@ -106,24 +106,24 @@ namespace GitLabApiClient.Models.Users
         /// User is admin.
         /// </summary>
         [JsonProperty("admin")]
-        public bool Admin { get; set; }
+        public bool? Admin { get; set; }
 
         /// <summary>
         /// User can create groups.
         /// </summary>
         [JsonProperty("can_create_group")]
-        public bool CanCreateGroup { get; set; }
+        public bool? CanCreateGroup { get; set; }
 
         /// <summary>
         /// Flags the user as external.
         /// </summary>
         [JsonProperty("skip_confirmation")]
-        public bool SkipConfirmation { get; set; }
+        public bool? SkipConfirmation { get; set; }
 
         /// <summary>
         /// Flags the user as external.
         /// </summary>
         [JsonProperty("external")]
-        public bool External { get; set; }
+        public bool? External { get; set; }
     }
 }

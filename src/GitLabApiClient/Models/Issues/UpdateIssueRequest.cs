@@ -51,7 +51,7 @@ namespace GitLabApiClient.Models.Issues
         /// Updates an issue to be confidential.
         /// </summary>
         [JsonProperty("confidential")]
-        public bool Confidential { get; set; }
+        public bool? Confidential { get; set; }
 
         /// <summary>
         /// The ID of the users to assign the issue to.

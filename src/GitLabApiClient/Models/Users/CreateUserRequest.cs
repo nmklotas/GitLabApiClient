@@ -54,7 +54,7 @@ namespace GitLabApiClient.Models.Users
         /// Send user password reset link
         /// </summary>
         [JsonProperty("reset_password")]
-        public bool ResetPassword { get; set; }
+        public bool? ResetPassword { get; set; }
 
         /// <summary>
         /// Skype ID
@@ -90,7 +90,7 @@ namespace GitLabApiClient.Models.Users
         /// umber of projects user can create
         /// </summary>
         [JsonProperty("projects_limit")]
-        public int ProjectsLimit { get; set; }
+        public int? ProjectsLimit { get; set; }
 
         /// <summary>
         /// External UID
@@ -120,24 +120,24 @@ namespace GitLabApiClient.Models.Users
         /// User is admin
         /// </summary>
         [JsonProperty("admin")]
-        public bool Admin { get; set; }
+        public bool? Admin { get; set; }
 
         /// <summary>
         /// User can create groups
         /// </summary>
         [JsonProperty("can_create_group")]
-        public bool CanCreateGroup { get; set; }
+        public bool? CanCreateGroup { get; set; }
 
         /// <summary>
         /// Skip confirmation
         /// </summary>
         [JsonProperty("skip_confirmation")]
-        public bool SkipConfirmation { get; set; }
+        public bool? SkipConfirmation { get; set; }
 
         /// <summary>
         /// Flags the user as external
         /// </summary>
         [JsonProperty("external")]
-        public bool External { get; set; }
+        public bool? External { get; set; }
     }
 }

@@ -72,7 +72,7 @@ namespace GitLabApiClient
         public async Task<Project> UpdateAsync(UpdateProjectRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Project>("projects", request);
+            return await _httpFacade.Put<Project>($"projects/{request.ProjectId}", request);
         }
 
         /// <summary>

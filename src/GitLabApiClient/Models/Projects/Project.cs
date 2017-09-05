@@ -114,7 +114,7 @@ namespace GitLabApiClient.Models.Projects
         public int StarCount { get; set; }
 
         [JsonProperty("visibility")]
-        public string Visibility { get; set; }
+        public ProjectVisibilityLevel Visibility { get; set; }
 
         [JsonProperty("tag_list")]
         public List<string> TagList { get; } = new List<string>();

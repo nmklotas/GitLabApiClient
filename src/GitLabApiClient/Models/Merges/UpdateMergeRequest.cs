@@ -72,7 +72,7 @@ namespace GitLabApiClient.Models.Merges
         public IList<string> Labels { get; set; } = new List<string>();
 
         [JsonProperty("state_event")]
-        public UpdateMergeRequestState? State { get; set; }
+        public RequestedMergeRequestState? State { get; set; }
 
         /// <summary>
         /// Flag indicating if a merge request should remove the source branch when merging.

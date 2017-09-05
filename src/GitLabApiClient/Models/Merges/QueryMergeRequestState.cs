@@ -1,6 +1,6 @@
 ﻿namespace GitLabApiClient.Models.Merges
 {
-    public enum MergeRequestQueryState
+    public enum QueryMergeRequestState
     {
         Opened,
         Closed,

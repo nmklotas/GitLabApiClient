@@ -42,13 +42,13 @@ namespace GitLabApiClient.Models.Merges
         /// If set removes the source branch.
         /// </summary>
         [JsonProperty("should_remove_source_branch")]
-        public bool RemoveSourceBranch { get; set; }
+        public bool? RemoveSourceBranch { get; set; }
 
         /// <summary>
         /// If set merge request is merged when the pipeline succeeds.
         /// </summary>
         [JsonProperty("merge_when_pipeline_succeeds")]
-        public bool MergeWhenPipelineSucceeds { get; set; }
+        public bool? MergeWhenPipelineSucceeds { get; set; }
 
         /// <summary>
         /// If set, then this SHA must match the HEAD of the source branch, otherwise the merge will fail.

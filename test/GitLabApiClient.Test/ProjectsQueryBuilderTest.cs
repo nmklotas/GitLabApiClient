@@ -18,7 +18,7 @@ namespace GitLabApiClient.Test
             {
                 UserId = "1",
                 Archived = true,
-                Visibility = VisibilityLevel.Internal,
+                Visibility = QueryProjectVisibilityLevel.Internal,
                 Order = ProjectsOrder.UpdatedAt,
                 SortOrder = SortOrder.Ascending,
                 Filter = "filter",

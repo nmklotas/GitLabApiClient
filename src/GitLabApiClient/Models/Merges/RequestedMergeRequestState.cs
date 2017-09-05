@@ -2,7 +2,7 @@
 
 namespace GitLabApiClient.Models.Merges
 {
-    public enum UpdateMergeRequestState
+    public enum RequestedMergeRequestState
     {
         [EnumMember(Value = "close")]
         Close,

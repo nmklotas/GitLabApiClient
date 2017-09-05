@@ -17,7 +17,7 @@ namespace GitLabApiClient.Test
                 "https://gitlab.com/api/v4/merge_requests",
                 new MergeRequestsQueryOptions
                 {
-                    State = MergeRequestQueryState.Opened,
+                    State = QueryMergeRequestState.Opened,
                     Order = MergeRequestsOrder.UpdatedAt,
                     SortOrder = SortOrder.Ascending,
                     MilestoneTitle = "milestone1",
