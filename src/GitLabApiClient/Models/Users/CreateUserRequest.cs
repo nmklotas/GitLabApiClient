@@ -51,10 +51,10 @@ namespace GitLabApiClient.Models.Users
         public string Password { get; set; }
 
         /// <summary>
-        /// Send user password reset link
+        /// Send user password reset link.
         /// </summary>
         [JsonProperty("reset_password")]
-        public bool? ResetPassword { get; set; }
+        public bool? ResetPassword { get; set; } = true;
 
         /// <summary>
         /// Skype ID
