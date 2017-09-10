@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GitLabApiClient.Models.Users;
+using GitLabApiClient.Users.Responses;
 
 namespace GitLabApiClient.Http
 {

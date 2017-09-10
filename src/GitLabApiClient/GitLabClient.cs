@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GitLabApiClient.Http;
-using GitLabApiClient.Models.Users;
+using GitLabApiClient.Issues;
+using GitLabApiClient.MergeRequests;
+using GitLabApiClient.Projects;
+using GitLabApiClient.Users;
+using GitLabApiClient.Users.Responses;
 using GitLabApiClient.Utilities;
 
 namespace GitLabApiClient
