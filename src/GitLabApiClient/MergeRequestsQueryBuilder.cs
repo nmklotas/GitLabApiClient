@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Linq;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Merges;
@@ -9,40 +8,40 @@ namespace GitLabApiClient
 {
     internal class MergeRequestsQueryBuilder : QueryBuilder<MergeRequestsQueryOptions>
     {
-        protected override void BuildCore(NameValueCollection nameValues, MergeRequestsQueryOptions options)
+        protected override void BuildCore(MergeRequestsQueryOptions options)
         {
             string stateQueryValue = GetStateQueryValue(options.State);
             if (!stateQueryValue.IsNullOrEmpty())
-                nameValues.Add("state", stateQueryValue);
+                Add("state", stateQueryValue);
 
             if (options.Order != MergeRequestsOrder.CreatedAt)
-                nameValues.Add("order_by", GetIssuesOrderQueryValue(options.Order));
+                Add("order_by", GetIssuesOrderQueryValue(options.Order));
 
             if (options.SortOrder != SortOrder.Descending)
-                nameValues.Add("sort", GetSortOrderQueryValue(options.SortOrder));
+                Add("sort", GetSortOrderQueryValue(options.SortOrder));
 
             if (!options.MilestoneTitle.IsNullOrEmpty())
-                nameValues.Add("milestone", options.MilestoneTitle);
+                Add("milestone", options.MilestoneTitle);
 
             if (options.Simple)
-                nameValues.Add("view", "simple");
+                Add("view", "simple");
 
             if (options.Labels.Any())
-                nameValues.Add("labels", ToQueryString(options.Labels));
+                Add("labels", options.Labels);
 
             if (options.CreatedAfter.HasValue)
-                nameValues.Add("created_after", GetDateValue(options.CreatedAfter.Value));
+                Add("created_after", options.CreatedAfter.Value);
 
             if (options.CreatedBefore.HasValue)
-                nameValues.Add("created_before", GetDateValue(options.CreatedBefore.Value));
+                Add("created_before", options.CreatedBefore.Value);
 
-            nameValues.Add("scope", GetScopeQueryValue(options.Scope));
+            Add("scope", GetScopeQueryValue(options.Scope));
 
             if (options.AuthorId.HasValue)
-                nameValues.Add("author_id", options.AuthorId.Value.ToString());
+                Add("author_id", options.AuthorId.Value);
 
             if (options.AssigneeId.HasValue)
-                nameValues.Add("assignee_id", options.AssigneeId.Value.ToString());
+                Add("assignee_id", options.AssigneeId.Value);
         }
 
         private static string GetStateQueryValue(QueryMergeRequestState state)

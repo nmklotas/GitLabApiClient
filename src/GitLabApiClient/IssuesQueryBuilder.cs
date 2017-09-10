@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Linq;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Issues;
@@ -9,37 +8,36 @@ namespace GitLabApiClient
 {
     internal class IssuesQueryBuilder : QueryBuilder<IssuesQueryOptions>
     {
-        protected override void BuildCore(NameValueCollection nameValues, IssuesQueryOptions options)
+        protected override void BuildCore(IssuesQueryOptions options)
         {
             string stateQueryValue = GetStateQueryValue(options.State);
             if (!stateQueryValue.IsNullOrEmpty())
-                nameValues.Add("state", stateQueryValue);
+                Add("state", stateQueryValue);
 
             if (options.Labels.Any())
-                nameValues.Add("labels", ToQueryString(options.Labels));
+                Add("labels", options.Labels);
 
             if (!options.MilestoneTitle.IsNullOrEmpty())
-                nameValues.Add("milestone", options.MilestoneTitle);
+                Add("milestone", options.MilestoneTitle);
 
-            nameValues.Add("scope", GetScopeQueryValue(options.Scope));
+            Add("scope", GetScopeQueryValue(options.Scope));
 
             if (options.AuthorId.HasValue)
-                nameValues.Add("author_id", options.AuthorId.Value.ToString());
+                Add("author_id", options.AuthorId.Value);
 
             if (options.AssigneeId.HasValue)
-                nameValues.Add("assignee_id", options.AssigneeId.Value.ToString());
+                Add("assignee_id", options.AssigneeId.Value);
 
-            foreach (int iid in options.IssueIds)
-                nameValues.Add("iids[]", iid.ToString());
+            Add(options.IssueIds);
 
             if (options.Order != IssuesOrder.CreatedAt)
-                nameValues.Add("order_by", GetIssuesOrderQueryValue(options.Order));
+                Add("order_by", GetIssuesOrderQueryValue(options.Order));
 
             if (options.SortOrder != SortOrder.Descending)
-                nameValues.Add("sort", GetSortOrderQueryValue(options.SortOrder));
+                Add("sort", GetSortOrderQueryValue(options.SortOrder));
 
             if (!options.Filter.IsNullOrEmpty())
-                nameValues.Add("search", options.Filter);
+                Add("search", options.Filter);
         }
 
         private static string GetStateQueryValue(IssueState state)

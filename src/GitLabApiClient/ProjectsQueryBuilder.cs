@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Projects;
 using GitLabApiClient.Utilities;
@@ -8,46 +7,46 @@ namespace GitLabApiClient
 {
     internal sealed class ProjectsQueryBuilder : QueryBuilder<ProjectQueryOptions>
     {
-        protected override void BuildCore(NameValueCollection nameValues, ProjectQueryOptions options)
+        protected override void BuildCore(ProjectQueryOptions options)
         {
             if (!options.UserId.IsNullOrEmpty())
-                nameValues.Add("user_id", options.UserId);
+                Add("user_id", options.UserId);
 
             if (options.Archived)
-                nameValues.Add("archived", options.Archived.ToLowerCaseString());
+                Add("archived", options.Archived);
 
             if (options.Visibility != QueryProjectVisibilityLevel.All)
-                nameValues.Add("visibility", GetVisibilityQueryValue(options.Visibility));
+                Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
             if (options.Order != ProjectsOrder.CreatedAt)
-                nameValues.Add("order_by", GetProjectOrderQueryValue(options.Order));
+                Add("order_by", GetProjectOrderQueryValue(options.Order));
 
             if (options.SortOrder != SortOrder.Descending)
-                nameValues.Add("sort", GetSortOrderQueryValue(options.SortOrder));
+                Add("sort", GetSortOrderQueryValue(options.SortOrder));
 
             if (!options.Filter.IsNullOrEmpty())
-                nameValues.Add("search", options.Filter);
+                Add("search", options.Filter);
 
             if (options.Simple)
-                nameValues.Add("simple", options.Simple.ToLowerCaseString());
+                Add("simple", options.Simple);
 
             if (options.Owned)
-                nameValues.Add("owned", options.Owned.ToLowerCaseString());
+                Add("owned", options.Owned);
 
             if (options.IsMemberOf)
-                nameValues.Add("membership", options.IsMemberOf.ToLowerCaseString());
+                Add("membership", options.IsMemberOf);
 
             if (options.Starred)
-                nameValues.Add("starred", options.Starred.ToLowerCaseString());
+                Add("starred", options.Starred);
 
             if (options.IncludeStatistics)
-                nameValues.Add("statistics", options.IncludeStatistics.ToLowerCaseString());
+                Add("statistics", options.IncludeStatistics);
 
             if (options.WithIssuesEnabled)
-                nameValues.Add("with_issues_enabled", options.WithIssuesEnabled.ToLowerCaseString());
+                Add("with_issues_enabled", options.WithIssuesEnabled);
 
             if (options.WithMergeRequestsEnabled)
-                nameValues.Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled.ToLowerCaseString());
+                Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
         }
 
         private static string GetProjectOrderQueryValue(ProjectsOrder order)

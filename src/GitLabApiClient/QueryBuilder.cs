@@ -3,24 +3,57 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using GitLabApiClient.Models;
+using GitLabApiClient.Utilities;
 using static System.Web.HttpUtility;
 
 namespace GitLabApiClient
 {
     internal abstract class QueryBuilder<T>
     {
+        private readonly NameValueCollection _nameValues = new NameValueCollection();
+
         public string Build(string baseUrl, T options)
         {
-            var nameValues = new NameValueCollection();
-            BuildCore(nameValues, options);
-            return baseUrl + ToQueryString(nameValues);
+            _nameValues.Clear();
+            BuildCore(options);
+            return baseUrl + ToQueryString(_nameValues);
         }
 
-        protected abstract void BuildCore(NameValueCollection nameValues, T options);
+        protected abstract void BuildCore(T options);
 
-        protected static string ToQueryString(IEnumerable<string> values) => string.Join(",", values);
+        protected void Add(string name, string value)
+        {
+            _nameValues.Add(name, value);
+        }
 
-        protected static string GetDateValue(DateTime dateTime) => dateTime.ToString("o");
+        protected void Add(string name, bool value)
+        {
+            Add(name, value.ToLowerCaseString());
+        }
+
+        protected void Add(string name, int value)
+        {
+            Add(name, value.ToLowerCaseString());
+        }
+
+        protected void Add(string name, DateTime value)
+        {
+            Add(name, value.ToString("o"));
+        }
+
+        protected void Add(string name, IList<string> values)
+        {
+            if (!values.Any())
+                return;
+
+            Add(name, string.Join(",", values));
+        }
+
+        protected void Add(IList<int> values)
+        {
+            foreach (int iid in values)
+                Add("iids[]", iid.ToString());
+        }
 
         protected static string GetSortOrderQueryValue(SortOrder order)
         {
