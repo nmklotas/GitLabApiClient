@@ -1,4 +1,5 @@
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Http.Serialization;
 
 namespace GitLabApiClient.Test.Utilities
 {
@@ -7,7 +8,7 @@ namespace GitLabApiClient.Test.Utilities
         public static GitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
-                "https://gitlab.com/api/v4/", "yYZSLFnrKyFsG4uD1Wa6");
+                "https://gitlab.com/api/v4/", new RequestsJsonSerializer(), "yYZSLFnrKyFsG4uD1Wa6");
 
             return facade;
         }

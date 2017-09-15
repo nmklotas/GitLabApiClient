@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient.Internal.Http
@@ -15,7 +16,7 @@ namespace GitLabApiClient.Internal.Http
         private readonly GitLabApiRequestor _requestor;
         private readonly GitLabApiPagedRequestor _pagedRequestor;
 
-        public GitLabHttpFacade(string hostUrl, string authenticationToken = "")
+        public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "")
         {
             _httpClient = new HttpClient
             {
@@ -23,7 +24,7 @@ namespace GitLabApiClient.Internal.Http
             };
 
             _httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
-            _requestor = new GitLabApiRequestor(_httpClient);
+            _requestor = new GitLabApiRequestor(_httpClient, jsonSerializer);
             _pagedRequestor = new GitLabApiPagedRequestor(_requestor);
         }
 

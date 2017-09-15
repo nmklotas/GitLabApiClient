@@ -3,30 +3,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace GitLabApiClient.Internal.Http
 {
     internal sealed class GitLabApiRequestor
     {
         private readonly HttpClient _client;
+        private readonly RequestsJsonSerializer _jsonSerializer;
 
-        public GitLabApiRequestor(HttpClient client)
+        public GitLabApiRequestor(HttpClient client, RequestsJsonSerializer jsonSerializer)
         {
             _client = client;
-
-            JsonConvert.DefaultSettings = () =>
-            {
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    ContractResolver = new EmptyCollectionContractResolver()
-                };
-
-                settings.Converters.Add(new StringEnumConverter());
-                return settings;
-            };
+            _jsonSerializer = jsonSerializer;
         }
 
         public async Task<T> Get<T>(string url)
@@ -38,7 +26,7 @@ namespace GitLabApiClient.Internal.Http
 
         public async Task<T> Post<T>(string url, object data = null)
         {
-            StringContent content = SerializeToString(data, true);
+            StringContent content = SerializeToString(data);
             var responseMessage = await _client.PostAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
@@ -46,7 +34,7 @@ namespace GitLabApiClient.Internal.Http
 
         public async Task<T> Put<T>(string url, object data)
         {
-            StringContent content = SerializeToString(data, false);
+            StringContent content = SerializeToString(data);
             var responseMessage = await _client.PutAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
@@ -74,21 +62,16 @@ namespace GitLabApiClient.Internal.Http
             throw new GitLabException(responseMessage.StatusCode, errorResponse ?? "");
         }
 
-        private static async Task<T> ReadResponse<T>(HttpResponseMessage responseMessage)
+        private async Task<T> ReadResponse<T>(HttpResponseMessage responseMessage)
         {
             string response = await responseMessage.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(response);
+            var result = _jsonSerializer.Deserialize<T>(response);
             return result;
         }
 
-        private static StringContent SerializeToString(object data, bool ignoreNullValues)
+        private StringContent SerializeToString(object data)
         {
-            string serializedObject = ignoreNullValues ?
-                JsonConvert.SerializeObject(data, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                }) :
-                JsonConvert.SerializeObject(data);
+            string serializedObject = _jsonSerializer.Serialize(data);
 
             var content = data != null ?
                 new StringContent(serializedObject) :

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Users.Responses;
@@ -24,8 +25,11 @@ namespace GitLabApiClient
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
 
+            var jsonSerializer = new RequestsJsonSerializer();
+
             _httpFacade = new GitLabHttpFacade(
                 FixBaseUrl(hostUrl),
+                jsonSerializer,
                 authenticationToken);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
