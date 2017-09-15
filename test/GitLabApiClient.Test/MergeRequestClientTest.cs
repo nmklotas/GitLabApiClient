@@ -20,7 +20,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()
         {
-            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourceBranch", "master", "Title")
+            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title")
             {
                 AssigneeId = 1,
                 Description = "Description",
@@ -43,7 +43,7 @@ namespace GitLabApiClient.Test
                     m.Description == "Description" &&
                     m.Labels.SequenceEqual(new[] { "Label1" }) &&
                     m.ProjectId == GitLabApiHelper.TestProjectTextId &&
-                    m.SourceBranch == "sourceBranch" &&
+                    m.SourceBranch == "sourcebranch1" &&
                     m.State == MergeRequestState.Opened &&
                     m.TargetBranch == "master";
             }
@@ -52,7 +52,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedMergeRequestCanBeUpdated()
         {
-            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourceBranch1", "master1", "Title1")
+            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title1")
             {
                 AssigneeId = 1,
                 Description = "Description1",
