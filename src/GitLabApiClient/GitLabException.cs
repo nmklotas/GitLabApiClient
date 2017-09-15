@@ -7,7 +7,6 @@ namespace GitLabApiClient
     /// <summary>
     /// Exception thrown when GitLab returns non success status code.
     /// </summary>
-    [Serializable]
     public sealed class GitLabException : Exception
     {
         public GitLabException(HttpStatusCode statusCode) => HttpStatusCode = statusCode;

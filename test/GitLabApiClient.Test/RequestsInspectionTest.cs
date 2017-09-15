@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
-using GitLabApiClient.Issues.Requests;
+using GitLabApiClient.Models.Issues.Requests;
 using Xunit;
 
 namespace GitLabApiClient.Test

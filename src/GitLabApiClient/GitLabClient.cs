@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
-using GitLabApiClient.Issues;
-using GitLabApiClient.MergeRequests;
-using GitLabApiClient.Projects;
-using GitLabApiClient.Users;
-using GitLabApiClient.Users.Responses;
-using GitLabApiClient.Utilities;
+using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
 {
