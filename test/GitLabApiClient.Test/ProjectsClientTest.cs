@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -45,7 +46,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectCreated()
         {
-            var createRequest = CreateProjectRequest.FromName("test-gitlabapiclient1");
+            var createRequest = CreateProjectRequest.FromName(GetRandomProjectName());
             createRequest.Description = "description1";
             createRequest.EnableContainerRegistry = true;
             createRequest.EnableIssues = true;
@@ -78,7 +79,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedProjectCanBeUpdated()
         {
-            var createRequest = CreateProjectRequest.FromName("test-gitlabapiclient1");
+            var createRequest = CreateProjectRequest.FromName(GetRandomProjectName());
             createRequest.Description = "description1";
             createRequest.EnableContainerRegistry = true;
             createRequest.EnableIssues = true;
@@ -132,5 +133,7 @@ namespace GitLabApiClient.Test
             foreach (int projectId in ProjectIdsToClean)
                 await _sut.DeleteAsync(projectId);
         }
+
+        private static string GetRandomProjectName() => "test-gitlabapiclient" + Path.GetRandomFileName();
     }
 }
