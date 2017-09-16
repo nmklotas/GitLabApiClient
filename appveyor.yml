@@ -1,0 +1,33 @@
+image: Visual Studio 2017
+version: 1.0.{build}-alpha
+configuration: Release
+build:
+  verbosity: minimal
+  
+environment:
+  # Don't report back to the mothership
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+  
+skip_branch_with_pr: true
+
+build_script:
+  - cmd: dotnet restore GitLabApiClient.sln 
+  - cmd: dotnet build src\GitLabApiClient\GitLabApiClient.csproj -c Release 
+  - cmd: dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build
+
+test_script:
+- ps: .\test.ps1
+  
+artifacts:
+  - path: 'src\bin\Release\*.nupkg'
+    name: Package
+
+deploy:
+  provider: NuGet  
+  api_key:
+    secure: yQCX8RMr2+lMMwXS1dVF/hIi1xsEOXoEqxzmrnvdSlXS1g5vHyrEoZG+Lq+RvekE
+  skip_symbols: false  
+  artifact: /.*\.nupkg/
+  on:
+    appveyor_repo_tag: true
