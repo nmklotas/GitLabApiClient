@@ -13,14 +13,14 @@ skip_branch_with_pr: true
 
 build_script:
   - cmd: dotnet restore GitLabApiClient.sln 
-  - cmd: dotnet test test\GitLabApiClient.Test\GitLabApiClient.Test.csproj 
   - cmd: dotnet build src\GitLabApiClient\GitLabApiClient.csproj -c Release 
-  - cmd: dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build -o %APPVEYOR_BUILD_FOLDER%
+  - cmd: dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build
 
-test: off
-
+test_script:
+- ps: .\test.ps1
+  
 artifacts:
-  - path: '*.nupkg'
+  - path: 'src\bin\Release\*.nupkg'
     name: Package
 
 deploy:
