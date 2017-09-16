@@ -1,4 +1,5 @@
 # GitLabApiClient
+[![Build status](https://ci.appveyor.com/api/projects/status/xsauc24bu17311dr?svg=true)](https://ci.appveyor.com/project/nmklotas/gitlabapiclient)
 [![codecov](https://codecov.io/gh/nmklotas/GitLabApiClient/branch/master/graph/badge.svg)](https://codecov.io/gh/nmklotas/GitLabApiClient)  
 GitLabApiClient is a rest client for GitLab API v4 (https://docs.gitlab.com/ce/api/README.html).
 
