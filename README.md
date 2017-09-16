@@ -12,8 +12,8 @@ Usage examples:
 
 ```csharp
 
-// create create client:
-var client =  new GitLabClient.Connect("https://gitlab.example.com", "your_private_token");  
+// create client using authorization token:
+var client =  new GitLabClient("https://gitlab.example.com", "your_private_token");
 
 // create new issue  
 await client.Issues.CreateAsync(new CreateIssueRequest("projectId", "issue title");  
