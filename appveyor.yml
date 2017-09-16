@@ -1,0 +1,28 @@
+image: Visual Studio 2017
+version: 1.0.{build}-alpha
+configuration: Release
+build:
+  verbosity: minimal
+  
+skip_branch_with_pr: true
+
+build_script:
+  - cmd: dotnet restore GitLabApiClient.sln 
+  - cmd: dotnet test test\GitLabApiClient.Test\GitLabApiClient.Test.csproj 
+  - cmd: dotnet build src\GitLabApiClient\GitLabApiClient.csproj -c Release 
+  - cmd: dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build -o %APPVEYOR_BUILD_FOLDER%
+
+test: off
+
+artifacts:
+  - path: '*.nupkg'
+    name: Package
+
+deploy:
+  provider: NuGet  
+  api_key:
+    secure: yQCX8RMr2+lMMwXS1dVF/hIi1xsEOXoEqxzmrnvdSlXS1g5vHyrEoZG+Lq+RvekE
+  skip_symbols: false  
+  artifact: /.*\.nupkg/
+  on:
+    appveyor_repo_tag: true
