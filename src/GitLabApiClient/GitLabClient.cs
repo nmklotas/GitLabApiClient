@@ -24,6 +24,7 @@ namespace GitLabApiClient
         {
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
+            HostUrl = hostUrl;
 
             var jsonSerializer = new RequestsJsonSerializer();
 
@@ -65,6 +66,11 @@ namespace GitLabApiClient
         public UsersClient Users { get; }
 
         /// <summary>
+        /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
+        /// </summary>
+        public string HostUrl { get; }
+
+        /// <summary>
         /// Authenticates with GitLab API using user credentials.
         /// </summary>
         public Task<Session> LoginAsync(string username, string password)
@@ -82,7 +88,7 @@ namespace GitLabApiClient
             if (!url.EndsWith("/api/v4/", StringComparison.OrdinalIgnoreCase))
                 url += "/api/v4/";
 
-            return url.Replace("//", "/");
+            return url;
         }
     }
 }
