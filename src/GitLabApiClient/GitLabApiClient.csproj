@@ -8,16 +8,27 @@
     <FileVersion>0.1.0.0</FileVersion>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Copyright />
+    <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
+    <Authors>nmklotas</Authors>
+    <PackageProjectUrl>https://github.com/nmklotas/GitLabApiClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
+    <RepositoryType />
+    <PackageTags>GitLab, REST, API, CI</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\Debug\</OutputPath>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>..\bin\Debug\netstandard2.0\GitLabApiClient.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\bin\Release\</OutputPath>
+    <DocumentationFile>..\bin\Release\netstandard2.0\GitLabApiClient.xml</DocumentationFile>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
