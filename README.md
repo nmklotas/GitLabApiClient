@@ -13,10 +13,10 @@ GitLabApiClient is a .NET rest client for GitLab API v4 (https://docs.gitlab.com
 
 1. Authenticate:
 
-//if you have auth token:
+// if you have auth token:
 var client =  new GitLabClient("https://gitlab.example.com", "your_private_token");
 
-//if you want to use username & password:
+// if you want to use username & password:
 var client =  new GitLabClient("https://gitlab.example.com");
 client.LoginAsync("username", "password");
 
