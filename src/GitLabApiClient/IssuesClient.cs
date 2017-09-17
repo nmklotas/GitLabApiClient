@@ -49,7 +49,7 @@ namespace GitLabApiClient
             var queryOptions = new ProjectIssuesQueryOptions(projectId);
             options?.Invoke(queryOptions);
 
-            string url = _projectIssuesQueryBuilder.Build("issues", queryOptions);
+            string url = _projectIssuesQueryBuilder.Build($"projects/{projectId}/issues", queryOptions);
             return await _httpFacade.GetPagedList<Issue>(url);
         }
 
