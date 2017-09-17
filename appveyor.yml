@@ -12,9 +12,7 @@ environment:
 skip_branch_with_pr: true
 
 build_script:
-  - cmd: dotnet restore GitLabApiClient.sln 
-  - cmd: dotnet build src\GitLabApiClient\GitLabApiClient.csproj -c Release 
-  - cmd: dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build
+- ps: .\build.ps1
 
 test_script:
 - ps: .\test.ps1
