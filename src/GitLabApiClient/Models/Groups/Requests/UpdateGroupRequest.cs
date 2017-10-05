@@ -79,13 +79,13 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// Enable/disable Large File Storage (LFS) for the projects in this group
         /// </summary>
         [JsonProperty("lfs_enabled")]
-        public bool LfsEnabled { get; set; }
+        public string LfsEnabled { get; set; }
 
         /// <summary>
         /// Allow users to request member access.
         /// </summary>
         [JsonProperty("request_access_enabled")]
-        public bool RequestAccessEnabled { get; set; }
+        public string RequestAccessEnabled { get; set; }
 
         /// <summary>
         /// The parent group id for creating nested group.
