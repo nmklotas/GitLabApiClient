@@ -24,6 +24,12 @@ namespace GitLabApiClient.Internal.Utilities
             throw new ArgumentException($"{message}");
         }
 
+		public static void NotNullOrDefault<T>(T arg, string argName)
+		{
+            if(Equals(arg, default(T)))
+                throw new ArgumentException($"ArgumentException: {argName} string not valid.");
+		}
+
         public static void NotEmpty<T>(IEnumerable<T> arg, string argName)
         {
             if (arg == null || !arg.Any())

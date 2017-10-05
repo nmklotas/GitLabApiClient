@@ -49,6 +49,12 @@ namespace GitLabApiClient.Internal.Queries
             Add(name, string.Join(",", values));
         }
 
+		protected void Add(string name, IList<int> values)
+		{
+			foreach (int val in values)
+                Add($"{name}[]", val.ToString());
+		}
+
         protected void Add(IList<int> values)
         {
             foreach (int iid in values)
