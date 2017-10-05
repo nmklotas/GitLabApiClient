@@ -8,6 +8,24 @@ namespace GitLabApiClient.Models.Groups.Requests
     /// </summary>
     public sealed class UpdateGroupRequest
     {
+		public UpdateGroupRequest(int id, GroupsVisibility visibility) : this (id)
+        {
+			switch (visibility)
+			{
+				case GroupsVisibility.Public:
+					Visibility = "public";
+					break;
+				case GroupsVisibility.Internal:
+					Visibility = "internal";
+					break;
+				case GroupsVisibility.Private:
+					Visibility = "private";
+					break;
+				default:
+					Visibility = "public";
+					break;
+			}
+		}
 
         public UpdateGroupRequest(int id)
         {
@@ -43,19 +61,19 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// Prevent adding new members to project membership within this group
         /// </summary>
         [JsonProperty("membership_lock")]
-        public bool MembershipLock { get; set; }
+        public string MembershipLock { get; set; }
 
         /// <summary>
         /// Prevent sharing a project with another group within this group
         /// </summary>
         [JsonProperty("share_with_group_lock")]
-        public bool ShareWithGroupLock { get; set; }
+        public string ShareWithGroupLock { get; set; }
 
         /// <summary>
         /// The group's visibility. Can be private, internal, or public.
         /// </summary>
         [JsonProperty("visibility")]
-        public GroupsVisibility Visibility { get; set; }
+        public string Visibility { get; set; }
 
         /// <summary>
         /// Enable/disable Large File Storage (LFS) for the projects in this group
