@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects.Responses
@@ -39,5 +40,8 @@ namespace GitLabApiClient.Models.Projects.Responses
 
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
+
+        [JsonProperty("projects")]
+        public IList<Project> Projects { get; set; }
     }
 }

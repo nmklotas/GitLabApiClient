@@ -40,7 +40,13 @@ namespace GitLabApiClient.Internal.Http
         public Task<T> Put<T>(string uri, object data) =>
             _requestor.Put<T>(uri, data);
 
-        public Task Delete(string uri) =>
+		public Task Post(string uri, object data) =>
+            _requestor.Post(uri, data);
+
+		public Task Put(string uri, object data) =>
+			_requestor.Put(uri, data);
+
+		public Task Delete(string uri) =>
             _requestor.Delete(uri);
 
         public async Task<Session> LoginAsync(string username, string password)

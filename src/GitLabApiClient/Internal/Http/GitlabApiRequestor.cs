@@ -32,6 +32,13 @@ namespace GitLabApiClient.Internal.Http
             return await ReadResponse<T>(responseMessage);
         }
 
+		public async Task Post(string url, object data = null)
+		{
+			StringContent content = SerializeToString(data);
+			var responseMessage = await _client.PostAsync(url, content);
+			await EnsureSuccessStatusCode(responseMessage);
+		}
+
         public async Task<T> Put<T>(string url, object data)
         {
             StringContent content = SerializeToString(data);
@@ -39,6 +46,13 @@ namespace GitLabApiClient.Internal.Http
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
+
+		public async Task Put(string url, object data)
+		{
+			StringContent content = SerializeToString(data);
+			var responseMessage = await _client.PutAsync(url, content);
+			await EnsureSuccessStatusCode(responseMessage);
+		}
 
         public async Task Delete(string url)
         {
