@@ -52,7 +52,7 @@ namespace GitLabApiClient
         /// Get the users list of a project.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
-        public async Task<IList<User>> GetUsers(int projectId) =>
+        public async Task<IList<User>> GetUsersAsync(int projectId) =>
             await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectUsersRetrieved()
         {
-            var users = await _sut.GetUsers(GitLabApiHelper.TestProjectId);
+            var users = await _sut.GetUsersAsync(GitLabApiHelper.TestProjectId);
             users.Should().NotBeEmpty();
         }
 

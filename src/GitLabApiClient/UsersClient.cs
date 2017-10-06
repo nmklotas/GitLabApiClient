@@ -43,7 +43,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="filter">Filter used for usernames and emails.</param>
         /// <returns>Users list satisfying the filter.</returns>
-        public async Task<IList<User>> GetByFilter(string filter)
+        public async Task<IList<User>> GetByFilterAsync(string filter)
         {
             Guard.NotEmpty(filter, nameof(filter));
             return await _httpFacade.GetPagedList<User>($"users?search={filter}");
