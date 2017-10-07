@@ -21,16 +21,7 @@ function Build()
 
 function Pack()
 {
-	if ($env:APPVEYOR_REPO_TAG_NAME) 
-	{
-		$version = $env:APPVEYOR_REPO_TAG_NAME
-		& dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --version-suffix $version --no-build | Write-Host
-	}
-	else
-	{
-		& dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build | Write-Host
-	}
-		
+	& dotnet pack src\GitLabApiClient\GitLabApiClient.csproj -c Release --no-build | Write-Host
 	if ($LastExitCode -ne 0)
 	{
 		exit 1
