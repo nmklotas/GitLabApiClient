@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GitLabApiClient.Models.Groups.Requests
 {
@@ -8,6 +7,8 @@ namespace GitLabApiClient.Models.Groups.Requests
 	/// </summary>
 	public class GroupsQueryOptions
     {
+        internal GroupsQueryOptions() { }
+
 		/// <summary>
 		/// Skip the group IDs passes
 		/// </summary>

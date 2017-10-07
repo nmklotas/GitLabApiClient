@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GitLabApiClient.Models.Groups.Requests
+﻿namespace GitLabApiClient.Models.Groups.Requests
 {
 	/// <summary>
 	/// Options for Groups listing
 	/// </summary>
-	public class GroupsProjectsQueryOptions
+	public class ProjectsGroupQueryOptions
     {
-		/// <summary>
-		/// The ID or URL-encoded path of the group owned by the authenticated user
-		/// </summary>
-		public object Id { get; set; }
+        internal ProjectsGroupQueryOptions(string id) => Id = id;
 
-		/// <summary>
+        /// <summary>
+        /// The ID or URL-encoded path of the group owned by the authenticated user
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
 		/// Limit by archived status
 		/// </summary>
 		public bool Archived { get; set; }
@@ -24,8 +23,8 @@ namespace GitLabApiClient.Models.Groups.Requests
 		public GroupsVisibility Visibility { get; set; }
 
 		/// <summary>
-		/// Return projects ordered by id, name, path, created_at, updated_at, 
-		/// or last_activity_at fields. Default is created_at
+		/// Return projects ordered by Id, Name, Path, CreatedAt, UpdatedAt, 
+		/// or LastActivityAt fields. Default is CreatedAt.
 		/// </summary>
 		public GroupsProjectsOrder Order { get; set; }
 

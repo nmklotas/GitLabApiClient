@@ -6,7 +6,7 @@ using FluentAssertions;
 using GitLabApiClient.Models.Issues.Requests;
 using Xunit;
 
-namespace GitLabApiClient.Test
+namespace GitLabApiClient.Test.Inspections
 {
     public class RequestsInspectionTest
     {

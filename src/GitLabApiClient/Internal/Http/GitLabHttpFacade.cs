@@ -34,14 +34,14 @@ namespace GitLabApiClient.Internal.Http
         public Task<T> Get<T>(string uri) =>
             _requestor.Get<T>(uri);
 
-        public Task<T> Post<T>(string uri, object data) where T : class =>
+        public Task<T> Post<T>(string uri, object data = null) where T : class =>
             _requestor.Post<T>(uri, data);
+
+        public Task Post(string uri, object data = null) =>
+            _requestor.Post(uri, data);
 
         public Task<T> Put<T>(string uri, object data) =>
             _requestor.Put<T>(uri, data);
-
-		public Task Post(string uri, object data) =>
-            _requestor.Post(uri, data);
 
 		public Task Put(string uri, object data) =>
 			_requestor.Put(uri, data);

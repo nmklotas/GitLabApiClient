@@ -1,35 +1,38 @@
 using System;
-using System.Linq;
 using GitLabApiClient.Internal.Utilities;
-using GitLabApiClient.Models;
 using GitLabApiClient.Models.Groups.Requests;
-using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient.Internal.Queries
 {
-    internal class GroupsProjectsQueryBuilder : QueryBuilder<GroupsProjectsQueryOptions>
+    internal class ProjectsGroupQueryBuilder : QueryBuilder<ProjectsGroupQueryOptions>
     {
-        protected override void BuildCore(GroupsProjectsQueryOptions options)
+        protected override void BuildCore(ProjectsGroupQueryOptions options)
         {
-            
-            Add("id", options.Id?.ToString());
+            Add("id", options.Id);
 
-            Add("archived", options.Archived);
+            if (options.Archived)
+                Add("archived", options.Archived);
 
-            Add("visibility", GetVisibilityQueryValue(options.Visibility));
+            if (options.Visibility != GroupsVisibility.Public)
+                Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
-            Add("order_by", GetOrderQueryValue(options.Order));
+            if (options.Order != GroupsProjectsOrder.CreatedAt)
+                Add("order_by", GetOrderQueryValue(options.Order));
 
-            Add("sort", GetSortQueryValue(options.Sort));
+            if (options.Sort != GroupsSort.Ascending)
+                Add("sort", GetSortQueryValue(options.Sort));
 
             if (!options.Search.IsNullOrEmpty())
                 Add("search", options.Search);
 
-            Add("simple", options.Simple);
+            if (options.Simple)
+                Add("simple", options.Simple);
 
-            Add("owned", options.Owned);
+            if (options.Owned)
+                Add("owned", options.Owned);
 
-            Add("starred", options.Starred);
+            if (options.Starred)
+                Add("starred", options.Starred);
         }
 
         private static string GetVisibilityQueryValue(GroupsVisibility visibility)
@@ -43,7 +46,7 @@ namespace GitLabApiClient.Internal.Queries
                 case GroupsVisibility.Private:
                     return "private";
                 default:
-                    return "public";
+                    throw new NotSupportedException($"GroupsVisibility {visibility} is not supported");
             }
         }
 
@@ -51,10 +54,12 @@ namespace GitLabApiClient.Internal.Queries
         {
             switch (sort)
             {
+                case GroupsSort.Ascending:
+                    return "asc";
                 case GroupsSort.Descending:
                     return "desc";
                 default:
-                    return "asc";
+                    throw new NotSupportedException($"GroupsSort {sort} is not supported");
             }
         }
 
@@ -75,7 +80,7 @@ namespace GitLabApiClient.Internal.Queries
                 case GroupsProjectsOrder.LastiActivityAt:
                     return "last_activity_at";
                 default:
-                    return "created_at";
+                    throw new NotSupportedException($"GroupsProjectsOrder {order} is not supported");
             }
         }
     }
