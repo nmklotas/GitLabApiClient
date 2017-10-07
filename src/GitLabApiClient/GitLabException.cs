@@ -9,11 +9,14 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class GitLabException : Exception
     {
-        public GitLabException(HttpStatusCode statusCode) => HttpStatusCode = statusCode;
+        public GitLabException(HttpStatusCode statusCode)
+            => HttpStatusCode = statusCode;
 
-        public GitLabException(HttpStatusCode statusCode, string message) : base(message) => HttpStatusCode = statusCode;
+        public GitLabException(HttpStatusCode statusCode, string message) : base(message)
+            => HttpStatusCode = statusCode;
 
-        public GitLabException(HttpStatusCode statusCode, string message, Exception innerException) : base(message, innerException) => HttpStatusCode = statusCode;
+        public GitLabException(HttpStatusCode statusCode, string message, Exception innerException) : base(message, innerException)
+            => HttpStatusCode = statusCode;
 
         /// <summary>
         /// Http status code of GitLab response.

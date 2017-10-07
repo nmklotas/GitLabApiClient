@@ -1,40 +1,44 @@
 using System;
-using System.Linq;
 using GitLabApiClient.Internal.Utilities;
-using GitLabApiClient.Models;
 using GitLabApiClient.Models.Groups.Requests;
-using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient.Internal.Queries
 {
-    internal class GroupsQueryBuilder : QueryBuilder<GroupsQueryOptions>
+    internal sealed class GroupsQueryBuilder : QueryBuilder<GroupsQueryOptions>
     {
         protected override void BuildCore(GroupsQueryOptions options)
         {
+            Add("skip_groups", options.SkipGroups);
 
-            if (options.SkipGroups.Any())
-                Add("skip_groups", options.SkipGroups);
+            if (options.AllAvailable)
+                Add("all_available", options.AllAvailable);
 
+            if (!options.Search.IsNullOrEmpty())
+                Add("search", options.Search);
 
-            Add("all_available", options.AllAvailable);
+            if (options.Order != GroupsOrder.Name)
+                Add("order_by", GetOrderQueryValue(options.Order));
 
-            Add("order_by", GetOrderQueryValue(options.Order));
+            if (options.Sort != GroupsSort.Ascending)
+                Add("sort", GetSortQueryValue(options.Sort));
 
-            Add("sort", GetSortQueryValue(options.Sort));
+            if (options.Statistics)
+                Add("statistics", options.Statistics);
 
-            Add("statistics", options.Statistics);
-
-            Add("owned", options.Owned);
+            if (options.Owned)
+                Add("owned", options.Owned);
         }
 
         private static string GetOrderQueryValue(GroupsOrder order)
         {
             switch (order)
             {
+                case GroupsOrder.Name:
+                    return "name";
                 case GroupsOrder.Path:
                     return "path";
                 default:
-                    return "name";
+                    throw new NotSupportedException($"GroupsOrder {order} is not supported");
             }
         }
 
@@ -42,10 +46,12 @@ namespace GitLabApiClient.Internal.Queries
         {
             switch (sort)
             {
+                case GroupsSort.Ascending:
+                    return "asc";
                 case GroupsSort.Descending:
                     return "desc";
                 default:
-                    return "asc";
+                    throw new NotSupportedException($"GroupsSort {sort} is not supported");
             }
         }
     }

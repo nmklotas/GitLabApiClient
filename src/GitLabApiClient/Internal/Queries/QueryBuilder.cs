@@ -21,25 +21,17 @@ namespace GitLabApiClient.Internal.Queries
 
         protected abstract void BuildCore(T options);
 
-        protected void Add(string name, string value)
-        {
-            _nameValues.Add(name, value);
-        }
+        protected void Add(string name, string value) 
+            => _nameValues.Add(name, value);
 
-        protected void Add(string name, bool value)
-        {
-            Add(name, value.ToLowerCaseString());
-        }
+        protected void Add(string name, bool value) 
+            => Add(name, value.ToLowerCaseString());
 
-        protected void Add(string name, int value)
-        {
-            Add(name, value.ToLowerCaseString());
-        }
+        protected void Add(string name, int value) 
+            => Add(name, value.ToLowerCaseString());
 
-        protected void Add(string name, DateTime value)
-        {
-            Add(name, value.ToString("o"));
-        }
+        protected void Add(string name, DateTime value) 
+            => Add(name, value.ToString("o"));
 
         protected void Add(string name, IList<string> values)
         {

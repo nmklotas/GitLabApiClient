@@ -15,6 +15,10 @@ namespace GitLabApiClient.Test.Utilities
 
         public static string TestProjectTextId { get; set; } = "4006344";
 
+        public static string TestGroupName { get; set; } = "txxxestprojecxxxt";
+
+        public static string TestProjectName { get; set; } = "txxxestprojecxxxt";
+
         public static int TestProjectId { get; set; } = 4006344;
     }
 }

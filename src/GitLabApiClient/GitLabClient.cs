@@ -38,11 +38,14 @@ namespace GitLabApiClient
             var issuesQueryBuilder = new IssuesQueryBuilder();
             var mergeRequestsQueryBuilder = new MergeRequestsQueryBuilder();
             var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
+            var groupsQueryBuilder = new GroupsQueryBuilder();
+            var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder);
             MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder);
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder);
             Users = new UsersClient(_httpFacade);
+            Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder);
         }
 
         /// <summary>
@@ -64,6 +67,11 @@ namespace GitLabApiClient
         /// Access GitLab's users API.
         /// </summary>
         public UsersClient Users { get; }
+
+        /// <summary>
+        /// Access GitLab's groups API.
+        /// </summary>
+        public GroupsClient Groups { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
