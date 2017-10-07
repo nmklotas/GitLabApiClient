@@ -36,28 +36,40 @@ await client.MergeRequests.CreateAsync(new CreateMergeRequest("projectId", "feat
 ```
 
 ## Currently supported GitLab APIs:
-Issues API:
-Create issue.
-Update issue.
-Query issues.
+Issues API:  
+Create issue.  
+Update issue.  
+Query issues.  
 
-Merges API:
-Create merge request.
-Update merge request.
-Accept merge request.
-Delete merge request.
-Query merge requests.
+Merges API:  
+Create merge request.  
+Update merge request.  
+Accept merge request.  
+Delete merge request.  
+Query merge requests.  
 
 Projects API:
-Create project.
-Update project.
-Delete project.
-Get project users.
-Query projects.
+Create project.  
+Update project.  
+Delete project.  
+Get project users.  
+Query projects.  
 
-Users API:
-Create user.
-Update user.
-Delete user.
-Get current user session.
-Query users.
+Users API:  
+Create user.  
+Update user.  
+Delete user.  
+Get current user session.  
+Query users.  
+
+Groups API (contributed by @ilijamitkov):  
+Create group.  
+Get projects for a group.  
+Transfer group.  
+Update group.  
+Delete group.  
+Sync group with linked LDAP group.  
+Create LDAP group link.  
+Delete LDAP group link.  
+Delete LDAP for a specific LDAP provider.  
+Query groups.  
