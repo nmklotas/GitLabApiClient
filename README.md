@@ -4,23 +4,30 @@
 GitLabApiClient is a .NET rest client for GitLab API v4 (https://docs.gitlab.com/ce/api/README.html).
 
 ## Main features
-1. Fully async.
-2. Thread safe.
-3. Multi core paging.
-4. Simple and easy to use.
+1. Targets .NET Standard 2.0.
+2. Fully async.
+3. Thread safe.
+4. Multi core paging.
+5. Simple and natural to use.
 
 ## Quick start
-```csharp
+
 
 1. Authenticate:
 
+```csharp
 // if you have auth token:
 var client =  new GitLabClient("https://gitlab.example.com", "your_private_token");
+```
 
+```csharp
 // if you want to use username & password:
 var client =  new GitLabClient("https://gitlab.example.com");
-client.LoginAsync("username", "password");
+await client.LoginAsync("username", "password");
+```
 
+2. Use it:
+```csharp
 // create a new issue.
 await client.Issues.CreateAsync(new CreateIssueRequest("projectId", "issue title"));  
 
@@ -36,33 +43,34 @@ await client.MergeRequests.CreateAsync(new CreateMergeRequest("projectId", "feat
 ```
 
 ## Currently supported GitLab APIs:
-Issues API:  
+
+1. Issues API:  
 Create issue.  
 Update issue.  
 Query issues.  
 
-Merges API:  
+2. Merges API:  
 Create merge request.  
 Update merge request.  
 Accept merge request.  
 Delete merge request.  
 Query merge requests.  
 
-Projects API:
+3. Projects API:
 Create project.  
 Update project.  
 Delete project.  
 Get project users.  
 Query projects.  
 
-Users API:  
+4. Users API:  
 Create user.  
 Update user.  
 Delete user.  
 Get current user session.  
 Query users.  
 
-Groups API (contributed by @ilijamitkov):  
+5. Groups API (contributed by @ilijamitkov):  
 Create group.  
 Get projects for a group.  
 Transfer group.  
