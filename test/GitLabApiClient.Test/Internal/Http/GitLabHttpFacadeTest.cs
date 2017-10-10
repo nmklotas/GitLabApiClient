@@ -15,18 +15,19 @@ namespace GitLabApiClient.Test.Internal.Http
             var facade = GitLabApiHelper.GetFacade();
 
             //act
-            var session = await facade.LoginAsync("test-gitlabapiclient", "KZKSRcxx");
+            var session = await facade.LoginAsync("root", "hariseldon");
 
             //assert
             session.Should().Match<Session>(s =>
                 s.CanCreateGroup &&
                 s.CanCreateProject &&
-                !s.IsAdmin &&
+                s.IsAdmin &&
                 !s.TwoFactorEnabled &&
-                s.Username == "test-gitlabapiclient" &&
-                s.Name == "test-gitlabapiclient");
+                s.Username == "root" &&
+                s.Name == "Administrator");
 
             session.PrivateToken.Should().NotBeNullOrEmpty();
+           
         }
     }
 }

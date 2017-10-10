@@ -26,7 +26,7 @@ namespace GitLabApiClient.Test
             group.FullPath.Should().Be(TestGroupName);
             group.Name.Should().Be(TestGroupName);
             group.Path.Should().Be(TestGroupName);
-            group.Visibility.Should().Be(GroupsVisibility.Public);
+            group.Visibility.Should().Be(GroupsVisibility.Private);
             group.Description.Should().BeEmpty();
         }
 

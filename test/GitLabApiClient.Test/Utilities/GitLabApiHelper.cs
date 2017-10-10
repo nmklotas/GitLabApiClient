@@ -8,17 +8,17 @@ namespace GitLabApiClient.Test.Utilities
         public static GitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
-                "https://gitlab.com/api/v4/", new RequestsJsonSerializer(), "yYZSLFnrKyFsG4uD1Wa6");
+                "http://localhost:9090/api/v4/", new RequestsJsonSerializer(), "ElijahBaley");
 
             return facade;
         }
 
-        public static string TestProjectTextId { get; set; } = "4006344";
+        public static string TestProjectTextId { get; set; } = "1";
 
-        public static string TestGroupName { get; set; } = "txxxestprojecxxxt";
+        public static string TestGroupName { get; set; } = "txxxestgrouxxxp";
 
         public static string TestProjectName { get; set; } = "txxxestprojecxxxt";
 
-        public static int TestProjectId { get; set; } = 4006344;
+        public static int TestProjectId { get; set; } = 1;
     }
 }
