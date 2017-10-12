@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
@@ -34,18 +35,43 @@ namespace GitLabApiClient
         /// <summary>
         /// Retrieves project issue.
         /// </summary>
-        public async Task<Issue> GetAsync(int projectId, int issueId) => 
-            await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}");
-
+        public async Task<Issue> GetAsync(int projectId, int issueId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            return await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}");
+        }
+        
+        /// <summary>
+        /// Retrieves issues from a project.
+        /// By default retrieves opened issues from all users.
+        /// </summary>
+        /// <param name="projectId">Id of the project.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        /// <returns>Issues satisfying options.</returns>
+        public async Task<IList<Issue>> GetProjectIssuesAsync(string projectId, CancellationToken cancellationToken)
+        {
+            return await GetProjectIssuesAsync(projectId, null, cancellationToken);
+        }
+        
         /// <summary>
         /// Retrieves issues from a project.
         /// By default retrieves opened issues from all users.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
         /// <param name="options">Issues retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
         /// <returns>Issues satisfying options.</returns>
-        public async Task<IList<Issue>> GetAsync(string projectId, Action<ProjectIssuesQueryOptions> options = null)
+        public async Task<IList<Issue>> GetProjectIssuesAsync(string projectId,
+                                                              Action<ProjectIssuesQueryOptions> options,
+                                                              CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             var queryOptions = new ProjectIssuesQueryOptions(projectId);
             options?.Invoke(queryOptions);
 
@@ -57,10 +83,26 @@ namespace GitLabApiClient
         /// Retrieves issues from all projects.
         /// By default retrieves opened issues from all users.
         /// </summary>
-        /// <param name="options">Issues retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
         /// <returns>Issues satisfying options.</returns>
-        public async Task<IList<Issue>> GetAsync(Action<IssuesQueryOptions> options = null)
+        public async Task<IList<Issue>> GetAsync(CancellationToken cancellationToken)
         {
+            return await GetAsync(null, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Retrieves issues from all projects.
+        /// By default retrieves opened issues from all users.
+        /// </summary>
+        /// <param name="options">Issues retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        /// <returns>Issues satisfying options.</returns>
+        public async Task<IList<Issue>> GetAsync(Action<IssuesQueryOptions> options, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             var queryOptions = new IssuesQueryOptions();
             options?.Invoke(queryOptions);
 
@@ -72,14 +114,28 @@ namespace GitLabApiClient
         /// Creates new issue.
         /// </summary>
         /// <returns>The newly created issue.</returns>
-        public async Task<Issue> CreateAsync(CreateIssueRequest request) => 
-            await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request);
+        public async Task<Issue> CreateAsync(CreateIssueRequest request, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            return await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request);
+        }
+
 
         /// <summary>
         /// Updated existing issue.
         /// </summary>
         /// <returns>The updated issue.</returns>
-        public async Task<Issue> UpdateAsync(UpdateIssueRequest request) =>
-            await _httpFacade.Put<Issue>($"projects/{request.ProjectId}/issues/{request.IssueId}", request);
+        public async Task<Issue> UpdateAsync(UpdateIssueRequest request, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            return await _httpFacade.Put<Issue>($"projects/{request.ProjectId}/issues/{request.IssueId}", request);
+        }
+            
     }
 }

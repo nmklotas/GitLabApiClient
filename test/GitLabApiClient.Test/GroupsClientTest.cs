@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
@@ -21,7 +22,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task GroupCanBeRetrievedByGroupId()
         {
-            var group = await _sut.GetAsync(TestGroupName);
+            var group = await _sut.GetByGroupIdAsync(TestGroupName, CancellationToken.None);
             group.FullName.Should().Be(TestGroupName);
             group.FullPath.Should().Be(TestGroupName);
             group.Name.Should().Be(TestGroupName);
@@ -29,18 +30,25 @@ namespace GitLabApiClient.Test
             group.Visibility.Should().Be(GroupsVisibility.Private);
             group.Description.Should().BeEmpty();
         }
+        
+        [Fact]
+        public async Task ProjectsCanBeTransferToGroup()
+        {
+            var group = await _sut.TransferAsync(TestGroupName, TestProjectId.ToString(), CancellationToken.None);
+            group.Projects.Should().NotBeEmpty();
+        }
 
         [Fact]
         public async Task ProjectsCanBeRetrievedFromGroup()
         {
-            var project = await _sut.GetProjectsAsync(TestGroupName, o => o.Search = TestProjectName);
+            var project = await _sut.GetProjectsAsync(TestGroupName, o => o.Search = TestProjectName, CancellationToken.None);
             project.Should().ContainSingle(s => s.Name == TestProjectName);
         }
 
         [Fact]
         public async Task GroupsCanBeRetrievedFromSearch()
         {
-            var group = await _sut.SearchAsync("gitlab");
+            var group = await _sut.SearchAsync("gitlab", CancellationToken.None);
             group.Should().NotBeEmpty();
         }
 
@@ -53,7 +61,7 @@ namespace GitLabApiClient.Test
                 o.Order = GroupsOrder.Name;
                 o.Sort = GroupsSort.Descending;
                 o.AllAvailable = true;
-            });
+            }, CancellationToken.None);
 
             group.Should().NotBeEmpty();
         }
@@ -71,7 +79,7 @@ namespace GitLabApiClient.Test
                 RequestAccessEnabled = true
             };
 
-            var response = await _sut.CreateAsync(request);
+            var response = await _sut.CreateAsync(request, CancellationToken.None);
             _groupIdsToClean.Add(response.Id);
 
             response.Name.Should().Be(groupName);
@@ -94,7 +102,7 @@ namespace GitLabApiClient.Test
                 RequestAccessEnabled = true
             };
 
-            var createGroupResponse = await _sut.CreateAsync(createGroupRequest);
+            var createGroupResponse = await _sut.CreateAsync(createGroupRequest, CancellationToken.None);
             _groupIdsToClean.Add(createGroupResponse.Id);
 
             string updateGroupName = GetRandomGroupName();
@@ -108,7 +116,7 @@ namespace GitLabApiClient.Test
                 RequestAccessEnabled = false
             };
 
-            var updateGroupResponse = await _sut.UpdateAsync(updateRequest);
+            var updateGroupResponse = await _sut.UpdateAsync(updateRequest, CancellationToken.None);
             updateGroupResponse.Name.Should().Be(updateGroupName);
             updateGroupResponse.Description.Should().Be("description2");
             updateGroupResponse.Visibility.Should().Be(GroupsVisibility.Internal);
@@ -125,7 +133,7 @@ namespace GitLabApiClient.Test
         private async Task CleanupGroups()
         {
             foreach (int groupId in _groupIdsToClean)
-                await _sut.DeleteAsync(groupId.ToString());
+                await _sut.DeleteAsync(groupId.ToString(), CancellationToken.None);
         }
 
         private static string GetRandomGroupName() 

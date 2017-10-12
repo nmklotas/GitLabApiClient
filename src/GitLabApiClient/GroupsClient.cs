@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
@@ -35,23 +36,53 @@ namespace GitLabApiClient
         /// Get all details of a group. 
         /// This endpoint can be accessed without authentication if the group is publicly accessible.
         /// </summary>
-        public async Task<Group> GetAsync(string groupId) =>
-            await _httpFacade.Get<Group>($"groups/{groupId}");
+        public async Task<Group> GetByGroupIdAsync(string groupId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            return await _httpFacade.Get<Group>($"groups/{groupId}");
+        }
+
 
         /// <summary>
         /// Get all groups that match your string in their name or path.
         /// </summary>
-        public async Task<IList<Group>> SearchAsync(string search) =>
-            await _httpFacade.GetPagedList<Group>($"groups?search={search}");
+        public async Task<IList<Group>> SearchAsync(string search, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            return await _httpFacade.GetPagedList<Group>($"groups?search={search}");
+        }
+            
 
         /// <summary>
         /// Get a list of visible groups for the authenticated user.
         /// When accessed without authentication, only public groups are returned.
         /// </summary>
-        /// <param name="options">Groups retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
         /// <returns>Groups satisfying options.</returns>
-        public async Task<IList<Group>> GetAsync(Action<GroupsQueryOptions> options = null)
+        public async Task<IList<Group>> GetAsync(CancellationToken cancellationToken)
         {
+            return await GetAsync(null, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Get a list of visible groups for the authenticated user.
+        /// When accessed without authentication, only public groups are returned.
+        /// </summary>
+        /// <param name="options">Groups retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        /// <returns>Groups satisfying options.</returns>
+        public async Task<IList<Group>> GetAsync(Action<GroupsQueryOptions> options, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             var queryOptions = new GroupsQueryOptions();
             options?.Invoke(queryOptions);
 
@@ -64,10 +95,29 @@ namespace GitLabApiClient
         /// When accessed without authentication, only public projects are returned..
         /// </summary>
         /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
-        /// <param name="options">Groups projects retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
         /// <returns>Issues satisfying options.</returns>
-        public async Task<IList<Project>> GetProjectsAsync(string groupId, Action<ProjectsGroupQueryOptions> options = null)
+        public async Task<IList<Project>> GetProjectsAsync(string groupId, CancellationToken cancellationToken)
         {
+            return await GetProjectsAsync(groupId, null, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Get a list of projects in this group..
+        /// When accessed without authentication, only public projects are returned..
+        /// </summary>
+        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="options">Groups projects retrieval options.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        /// <returns>Issues satisfying options.</returns>
+        public async Task<IList<Project>> GetProjectsAsync(string groupId, 
+                                                           Action<ProjectsGroupQueryOptions> options,
+                                                           CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             var queryOptions = new ProjectsGroupQueryOptions(groupId);
             options?.Invoke(queryOptions);
 
@@ -80,55 +130,109 @@ namespace GitLabApiClient
         /// Available only for users who can create groups.
         /// </summary>
         /// <returns>The newly created group.</returns>
-        public async Task<Group> CreateAsync(CreateGroupRequest request) =>
-            await _httpFacade.Post<Group>("groups", request);
+        public async Task<Group> CreateAsync(CreateGroupRequest request, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            
+            return await _httpFacade.Post<Group>("groups", request);
+        }
+
 
         /// <summary>
         /// Transfer a project to the Group namespace. Available only for admin
         /// </summary>
         /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
         /// <param name="projectId">The ID or path of a project.</param>
+        /// <param name="cancellationToken">Request CancellationToken</param>
         /// <returns>The newly updated group.</returns>
-        public async Task<Group> TransferAsync(string groupId, string projectId) =>
-            await _httpFacade.Post<Group>($"groups/{groupId}/projects/{projectId}", null);
+        public async Task<Group> TransferAsync(string groupId, string projectId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            
+            return await _httpFacade.Post<Group>($"groups/{groupId}/projects/{projectId}", null);
+        }
+
 
         /// <summary>
         /// Updates the project group.
         /// Only available to group owners and administrators.
         /// </summary>
         /// <returns>The updated group.</returns>
-        public async Task<Group> UpdateAsync(UpdateGroupRequest request) =>
-            await _httpFacade.Put<Group>($"groups/{request.Id}", request);
+        public async Task<Group> UpdateAsync(UpdateGroupRequest request, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
+            return await _httpFacade.Put<Group>($"groups/{request.Id}", request);
+        }
+
 
         /// <summary>
         /// Removes group with all projects inside.
         /// Only available to group owners and administrators.
         /// </summary>
         /// <param name="groupId">The ID or path of a user group.</param>
-        public async Task DeleteAsync(string groupId) =>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        public async Task DeleteAsync(string groupId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             await _httpFacade.Delete($"groups/{groupId}");
+        }
+
 
         /// <summary>
         /// Syncs the group with its linked LDAP group.
         /// Only available to group owners and administrators.
         /// </summary>
         /// <param name="groupId">The ID or path of a user group.</param>
-        public async Task SyncLdapAsync(string groupId) =>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        public async Task SyncLdapAsync(string groupId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             await _httpFacade.Post($"groups/{groupId}/ldap_sync");
+        }
 
         /// <summary>
         /// Creates LDAP group link.
         /// </summary>
-        public async Task CreateLdapLinkAsync(CreateLdapGroupLinkRequest request) =>
+        public async Task CreateLdapLinkAsync(CreateLdapGroupLinkRequest request, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             await _httpFacade.Post($"groups/{request.Id}/ldap_group_links", request);
+        }
+
 
         /// <summary>
         /// Deletes a LDAP group link.
         /// </summary>
         /// <param name="groupId">Id of the group.</param>
         /// <param name="cn">The CN of a LDAP group</param>
-        public async Task DeleteLdapLinkAsync(int groupId, string cn) =>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        public async Task DeleteLdapLinkAsync(int groupId, string cn, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{cn}");
+        }
+
 
 
         /// <summary>
@@ -137,7 +241,18 @@ namespace GitLabApiClient
         /// <param name="groupId">Id of the group.</param>
         /// <param name="provider">Name of a LDAP provider</param>
         /// <param name="cn">The CN of a LDAP group</param>
-        public async Task DeleteProviderLdapLinkAsync(int groupId, string provider, string cn) =>
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        public async Task DeleteProviderLdapLinkAsync(int groupId,
+                                                      string provider,
+                                                      string cn,
+                                                      CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
+            {
+            }
             await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{provider}/{cn}");
+        }
+            
     }
 }
