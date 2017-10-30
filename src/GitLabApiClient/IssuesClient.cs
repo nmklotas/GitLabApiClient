@@ -38,9 +38,6 @@ namespace GitLabApiClient
         public async Task<Issue> GetAsync(int projectId, int issueId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}", cancellationToken);
         }
         
@@ -53,6 +50,7 @@ namespace GitLabApiClient
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Issue>> GetProjectIssuesAsync(string projectId, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             return await GetProjectIssuesAsync(projectId, null, cancellationToken);
         }
         
@@ -69,9 +67,6 @@ namespace GitLabApiClient
                                                               CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             var queryOptions = new ProjectIssuesQueryOptions(projectId);
             options?.Invoke(queryOptions);
 
@@ -87,6 +82,7 @@ namespace GitLabApiClient
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Issue>> GetAsync(CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             return await GetAsync(null, cancellationToken);
         }
         
@@ -100,9 +96,6 @@ namespace GitLabApiClient
         public async Task<IList<Issue>> GetAsync(Action<IssuesQueryOptions> options, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             var queryOptions = new IssuesQueryOptions();
             options?.Invoke(queryOptions);
 
@@ -117,9 +110,6 @@ namespace GitLabApiClient
         public async Task<Issue> CreateAsync(CreateIssueRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request, cancellationToken);
         }
 
@@ -131,9 +121,6 @@ namespace GitLabApiClient
         public async Task<Issue> UpdateAsync(UpdateIssueRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Put<Issue>($"projects/{request.ProjectId}/issues/{request.IssueId}", request, cancellationToken);
         }
             

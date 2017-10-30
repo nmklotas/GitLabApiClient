@@ -39,10 +39,7 @@ namespace GitLabApiClient
         public async Task<Group> GetByGroupIdAsync(string groupId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
-            return await _httpFacade.Get<Group>($"groups/{groupId}");
+            return await _httpFacade.Get<Group>($"groups/{groupId}", cancellationToken);
         }
 
 
@@ -52,10 +49,7 @@ namespace GitLabApiClient
         public async Task<IList<Group>> SearchAsync(string search, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
-            return await _httpFacade.GetPagedList<Group>($"groups?search={search}");
+            return await _httpFacade.GetPagedList<Group>($"groups?search={search}", cancellationToken);
         }
             
 
@@ -67,6 +61,7 @@ namespace GitLabApiClient
         /// <returns>Groups satisfying options.</returns>
         public async Task<IList<Group>> GetAsync(CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             return await GetAsync(null, cancellationToken);
         }
         
@@ -80,14 +75,11 @@ namespace GitLabApiClient
         public async Task<IList<Group>> GetAsync(Action<GroupsQueryOptions> options, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             var queryOptions = new GroupsQueryOptions();
             options?.Invoke(queryOptions);
 
             string url = _queryBuilder.Build("groups", queryOptions);
-            return await _httpFacade.GetPagedList<Group>(url);
+            return await _httpFacade.GetPagedList<Group>(url, cancellationToken);
         }
 
         /// <summary>
@@ -99,6 +91,7 @@ namespace GitLabApiClient
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Project>> GetProjectsAsync(string groupId, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             return await GetProjectsAsync(groupId, null, cancellationToken);
         }
         
@@ -115,9 +108,6 @@ namespace GitLabApiClient
                                                            CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             var queryOptions = new ProjectsGroupQueryOptions(groupId);
             options?.Invoke(queryOptions);
 
@@ -133,10 +123,6 @@ namespace GitLabApiClient
         public async Task<Group> CreateAsync(CreateGroupRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
-            
             return await _httpFacade.Post<Group>("groups", request, cancellationToken);
         }
 
@@ -151,10 +137,6 @@ namespace GitLabApiClient
         public async Task<Group> TransferAsync(string groupId, string projectId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
-            
             return await _httpFacade.Post<Group>($"groups/{groupId}/projects/{projectId}", null, cancellationToken);
         }
 
@@ -167,9 +149,6 @@ namespace GitLabApiClient
         public async Task<Group> UpdateAsync(UpdateGroupRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Put<Group>($"groups/{request.Id}", request, cancellationToken);
         }
 
@@ -183,9 +162,6 @@ namespace GitLabApiClient
         public async Task DeleteAsync(string groupId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Delete($"groups/{groupId}", cancellationToken);
         }
 
@@ -199,9 +175,6 @@ namespace GitLabApiClient
         public async Task SyncLdapAsync(string groupId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Post($"groups/{groupId}/ldap_sync", cancellationToken);
         }
 
@@ -211,9 +184,6 @@ namespace GitLabApiClient
         public async Task CreateLdapLinkAsync(CreateLdapGroupLinkRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Post($"groups/{request.Id}/ldap_group_links", request, cancellationToken);
         }
 
@@ -227,9 +197,6 @@ namespace GitLabApiClient
         public async Task DeleteLdapLinkAsync(int groupId, string cn, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{cn}", cancellationToken);
         }
 
@@ -248,9 +215,6 @@ namespace GitLabApiClient
                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{provider}/{cn}", cancellationToken);
         }
             

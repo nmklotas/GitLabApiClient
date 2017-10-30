@@ -25,8 +25,13 @@ namespace GitLabApiClient
         /// <summary>
         /// Retrieves registered users.
         /// </summary>
-        public async Task<IList<User>> GetAsync() => 
-            await _httpFacade.GetPagedList<User>("users");
+        /// <param name="cancellationToken">Request CancellationToken</param>
+        public async Task<IList<User>> GetAsync(CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return await _httpFacade.GetPagedList<User>("users", cancellationToken);
+        }
+            
 
         /// <summary>
         /// Retrieves an user matched by name.
@@ -37,9 +42,6 @@ namespace GitLabApiClient
         public async Task<User> GetAsync(string name, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             Guard.NotEmpty(name, nameof(name));
             return (await _httpFacade.Get<IList<User>>($"users?username={name}", cancellationToken)).FirstOrDefault();
         }
@@ -53,9 +55,6 @@ namespace GitLabApiClient
         public async Task<IList<User>> GetByFilterAsync(string filter, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             Guard.NotEmpty(filter, nameof(filter));
             return await _httpFacade.GetPagedList<User>($"users?search={filter}", cancellationToken);
         }
@@ -69,9 +68,6 @@ namespace GitLabApiClient
         public async Task<User> CreateAsync(CreateUserRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Post<User>("users", request, cancellationToken);
         }
 
@@ -85,9 +81,6 @@ namespace GitLabApiClient
         public async Task<User> UpdateAsync(UpdateUserRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Put<User>($"users/{request.UserId}", request, cancellationToken);
         }
 
@@ -98,9 +91,6 @@ namespace GitLabApiClient
         public async Task<Session> GetCurrentSessionAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Get<Session>("user", cancellationToken);
         }
 
@@ -112,9 +102,6 @@ namespace GitLabApiClient
         public async Task DeleteAsync(int userId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Delete($"users/{userId}", cancellationToken);
         } 
             

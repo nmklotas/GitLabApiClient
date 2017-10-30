@@ -23,7 +23,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectRetrieved()
         {
-            var project = await _sut.GetAsync(GitLabApiHelper.TestProjectId);
+            var project = await _sut.GetAsync(GitLabApiHelper.TestProjectId, CancellationToken.None);
             project.Id.Should().Be(GitLabApiHelper.TestProjectId);
         }
 

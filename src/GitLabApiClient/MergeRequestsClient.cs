@@ -41,6 +41,7 @@ namespace GitLabApiClient
         /// <returns>Merge requests satisfying options.</returns>
         public async Task<IList<MergeRequest>> GetAsync(int projectId, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             return await GetAsync(projectId, null, cancellationToken);
         }
         
@@ -57,9 +58,6 @@ namespace GitLabApiClient
                                                         CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             var projectMergeRequestOptions = new ProjectMergeRequestsQueryOptions(projectId);
             options?.Invoke(projectMergeRequestOptions);
 
@@ -77,6 +75,7 @@ namespace GitLabApiClient
         /// <returns>Merge requests satisfying options.</returns>
         public async Task<IList<MergeRequest>> GetAsync(CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             return await GetAsync(null, cancellationToken);
         }
         
@@ -91,9 +90,6 @@ namespace GitLabApiClient
                                                         CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             var projectMergeRequestOptions = new MergeRequestsQueryOptions();
             options?.Invoke(projectMergeRequestOptions);
 
@@ -110,9 +106,6 @@ namespace GitLabApiClient
         public async Task<MergeRequest> CreateAsync(CreateMergeRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Post<MergeRequest>($"projects/{request.ProjectId}/merge_requests", request, cancellationToken);
         }
 
@@ -123,9 +116,6 @@ namespace GitLabApiClient
         public async Task<MergeRequest> UpdateAsync(UpdateMergeRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Put<MergeRequest>(
                 $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request, cancellationToken);
         }
@@ -137,9 +127,6 @@ namespace GitLabApiClient
         public async Task<MergeRequest> AcceptAsync(AcceptMergeRequest request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             return await _httpFacade.Put<MergeRequest>(
                 $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}/merge", request, cancellationToken);
         }
@@ -150,9 +137,6 @@ namespace GitLabApiClient
         public async Task DeleteAsync(int projectId, int mergeRequestId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
-            {
-            }
             await _httpFacade.Delete($"projects/{projectId}/merge_requests/{mergeRequestId}", cancellationToken);
         }
             
