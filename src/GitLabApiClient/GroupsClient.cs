@@ -122,7 +122,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _projectsQueryBuilder.Build($"groups/{groupId}/projects", queryOptions);
-            return await _httpFacade.GetPagedList<Project>(url);
+            return await _httpFacade.GetPagedList<Project>(url, cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace GitLabApiClient
             {
             }
             
-            return await _httpFacade.Post<Group>("groups", request);
+            return await _httpFacade.Post<Group>("groups", request, cancellationToken);
         }
 
 
@@ -155,7 +155,7 @@ namespace GitLabApiClient
             {
             }
             
-            return await _httpFacade.Post<Group>($"groups/{groupId}/projects/{projectId}", null);
+            return await _httpFacade.Post<Group>($"groups/{groupId}/projects/{projectId}", null, cancellationToken);
         }
 
 
@@ -170,7 +170,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Put<Group>($"groups/{request.Id}", request);
+            return await _httpFacade.Put<Group>($"groups/{request.Id}", request, cancellationToken);
         }
 
 
@@ -186,7 +186,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Delete($"groups/{groupId}");
+            await _httpFacade.Delete($"groups/{groupId}", cancellationToken);
         }
 
 
@@ -202,7 +202,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Post($"groups/{groupId}/ldap_sync");
+            await _httpFacade.Post($"groups/{groupId}/ldap_sync", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Post($"groups/{request.Id}/ldap_group_links", request);
+            await _httpFacade.Post($"groups/{request.Id}/ldap_group_links", request, cancellationToken);
         }
 
 
@@ -230,7 +230,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{cn}");
+            await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{cn}", cancellationToken);
         }
 
 
@@ -251,7 +251,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{provider}/{cn}");
+            await _httpFacade.Delete($"groups/{groupId}/ldap_group_links/{provider}/{cn}", cancellationToken);
         }
             
     }

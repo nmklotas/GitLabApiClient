@@ -41,7 +41,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}");
+            return await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}", cancellationToken);
         }
         
         /// <summary>
@@ -76,7 +76,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _projectIssuesQueryBuilder.Build($"projects/{projectId}/issues", queryOptions);
-            return await _httpFacade.GetPagedList<Issue>(url);
+            return await _httpFacade.GetPagedList<Issue>(url, cancellationToken);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _queryBuilder.Build("issues", queryOptions);
-            return await _httpFacade.GetPagedList<Issue>(url);
+            return await _httpFacade.GetPagedList<Issue>(url, cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request);
+            return await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request, cancellationToken);
         }
 
 
@@ -134,7 +134,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Put<Issue>($"projects/{request.ProjectId}/issues/{request.IssueId}", request);
+            return await _httpFacade.Put<Issue>($"projects/{request.ProjectId}/issues/{request.IssueId}", request, cancellationToken);
         }
             
     }

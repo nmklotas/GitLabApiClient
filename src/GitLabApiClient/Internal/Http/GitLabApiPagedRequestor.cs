@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabApiClient.Internal.Http
@@ -14,12 +15,12 @@ namespace GitLabApiClient.Internal.Http
 
         public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
 
-        public async Task<IList<T>> GetPagedList<T>(string url)
+        public async Task<IList<T>> GetPagedList<T>(string url, CancellationToken cancellationToken)
         {
             var result = new List<T>();
 
             //make first request and it will get available pages in the headers
-            var responseMessage = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
+            var responseMessage = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1), cancellationToken);
             result.AddRange(responseMessage.Item1);
 
             //get paged urls
@@ -41,6 +42,11 @@ namespace GitLabApiClient.Internal.Http
             while (remainingUrls.Any());
 
             return result;
+        }
+        
+        public async Task<IList<T>> GetPagedList<T>(string url)
+        {
+            return await GetPagedList<T>(url, CancellationToken.None);
         }
 
         private static List<string> GetPagedUrls(string originalUrl, HttpResponseHeaders headers)

@@ -66,7 +66,7 @@ namespace GitLabApiClient
             string query = _mergeRequestsQueryBuilder.
                 Build($"projects/{projectId}/merge_requests", projectMergeRequestOptions);
 
-            return await _httpFacade.GetPagedList<MergeRequest>(query);
+            return await _httpFacade.GetPagedList<MergeRequest>(query, cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace GitLabApiClient
             string query = _projectMergeRequestsQueryBuilder.
                 Build("merge_requests", projectMergeRequestOptions);
 
-            return await _httpFacade.GetPagedList<MergeRequest>(query);
+            return await _httpFacade.GetPagedList<MergeRequest>(query, cancellationToken);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Post<MergeRequest>($"projects/{request.ProjectId}/merge_requests", request);
+            return await _httpFacade.Post<MergeRequest>($"projects/{request.ProjectId}/merge_requests", request, cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace GitLabApiClient
             {
             }
             return await _httpFacade.Put<MergeRequest>(
-                $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
+                $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request, cancellationToken);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace GitLabApiClient
             {
             }
             return await _httpFacade.Put<MergeRequest>(
-                $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}/merge", request);
+                $"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}/merge", request, cancellationToken);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Delete($"projects/{projectId}/merge_requests/{mergeRequestId}");
+            await _httpFacade.Delete($"projects/{projectId}/merge_requests/{mergeRequestId}", cancellationToken);
         }
             
     }

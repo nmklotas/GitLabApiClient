@@ -41,7 +41,7 @@ namespace GitLabApiClient
             {
             }
             Guard.NotEmpty(name, nameof(name));
-            return (await _httpFacade.Get<IList<User>>($"users?username={name}")).FirstOrDefault();
+            return (await _httpFacade.Get<IList<User>>($"users?username={name}", cancellationToken)).FirstOrDefault();
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace GitLabApiClient
             {
             }
             Guard.NotEmpty(filter, nameof(filter));
-            return await _httpFacade.GetPagedList<User>($"users?search={filter}");
+            return await _httpFacade.GetPagedList<User>($"users?search={filter}", cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Post<User>("users", request);
+            return await _httpFacade.Post<User>("users", request, cancellationToken);
         }
 
 
@@ -88,7 +88,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Put<User>($"users/{request.UserId}", request);
+            return await _httpFacade.Put<User>($"users/{request.UserId}", request, cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.Get<Session>("user");
+            return await _httpFacade.Get<Session>("user", cancellationToken);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            await _httpFacade.Delete($"users/{userId}");
+            await _httpFacade.Delete($"users/{userId}", cancellationToken);
         } 
             
     }

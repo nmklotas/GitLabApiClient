@@ -61,7 +61,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _queryBuilder.Build("projects", queryOptions);
-            return await _httpFacade.GetPagedList<Project>(url);
+            return await _httpFacade.GetPagedList<Project>(url, cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace GitLabApiClient
             using (var registration = cancellationToken.Register(cancellationToken.ThrowIfCancellationRequested))
             {
             }
-            return await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
+            return await _httpFacade.GetPagedList<User>($"projects/{projectId}/users", cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace GitLabApiClient
             {
             }
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Post<Project>("projects", request);
+            return await _httpFacade.Post<Project>("projects", request, cancellationToken);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace GitLabApiClient
             {
             }
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Project>($"projects/{request.ProjectId}", request);
+            return await _httpFacade.Put<Project>($"projects/{request.ProjectId}", request, cancellationToken);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace GitLabApiClient
         /// <param name="cancellationToken">Request CancellationToken</param>
         public async Task DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            await _httpFacade.Delete($"projects/{id}");
+            await _httpFacade.Delete($"projects/{id}", cancellationToken);
         }
             
     }
