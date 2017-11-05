@@ -9,6 +9,7 @@ using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
 namespace GitLabApiClient.Test
 {
+    [Collection("GitLabContainerFixture")]
     public class GroupsClientTest
     {
         private readonly List<int> _groupIdsToClean = new List<int>();

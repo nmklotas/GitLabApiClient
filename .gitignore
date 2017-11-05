@@ -264,3 +264,6 @@ __pycache__/
 coverage/
 docker/build/volumes/*
 !docker/build/volumes/placeholder.gitkeep
+
+# vscode files
+.vscode/

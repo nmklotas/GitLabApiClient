@@ -5,6 +5,7 @@ using Xunit;
 
 namespace GitLabApiClient.Test
 {
+    [Collection("GitLabContainerFixture")]
     public class UsersClientTest
     {
         private readonly UsersClient _sut = new UsersClient(GitLabApiHelper.GetFacade());
