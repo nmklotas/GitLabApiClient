@@ -1,0 +1,13 @@
+language: csharp
+mono: none
+dotnet: 2.0.2
+dist: trusty
+sudo: required
+services:
+ - docker
+script:
+ - dotnet build
+ - (cd ./test/GitLabApiClient.Test && dotnet test)
+cache:
+  directories:
+  - $HOME/.nuget
