@@ -1,24 +1,15 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace GitLabApiClient.Test.Utilities
 {
-    public class FixtureTest
-    {
-        [Fact]
-        public async Task Test()
-        {
-            var fixture = new GitLabContainerFixture();
-            await fixture.InitializeAsync();
-        }
-    }
-
     public class GitLabContainerFixture : IAsyncLifetime
     {
-        private const string GitLabContainerPath = "../../../docker";
+        private const string GitLabContainerPath = "../../../../docker";
  
         private const string GitLabApiPath = "http://localhost:9190/";
  
