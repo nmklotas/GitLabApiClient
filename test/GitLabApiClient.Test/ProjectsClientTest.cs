@@ -11,6 +11,7 @@ using Xunit;
 
 namespace GitLabApiClient.Test
 {
+    [Collection("GitLabContainerFixture")]
     public class ProjectsClientTest : IAsyncLifetime
     {
         private List<int> ProjectIdsToClean { get; } = new List<int>();

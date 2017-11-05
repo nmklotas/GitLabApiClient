@@ -12,6 +12,7 @@ using Xunit;
 
 namespace GitLabApiClient.Test
 {
+    [Collection("GitLabContainerFixture")]
     public class MergeRequestClientTest : IAsyncLifetime
     {
         private readonly MergeRequestsClient _sut = new MergeRequestsClient(

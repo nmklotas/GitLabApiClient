@@ -13,13 +13,13 @@ namespace GitLabApiClient.Test.Utilities
  
         private const string GitLabApiPath = "http://localhost:9190/";
  
-        private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(60);
+        private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(10);
 
-        private HttpClient _client;
+        private HttpClient _gitLabPingClient;
 
         public async Task InitializeAsync()
         {
-            _client = new HttpClient
+            _gitLabPingClient = new HttpClient
             {
                 Timeout = TimeSpan.FromSeconds(1)
             };
@@ -37,7 +37,6 @@ namespace GitLabApiClient.Test.Utilities
 
         private void StartContainer()
         {
-            // Now start the docker containers
             StartProcessAndWaitForExit(new ProcessStartInfo
             {
                 FileName = "docker-compose",
@@ -75,15 +74,18 @@ namespace GitLabApiClient.Test.Utilities
             {
                 try
                 {
-                    var response = await _client.GetAsync(GitLabApiPath);
-                    return response.IsSuccessStatusCode;
+                    var response = await _gitLabPingClient.GetAsync(GitLabApiPath);
+                    if (response.IsSuccessCode)
+                    {
+                        Debug.WriteLine("GitLab started to respond!");
+                        return true;
+                    }
                 }
                 catch
                 {
-                    // Ignore exceptions, just retry
                 }
 
-                await Task.Delay(1000);
+                await Task.Delay(5000);
             }
  
             return false;
