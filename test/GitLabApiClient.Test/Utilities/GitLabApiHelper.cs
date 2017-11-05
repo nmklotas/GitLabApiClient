@@ -8,7 +8,7 @@ namespace GitLabApiClient.Test.Utilities
         public static GitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
-                "http://localhost:9090/api/v4/", new RequestsJsonSerializer(), "ElijahBaley");
+                "http://localhost:9190/api/v4/", new RequestsJsonSerializer(), "ElijahBaley");
 
             return facade;
         }
