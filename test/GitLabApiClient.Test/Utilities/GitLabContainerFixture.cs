@@ -75,7 +75,7 @@ namespace GitLabApiClient.Test.Utilities
                 try
                 {
                     var response = await _gitLabPingClient.GetAsync(GitLabApiPath);
-                    if (response.IsSuccessCode)
+                    if (response.IsSuccessStatusCode)
                     {
                         Debug.WriteLine("GitLab started to respond!");
                         return true;
