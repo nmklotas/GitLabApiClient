@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
@@ -27,11 +28,11 @@ namespace GitLabApiClient.Test
                 Description = "Description",
                 Labels = new[] { "Label1" },
                 RemoveSourceBranch = true,
-            });
+            }, CancellationToken.None);
 
             mergeRequest.Should().Match(Assert());
 
-            var retrievedMergeRequest = (await _sut.GetAsync(GitLabApiHelper.TestProjectId)).Single();
+            var retrievedMergeRequest = (await _sut.GetAsync(GitLabApiHelper.TestProjectId, CancellationToken.None)).Single();
 
             retrievedMergeRequest.Should().Match(Assert());
 
@@ -59,21 +60,21 @@ namespace GitLabApiClient.Test
                 Description = "Description1",
                 Labels = new[] { "Label1" },
                 MilestoneId = 1
-            });
+            }, CancellationToken.None);
 
             var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid)
             {
-                AssigneeId = 11,
+                AssigneeId = 1,
                 Description = "Description11",
                 Title = "Title11",
                 Labels = new[] { "Label11"},
                 MilestoneId = 11,
                 TargetBranch = "master11",
                 RemoveSourceBranch = true
-            });
+            }, CancellationToken.None);
 
             updatedMergeRequest.Should().Match<MergeRequest>(
-                m => m.Assignee.Id == 11 &&
+                m => m.Assignee.Id == 1 &&
                      m.Description == "Description11" &&
                      m.Title == "Title11" &&
                      m.Labels.SequenceEqual(new[] {"Label11"}) &&
@@ -90,10 +91,10 @@ namespace GitLabApiClient.Test
                 Description = "Description1",
                 Labels = new[] { "Label1" },
                 MilestoneId = 1
-            });
+            }, CancellationToken.None);
 
             Func<Task<MergeRequest>> acceptAction = () => 
-                _sut.AcceptAsync(new AcceptMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid));
+                _sut.AcceptAsync(new AcceptMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid), CancellationToken.None);
 
             acceptAction.ShouldThrow<GitLabException>().
                 WithMessage("{\"message\":\"405 Method Not Allowed\"}").
@@ -103,12 +104,13 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task MergeRequestCanBeClosed()
         {
-            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title1"));
+            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title1"),
+                                                             CancellationToken.None);
 
             var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid)
             {
                 State = RequestedMergeRequestState.Close
-            });
+            }, CancellationToken.None);
 
             updatedMergeRequest.State.Should().Be(MergeRequestState.Closed);
         }
@@ -119,9 +121,9 @@ namespace GitLabApiClient.Test
 
         private async Task DeleteAllMergeRequests()
         {
-            var mergeRequests = await _sut.GetAsync(GitLabApiHelper.TestProjectId);
+            var mergeRequests = await _sut.GetAsync(GitLabApiHelper.TestProjectId, CancellationToken.None);
             await Task.WhenAll(mergeRequests.Select(
-                m => _sut.DeleteAsync(GitLabApiHelper.TestProjectId, m.Iid)));
+                m => _sut.DeleteAsync(GitLabApiHelper.TestProjectId, m.Iid, CancellationToken.None)));
         }
     }
 }

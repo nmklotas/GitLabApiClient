@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
@@ -31,7 +32,7 @@ namespace GitLabApiClient.Test
                 MilestoneId = 2,
                 DiscussionToResolveId = 3,
                 MergeRequestIdToResolveDiscussions = 4
-            });
+            }, CancellationToken.None);
 
             //act
             var updatedIssue = await _sut.UpdateAsync(new UpdateIssueRequest(TestProjectTextId, createdIssue.Iid)
@@ -42,7 +43,7 @@ namespace GitLabApiClient.Test
                 Labels = new[] { "Label11" },
                 Title = "Title11",
                 MilestoneId = 22
-            });
+            }, CancellationToken.None);
 
             //assert
             updatedIssue.Should().Match<Issue>(i =>
@@ -57,13 +58,13 @@ namespace GitLabApiClient.Test
         public async Task CreatedIssueCanBeClosed()
         {
             //arrange
-            var createdIssue = await _sut.CreateAsync(new CreateIssueRequest(TestProjectTextId, "Title1"));
+            var createdIssue = await _sut.CreateAsync(new CreateIssueRequest(TestProjectTextId, "Title1"), CancellationToken.None);
 
             //act
             var updatedIssue = await _sut.UpdateAsync(new UpdateIssueRequest(TestProjectTextId, createdIssue.Iid)
             {
                 State = UpdatedIssueState.Close
-            });
+            }, CancellationToken.None);
 
             //assert
             updatedIssue.Should().Match<Issue>(i => i.State == IssueState.Closed);
@@ -74,10 +75,10 @@ namespace GitLabApiClient.Test
         {
             //arrange
             string title = Guid.NewGuid().ToString();
-            await _sut.CreateAsync(new CreateIssueRequest(TestProjectTextId, title));
+            await _sut.CreateAsync(new CreateIssueRequest(TestProjectTextId, title), CancellationToken.None);
 
             //act
-            var listedIssues = await _sut.GetAsync(TestProjectTextId, o => o.Filter = title);
+            var listedIssues = await _sut.GetProjectIssuesAsync(TestProjectTextId, o => o.Filter = title, CancellationToken.None);
 
             //assert
             listedIssues.Single().Title.Should().Be(title);
@@ -95,12 +96,12 @@ namespace GitLabApiClient.Test
                 Confidential = true,
                 Description = "Description",
                 Labels = new List<string> { "Label1" }
-            });
+            }, CancellationToken.None);
 
             //act
-            var issueById = await _sut.GetAsync(TestProjectId, issue.Iid);
-            var issueByProjectId = (await _sut.GetAsync(o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
-            var ownedIssue = (await _sut.GetAsync(o => o.Scope = Scope.CreatedByMe)).FirstOrDefault(i => i.Title == title);
+            var issueById = await _sut.GetAsync(TestProjectId, issue.Iid, CancellationToken.None);
+            var issueByProjectId = (await _sut.GetAsync(o => o.IssueIds = new[] { issue.Iid }, CancellationToken.None)).FirstOrDefault(i => i.Title == title);
+            var ownedIssue = (await _sut.GetAsync(o => o.Scope = Scope.CreatedByMe, CancellationToken.None)).FirstOrDefault(i => i.Title == title);
 
             //assert
             issue.Should().Match<Issue>(i =>

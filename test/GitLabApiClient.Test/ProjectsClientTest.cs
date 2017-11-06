@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
@@ -23,14 +24,14 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectRetrieved()
         {
-            var project = await _sut.GetAsync(GitLabApiHelper.TestProjectId);
+            var project = await _sut.GetAsync(GitLabApiHelper.TestProjectId, CancellationToken.None);
             project.Id.Should().Be(GitLabApiHelper.TestProjectId);
         }
 
         [Fact]
         public async Task ProjectUsersRetrieved()
         {
-            var users = await _sut.GetUsersAsync(GitLabApiHelper.TestProjectId);
+            var users = await _sut.GetUsersAsync(GitLabApiHelper.TestProjectId, CancellationToken.None);
             users.Should().NotBeEmpty();
         }
 
@@ -38,7 +39,7 @@ namespace GitLabApiClient.Test
         public async Task ProjectRetrievedByName()
         {
             var project = (await _sut.GetAsync(
-                o => o.Filter = "test-gitlabapiclient")).Single();
+                o => o.Filter = GitLabApiHelper.TestProjectName, CancellationToken.None)).Single();
 
             project.Id.Should().Be(GitLabApiHelper.TestProjectId);
         }
@@ -61,7 +62,7 @@ namespace GitLabApiClient.Test
             createRequest.OnlyAllowMergeIfPipelineSucceeds = true;
             createRequest.Visibility = ProjectVisibilityLevel.Internal;
 
-            var project = await _sut.CreateAsync(createRequest);
+            var project = await _sut.CreateAsync(createRequest, CancellationToken.None);
             project.Should().Match<Project>(
                 p => p.Description == "description1" &&
                      p.ContainerRegistryEnabled &&
@@ -94,7 +95,7 @@ namespace GitLabApiClient.Test
             createRequest.OnlyAllowMergeIfPipelineSucceeds = true;
             createRequest.Visibility = ProjectVisibilityLevel.Internal;
 
-            var createdProject = await _sut.CreateAsync(createRequest);
+            var createdProject = await _sut.CreateAsync(createRequest, CancellationToken.None);
             ProjectIdsToClean.Add(createdProject.Id);
 
             var updatedProject = await _sut.UpdateAsync(new UpdateProjectRequest(createdProject.Id.ToString(), createdProject.Name)
@@ -110,7 +111,7 @@ namespace GitLabApiClient.Test
                 OnlyAllowMergeIfAllDiscussionsAreResolved = false,
                 OnlyAllowMergeIfPipelineSucceeds = false,
                 Visibility = ProjectVisibilityLevel.Public
-            });
+            }, CancellationToken.None);
 
             updatedProject.Should().Match<Project>(
                 p => p.Description == "description11" &&
@@ -132,7 +133,7 @@ namespace GitLabApiClient.Test
         private async Task CleanupProjects()
         {
             foreach (int projectId in ProjectIdsToClean)
-                await _sut.DeleteAsync(projectId);
+                await _sut.DeleteAsync(projectId, CancellationToken.None);
         }
 
         private static string GetRandomProjectName() => "test-gitlabapiclient" + Path.GetRandomFileName();

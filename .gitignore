@@ -262,6 +262,7 @@ __pycache__/
 
 # Coverage files
 coverage/
+#docker volumes
 docker/build/volumes/*
 !docker/build/volumes/placeholder.gitkeep
 
