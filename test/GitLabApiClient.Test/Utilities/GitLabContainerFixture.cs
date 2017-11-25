@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace GitLabApiClient.Test.Utilities
 {
@@ -15,12 +14,7 @@ namespace GitLabApiClient.Test.Utilities
  
         private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(10);
 
-        private readonly ITestOutputHelper _testOutputHelper;
-
         private HttpClient _gitLabPingClient;
-
-        public GitLabContainerFixture(ITestOutputHelper testOutputHelper)
-            => _testOutputHelper = testOutputHelper;
 
         public async Task InitializeAsync()
         {
@@ -81,8 +75,8 @@ namespace GitLabApiClient.Test.Utilities
 
             Assert.Equal(0, process.ExitCode);
 
-            void LogOutputData(object sender, DataReceivedEventArgs e) 
-                => _testOutputHelper.WriteLine(e.Data);
+            void LogOutputData(object sender, DataReceivedEventArgs e)
+                => Trace.WriteLine(e.Data);
         }
 
         private async Task<bool> WaitForService()
@@ -96,7 +90,7 @@ namespace GitLabApiClient.Test.Utilities
                     var response = await _gitLabPingClient.GetAsync(GitLabApiPath);
                     if (response.IsSuccessStatusCode)
                     {
-                        _testOutputHelper.WriteLine("GitLab started to respond!");
+                        Trace.WriteLine("GitLab started to respond!");
                         return true;
                     }
                 }
