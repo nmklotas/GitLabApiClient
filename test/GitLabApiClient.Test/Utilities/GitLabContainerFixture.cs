@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GitLabApiClient.Test.Utilities
 {
@@ -15,7 +15,12 @@ namespace GitLabApiClient.Test.Utilities
  
         private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(10);
 
+        private readonly ITestOutputHelper _testOutputHelper;
+
         private HttpClient _gitLabPingClient;
+
+        public GitLabContainerFixture(ITestOutputHelper testOutputHelper)
+            => _testOutputHelper = testOutputHelper;
 
         public async Task InitializeAsync()
         {
@@ -26,7 +31,7 @@ namespace GitLabApiClient.Test.Utilities
 
             StartContainer();
             if (!await WaitForService())
-                throw new Exception($"Failed to start container, timeout hit.");
+                throw new Exception("Failed to start container, timeout hit.");
         }
 
         public Task DisposeAsync()
@@ -59,13 +64,27 @@ namespace GitLabApiClient.Test.Utilities
 
         private void StartProcessAndWaitForExit(ProcessStartInfo processStartInfo)
         {
+            processStartInfo.UseShellExecute = false;
+            processStartInfo.RedirectStandardOutput = true;
+            processStartInfo.CreateNoWindow = true;
             processStartInfo.Environment["COMPUTERNAME"] = Environment.MachineName;
 
-            var process = Process.Start(processStartInfo);
+            var process = new Process
+            {
+                StartInfo = processStartInfo
+            };
+
+            process.OutputDataReceived += LogOutputData;
+            process.Start();
+            process.BeginOutputReadLine();
             process.WaitForExit();
+
             Assert.Equal(0, process.ExitCode);
+
+            void LogOutputData(object sender, DataReceivedEventArgs e) 
+                => _testOutputHelper.WriteLine(e.Data);
         }
- 
+
         private async Task<bool> WaitForService()
         {
             var startTime = DateTime.Now;
@@ -77,11 +96,14 @@ namespace GitLabApiClient.Test.Utilities
                     var response = await _gitLabPingClient.GetAsync(GitLabApiPath);
                     if (response.IsSuccessStatusCode)
                     {
-                        Debug.WriteLine("GitLab started to respond!");
+                        _testOutputHelper.WriteLine("GitLab started to respond!");
                         return true;
                     }
                 }
-                catch
+                catch (HttpRequestException)
+                {
+                }
+                catch (OperationCanceledException)
                 {
                 }
 
