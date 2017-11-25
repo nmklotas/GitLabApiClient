@@ -6,6 +6,7 @@ using Xunit;
 
 namespace GitLabApiClient.Test.Internal.Http
 {
+    [Collection("GitLabContainerFixture")]
     public class GitLabHttpFacadeTest
     {
         [Fact]
@@ -27,7 +28,6 @@ namespace GitLabApiClient.Test.Internal.Http
                 s.Name == "Administrator");
 
             session.PrivateToken.Should().NotBeNullOrEmpty();
-           
         }
     }
 }
