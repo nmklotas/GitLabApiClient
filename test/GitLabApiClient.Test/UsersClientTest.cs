@@ -5,6 +5,8 @@ using Xunit;
 
 namespace GitLabApiClient.Test
 {
+    [Trait("Category", "LinuxIntegration")]
+    [Collection("GitLabContainerFixture")]
     public class UsersClientTest
     {
         private readonly UsersClient _sut = new UsersClient(GetFacade());
