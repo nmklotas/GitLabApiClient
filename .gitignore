@@ -262,8 +262,10 @@ __pycache__/
 
 # Coverage files
 coverage/
-docker/build/volumes/*
-!docker/build/volumes/placeholder.gitkeep
+
+# docker files
+docker/volumes/*
+!docker/volumes/placeholder.gitkeep
 
 # vscode files
 .vscode/
