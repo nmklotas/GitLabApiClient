@@ -12,6 +12,7 @@ using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
 namespace GitLabApiClient.Test
 {
+    [Trait("Category", "LinuxIntegration")]
     [Collection("GitLabContainerFixture")]
     public class IssuesClientTest
     {

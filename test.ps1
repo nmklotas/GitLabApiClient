@@ -13,7 +13,7 @@ $codeCov = "$PSScriptRoot\packages\CodeCov.1.0.3\tools\codecov.exe"
 Write-Host "Calculating coverage with OpenCover."
 & $openCover `
   -target:"c:\Program Files\dotnet\dotnet.exe" `
-  -targetargs:"test test\GitLabApiClient.Test\GitLabApiClient.Test.csproj" `
+  -targetargs:"test test\GitLabApiClient.Test\GitLabApiClient.Test.csproj --filter Category!=LinuxIntegration" `
   -mergeoutput `
   -hideskipped:File `
   -output:coverage/coverage.xml `
