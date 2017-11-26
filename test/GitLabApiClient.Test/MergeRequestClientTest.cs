@@ -63,7 +63,7 @@ namespace GitLabApiClient.Test
 
             var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid)
             {
-                AssigneeId = 11,
+                AssigneeId = 1,
                 Description = "Description11",
                 Title = "Title11",
                 Labels = new[] { "Label11"},
@@ -73,7 +73,7 @@ namespace GitLabApiClient.Test
             });
 
             updatedMergeRequest.Should().Match<MergeRequest>(
-                m => m.Assignee.Id == 11 &&
+                m => m.Assignee.Id == 1 &&
                      m.Description == "Description11" &&
                      m.Title == "Title11" &&
                      m.Labels.SequenceEqual(new[] {"Label11"}) &&

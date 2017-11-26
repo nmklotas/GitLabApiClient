@@ -2,6 +2,7 @@ version: '2'
 services:
     gitlabapiclient:
         image: 'gitlab/gitlab-ce:latest'
+        build: .
         restart: always
         hostname: 'localhost' 
         environment:
@@ -13,6 +14,6 @@ services:
            - '9143:443'
            - '9122:22'
         volumes:
-            - './build/volumes/config:/etc/gitlab'
-            - './build/volumes/logs:/var/log/gitlab'
-            - './build/volumes/data:/var/opt/gitlab'
+            - './volumes/config:/etc/gitlab'
+            - './volumes/logs:/var/log/gitlab'
+            - './volumes/data:/var/opt/gitlab'

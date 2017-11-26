@@ -16,21 +16,22 @@ namespace GitLabApiClient.Test.Utilities
 
         private HttpClient _gitLabPingClient;
 
-        public async Task InitializeAsync()
+        public Task InitializeAsync()
         {
-            _gitLabPingClient = new HttpClient
-            {
-                Timeout = TimeSpan.FromSeconds(1)
-            };
+            // _gitLabPingClient = new HttpClient
+            // {
+            //     Timeout = TimeSpan.FromSeconds(1)
+            // };
 
-            StartContainer();
-            if (!await WaitForService())
-                throw new Exception("Failed to start container, timeout hit.");
+            // StartContainer();
+            // if (!await WaitForService())
+            //     throw new Exception("Failed to start container, timeout hit.");
+            return Task.CompletedTask;
         }
 
         public Task DisposeAsync()
         {
-            StopContainer();
+           // StopContainer();
             return Task.CompletedTask;
         }
 
