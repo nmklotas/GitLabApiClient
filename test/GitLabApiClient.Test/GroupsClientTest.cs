@@ -31,12 +31,12 @@ namespace GitLabApiClient.Test
             group.Description.Should().BeEmpty();
         }
 
-        [Fact]
-        public async Task ProjectsCanBeRetrievedFromGroup()
-        {
-            var project = await _sut.GetProjectsAsync(TestGroupName, o => o.Search = TestProjectName);
-            project.Should().ContainSingle(s => s.Name == TestProjectName);
-        }
+        // [Fact]
+        // public async Task ProjectsCanBeRetrievedFromGroup()
+        // {
+        //     var project = await _sut.GetProjectsAsync(TestGroupName);
+        //     project.Should().ContainSingle(s => s.Name == TestProjectName);
+        // }
 
         [Fact]
         public async Task GroupsCanBeRetrievedFromSearch()

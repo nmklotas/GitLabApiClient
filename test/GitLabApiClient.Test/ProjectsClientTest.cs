@@ -37,10 +37,10 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectRetrievedByName()
         {
-            var project = (await _sut.GetAsync(
-                o => o.Filter = "test-gitlabapiclient")).Single();
+            var projects = await _sut.GetAsync(
+                o => o.Filter = GitLabApiHelper.TestProjectName);
 
-            project.Id.Should().Be(GitLabApiHelper.TestProjectId);
+            projects.Should().ContainSingle().Which.Id.Should().Be(GitLabApiHelper.TestProjectId);
         }
 
 

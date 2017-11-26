@@ -1,4 +1,4 @@
-FROM gitlab/gitlab-ee:latest
+FROM gitlab/gitlab-ce:latest
 
 RUN gem install gitlab
 
@@ -14,4 +14,3 @@ RUN echo "export export GITLAB_API_PRIVATE_TOKEN=ElijahBaley" >> /etc/profile
 
 EXPOSE 443 80 22 5432
 CMD ["/entrypoint.sh"]
-
