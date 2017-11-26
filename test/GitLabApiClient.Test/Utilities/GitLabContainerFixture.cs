@@ -16,22 +16,21 @@ namespace GitLabApiClient.Test.Utilities
 
         private HttpClient _gitLabPingClient;
 
-        public Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            // _gitLabPingClient = new HttpClient
-            // {
-            //     Timeout = TimeSpan.FromSeconds(1)
-            // };
+            _gitLabPingClient = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(1)
+            };
 
-            // StartContainer();
-            // if (!await WaitForService())
-            //     throw new Exception("Failed to start container, timeout hit.");
-            return Task.CompletedTask;
+            StartContainer();
+            if (!await WaitForService())
+                throw new Exception("Failed to start container, timeout hit.");
         }
 
         public Task DisposeAsync()
         {
-           // StopContainer();
+            StopContainer();
             return Task.CompletedTask;
         }
 
@@ -77,6 +76,7 @@ namespace GitLabApiClient.Test.Utilities
             Assert.Equal(0, process.ExitCode);
 
             void LogOutputData(object sender, DataReceivedEventArgs e)
+            //TODO: find out how to log data in XUnit fixtures
                 => Trace.WriteLine(e.Data);
         }
 
@@ -102,7 +102,7 @@ namespace GitLabApiClient.Test.Utilities
                 {
                 }
 
-                await Task.Delay(5000);
+                await Task.Delay(15000);
             }
  
             return false;

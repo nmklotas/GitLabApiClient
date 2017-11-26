@@ -16,10 +16,10 @@ do
             configured=true
         else
             echo "Unable to configure retry in 30s"
-            sleep 30
+            sleep 15
         fi
     else
         echo "Gitlab is not running retry in 30s"
-        sleep 30
+        sleep 15
     fi
 done
