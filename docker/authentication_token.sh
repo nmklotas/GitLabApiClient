@@ -10,6 +10,6 @@ do
         echo "Success updated root authentication_token"
     else
         echo "Unable to update root authentication_token retry in 30s"
-        sleep 30
+        sleep 15
     fi
 done
