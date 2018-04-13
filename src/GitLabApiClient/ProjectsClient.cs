@@ -28,7 +28,7 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        /// Retrieves project by it's id.
+        /// Retrieves project by its id.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
         public async Task<Project> GetAsync(int projectId) =>
