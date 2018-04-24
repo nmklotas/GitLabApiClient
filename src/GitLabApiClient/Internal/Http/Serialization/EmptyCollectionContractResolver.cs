@@ -8,6 +8,11 @@ namespace GitLabApiClient.Internal.Http.Serialization
 {
     internal sealed class EmptyCollectionContractResolver : DefaultContractResolver
     {
+        public EmptyCollectionContractResolver()
+        {
+            NamingStrategy = new SnakeCaseNamingStrategy();
+        }
+
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var property = base.CreateProperty(member, memberSerialization);
