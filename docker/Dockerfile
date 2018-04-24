@@ -1,4 +1,4 @@
-FROM gitlab/gitlab-ce:latest
+FROM gitlab/gitlab-ce:10.1.4-ce.0
 
 RUN gem install gitlab
 
