@@ -1,7 +1,6 @@
 version: '2'
 services:
     gitlabapiclient:
-        image: 'gitlab/gitlab-ce:latest'
         build: .
         restart: always
         hostname: 'localhost' 

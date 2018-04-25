@@ -42,7 +42,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task GroupsCanBeRetrievedFromSearch()
         {
-            var group = await _sut.SearchAsync("gitlab");
+            var group = await _sut.SearchAsync(TestGroupName);
             group.Should().NotBeEmpty();
         }
 
