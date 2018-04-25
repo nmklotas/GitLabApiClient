@@ -42,7 +42,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task GroupsCanBeRetrievedFromSearch()
         {
-            var group = await _sut.SearchAsync("txxxestgrouxxxp");
+            var group = await _sut.SearchAsync("gitlab");
             group.Should().NotBeEmpty();
         }
 
@@ -51,7 +51,7 @@ namespace GitLabApiClient.Test
         {
             var group = await _sut.GetAsync(o =>
             {
-                o.Search = "txxxestgrouxxxp";
+                o.Search = "gitlab";
                 o.Order = GroupsOrder.Name;
                 o.Sort = GroupsSort.Descending;
                 o.AllAvailable = true;
