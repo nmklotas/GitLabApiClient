@@ -83,5 +83,19 @@ namespace GitLabApiClient
         /// <param name="id">Id of the project.</param>
         public async Task DeleteAsync(int id) => 
             await _httpFacade.Delete($"projects/{id}");
+
+        /// <summary>
+        /// Archive project.
+        /// </summary>
+        /// <param name="id">Id of the project.</param>
+        public async Task ArchiveAsync(int id) => 
+            await _httpFacade.Post($"projects/{id}/archive");
+
+        /// <summary>
+        /// Unarchive project.
+        /// </summary>
+        /// <param name="id">Id of the project.</param>
+        public async Task UnArchiveAsync(int id) => 
+            await _httpFacade.Post($"projects/{id}/unarchive");
     }
 }
