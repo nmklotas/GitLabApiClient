@@ -46,5 +46,8 @@ namespace GitLabApiClient.Models.Issues.Responses
         
         [JsonProperty("weight")]
         public int? Weight { get; set; }
+
+        [JsonProperty("time_stats")]
+        public IssueTimeStatistic TimeStats { get; set; }
     }
 }
