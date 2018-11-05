@@ -43,5 +43,8 @@ namespace GitLabApiClient.Models.Issues.Responses
 
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
+        
+        [JsonProperty("weight")]
+        public int? Weight { get; set; }
     }
 }

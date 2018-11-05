@@ -91,5 +91,11 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// </summary>
         [JsonProperty("due_date")]
         public string DueDate { get; set; }
+
+        /// <summary>
+        /// The weight of an issue. Valid values are greater than or equal to 0.
+        /// </summary>
+        [JsonProperty("weight")]
+        public int? Weight { get; set; }
     }
 }
