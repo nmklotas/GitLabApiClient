@@ -53,7 +53,7 @@ namespace GitLabApiClient.Test
                 i.Confidential == false &&
                 i.Description == "Description11" &&
                 i.Labels.SequenceEqual(new[] { "Label11" }) &&
-                i.Title == "Title11" && 
+                i.Title == "Title11" &&
                 i.Weight == 33);
         }
 
@@ -84,7 +84,10 @@ namespace GitLabApiClient.Test
             var listedIssues = await _sut.GetAsync(TestProjectTextId, o => o.Filter = title);
 
             //assert
-            listedIssues.Single().Title.Should().Be(title);
+            listedIssues.Single().Should().Match<Issue>(i =>
+                i.ProjectId == TestProjectTextId &&
+                i.Title == title &&
+                i.TimeStats != null);
         }
 
         [Fact]
