@@ -31,7 +31,8 @@ namespace GitLabApiClient.Test
                 Labels = new[] { "Label1" },
                 MilestoneId = 2,
                 DiscussionToResolveId = 3,
-                MergeRequestIdToResolveDiscussions = 4
+                MergeRequestIdToResolveDiscussions = 4,
+                Weight = 3
             });
 
             //act
@@ -42,7 +43,8 @@ namespace GitLabApiClient.Test
                 Description = "Description11",
                 Labels = new[] { "Label11" },
                 Title = "Title11",
-                MilestoneId = 22
+                MilestoneId = 22,
+                Weight = 33
             });
 
             //assert
@@ -51,7 +53,8 @@ namespace GitLabApiClient.Test
                 i.Confidential == false &&
                 i.Description == "Description11" &&
                 i.Labels.SequenceEqual(new[] { "Label11" }) &&
-                i.Title == "Title11");
+                i.Title == "Title11" &&
+                i.Weight == 33);
         }
 
         [Fact]
@@ -81,7 +84,10 @@ namespace GitLabApiClient.Test
             var listedIssues = await _sut.GetAsync(TestProjectTextId, o => o.Filter = title);
 
             //assert
-            listedIssues.Single().Title.Should().Be(title);
+            listedIssues.Single().Should().Match<Issue>(i =>
+                i.ProjectId == TestProjectTextId &&
+                i.Title == title &&
+                i.TimeStats != null);
         }
 
         [Fact]

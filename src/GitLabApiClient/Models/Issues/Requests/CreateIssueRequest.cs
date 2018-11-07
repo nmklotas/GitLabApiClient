@@ -94,5 +94,11 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// </summary>
         [JsonProperty("discussion_to_resolve")]
         public int? DiscussionToResolveId { get; set; }
+
+        /// <summary>
+        /// The weight of an issue. Valid values are greater than or equal to 0.
+        /// </summary>
+        [JsonProperty("weight")]
+        public int? Weight { get; set; }
     }
 }
