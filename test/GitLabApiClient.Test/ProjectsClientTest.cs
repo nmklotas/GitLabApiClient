@@ -36,6 +36,13 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
+        public async Task ProjectLabelsRetrieved()
+        {
+            var users = await _sut.GetLabelsAsync(GitLabApiHelper.TestProjectId);
+            users.Should().NotBeEmpty();
+        }
+
+        [Fact]
         public async Task ProjectRetrievedByName()
         {
             var projects = await _sut.GetAsync(
@@ -124,6 +131,34 @@ namespace GitLabApiClient.Test
                      p.OnlyAllowMergeIfAllDiscussionsAreResolved == false &&
                      p.OnlyAllowMergeIfPipelineSucceeds == false &&
                      p.Visibility == ProjectVisibilityLevel.Public);
+        }
+
+        [Fact]
+        public async Task CreatedProjectLabelCanBeUpdated()
+        {
+            //arrange
+            var createdLabel= await _sut.CreateLabelAsync(new CreateProjectLabelRequest(GitLabApiHelper.TestProjectTextId, "Label 1")
+            {
+                Color = "#FFFFFF",
+                Description = "description1",
+                Priority = 1
+            });
+
+            //act
+            var updateRequest = UpdateProjectLabelRequest.FromNewName(GitLabApiHelper.TestProjectTextId, createdLabel.Name, "Label 11");
+            updateRequest.Color = "#000000";
+            updateRequest.Description = "description11";
+            updateRequest.Priority = 11;
+            
+            var updatedLabel = await _sut.UpdateLabelAsync(updateRequest);
+            await _sut.DeleteLabelAsync(GitLabApiHelper.TestProjectId, updatedLabel.Name);
+
+            //assert
+            updatedLabel.Should().Match<Label>(l =>
+                l.Name == "Label 11" &&
+                l.Color == "#000000" &&
+                l.Description == "description11" &&
+                l.Priority == 11);
         }
 
         public Task InitializeAsync() => CleanupProjects();

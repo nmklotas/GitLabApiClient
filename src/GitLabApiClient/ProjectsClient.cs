@@ -56,6 +56,13 @@ namespace GitLabApiClient
             await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
 
         /// <summary>
+        /// Get the labels list of a project.
+        /// </summary>
+        /// <param name="projectId">Id of the project.</param>
+        public async Task<IList<Label>> GetLabelsAsync(int projectId) =>
+            await _httpFacade.GetPagedList<Label>($"projects/{projectId}/labels");
+
+        /// <summary>
         /// Creates new project.
         /// </summary>
         /// <param name="request">Create project request.</param>
@@ -64,6 +71,17 @@ namespace GitLabApiClient
         {
             Guard.NotNull(request, nameof(request));
             return await _httpFacade.Post<Project>("projects", request);
+        }
+
+        /// <summary>
+        /// Creates new project label.
+        /// </summary>
+        /// <param name="request">Create label request.</param>
+        /// <returns>Newly created label.</returns>
+        public async Task<Label> CreateLabelAsync(CreateProjectLabelRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Label>($"projects/{request.ProjectId}/labels", request);
         }
 
         /// <summary>
@@ -78,11 +96,30 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Updates an existing label with new name or new color. At least one parameter is required, to update the label.
+        /// </summary>
+        /// <param name="request">Update label request.</param>
+        /// <returns>Newly modified label.</returns>
+        public async Task<Label> UpdateLabelAsync(UpdateProjectLabelRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Put<Label>($"projects/{request.ProjectId}/labels", request);
+        }
+
+        /// <summary>
         /// Deletes project.
         /// </summary>
         /// <param name="id">Id of the project.</param>
         public async Task DeleteAsync(int id) => 
             await _httpFacade.Delete($"projects/{id}");
+
+        /// <summary>
+        /// Deletes project labels.
+        /// </summary>
+        /// <param name="id">Id of the project.</param>
+        /// <param name="name">Name of the label.</param>
+        public async Task DeleteLabelAsync(int id, string name) =>
+            await _httpFacade.Delete($"projects/{id}/labels?name={name}");
 
         /// <summary>
         /// Archive project.
