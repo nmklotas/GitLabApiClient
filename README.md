@@ -64,7 +64,8 @@ Delete project.
 Get project users.  
 Query projects.  
 Archive/Unarchive
-Labels (contributed by DTeuchert)
+Labels (contributed by @DTeuchert)
+Milestones (contributed by @DTeuchert)
 
 4. Users API:  
 Create user.  
