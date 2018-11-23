@@ -171,7 +171,7 @@ namespace GitLabApiClient
         /// Deletes project milestone. Only for user with developer access to the project.
         /// </summary>
         /// <param name="id">Id of the project.</param>
-        /// <param name="milestoneId">The ID of the project’s milestone.</param>
+        /// <param name="milestoneId">The ID of the projectï¿½s milestone.</param>
         public async Task DeleteMilestoneAsync(int id, int milestoneId) =>
             await _httpFacade.Delete($"projects/{id}/milestones/{milestoneId}");
 
