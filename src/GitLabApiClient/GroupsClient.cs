@@ -7,6 +7,9 @@ using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Groups.Requests;
 using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Milestones.Requests;
+using GitLabApiClient.Internal.Utilities;
 
 namespace GitLabApiClient
 {
@@ -20,15 +23,18 @@ namespace GitLabApiClient
         private readonly GitLabHttpFacade _httpFacade;
         private readonly GroupsQueryBuilder _queryBuilder;
         private readonly ProjectsGroupQueryBuilder _projectsQueryBuilder;
+        private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
 
         internal GroupsClient(
             GitLabHttpFacade httpFacade,
             GroupsQueryBuilder queryBuilder,
-            ProjectsGroupQueryBuilder projectsQueryBuilder)
+            ProjectsGroupQueryBuilder projectsQueryBuilder, 
+            MilestonesQueryBuilder queryMilestonesBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
             _projectsQueryBuilder = projectsQueryBuilder;
+            _queryMilestonesBuilder = queryMilestonesBuilder;
         }
 
         /// <summary>
@@ -60,8 +66,8 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        /// Get a list of projects in this group..
-        /// When accessed without authentication, only public projects are returned..
+        /// Get a list of projects in this group.
+        /// When accessed without authentication, only public projects are returned.
         /// </summary>
         /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
         /// <param name="options">Groups projects retrieval options.</param>
@@ -76,12 +82,45 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Get a list of milestones in this group.
+        /// </summary>
+        /// <param name="groupId">Id of the group.</param>
+        /// <param name="options">Query options.</param>
+        public async Task<IList<Milestone>> GetMilestonesAsync(int groupId, Action<MilestonesQueryOptions> options = null)
+        {
+            var queryOptions = new MilestonesQueryOptions();
+            options?.Invoke(queryOptions);
+
+            string url = _queryMilestonesBuilder.Build($"groups/{groupId}/milestones", queryOptions);
+            return await _httpFacade.GetPagedList<Milestone>(url);
+        }
+
+        /// <summary>
+        /// Retrieves a group milestone by its id.
+        /// </summary>
+        /// <param name="groupId">Id of the group.</param>
+        /// <param name="milestoneId">Id of the milestone.</param>
+        public async Task<Milestone> GetMilestoneAsync(int groupId, int milestoneId) =>
+            await _httpFacade.Get<Milestone>($"groups/{groupId}/milestones/{milestoneId}");
+
+        /// <summary>
         /// Creates a new project group.
         /// Available only for users who can create groups.
         /// </summary>
         /// <returns>The newly created group.</returns>
         public async Task<Group> CreateAsync(CreateGroupRequest request) =>
             await _httpFacade.Post<Group>("groups", request);
+
+        /// <summary>
+        /// Creates a new group milestone.
+        /// </summary>
+        /// <param name="request">Create milestone request.</param>
+        /// <returns>Newly created milestone.</returns>
+        public async Task<Milestone> CreateMilestoneAsync(CreateGroupMilestoneRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Milestone>($"groups/{request.GroupId}/milestones", request);
+        }
 
         /// <summary>
         /// Transfer a project to the Group namespace. Available only for admin
@@ -101,12 +140,31 @@ namespace GitLabApiClient
             await _httpFacade.Put<Group>($"groups/{request.Id}", request);
 
         /// <summary>
+        /// Updates an existing group milestone.
+        /// </summary>
+        /// <param name="request">Update milestone request.</param>
+        /// <returns>Newly modified milestone.</returns>
+        public async Task<Milestone> UpdateMilestoneAsync(UpdateGroupMilestoneRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Put<Milestone>($"groups/{request.GroupId}/milestones/{request.MilestoneId}", request);
+        }
+
+        /// <summary>
         /// Removes group with all projects inside.
         /// Only available to group owners and administrators.
         /// </summary>
         /// <param name="groupId">The ID or path of a user group.</param>
         public async Task DeleteAsync(string groupId) =>
             await _httpFacade.Delete($"groups/{groupId}");
+
+        /// <summary>
+        /// Deletes a group milestone. Only for user with developer access to the group.
+        /// </summary>
+        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="milestoneId">The ID of the group's milestone.</param>
+        public async Task DeleteMilestoneAsync(int groupId, int milestoneId) =>
+            await _httpFacade.Delete($"groups/{groupId}/milestones/{milestoneId}");
 
         /// <summary>
         /// Syncs the group with its linked LDAP group.

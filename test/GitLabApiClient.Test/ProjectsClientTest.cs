@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
