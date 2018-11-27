@@ -37,7 +37,7 @@ namespace GitLabApiClient
             var projectIssuesQueryBuilder = new ProjectIssuesQueryBuilder();
             var issuesQueryBuilder = new IssuesQueryBuilder();
             var mergeRequestsQueryBuilder = new MergeRequestsQueryBuilder();
-            var projectMilestonesQueryBuilder = new ProjectMilestonesQueryBuilder();
+            var projectMilestonesQueryBuilder = new MilestonesQueryBuilder();
             var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
             var groupsQueryBuilder = new GroupsQueryBuilder();
             var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();

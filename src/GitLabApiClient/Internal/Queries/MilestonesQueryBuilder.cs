@@ -1,12 +1,12 @@
 using System;
-using GitLabApiClient.Models.Projects.Requests;
-using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Milestones.Requests;
+using GitLabApiClient.Models.Milestones.Responses;
 
 namespace GitLabApiClient.Internal.Queries
 {
-    internal sealed class ProjectMilestonesQueryBuilder : QueryBuilder<ProjectMilestonesQueryOptions>
+    internal sealed class MilestonesQueryBuilder : QueryBuilder<MilestonesQueryOptions>
     {
-        protected override void BuildCore(ProjectMilestonesQueryOptions options)
+        protected override void BuildCore(MilestonesQueryOptions options)
         {
             if(options.MilestoneIds.Count > 0)
                 Add(options.MilestoneIds);
