@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Milestones.Responses;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Issues.Responses

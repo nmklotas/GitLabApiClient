@@ -3,33 +3,33 @@ using GitLabApiClient.Models.Milestones.Requests;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace GitLabApiClient.Models.Projects.Requests
+namespace GitLabApiClient.Models.Groups.Requests
 {
     /// <summary>
-    /// Updates an existing project milestone.
+    /// Updates an existing group milestone.
     /// </summary>
-    public sealed class UpdateProjectMilestoneRequest
+    public sealed class UpdateGroupMilestoneRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateProjectMilestoneRequest"/> class.
+        /// Initializes a new instance of the <see cref="UpdateGroupMilestoneRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
-        /// <param name="milestoneId">The ID of a project milestone.</param>
-        public UpdateProjectMilestoneRequest(string projectId, int milestoneId)
+        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="milestoneId">The ID of a group milestone.</param>
+        public UpdateGroupMilestoneRequest(string groupId, int milestoneId)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
-            ProjectId = projectId;
+            Guard.NotEmpty(groupId, nameof(groupId));
+            GroupId = groupId;
             MilestoneId = milestoneId;
         }
 
         /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
+        /// The ID or URL-encoded path of the group owned by the authenticated user.
         /// </summary>
         [JsonProperty("id")]
-        public string ProjectId { get; private set; }
-        
+        public string GroupId { get; private set; }
+
         /// <summary>
-        /// The ID of a project milestone.
+        /// The ID of a group milestone.
         /// </summary>
         [JsonProperty("milestone_id")]
         public int MilestoneId { get; private set; }

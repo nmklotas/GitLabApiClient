@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.Milestones.Requests;
+using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Test.Utilities;
@@ -21,7 +22,7 @@ namespace GitLabApiClient.Test
         private readonly ProjectsClient _sut = new ProjectsClient(
             GitLabApiHelper.GetFacade(),
             new ProjectsQueryBuilder(),
-            new ProjectMilestonesQueryBuilder());
+            new MilestonesQueryBuilder());
 
         [Fact]
         public async Task ProjectRetrieved()

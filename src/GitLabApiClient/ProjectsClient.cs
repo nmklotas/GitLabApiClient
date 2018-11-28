@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models.Milestones.Requests;
+using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Users.Responses;
@@ -20,13 +22,13 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly ProjectsQueryBuilder _queryBuilder;
-        private readonly ProjectMilestonesQueryBuilder _queryProjectsMilestonesBuilder;
+        private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
 
-        internal ProjectsClient(GitLabHttpFacade httpFacade, ProjectsQueryBuilder queryBuilder, ProjectMilestonesQueryBuilder queryProjectsMilestonesBuilder)
+        internal ProjectsClient(GitLabHttpFacade httpFacade, ProjectsQueryBuilder queryBuilder, MilestonesQueryBuilder queryMilestonesBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
-            _queryProjectsMilestonesBuilder = queryProjectsMilestonesBuilder;
+            _queryMilestonesBuilder = queryMilestonesBuilder;
         }
 
         /// <summary>
@@ -69,12 +71,12 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
         /// <param name="options">Query options.</param>
-        public async Task<IList<Milestone>> GetMilestonesAsync(int projectId, Action<ProjectMilestonesQueryOptions> options = null)
+        public async Task<IList<Milestone>> GetMilestonesAsync(int projectId, Action<MilestonesQueryOptions> options = null)
         {
-            var queryOptions = new ProjectMilestonesQueryOptions();
+            var queryOptions = new MilestonesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryProjectsMilestonesBuilder.Build($"projects/{projectId}/milestones", queryOptions);
+            string url = _queryMilestonesBuilder.Build($"projects/{projectId}/milestones", queryOptions);
             return await _httpFacade.GetPagedList<Milestone>(url);
         }
 
