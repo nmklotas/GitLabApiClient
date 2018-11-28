@@ -37,7 +37,7 @@ namespace GitLabApiClient
             var projectIssuesQueryBuilder = new ProjectIssuesQueryBuilder();
             var issuesQueryBuilder = new IssuesQueryBuilder();
             var mergeRequestsQueryBuilder = new MergeRequestsQueryBuilder();
-            var projectMilestonesQueryBuilder = new ProjectMilestonesQueryBuilder();
+            var projectMilestonesQueryBuilder = new MilestonesQueryBuilder();
             var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
             var groupsQueryBuilder = new GroupsQueryBuilder();
             var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
@@ -46,7 +46,7 @@ namespace GitLabApiClient
             MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder);
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder);
             Users = new UsersClient(_httpFacade);
-            Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder);
+            Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder);
         }
 
         /// <summary>

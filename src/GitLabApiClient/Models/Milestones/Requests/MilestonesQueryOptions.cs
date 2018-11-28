@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Milestones.Responses;
 
-namespace GitLabApiClient.Models.Projects.Requests
+namespace GitLabApiClient.Models.Milestones.Requests
 {
     /// <summary>
     /// Options for project milestone listing
     /// </summary>
-    public sealed class ProjectMilestonesQueryOptions
+    public sealed class MilestonesQueryOptions
     {
-        internal ProjectMilestonesQueryOptions() { }
+        internal MilestonesQueryOptions() { }
 
         /// <summary>
         /// Return only the milestones having the given iid.

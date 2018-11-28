@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace GitLabApiClient.Models.Projects.Requests
+namespace GitLabApiClient.Models.Milestones.Requests
 {
     public enum UpdatedMilestoneState
     {
