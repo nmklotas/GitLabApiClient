@@ -85,4 +85,4 @@ Create LDAP group link.
 Delete LDAP group link.  
 Delete LDAP for a specific LDAP provider.  
 Query groups.  
-Milestones.  
+Milestones.  (contributed by @DTeuchert)
