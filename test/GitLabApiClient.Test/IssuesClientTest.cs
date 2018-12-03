@@ -7,6 +7,8 @@ using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Issues.Responses;
+using GitLabApiClient.Models.Notes.Requests;
+using GitLabApiClient.Models.Notes.Responses;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
@@ -17,7 +19,7 @@ namespace GitLabApiClient.Test
     public class IssuesClientTest
     {
         private readonly IssuesClient _sut = new IssuesClient(
-            GetFacade(), new IssuesQueryBuilder(), new ProjectIssuesQueryBuilder());
+            GetFacade(), new IssuesQueryBuilder(), new ProjectIssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
 
         [Fact]
         public async Task CreatedIssueCanBeUpdated()
@@ -120,5 +122,48 @@ namespace GitLabApiClient.Test
             ownedIssue.ShouldBeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
         }
 
+        [Fact]
+        public async Task CreatedIssueNoteCanBeRetrieved()
+        {
+            //arrange
+            string body = "comment1";
+            var issue = await _sut.CreateAsync(new CreateIssueRequest(TestProjectTextId, Guid.NewGuid().ToString())
+            {
+                Description = "Description"
+            });
+            
+            //act
+            var note = await _sut.CreateNoteAsync(new CreateIssueNoteRequest(TestProjectTextId, issue.Iid, body)
+            {
+                CreatedAt = DateTime.Now
+            });
+            var issueNotes = (await _sut.GetNotesAsync(TestProjectId, issue.Iid)).FirstOrDefault(i => i.Body == body);
+            var issueNote = await _sut.GetNoteAsync(TestProjectId, issue.Iid, note.Id);
+
+            //assert
+            note.Should().Match<Note>(n =>
+                n.Body == body);
+
+            issueNotes.ShouldBeEquivalentTo(note, o => o.Excluding(s => s.UpdatedAt));
+            issueNote.ShouldBeEquivalentTo(note, o => o.Excluding(s => s.UpdatedAt));
+        }
+
+        [Fact]
+        public async Task CreatedIssueNoteCanBeUpdated()
+        {
+            //arrange
+            var createdIssue = await _sut.CreateAsync(new CreateIssueRequest(TestProjectTextId, Guid.NewGuid().ToString())
+            {
+                Description = "Description1"
+            });
+            var createdIssueNote = await _sut.CreateNoteAsync(new CreateIssueNoteRequest(TestProjectTextId, createdIssue.Iid, "comment2"));
+
+            //act
+            var updatedIssueNote = await _sut.UpdateNoteAsync(new UpdateIssueNoteRequest(TestProjectTextId, createdIssue.Iid, createdIssueNote.Id, "comment22"));
+
+            //assert
+            updatedIssueNote.Should().Match<Note>(n =>
+                n.Body == "comment22");
+        }
     }
 }
