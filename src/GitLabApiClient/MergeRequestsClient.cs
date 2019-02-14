@@ -43,7 +43,7 @@ namespace GitLabApiClient
             var projectMergeRequestOptions = new ProjectMergeRequestsQueryOptions(projectId);
             options?.Invoke(projectMergeRequestOptions);
 
-            string query = _mergeRequestsQueryBuilder.
+            string query = _projectMergeRequestsQueryBuilder.
                 Build($"projects/{projectId}/merge_requests", projectMergeRequestOptions);
 
             return await _httpFacade.GetPagedList<MergeRequest>(query);
@@ -57,11 +57,11 @@ namespace GitLabApiClient
         /// <returns>Merge requests satisfying options.</returns>
         public async Task<IList<MergeRequest>> GetAsync(Action<MergeRequestsQueryOptions> options = null)
         {
-            var projectMergeRequestOptions = new MergeRequestsQueryOptions();
-            options?.Invoke(projectMergeRequestOptions);
+            var mergeRequestOptions = new MergeRequestsQueryOptions();
+            options?.Invoke(mergeRequestOptions);
 
-            string query = _projectMergeRequestsQueryBuilder.
-                Build("merge_requests", projectMergeRequestOptions);
+            string query = _mergeRequestsQueryBuilder.
+                Build("merge_requests", mergeRequestOptions);
 
             return await _httpFacade.GetPagedList<MergeRequest>(query);
         }
