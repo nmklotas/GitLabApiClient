@@ -24,12 +24,12 @@ namespace GitLabApiClient
         {
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
-            HostUrl = hostUrl;
+            HostUrl = FixBaseUrl(hostUrl);
 
             var jsonSerializer = new RequestsJsonSerializer();
 
             _httpFacade = new GitLabHttpFacade(
-                FixBaseUrl(hostUrl),
+                HostUrl,
                 jsonSerializer,
                 authenticationToken);
 
@@ -92,13 +92,12 @@ namespace GitLabApiClient
 
         private static string FixBaseUrl(string url)
         {
-            if (!url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
-                url += "/";
+            url = url.TrimEnd('/');
 
-            if (!url.EndsWith("/api/v4/", StringComparison.OrdinalIgnoreCase))
-                url += "/api/v4/";
+            if (!url.EndsWith("/api/v4", StringComparison.OrdinalIgnoreCase))
+                url += "/api/v4";
 
-            return url;
+            return url + "/";
         }
     }
 }

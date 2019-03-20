@@ -25,7 +25,7 @@ namespace GitLabApiClient
         private readonly ProjectIssueNotesQueryBuilder _projectIssueNotesQueryBuilder;
 
         internal IssuesClient(
-            GitLabHttpFacade httpFacade, 
+            GitLabHttpFacade httpFacade,
             IssuesQueryBuilder queryBuilder,
             ProjectIssuesQueryBuilder projectIssuesQueryBuilder,
             ProjectIssueNotesQueryBuilder projectIssueNotesQueryBuilder)
@@ -39,7 +39,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Retrieves project issue.
         /// </summary>
-        public async Task<Issue> GetAsync(int projectId, int issueId) => 
+        public async Task<Issue> GetAsync(int projectId, int issueId) =>
             await _httpFacade.Get<Issue>($"projects/{projectId}/issues/{issueId}");
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace GitLabApiClient
         /// Creates new issue.
         /// </summary>
         /// <returns>The newly created issue.</returns>
-        public async Task<Issue> CreateAsync(CreateIssueRequest request) => 
+        public async Task<Issue> CreateAsync(CreateIssueRequest request) =>
             await _httpFacade.Post<Issue>($"projects/{request.ProjectId}/issues", request);
 
         /// <summary>

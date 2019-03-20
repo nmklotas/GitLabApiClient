@@ -13,7 +13,7 @@ namespace GitLabApiClient.Test
         public void GitLabClientCanBeConstructed(string hostUrl)
         {
             var sut = new GitLabClient(hostUrl);
-            sut.HostUrl.Should().Be(hostUrl);
+            sut.HostUrl.Should().Be("https://gitlab.com/api/v4/");
         }
     }
 }
