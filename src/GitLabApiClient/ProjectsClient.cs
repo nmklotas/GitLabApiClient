@@ -85,7 +85,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
         /// <param name="milestoneId">Id of the milestone.</param>
-        public async Task<Milestone> GetMilestoneAsync(int projectId, int milestoneId) => 
+        public async Task<Milestone> GetMilestoneAsync(int projectId, int milestoneId) =>
             await _httpFacade.Get<Milestone>($"projects/{projectId}/milestones/{milestoneId}");
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace GitLabApiClient
         /// Deletes project.
         /// </summary>
         /// <param name="id">Id of the project.</param>
-        public async Task DeleteAsync(int id) => 
+        public async Task DeleteAsync(int id) =>
             await _httpFacade.Delete($"projects/{id}");
 
         /// <summary>
@@ -181,14 +181,14 @@ namespace GitLabApiClient
         /// Archive project.
         /// </summary>
         /// <param name="id">Id of the project.</param>
-        public async Task ArchiveAsync(int id) => 
+        public async Task ArchiveAsync(int id) =>
             await _httpFacade.Post($"projects/{id}/archive");
 
         /// <summary>
         /// Unarchive project.
         /// </summary>
         /// <param name="id">Id of the project.</param>
-        public async Task UnArchiveAsync(int id) => 
+        public async Task UnArchiveAsync(int id) =>
             await _httpFacade.Post($"projects/{id}/unarchive");
     }
 }

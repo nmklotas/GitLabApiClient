@@ -25,8 +25,14 @@ namespace GitLabApiClient.Internal.Queries
             if (options.Statistics)
                 Add("statistics", options.Statistics);
 
+            if (options.WithCustomAttributes)
+                Add("with_custom_attributes", options.WithCustomAttributes);
+
             if (options.Owned)
                 Add("owned", options.Owned);
+
+            if (options.MinAccessLevel.HasValue)
+                Add("min_access_level", (int)options.MinAccessLevel.Value);
         }
 
         private static string GetOrderQueryValue(GroupsOrder order)
