@@ -18,13 +18,13 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 
-        internal UsersClient(GitLabHttpFacade httpFacade) => 
+        internal UsersClient(GitLabHttpFacade httpFacade) =>
             _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves registered users.
         /// </summary>
-        public async Task<IList<User>> GetAsync() => 
+        public async Task<IList<User>> GetAsync() =>
             await _httpFacade.GetPagedList<User>("users");
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="request">Request to create user.</param>
         /// <returns>Newly created user.</returns>
-        public async Task<User> CreateAsync(CreateUserRequest request) => 
+        public async Task<User> CreateAsync(CreateUserRequest request) =>
             await _httpFacade.Post<User>("users", request);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="request">Request to update user.</param>
         /// <returns>Newly modified user.</returns>
-        public async Task<User> UpdateAsync(UpdateUserRequest request) => 
+        public async Task<User> UpdateAsync(UpdateUserRequest request) =>
             await _httpFacade.Put<User>($"users/{request.UserId}", request);
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace GitLabApiClient
         /// Deletes user.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        public async Task DeleteAsync(int userId) => 
+        public async Task DeleteAsync(int userId) =>
             await _httpFacade.Delete($"users/{userId}");
     }
 }

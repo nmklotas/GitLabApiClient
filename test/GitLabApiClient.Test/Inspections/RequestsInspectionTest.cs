@@ -45,6 +45,7 @@ namespace GitLabApiClient.Test.Inspections
         {
             var requestClasses = GetRequestClasses();
 
+
             foreach (var requestClass in requestClasses)
             {
                 var intProperties = requestClass.GetProperties(BindingFlags.Public | BindingFlags.Instance).

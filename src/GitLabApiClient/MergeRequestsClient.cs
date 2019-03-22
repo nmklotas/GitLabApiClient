@@ -70,14 +70,14 @@ namespace GitLabApiClient
         /// Creates merge request.
         /// </summary>
         /// <returns>The newly created merge request.</returns>
-        public async Task<MergeRequest> CreateAsync(CreateMergeRequest request) => 
+        public async Task<MergeRequest> CreateAsync(CreateMergeRequest request) =>
             await _httpFacade.Post<MergeRequest>($"projects/{request.ProjectId}/merge_requests", request);
 
         /// <summary>
         /// Updates merge request.
         /// </summary>
         /// <returns>The updated merge request.</returns>
-        public async Task<MergeRequest> UpdateAsync(UpdateMergeRequest request) => 
+        public async Task<MergeRequest> UpdateAsync(UpdateMergeRequest request) =>
             await _httpFacade.Put<MergeRequest>($"projects/{request.ProjectId}/merge_requests/{request.MergeRequestId}", request);
 
         /// <summary>

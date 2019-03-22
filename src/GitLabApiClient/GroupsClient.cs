@@ -10,6 +10,7 @@ using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
 
 namespace GitLabApiClient
 {
@@ -28,7 +29,7 @@ namespace GitLabApiClient
         internal GroupsClient(
             GitLabHttpFacade httpFacade,
             GroupsQueryBuilder queryBuilder,
-            ProjectsGroupQueryBuilder projectsQueryBuilder, 
+            ProjectsGroupQueryBuilder projectsQueryBuilder,
             MilestonesQueryBuilder queryMilestonesBuilder)
         {
             _httpFacade = httpFacade;
@@ -43,6 +44,13 @@ namespace GitLabApiClient
         /// </summary>
         public async Task<Group> GetAsync(string groupId) =>
             await _httpFacade.Get<Group>($"groups/{groupId}");
+
+        /// <summary>
+        /// Get all subgroups of a group. 
+        /// This endpoint can be accessed without authentication if the group is publicly accessible.
+        /// </summary>
+        public async Task<IList<Group>> GetSubgroupsAsync(string groupId) =>
+            await _httpFacade.GetPagedList<Group>($"groups/{groupId}/subgroups");
 
         /// <summary>
         /// Get all groups that match your string in their name or path.
@@ -82,6 +90,53 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Get a list of members in this group.
+        /// </summary>
+        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="search">A query string to search for members.</param>
+        /// <returns>Group members satisfying options.</returns>
+        public async Task<IList<Member>> GetMembersAsync(string groupId, string search = null)
+        {
+            string url = $"groups/{groupId}/members";
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                url += $"?search={search}";
+            }
+
+            return await _httpFacade.GetPagedList<Member>(url);
+        }
+
+        /// <summary>
+        /// Get a list of all members (including inherited) in this group.
+        /// </summary>
+        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="search">A query string to search for members.</param>
+        /// <returns>Group members satisfying options.</returns>
+        public async Task<IList<Member>> GetAllMembersAsync(string groupId, string search = null)
+        {
+            string url = $"groups/{groupId}/members/all";
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                url += $"?search={search}";
+            }
+
+            return await _httpFacade.GetPagedList<Member>(url);
+        }
+
+        /// <summary>
+        /// Adds a member to the group.
+        /// </summary>
+        /// <param name="request">Create milestone request.</param>
+        /// <returns>Newly created milestone.</returns>
+        public async Task<Milestone> CreateMilestoneAsync(CreateGroupMilestoneRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Milestone>($"groups/{request.GroupId}/milestones", request);
+        }
+
+        /// <summary>
         /// Get a list of milestones in this group.
         /// </summary>
         /// <param name="groupId">Id of the group.</param>
@@ -112,15 +167,34 @@ namespace GitLabApiClient
             await _httpFacade.Post<Group>("groups", request);
 
         /// <summary>
-        /// Creates a new group milestone.
+        /// Adds a user to a group.
         /// </summary>
-        /// <param name="request">Create milestone request.</param>
-        /// <returns>Newly created milestone.</returns>
-        public async Task<Milestone> CreateMilestoneAsync(CreateGroupMilestoneRequest request)
+        /// <param name="request">Add group member request.</param>
+        /// <returns>Newly created membership.</returns>
+        public async Task<Member> AddMemberAsync(AddGroupMemberRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Post<Milestone>($"groups/{request.GroupId}/milestones", request);
+            return await _httpFacade.Post<Member>($"groups/{request.GroupId}/members", request);
         }
+
+        /// <summary>
+        /// Updates a user's group membership.
+        /// </summary>
+        /// <param name="request">Update group member request.</param>
+        /// <returns>Updated membership.</returns>
+        public async Task<Member> UpdateMemberAsync(AddGroupMemberRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Put<Member>($"groups/{request.GroupId}/members/{request.UserId}", request);
+        }
+
+        /// <summary>
+        /// Removes a user as a member of the group.
+        /// </summary>
+        /// <param name="groupId">The ID or path of a group.</param>
+        /// <param name="userId">The id of the user.</param>
+        public async Task RemoveMemberAsync(string groupId, int userId) =>
+            await _httpFacade.Delete($"groups/{groupId}/members/{userId}");
 
         /// <summary>
         /// Transfer a project to the Group namespace. Available only for admin
