@@ -10,11 +10,14 @@ namespace GitLabApiClient.Models.Uploads.Requests
     /// </summary>
     public sealed class CreateUploadRequest
     {
-        public CreateUploadRequest(Stream stream, string fileName)
+        public CreateUploadRequest(string projectId, Stream stream, string fileName)
         {
+            projectId = projectId;
             Stream = stream;
             FileName = fileName;
         }
+
+        public string ProjectId { get; }
 
         /// <summary>
         /// The stream to be uploaded

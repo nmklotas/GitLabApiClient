@@ -27,9 +27,9 @@ namespace GitLabApiClient
         /// <returns>A <see cref="Upload"/> object.
         /// Use the <see cref="Upload.Markdown"/> property to place the image in your markdown text.
         /// </returns>
-        public async Task<Upload> UploadFile(string projectId, CreateUploadRequest uploadRequest)
+        public async Task<Upload> UploadFile(CreateUploadRequest uploadRequest)
         {
-            return await _httpFacade.PostFile($"projects/{projectId}/uploads", uploadRequest);
+            return await _httpFacade.PostFile($"projects/{uploadRequest.ProjectId}/uploads", uploadRequest);
         }
     }
 }
