@@ -44,7 +44,7 @@ namespace GitLabApiClient
             var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
-            Uploadses = new UploadsClient(_httpFacade);
+            Uploads = new UploadsClient(_httpFacade);
             MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder);
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder);
             Users = new UsersClient(_httpFacade);
@@ -59,7 +59,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Access GitLab's uploads API.
         /// </summary>
-        public UploadsClient Uploadses { get; }
+        public UploadsClient Uploads { get; }
 
         /// <summary>
         /// Access GitLab's merge requests API.
