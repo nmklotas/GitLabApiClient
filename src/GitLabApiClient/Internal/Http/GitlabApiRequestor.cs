@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http.Serialization;
+using GitLabApiClient.Models.Uploads.Requests;
+using GitLabApiClient.Models.Uploads.Responses;
 
 namespace GitLabApiClient.Internal.Http
 {
@@ -39,6 +43,20 @@ namespace GitLabApiClient.Internal.Http
 			await EnsureSuccessStatusCode(responseMessage);
 		}
 
+        public async Task<Upload> PostFile(string url, CreateUploadRequest uploadRequest)
+        {
+            using (var uploadContent =
+                new MultipartFormDataContent($"Upload----{DateTime.Now.Ticks}"))
+            {
+                uploadContent.Add(new StreamContent(uploadRequest.Stream), uploadRequest.FileName);
+
+                var responseMessage = await _client.PostAsync(url, uploadContent);
+                await EnsureSuccessStatusCode(responseMessage);
+
+                return await ReadResponse<Upload>(responseMessage);
+            }
+        }
+
         public async Task<T> Put<T>(string url, object data)
         {
             StringContent content = SerializeToString(data);
@@ -47,7 +65,7 @@ namespace GitLabApiClient.Internal.Http
             return await ReadResponse<T>(responseMessage);
         }
 
-		public async Task Put(string url, object data)
+        public async Task Put(string url, object data)
 		{
 			StringContent content = SerializeToString(data);
 			var responseMessage = await _client.PutAsync(url, content);
