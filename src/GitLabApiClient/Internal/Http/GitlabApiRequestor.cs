@@ -48,7 +48,7 @@ namespace GitLabApiClient.Internal.Http
             using (var uploadContent =
                 new MultipartFormDataContent($"Upload----{DateTime.Now.Ticks}"))
             {
-                uploadContent.Add(new StreamContent(uploadRequest.Stream), uploadRequest.FileName);
+                uploadContent.Add(new StreamContent(uploadRequest.Stream), "file", uploadRequest.FileName);
 
                 var responseMessage = await _client.PostAsync(url, uploadContent);
                 await EnsureSuccessStatusCode(responseMessage);
