@@ -8,12 +8,14 @@
     <FileVersion>1.0.0.0</FileVersion>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Copyright />
-    <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
-    <Authors>nmklotas</Authors>
-    <PackageProjectUrl>https://github.com/nmklotas/GitLabApiClient</PackageProjectUrl>
+    <Description>This is a fork of GitLabApiClient (https://github.com/nmklotas/GitLabApiClient). I've added capabilities to upload files via the GitLab API.</Description>
+    <Authors>nmklotas, yan.kun</Authors>
+    <PackageProjectUrl>https://github.com/yankun/GitLabApiClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
     <RepositoryType />
     <PackageTags>GitLab REST API CI Client</PackageTags>
+    <PackageId>GitLabApiClientWithUploads</PackageId>
+    <Company>nmklotas, yan.kun</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
