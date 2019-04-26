@@ -14,6 +14,8 @@
     <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
     <RepositoryType />
     <PackageTags>GitLab REST API CI Client</PackageTags>
+    <PackageId>GitLabApiClient</PackageId>
+    <Company>nmklotas</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -20,9 +20,8 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
 
         /// <summary>
-        /// Uploadses a file for the provided project. 
+        /// Uploads a file for the provided project. 
         /// </summary>
-        /// <param name="projectId">The id of the project</param>
         /// <param name="uploadRequest">The upload request containing the filename and stream to be uploaded</param>
         /// <returns>A <see cref="Upload"/> object.
         /// Use the <see cref="Upload.Markdown"/> property to place the image in your markdown text.
