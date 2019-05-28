@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http.Serialization;
@@ -20,6 +21,8 @@ namespace GitLabApiClient.Internal.Http
 
         public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "")
         {
+            // allow tls 1.1 and 1.2
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(hostUrl)
