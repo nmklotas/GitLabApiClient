@@ -8,6 +8,9 @@ namespace GitLabApiClient.Models.Releases.Responses
 {
     public class Release
     {
+        [JsonProperty("id")]
+        public string ProjectId { get; set; }
+
         [JsonProperty("tag_name")]
         public string TagName { get; set; }
 
