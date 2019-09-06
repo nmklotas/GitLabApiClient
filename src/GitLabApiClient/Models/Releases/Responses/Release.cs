@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Releases.Responses
 {
-    public sealed class Release
+    public class Release
     {
         [JsonProperty("tag_name")]
         public string TagName { get; set; }
@@ -15,16 +15,16 @@ namespace GitLabApiClient.Models.Releases.Responses
         public string Description { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string ReleaseName { get; set; }
 
         [JsonProperty("description_html")]
         public string DescriptionHtml { get; set; }
 
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonProperty("released_at")]
-        public string ReleasedAt { get; set; }
+        public DateTime? ReleasedAt { get; set; }
 
         [JsonProperty("author")]
         public Member Author { get; set; }
