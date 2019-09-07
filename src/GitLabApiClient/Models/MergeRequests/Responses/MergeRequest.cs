@@ -57,6 +57,12 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         [JsonProperty("source_project_id")]
         public int SourceProjectId { get; set; }
 
+        [JsonProperty("closed_at")]
+        public DateTime? ClosedAt { get; set; }
+
+        [JsonProperty("closed_by")]
+        public string ClosedBy { get; set; }
+
         [JsonProperty("target_branch")]
         public string TargetBranch { get; set; }
 
