@@ -23,7 +23,7 @@ namespace GitLabApiClient.Models.Branches.Requests
             Guard.NotNullOrDefault(id, nameof(id));
             Guard.NotEmpty(branch, nameof(branch));
             Guard.NotEmpty(reference, nameof(reference));
-            Id = id;
+            ProjectId = id;
             Branch = branch;
             Reference = reference;
         }
@@ -32,7 +32,7 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// Project ID.
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public int ProjectId { get; set; }
 
         /// <summary>
         /// Branch Name.
