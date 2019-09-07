@@ -8,7 +8,7 @@ namespace GitLabApiClient.Models.Branches.Requests
     /// <summary>
     /// Deletes all merged Branches of a project.
     /// </summary>
-    class DeleteMergedBranchesRequest
+    public sealed class DeleteMergedBranchesRequest
     {
         /// <summary>
         /// Initializes a new instnce of the <see cref="DeleteMergedBranchesRequest"/> class.
