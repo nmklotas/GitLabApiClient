@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using GitLabApiClient.Internal.Utilities;
+
+namespace GitLabApiClient.Models.Branches.Requests
+{
+    /// <summary>
+    /// Deletes all merged Branches of a project.
+    /// </summary>
+    class DeleteMergedBranchesRequest
+    {
+        /// <summary>
+        /// Initializes a new instnce of the <see cref="DeleteMergedBranchesRequest"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        public DeleteMergedBranchesRequest(string id)
+        {
+            Guard.NotEmpty(id, nameof(id));
+            Id = id;
+        }
+
+        /// <summary>
+        /// Id or URL-Encoded path of the project.
+        /// </summary>
+        public string Id { get; set; }
+
+    }
+}
