@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Branches.Requests
@@ -19,6 +20,9 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// <param name="reference">Branch name or commit SHA to create branch from.</param>
         public CreateBranch(int id, string branch, string reference)
         {
+            Guard.NotNullOrDefault(id, nameof(id));
+            Guard.NotEmpty(branch, nameof(branch));
+            Guard.NotEmpty(reference, nameof(reference));
             Id = id;
             Branch = branch;
             Reference = reference;
