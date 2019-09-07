@@ -19,18 +19,18 @@ namespace GitLabApiClient.Models.Branches.Requests
         {
             Guard.NotNullOrDefault(id, nameof(id));
             Guard.NotEmpty(branch, nameof(branch));
-            Id = id;
-            Branch = branch;
+            ProjectId = id;
+            BranchName = branch;
         }
 
         /// <summary>
         /// Project Id.
         /// </summary>
-        public string Id { get; set; }
+        public string ProjectId { get; set; }
         
         /// <summary>
         /// Branch Name.
         /// </summary>
-        public string Branch { get; set; }
+        public string BranchName { get; set; }
     }
 }
