@@ -17,13 +17,13 @@ namespace GitLabApiClient.Models.Branches.Requests
         public DeleteMergedBranchesRequest(string id)
         {
             Guard.NotEmpty(id, nameof(id));
-            Id = id;
+            ProjectId = id;
         }
 
         /// <summary>
         /// Id or URL-Encoded path of the project.
         /// </summary>
-        public string Id { get; set; }
+        public string ProjectId { get; set; }
 
     }
 }
