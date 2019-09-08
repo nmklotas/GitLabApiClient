@@ -15,15 +15,15 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateBranch"/> class
         /// </summary>
-        /// <param name="id">Id or URL-Encoded Path of the project.</param>
+        /// <param name="projectId">Id or URL-Encoded Path of the project.</param>
         /// <param name="branch">Name of the Branch.</param>
         /// <param name="reference">Branch name or commit SHA to create branch from.</param>
-        public CreateBranchRequest(int id, string branch, string reference)
+        public CreateBranchRequest(string projectId, string branch, string reference)
         {
-            Guard.NotNullOrDefault(id, nameof(id));
+            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(branch, nameof(branch));
             Guard.NotEmpty(reference, nameof(reference));
-            ProjectId = id;
+            ProjectId = projectId;
             Branch = branch;
             Reference = reference;
         }
@@ -32,7 +32,7 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// Project ID.
         /// </summary>
         [JsonProperty("id")]
-        public int ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         /// <summary>
         /// Branch Name.
