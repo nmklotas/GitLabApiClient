@@ -11,8 +11,8 @@ using System.Collections.Generic;
 namespace GitLabApiClient.Test
 {
     [Trait("Category", "LinuxIntegration")]
-    [Collection("GitlabContainerFixture")]
-    class ReeasesTest
+    [Collection("GitLabContainerFixture")]
+    public class ReeasesTest
     {
         private readonly ReleaseClient _sut = new ReleaseClient(GetFacade(), new ReleaseQueryBuilder());
         

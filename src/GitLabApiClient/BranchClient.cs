@@ -54,6 +54,5 @@ namespace GitLabApiClient
 
         public async Task UnprotectBranchAsync(string projectId, string branchName) =>
             await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName}");
-
     }
 }
