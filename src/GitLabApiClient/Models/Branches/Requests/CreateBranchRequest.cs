@@ -13,7 +13,7 @@ namespace GitLabApiClient.Models.Branches.Requests
     {
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateBranch"/> class
+        /// Initializes a new instance of the <see cref="CreateBranchRequest"/> class
         /// </summary>
         /// <param name="projectId">Id or URL-Encoded Path of the project.</param>
         /// <param name="branch">Name of the Branch.</param>
