@@ -52,7 +52,7 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// Access levels allowed to push (defaults: 40, maintainer access level).
         /// </summary>
         [JsonProperty("push_access_level")]
-        public string PushAccessLevel { get; set; };
+        public string PushAccessLevel { get; set; }
 
         /// <summary>
         /// Access levels allowed to merge (defaults: 40, maintainer access level).
@@ -64,6 +64,6 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// Access levels allowed to unprotect (defaults: 40, maintainer access level).
         /// </summary>
         [JsonProperty("unprotect_access_level")]
-        public string UnprotectAccessLevel { get; set; };
+        public string UnprotectAccessLevel { get; set; }
     }
 }
