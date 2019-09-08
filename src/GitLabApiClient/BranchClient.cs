@@ -43,5 +43,16 @@ namespace GitLabApiClient
         public async Task DeleteMergedBranches(DeleteMergedBranchesRequest request) =>
             await _httpFacade.Delete($"projects/{request.ProjectId}/repository/merged_branches");
 
+        public async Task<ProtectedBranch> GetProtectedBranchesAsync(string projectId, string branchName) =>
+            await _httpFacade.Get<ProtectedBranch>($"projects/{projectId}/protected_branches/{branchName}");
+
+        public async Task<IList<ProtectedBranch>> GetProtectedBranchesAsync(string projectId) =>
+            await _httpFacade.GetPagedList<ProtectedBranch>($"projects/{projectId}/protected_branches");
+
+        public async Task<ProtectedBranch> ProtectBranchAsync(ProtectBranchRequest request) =>
+            await _httpFacade.Post<ProtectedBranch>($"projects/{request.ProjectId}/protected_branches", request);
+
+        public async Task UnprotectBranchAsync(string projectId, string branchName) =>
+            await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName}");
     }
 }
