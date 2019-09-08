@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GitLabApiClient.Models.Milestones.Responses;
 using Newtonsoft.Json;
@@ -32,6 +33,12 @@ namespace GitLabApiClient.Models.Issues.Responses
 
         [JsonProperty("milestone")]
         public Milestone Milestone { get; set; }
+
+        [JsonProperty("closed_at")]
+        public DateTime? ClosedAt { get; set; }
+
+        [JsonProperty("closed_by")]
+        public string ClosedBy { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }
