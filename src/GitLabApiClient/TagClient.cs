@@ -23,7 +23,7 @@ namespace GitLabApiClient
         }
 
         public async Task<Tag> GetAsync(string projectId, string tagName) =>
-            await _httpFacade.Get<Tag>($"projects/{projectId}/tags/{tagName}");
+            await _httpFacade.Get<Tag>($"projects/{projectId}/repository/tags/{tagName}");
 
         public async Task<IList<Tag>> GetAsync(string projectId, Action<TagQueryOptions> options)
         {
