@@ -25,6 +25,29 @@ namespace GitLabApiClient.Test
             new MilestonesQueryBuilder());
 
         [Fact]
+        public async Task GroupCanBeCreated()
+        {
+            string groupName = GetRandomGroupName();
+
+            var request = new CreateGroupRequest(groupName, groupName)
+            {
+                Description = "description1",
+                Visibility = GroupsVisibility.Public,
+                LfsEnabled = true,
+                RequestAccessEnabled = true
+            };
+
+            var response = await _sut.CreateAsync(request);
+            _groupIdsToClean.Add(response.Id);
+
+            response.Name.Should().Be(groupName);
+            response.Description.Should().Be("description1");
+            response.Visibility.Should().Be(GroupsVisibility.Public);
+            response.LfsEnabled.Should().BeTrue();
+            response.RequestAccessEnabled.Should().BeTrue();
+        }
+
+        [Fact]
         public async Task GroupCanBeRetrievedByGroupId()
         {
             var group = await _sut.GetAsync(TestGroupName);
@@ -89,29 +112,6 @@ namespace GitLabApiClient.Test
                 m.StartDate == "2018-11-05" &&
                 m.DueDate == "2018-11-10" &&
                 m.Description == "description1");
-        }
-
-        [Fact]
-        public async Task GroupCanBeCreated()
-        {
-            string groupName = GetRandomGroupName();
-
-            var request = new CreateGroupRequest(groupName, groupName)
-            {
-                Description = "description1",
-                Visibility = GroupsVisibility.Public,
-                LfsEnabled = true,
-                RequestAccessEnabled = true
-            };
-
-            var response = await _sut.CreateAsync(request);
-            _groupIdsToClean.Add(response.Id);
-
-            response.Name.Should().Be(groupName);
-            response.Description.Should().Be("description1");
-            response.Visibility.Should().Be(GroupsVisibility.Public);
-            response.LfsEnabled.Should().BeTrue();
-            response.RequestAccessEnabled.Should().BeTrue();
         }
 
         [Fact]
