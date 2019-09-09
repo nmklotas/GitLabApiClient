@@ -12,8 +12,11 @@ namespace GitLabApiClient.Internal.Queries
             if (!string.IsNullOrEmpty(options.ProjectId))
                 Add("id", options.ProjectId);
 
-            if (!string.IsNullOrEmpty(options.TagName))
-                Add("tag_name", options.TagName);
+            if (!string.IsNullOrEmpty(options.Search))
+                Add("search", options.Search);
+
+            Add("order_by", options.OrderBy.ToString().ToLower());
+            Add("sort", options.Sort.ToString().ToLower());
         }
     }
 }
