@@ -4,11 +4,11 @@ using System.Text;
 
 namespace GitLabApiClient.Models.Tags.Requests
 {
-    public sealed class TagQueryOptsions
+    public sealed class TagQueryOptions
     {
         public string ProjectId { get; set; }
         public string TagName { get; set; }
 
-        internal TagQueryOptsions(string projectId = null) => ProjectId = projectId;
+        internal TagQueryOptions(string projectId = null) => ProjectId = projectId;
     }
 }
