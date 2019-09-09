@@ -21,7 +21,7 @@ namespace GitLabApiClient.Models.Markdown.Request
         /// Render text using GitLab Flavored Markdown
         /// </summary>
         [JsonProperty("gfm")]
-        public bool FlavoredMarkdown { get; set; } = false;
+        public bool? FlavoredMarkdown { get; set; } = false;
 
         /// <summary>
         /// Use as a context when creating references using GitLab Flavored Markdown. Authentication is required if a project is not public.
