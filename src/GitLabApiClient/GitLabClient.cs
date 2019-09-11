@@ -42,6 +42,9 @@ namespace GitLabApiClient
             var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
             var groupsQueryBuilder = new GroupsQueryBuilder();
             var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
+            var branchQueryBuilder = new BranchQueryBuilder();
+            var releaseQueryBuilder = new ReleaseQueryBuilder();
+            var tagQueryBuilder = new TagQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -49,7 +52,11 @@ namespace GitLabApiClient
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder);
             Users = new UsersClient(_httpFacade);
             Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder);
-        }
+            Branches = new BranchClient(_httpFacade, branchQueryBuilder);
+            Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
+            Tags = new TagClient(_httpFacade, tagQueryBuilder);
+            Markdown = new MarkdownClient(_httpFacade);
+    }
 
         /// <summary>
         /// Access GitLab's issues API.
@@ -80,6 +87,26 @@ namespace GitLabApiClient
         /// Access GitLab's groups API.
         /// </summary>
         public GroupsClient Groups { get; }
+
+        /// <summary>
+        /// Access GitLab's branches API.
+        /// </summary>
+        public BranchClient Branches { get; }
+
+        /// <summary>
+        /// Access GitLab's release API.
+        /// </summary>
+        public ReleaseClient Releases { get; }
+
+        /// <summary>
+        /// Access GitLab's tags API.
+        /// </summary>
+        public TagClient Tags { get; }
+
+        /// <summary>
+        /// Access GitLab's Markdown API.
+        /// </summary>
+        public MarkdownClient Markdown { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
