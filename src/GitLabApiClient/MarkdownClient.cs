@@ -19,6 +19,6 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
 
         public async Task<Markdown> RenderAsync(RenderMarkdownRequest request) =>
-            await _httpFacade.Post<Markdown>($"api/v4/markdown", request);
+            await _httpFacade.Post<Markdown>($"markdown", request);
     }
 }
