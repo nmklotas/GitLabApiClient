@@ -38,7 +38,7 @@ namespace GitLabApiClient.Models.Issues.Responses
         public DateTime? ClosedAt { get; set; }
 
         [JsonProperty("closed_by")]
-        public string ClosedBy { get; set; }
+        public ClosedBy ClosedBy { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

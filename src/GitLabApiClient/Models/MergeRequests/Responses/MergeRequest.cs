@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GitLabApiClient.Models.Issues.Responses;
 using GitLabApiClient.Models.Milestones.Responses;
 using Newtonsoft.Json;
 
@@ -62,7 +63,7 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         public DateTime? ClosedAt { get; set; }
 
         [JsonProperty("closed_by")]
-        public string ClosedBy { get; set; }
+        public ClosedBy ClosedBy { get; set; }
 
         [JsonProperty("target_branch")]
         public string TargetBranch { get; set; }
