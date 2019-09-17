@@ -4,7 +4,7 @@ using System.Text;
 using GitLabApiClient.Models.Releases.Responses;
 using Newtonsoft.Json;
 
-namespace GitLabApiClient.Models.Tags.Responses
+namespace GitLabApiClient.Models.Commits.Responses
 {
     public sealed class Commit
     {

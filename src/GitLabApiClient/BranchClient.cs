@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
@@ -11,11 +11,11 @@ namespace GitLabApiClient
 {
     public sealed class BranchClient
     {
-        private readonly GitLabHttpFacade _httpFacade;
+        private readonly IGitLabHttpFacade _httpFacade;
         private readonly BranchQueryBuilder _branchQueryBuilder;
 
         internal BranchClient(
-            GitLabHttpFacade httpFacade,
+            IGitLabHttpFacade httpFacade,
             BranchQueryBuilder branchQueryBuilder)
         {
             _httpFacade = httpFacade;

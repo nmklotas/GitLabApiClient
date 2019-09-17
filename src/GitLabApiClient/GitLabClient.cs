@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using GitLabApiClient.Http;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
@@ -13,7 +14,7 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class GitLabClient
     {
-        private readonly GitLabHttpFacade _httpFacade;
+        private readonly IGitLabHttpFacade _httpFacade;
 
         /// <summary>
         /// Creates a new instance of the GitLab API v4 client pointing to the specified hostUrl.

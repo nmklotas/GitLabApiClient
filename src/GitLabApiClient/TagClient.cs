@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Tags.Requests;
 using GitLabApiClient.Models.Tags.Responses;
@@ -11,11 +11,11 @@ namespace GitLabApiClient
 {
     public sealed class TagClient
     {
-        private readonly GitLabHttpFacade _httpFacade;
+        private readonly IGitLabHttpFacade _httpFacade;
         private readonly TagQueryBuilder _tagQueryBuilder;
 
         internal TagClient(
-            GitLabHttpFacade httpFacade,
+            IGitLabHttpFacade httpFacade,
             TagQueryBuilder tagQueryBuilder)
         {
             _httpFacade = httpFacade;

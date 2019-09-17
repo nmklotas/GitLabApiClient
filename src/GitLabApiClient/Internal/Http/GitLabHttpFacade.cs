@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using GitLabApiClient.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Models.Uploads.Requests;
 using GitLabApiClient.Models.Uploads.Responses;
@@ -10,7 +11,7 @@ using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient.Internal.Http
 {
-    internal sealed class GitLabHttpFacade
+    internal sealed class GitLabHttpFacade : IGitLabHttpFacade
     {
         private const string PrivateToken = "PRIVATE-TOKEN";
 
@@ -51,10 +52,10 @@ namespace GitLabApiClient.Internal.Http
         public Task<T> Put<T>(string uri, object data) =>
             _requestor.Put<T>(uri, data);
 
-		public Task Put(string uri, object data) =>
-			_requestor.Put(uri, data);
+        public Task Put(string uri, object data) =>
+            _requestor.Put(uri, data);
 
-		public Task Delete(string uri) =>
+        public Task Delete(string uri) =>
             _requestor.Delete(uri);
 
         public async Task<Session> LoginAsync(string username, string password)

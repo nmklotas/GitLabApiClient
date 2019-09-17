@@ -1,3 +1,4 @@
+using GitLabApiClient.Http;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 
@@ -7,7 +8,7 @@ namespace GitLabApiClient.Test.Utilities
     {
         private const string PrivateAuthenticationToken = "ElijahBaley";
 
-        public static GitLabHttpFacade GetFacade()
+        public static IGitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
                 "http://localhost:9190/api/v4/", new RequestsJsonSerializer(), PrivateAuthenticationToken);
