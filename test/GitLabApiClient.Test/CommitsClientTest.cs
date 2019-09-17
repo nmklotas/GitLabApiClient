@@ -16,7 +16,7 @@ namespace GitLabApiClient.Test
         public async void GetCommitBySha()
         {
             string projectId = "id";
-            string sha = "sha";
+            string sha = "sha-tmp";
             var commit = new Commit();
             var task = new Mock<Task<Commit>>();
             task.Setup(t => t.Result).Returns(commit);
