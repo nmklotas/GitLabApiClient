@@ -21,7 +21,7 @@ namespace GitLabApiClient.Test
 
             var commit = new Commit();
             var httpFacade = new Mock<IGitLabHttpFacade>(MockBehavior.Strict);
-            httpFacade.Setup(c => c.Get<Commit>(It.IsAny<string>())).ReturnsAsync(commit);
+            httpFacade.Setup(c => c.Get<Commit>(uri)).ReturnsAsync(commit);
             var commitsClient = new CommitsClient(httpFacade.Object);
 
             var commitFromClient = await commitsClient.GetAsync(projectId, sha);
