@@ -31,7 +31,7 @@ namespace GitLabApiClient.Models.Commits.Responses
         [JsonProperty("message")]
         public string Message { get; set; }
         [JsonProperty("parent_ids")]
-        public List<string> ParentIds { get; set; }
+        public List<string> ParentIds { get; } = new List<string>();
 
     }
 }
