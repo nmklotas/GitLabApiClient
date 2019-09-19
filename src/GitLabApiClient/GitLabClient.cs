@@ -46,6 +46,7 @@ namespace GitLabApiClient
             var branchQueryBuilder = new BranchQueryBuilder();
             var releaseQueryBuilder = new ReleaseQueryBuilder();
             var tagQueryBuilder = new TagQueryBuilder();
+            var commitQueryBuilder = new CommitQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -56,7 +57,7 @@ namespace GitLabApiClient
             Branches = new BranchClient(_httpFacade, branchQueryBuilder);
             Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
-            Commits = new CommitsClient(_httpFacade);
+            Commits = new CommitsClient(_httpFacade, commitQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
     }
 

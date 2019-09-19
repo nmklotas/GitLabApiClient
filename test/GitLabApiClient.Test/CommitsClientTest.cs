@@ -5,6 +5,7 @@ using Xunit;
 using GitLabApiClient.Http;
 using Moq;
 using System.Diagnostics.CodeAnalysis;
+using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Commits.Responses;
 
 namespace GitLabApiClient.Test
@@ -22,7 +23,7 @@ namespace GitLabApiClient.Test
             var commit = new Commit();
             var httpFacade = new Mock<IGitLabHttpFacade>(MockBehavior.Strict);
             httpFacade.Setup(c => c.Get<Commit>(uri)).ReturnsAsync(commit);
-            var commitsClient = new CommitsClient(httpFacade.Object);
+            var commitsClient = new CommitsClient(httpFacade.Object, new CommitQueryBuilder());
 
             var commitFromClient = await commitsClient.GetAsync(projectId, sha);
             commitFromClient.Should().BeSameAs(commit);
