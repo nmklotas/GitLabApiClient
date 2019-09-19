@@ -23,7 +23,7 @@ namespace GitLabApiClient
         }
 
         public async Task<Tag> GetAsync(string projectId, string tagName) =>
-            await _httpFacade.Get<Tag>(TagsBaseUrl(projectId) + "/{tagName}");
+            await _httpFacade.Get<Tag>($"{TagsBaseUrl(projectId)}/{tagName}");
 
         public async Task<IList<Tag>> GetAsync(string projectId, Action<TagQueryOptions> options)
         {
@@ -38,7 +38,7 @@ namespace GitLabApiClient
             await _httpFacade.Post<Tag>(TagsBaseUrl(request.ProjectId), request);
 
         public async Task DeleteAsync(DeleteTagRequest request) =>
-            await _httpFacade.Delete(TagsBaseUrl(request.ProjectId) + "/{request.TagName}");
+            await _httpFacade.Delete($"{TagsBaseUrl(request.ProjectId)}/{request.TagName}");
 
         public static string TagsBaseUrl(string projectId)
         {
