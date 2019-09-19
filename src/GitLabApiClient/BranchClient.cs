@@ -23,22 +23,22 @@ namespace GitLabApiClient
         }
 
         public async Task<Branch> GetAsync(string projectId, string branchName) =>
-            await _httpFacade.Get<Branch>($"projects/{projectId}/branches/{branchName}");
+            await _httpFacade.Get<Branch>($"projects/{projectId}/repository/branches/{branchName}");
 
         public async Task<IList<Branch>> GetAsync(string projectId, Action<BranchQueryOptions> options)
         {
-            var queryOptions = new BranchQueryOptions(projectId);
+            var queryOptions = new BranchQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _branchQueryBuilder.Build($"projects/{projectId}/branches", queryOptions);
+            string url = _branchQueryBuilder.Build($"projects/{projectId}/repository/branches", queryOptions);
             return await _httpFacade.GetPagedList<Branch>(url);
         }
 
         public async Task<Branch> CreateAsync(CreateBranchRequest request) =>
-            await _httpFacade.Post<Branch>($"projects/{request.ProjectId}/branches", request);
+            await _httpFacade.Post<Branch>($"projects/{request.ProjectId}/repository/branches", request);
 
         public async Task DeleteBranch(DeleteBranchRequest request) =>
-            await _httpFacade.Delete($"projects/{request.ProjectId}/releases/{request.BranchName}");
+            await _httpFacade.Delete($"projects/{request.ProjectId}/repository/branches/{request.BranchName}");
 
         public async Task DeleteMergedBranches(DeleteMergedBranchesRequest request) =>
             await _httpFacade.Delete($"projects/{request.ProjectId}/repository/merged_branches");

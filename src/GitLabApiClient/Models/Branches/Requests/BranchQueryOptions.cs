@@ -6,9 +6,10 @@ namespace GitLabApiClient.Models.Branches.Requests
 {
     public sealed class BranchQueryOptions
     {
-        public string ProjectId { get; set; }
-        public string BranchName { get; set; }
+        public string Search { get; set; }
 
-        internal BranchQueryOptions(string projectId = null) => ProjectId = projectId;
+        internal BranchQueryOptions()
+        {
+        }
     }
 }
