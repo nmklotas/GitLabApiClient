@@ -51,7 +51,7 @@ namespace GitLabApiClient
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Issue>> GetAsync(string projectId, Action<ProjectIssuesQueryOptions> options = null)
         {
-            var queryOptions = new ProjectIssuesQueryOptions(projectId);
+            var queryOptions = new ProjectIssuesQueryOptions();
             options?.Invoke(queryOptions);
 
             string url = _projectIssuesQueryBuilder.Build($"projects/{projectId}/issues", queryOptions);

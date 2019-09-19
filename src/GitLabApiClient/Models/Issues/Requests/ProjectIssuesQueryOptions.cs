@@ -12,17 +12,9 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// <summary>
         /// Initializes a new instance of ProjectIssuesQueryOptions
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user</param>
-        internal ProjectIssuesQueryOptions(string projectId)
+        internal ProjectIssuesQueryOptions()
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
-            ProjectId = projectId;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user
-        /// </summary>
-        public string ProjectId { get; }
 
         /// <summary>
         /// Return issues created after the given time (inclusive)
