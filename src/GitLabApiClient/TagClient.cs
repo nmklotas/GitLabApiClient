@@ -42,8 +42,7 @@ namespace GitLabApiClient
 
         public static string TagsBaseUrl(string projectId)
         {
-            string baseUrl = $"projects/{projectId}/repository/tags";
-            return baseUrl;
+            return $"projects/{projectId}/repository/tags";
         }
     }
 }
