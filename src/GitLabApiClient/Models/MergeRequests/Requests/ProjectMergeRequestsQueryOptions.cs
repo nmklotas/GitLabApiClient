@@ -11,7 +11,6 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// <summary>
         /// Initializes a new instance of ProjectMergeRequestsQueryOptions.
         /// </summary>
-        /// <param name="projectId">The ID of a project.</param>
         internal ProjectMergeRequestsQueryOptions()
         {
         }
