@@ -24,10 +24,10 @@ namespace GitLabApiClient.Test
         public async Task UploadFile()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = assembly.GetManifestResourceNames()
+            string resourceName = assembly.GetManifestResourceNames()
                 .Single(str => str.EndsWith("gitlabtest.png"));
-            var fileName = $"{Guid.NewGuid()}";
-            var fileNameWithExtension = $"{fileName}.png";
+            string fileName = $"{Guid.NewGuid()}";
+            string fileNameWithExtension = $"{fileName}.png";
 
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {

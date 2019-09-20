@@ -1,6 +1,5 @@
-using System;
 using Xunit;
- 
+
 namespace GitLabApiClient.Test.Utilities
 {
     [CollectionDefinition("GitLabContainerFixture")]
