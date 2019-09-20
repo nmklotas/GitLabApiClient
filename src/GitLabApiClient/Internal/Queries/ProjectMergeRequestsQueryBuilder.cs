@@ -12,7 +12,6 @@ namespace GitLabApiClient.Internal.Queries
                 return;
             }
 
-            Add("id", projectOptions.ProjectId);
             Add(projectOptions.MergeRequestsIds);
             base.BuildCore(options);
         }
