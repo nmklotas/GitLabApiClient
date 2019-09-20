@@ -1,13 +1,10 @@
-using System.Threading.Tasks;
-using FluentAssertions;
-using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
-using Xunit;
-using GitLabApiClient.Http;
-using Moq;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Commits.Responses;
+using Moq;
+using Xunit;
 
 namespace GitLabApiClient.Test
 {

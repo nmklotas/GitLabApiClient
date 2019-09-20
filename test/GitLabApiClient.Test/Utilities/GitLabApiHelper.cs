@@ -1,4 +1,3 @@
-using GitLabApiClient.Http;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 
