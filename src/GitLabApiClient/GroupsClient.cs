@@ -39,14 +39,14 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        /// Get all details of a group. 
+        /// Get all details of a group.
         /// This endpoint can be accessed without authentication if the group is publicly accessible.
         /// </summary>
         public async Task<Group> GetAsync(string groupId) =>
             await _httpFacade.Get<Group>($"groups/{groupId}");
 
         /// <summary>
-        /// Get all subgroups of a group. 
+        /// Get all subgroups of a group.
         /// This endpoint can be accessed without authentication if the group is publicly accessible.
         /// </summary>
         public async Task<IList<Group>> GetSubgroupsAsync(string groupId) =>
@@ -82,7 +82,7 @@ namespace GitLabApiClient
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Project>> GetProjectsAsync(string groupId, Action<ProjectsGroupQueryOptions> options = null)
         {
-            var queryOptions = new ProjectsGroupQueryOptions(groupId);
+            var queryOptions = new ProjectsGroupQueryOptions();
             options?.Invoke(queryOptions);
 
             string url = _projectsQueryBuilder.Build($"groups/{groupId}/projects", queryOptions);
