@@ -27,7 +27,6 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/groups?" +
-                              "id=1&" +
                               "archived=true&" +
                               "visibility=internal&" +
                               "order_by=id&" +
