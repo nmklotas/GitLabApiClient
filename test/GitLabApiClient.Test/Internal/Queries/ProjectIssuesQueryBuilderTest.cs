@@ -34,7 +34,6 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/issues?" +
-                              "id=projectId&" +
                               "state=opened&" +
                               "labels=label1%2clabel2&" +
                               "milestone=milestone1&" +
