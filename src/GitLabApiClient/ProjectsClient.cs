@@ -39,7 +39,7 @@ namespace GitLabApiClient
             await _httpFacade.Get<Project>($"projects/{projectId}");
 
         /// <summary>
-        /// Get a list of visible projects for authenticated user. 
+        /// Get a list of visible projects for authenticated user.
         /// When accessed without authentication, only public projects are returned.
         /// </summary>
         /// <param name="options">Query options.</param>
@@ -190,5 +190,11 @@ namespace GitLabApiClient
         /// <param name="id">Id of the project.</param>
         public async Task UnArchiveAsync(int id) =>
             await _httpFacade.Post($"projects/{id}/unarchive");
+
+        public async Task<Project> Transfer(string id, TransferProjectRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Put<Project>($"projects/{id}/transfer", request);
+        }
     }
 }
