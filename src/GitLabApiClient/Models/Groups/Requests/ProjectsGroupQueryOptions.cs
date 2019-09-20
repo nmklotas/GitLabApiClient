@@ -5,12 +5,9 @@
 	/// </summary>
 	public class ProjectsGroupQueryOptions
     {
-        internal ProjectsGroupQueryOptions(string id) => Id = id;
-
-        /// <summary>
-        /// The ID or URL-encoded path of the group owned by the authenticated user
-        /// </summary>
-        public string Id { get; set; }
+        internal ProjectsGroupQueryOptions()
+        {
+        }
 
         /// <summary>
 		/// Limit by archived status
@@ -23,7 +20,7 @@
 		public GroupsVisibility Visibility { get; set; }
 
 		/// <summary>
-		/// Return projects ordered by Id, Name, Path, CreatedAt, UpdatedAt, 
+		/// Return projects ordered by Id, Name, Path, CreatedAt, UpdatedAt,
 		/// or LastActivityAt fields. Default is CreatedAt.
 		/// </summary>
 		public GroupsProjectsOrder Order { get; set; }
@@ -52,5 +49,41 @@
 		/// Limit by projects starred by the current user
 		/// </summary>
 		public bool Starred { get; set; }
+
+        /// <summary>
+        /// Limit by projects with issues feature enabled. Default is <code>false</code>
+        /// </summary>
+        public bool WithIssuesEnabled { get; set; }
+
+        /// <summary>
+        /// Limit by projects with merge requests feature enabled. Default is <code>false</code>
+        /// </summary>
+        public bool WithMergeRequestsEnabled { get; set; }
+
+        /// <summary>
+        /// Include projects shared to this group. Default is <code>true</code>
+        /// </summary>
+        public bool WithShared { get; set; } = true;
+
+        /// <summary>
+        /// Include projects in subgroups of this group. Default is <code>false</code>
+        /// </summary>
+        public bool IncludeSubgroups { get; set; }
+
+        /// <summary>
+        /// Limit to projects where current user has at least this <a href="https://docs.gitlab.com/ee/api/members.html">access level</a>
+        /// </summary>
+        public AccessLevel? MinAccessLevel { get; set; }
+
+        /// <summary>
+        /// Include <a href="https://docs.gitlab.com/ee/api/custom_attributes.html">custom attributes</a> in response (admins only)
+        /// </summary>
+        public bool WithCustomAttributes { get; set; }
+
+        /// <summary>
+        /// Return only projects that have security reports artifacts present in any of their builds. This means “projects with security reports enabled”. Default is false
+        /// Only Available for GitLab Ultimate or GitLab.com Gold
+        /// </summary>
+        public bool WithSecurityReports { get; set; }
     }
 }

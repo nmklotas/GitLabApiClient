@@ -8,8 +8,6 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(ProjectsGroupQueryOptions options)
         {
-            Add("id", options.Id);
-
             if (options.Archived)
                 Add("archived", options.Archived);
 
@@ -33,6 +31,28 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.Starred)
                 Add("starred", options.Starred);
+
+            if (options.WithIssuesEnabled)
+                Add("with_issues_enabled", options.WithIssuesEnabled);
+
+            if (options.WithMergeRequestsEnabled)
+                Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
+
+            if (!options.WithShared)
+                Add("with_shared", options.WithShared);
+
+            if (options.IncludeSubgroups)
+                Add("include_subgroups", options.IncludeSubgroups);
+
+            if (options.MinAccessLevel != null)
+                Add("min_access_level", (int) options.MinAccessLevel);
+
+            if (options.WithCustomAttributes)
+                Add("with_custom_attributes", options.WithCustomAttributes);
+
+            if (options.WithSecurityReports)
+                Add("with_security_reports", options.WithSecurityReports);
+
         }
 
         private static string GetVisibilityQueryValue(GroupsVisibility visibility)
