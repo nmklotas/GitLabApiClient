@@ -32,7 +32,7 @@ namespace GitLabApiClient.Models.Projects.Requests
         /// Initializes a new instance of the <see cref="UpdateProjectLabelRequest"/> class.
         /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
         /// <param name="name">Old name of the label.</param>
-        /// <param name="color">The color of the label given in 6-digit hex notation with leading ‘#’ sign (e.g. #FFAABB) or one of the CSS color names.</param>
+        /// <param name="color">The color of the label given in 6-digit hex notation with leading â€˜#â€™ sign (e.g. #FFAABB) or one of the CSS color names.</param>
         /// </summary>
         public static UpdateProjectLabelRequest FromColor(string projectId, string name, string color)
         {
@@ -69,7 +69,7 @@ namespace GitLabApiClient.Models.Projects.Requests
         public string NewName { get; private set; }
 
         /// <summary>
-        /// The color of the label given in 6-digit hex notation with leading ‘#’ sign (e.g. #FFAABB) or one of the CSS color names.
+        /// The color of the label given in 6-digit hex notation with leading â€˜#â€™ sign (e.g. #FFAABB) or one of the CSS color names.
         /// </summary>
         [JsonProperty("color")]
         public string Color { get; set; }

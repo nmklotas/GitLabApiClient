@@ -35,7 +35,7 @@ namespace GitLabApiClient.Models.Projects.Requests
         public string Name { get; private set; }
 
         /// <summary>
-        /// The color of the label given in 6-digit hex notation with leading ‘#’ sign (e.g. #FFAABB) or one of the CSS color names.
+        /// The color of the label given in 6-digit hex notation with leading â€˜#â€™ sign (e.g. #FFAABB) or one of the CSS color names.
         /// </summary>
         [JsonProperty("color")]
         public string Color { get; set; }
