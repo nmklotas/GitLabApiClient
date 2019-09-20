@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
@@ -17,12 +17,12 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class MergeRequestsClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
         private readonly MergeRequestsQueryBuilder _mergeRequestsQueryBuilder;
         private readonly ProjectMergeRequestsQueryBuilder _projectMergeRequestsQueryBuilder;
 
         internal MergeRequestsClient(
-            IGitLabHttpFacade httpFacade,
+            GitLabHttpFacade httpFacade,
             MergeRequestsQueryBuilder mergeRequestsQueryBuilder,
             ProjectMergeRequestsQueryBuilder projectMergeRequestsQueryBuilder)
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Commits.Requests;
 using GitLabApiClient.Models.Commits.Responses;
@@ -10,10 +10,10 @@ namespace GitLabApiClient
 {
     public sealed class CommitsClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
         private readonly CommitQueryBuilder _commitQueryBuilder;
 
-        internal CommitsClient(IGitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder)
+        internal CommitsClient(GitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder)
         {
             _httpFacade = httpFacade;
             _commitQueryBuilder = commitQueryBuilder;

@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Net.Http;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
-using GitLabApiClient.Models.Groups.Requests;
-using GitLabApiClient.Models.Groups.Responses;
-using GitLabApiClient.Models.Projects.Responses;
-using GitLabApiClient.Models.Milestones.Responses;
-using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models;
+using GitLabApiClient.Models.Groups.Requests;
+using GitLabApiClient.Models.Groups.Responses;
+using GitLabApiClient.Models.Milestones.Requests;
+using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
 {
@@ -21,13 +21,13 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class GroupsClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
         private readonly GroupsQueryBuilder _queryBuilder;
         private readonly ProjectsGroupQueryBuilder _projectsQueryBuilder;
         private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
 
         internal GroupsClient(
-            IGitLabHttpFacade httpFacade,
+            GitLabHttpFacade httpFacade,
             GroupsQueryBuilder queryBuilder,
             ProjectsGroupQueryBuilder projectsQueryBuilder,
             MilestonesQueryBuilder queryMilestonesBuilder)

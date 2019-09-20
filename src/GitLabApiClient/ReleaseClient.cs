@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Releases.Requests;
 using GitLabApiClient.Models.Releases.Responses;
@@ -11,11 +10,11 @@ namespace GitLabApiClient
 {
     public sealed class ReleaseClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
         private readonly ReleaseQueryBuilder _releaseQueryBuilder;
 
         internal ReleaseClient(
-            IGitLabHttpFacade httpFacade,
+            GitLabHttpFacade httpFacade,
             ReleaseQueryBuilder releaseQueryBuilder)
         {
             _httpFacade = httpFacade;

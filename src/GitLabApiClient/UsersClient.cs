@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Users.Requests;
 using GitLabApiClient.Models.Users.Responses;
@@ -16,9 +16,9 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class UsersClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
 
-        internal UsersClient(IGitLabHttpFacade httpFacade) =>
+        internal UsersClient(GitLabHttpFacade httpFacade) =>
             _httpFacade = httpFacade;
 
         /// <summary>

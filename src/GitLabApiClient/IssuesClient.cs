@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GitLabApiClient.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Issues.Responses;
@@ -19,13 +19,13 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class IssuesClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
         private readonly IssuesQueryBuilder _queryBuilder;
         private readonly ProjectIssuesQueryBuilder _projectIssuesQueryBuilder;
         private readonly ProjectIssueNotesQueryBuilder _projectIssueNotesQueryBuilder;
 
         internal IssuesClient(
-            IGitLabHttpFacade httpFacade,
+            GitLabHttpFacade httpFacade,
             IssuesQueryBuilder queryBuilder,
             ProjectIssuesQueryBuilder projectIssuesQueryBuilder,
             ProjectIssueNotesQueryBuilder projectIssueNotesQueryBuilder)

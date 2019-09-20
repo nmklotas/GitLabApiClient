@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using GitLabApiClient.Http;
+﻿using System.Threading.Tasks;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Models.Markdown.Request;
 using GitLabApiClient.Models.Markdown.Response;
 
@@ -13,9 +10,9 @@ namespace GitLabApiClient
     /// </summary>
     public sealed class MarkdownClient
     {
-        private readonly IGitLabHttpFacade _httpFacade;
+        private readonly GitLabHttpFacade _httpFacade;
 
-        internal MarkdownClient(IGitLabHttpFacade httpFacade) => 
+        internal MarkdownClient(GitLabHttpFacade httpFacade) => 
             _httpFacade = httpFacade;
 
         public async Task<Markdown> RenderAsync(RenderMarkdownRequest request) =>
