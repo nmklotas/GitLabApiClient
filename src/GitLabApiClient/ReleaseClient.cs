@@ -27,7 +27,7 @@ namespace GitLabApiClient
 
         public async Task<IList<Release>> GetAsync(string projectId, Action<ReleaseQueryOptions> options = null)
         {
-            var queryOptions = new ReleaseQueryOptions(projectId);
+            var queryOptions = new ReleaseQueryOptions();
             options?.Invoke(queryOptions);
 
             string url = _releaseQueryBuilder.Build($"projects/{projectId}/releases", queryOptions);

@@ -15,7 +15,7 @@ namespace GitLabApiClient.Test
     public class ReeasesTest
     {
         private readonly ReleaseClient _sut = new ReleaseClient(GetFacade(), new ReleaseQueryBuilder());
-        
+
         [Fact]
         public async Task CreatedReleaseCanBeUpdated()
         {
@@ -24,7 +24,7 @@ namespace GitLabApiClient.Test
 
             //act
             var updatedRelease = await _sut.UpdateAsync(new UpdateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, "Updated Description", DateTime.MinValue));
-            
+
             //assert
             updatedRelease.Should().Match<Release>(i =>
                 i.ProjectId == TestProjectTextId &&
@@ -57,7 +57,7 @@ namespace GitLabApiClient.Test
             var createdRelease = await _sut.CreateAsync(new CreateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, TestDescription, DateTime.MinValue));
 
             //act
-            var releaseList = await _sut.GetAsync(TestProjectTextId, o => o.TagName = TestTagName);
+            var releaseList = await _sut.GetAsync(TestProjectTextId);
 
             //assert
             releaseList[0].Should().Match<Release>(i =>
