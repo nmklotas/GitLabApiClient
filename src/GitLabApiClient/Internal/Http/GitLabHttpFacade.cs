@@ -15,20 +15,28 @@ namespace GitLabApiClient.Internal.Http
         private const string PrivateToken = "PRIVATE-TOKEN";
 
         private readonly object _locker = new object();
-        private readonly HttpClient _httpClient;
-        private readonly GitLabApiRequestor _requestor;
-        private readonly GitLabApiPagedRequestor _pagedRequestor;
+        private HttpClient _httpClient;
+        private GitLabApiRequestor _requestor;
+        private GitLabApiPagedRequestor _pagedRequestor;
 
         public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "")
         {
-            // allow tls 1.1 and 1.2
-            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            _httpClient = new HttpClient
+            var httpClient = new HttpClient
             {
                 BaseAddress = new Uri(hostUrl)
             };
+            httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
+            
+            Setup(jsonSerializer, httpClient);
+        }
+        
+        public GitLabHttpFacade(RequestsJsonSerializer jsonSerializer, HttpClient httpClient) => Setup(jsonSerializer, httpClient);
 
-            _httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
+        private void Setup(RequestsJsonSerializer jsonSerializer, HttpClient httpClient)
+        {
+            // allow tls 1.1 and 1.2
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            _httpClient = httpClient;
             _requestor = new GitLabApiRequestor(_httpClient, jsonSerializer);
             _pagedRequestor = new GitLabApiPagedRequestor(_requestor);
         }
