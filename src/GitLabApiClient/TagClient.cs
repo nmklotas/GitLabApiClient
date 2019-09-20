@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
@@ -42,8 +41,7 @@ namespace GitLabApiClient
 
         public static string TagsBaseUrl(string projectId)
         {
-            string baseUrl = $"projects/{projectId}/repository/tags";
-            return baseUrl;
+            return $"projects/{projectId}/repository/tags";
         }
     }
 }
