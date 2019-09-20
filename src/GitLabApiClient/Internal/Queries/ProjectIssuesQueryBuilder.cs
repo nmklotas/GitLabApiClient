@@ -12,7 +12,6 @@ namespace GitLabApiClient.Internal.Queries
                 return;
             }
 
-            Add("id", projectIssuesQueryOptions.ProjectId);
             base.BuildCore(options);
 
             if (projectIssuesQueryOptions.CreatedAfter.HasValue)
