@@ -17,7 +17,7 @@ namespace GitLabApiClient.Test.Internal.Queries
 
             string query = sut.Build(
                 "https://gitlab.com/api/v4/issues",
-                new ProjectIssuesQueryOptions("projectId")
+                new ProjectIssuesQueryOptions()
                 {
                     State = IssueState.Opened,
                     Labels = { "label1", "label2" },
@@ -34,7 +34,6 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/issues?" +
-                              "id=projectId&" +
                               "state=opened&" +
                               "labels=label1%2clabel2&" +
                               "milestone=milestone1&" +
