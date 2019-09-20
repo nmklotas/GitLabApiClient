@@ -40,7 +40,7 @@ namespace GitLabApiClient
         /// <returns>Merge requests satisfying options.</returns>
         public async Task<IList<MergeRequest>> GetAsync(int projectId, Action<ProjectMergeRequestsQueryOptions> options = null)
         {
-            var projectMergeRequestOptions = new ProjectMergeRequestsQueryOptions(projectId);
+            var projectMergeRequestOptions = new ProjectMergeRequestsQueryOptions();
             options?.Invoke(projectMergeRequestOptions);
 
             string query = _projectMergeRequestsQueryBuilder.
