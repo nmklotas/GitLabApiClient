@@ -9,9 +9,6 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(TagQueryOptions options)
         {
-            if (!string.IsNullOrEmpty(options.ProjectId))
-                Add("id", options.ProjectId);
-
             if (!string.IsNullOrEmpty(options.Search))
                 Add("search", options.Search);
 
