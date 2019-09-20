@@ -19,11 +19,46 @@ namespace GitLabApiClient.Internal.Http
             var result = new List<T>();
 
             //make first request and it will get available pages in the headers
-            var responseMessage = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
-            result.AddRange(responseMessage.Item1);
+            var response = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
+            var results = response.Item1;
+            var headers = response.Item2;
+            result.AddRange(results);
+            int totalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages");
+            int nextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page");
 
+            switch (totalPages)
+            {
+                // X-Total-Pages is not always present due to performance concern so we have to take the slow path of nextPage
+                case 0 when nextPage > 1:
+                    return await GetNextPageList(url, nextPage, result);
+                case 0:
+                case 1:
+                    return result;
+                default:
+                    return await GetTotalPagedList(url, totalPages, result);
+            }
+        }
+
+        private async Task<IList<T>> GetNextPageList<T>(string url, int nextPage, List<T> result)
+        {
+            do
+            {
+                string pagedUrl = GetPagedUrl(url, nextPage);
+                var response = await _requestor.GetWithHeaders<IList<T>>(pagedUrl);
+                var results = response.Item1;
+                var headers = response.Item2;
+                result.AddRange(results);
+                nextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page");
+            }
+            while (nextPage > 1);
+
+            return result;
+        }
+
+        private async Task<IList<T>> GetTotalPagedList<T>(string url, int totalPages, List<T> result)
+        {
             //get paged urls
-            var pagedUrls = GetPagedUrls(url, responseMessage.Item2);
+            var pagedUrls = GetPagedUrls(url, totalPages);
             if (pagedUrls.Count == 0)
                 return result;
 
@@ -43,28 +78,12 @@ namespace GitLabApiClient.Internal.Http
             return result;
         }
 
-        private static List<string> GetPagedUrls(string originalUrl, HttpResponseHeaders headers)
+        private static List<string> GetPagedUrls(string originalUrl, int totalPages)
         {
-            if (!headers.TryGetValues("X-Total-Pages", out IEnumerable<string> totalPagesValue))
-                return new List<string>();
-
-            string totalPages = totalPagesValue.FirstOrDefault();
-            if (totalPages == null)
-                return new List<string>();
-
-            if (!int.TryParse(totalPages, out int totalPagesCount))
-                return new List<string>();
-
-            if (totalPagesCount == 1)
-                //one page was already retrieved by the first request
-                return new List<string>();
-
-            //1 less page because it was already requested by the first request
-            int pagesCount = totalPagesCount - 1;
-
             var pagedUrls = new List<string>();
-            for (int i = 0; i < pagesCount; i++)
-                pagedUrls.Add(GetPagedUrl(originalUrl, 2 + i));
+
+            for (int i = 2; i <= totalPages; i++)
+                pagedUrls.Add(GetPagedUrl(originalUrl, i));
 
             return pagedUrls;
         }
@@ -73,6 +92,22 @@ namespace GitLabApiClient.Internal.Http
         {
             string parameterSymbol = url.Contains("?") ? "&" : "?";
             return $"{url}{parameterSymbol}per_page={MaxItemsPerPage}&page={pageNumber}";
+        }
+    }
+
+    internal static class HttpResponseHeadersExtensions
+    {
+        public static T GetFirstHeaderValueOrDefault<T>(
+            this HttpResponseHeaders headers,
+            string headerKey)
+        {
+            var toReturn = default(T);
+
+            if (!headers.TryGetValues(headerKey, out var headerValues))
+                return toReturn;
+
+            string valueString = headerValues.FirstOrDefault();
+            return valueString == null ? toReturn : (T)Convert.ChangeType(valueString, typeof(T));
         }
     }
 }
