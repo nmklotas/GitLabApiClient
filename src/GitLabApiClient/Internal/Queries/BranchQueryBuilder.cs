@@ -9,11 +9,8 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(BranchQueryOptions options)
         {
-            if (!string.IsNullOrEmpty(options.ProjectId))
-                Add("id", options.ProjectId);
-
-            if (!string.IsNullOrEmpty(options.BranchName))
-                Add("branch", options.BranchName);
+            if (!string.IsNullOrEmpty(options.Search))
+                Add("search", options.Search);
         }
     }
 }
