@@ -27,7 +27,7 @@ namespace GitLabApiClient
 
         public async Task<IList<Tag>> GetAsync(string projectId, Action<TagQueryOptions> options)
         {
-            var queryOptions = new TagQueryOptions(projectId);
+            var queryOptions = new TagQueryOptions();
             options?.Invoke(queryOptions);
 
             string url = _tagQueryBuilder.Build(TagsBaseUrl(projectId), queryOptions);
