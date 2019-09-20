@@ -14,7 +14,7 @@ namespace GitLabApiClient.Test.Internal.Queries
 
             string query = sut.Build(
                 "https://gitlab.com/api/v4/groups",
-                new ProjectsGroupQueryOptions("1")
+                new ProjectsGroupQueryOptions()
                 {
                     Archived = true,
                     Visibility = GroupsVisibility.Internal,
