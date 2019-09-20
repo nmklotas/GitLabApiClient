@@ -9,11 +9,6 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(ReleaseQueryOptions options)
         {
-            if (!string.IsNullOrEmpty(options.ProjectId))
-                Add("id", options.ProjectId);
-
-            if (!string.IsNullOrEmpty(options.TagName))
-                Add("tag_name", options.TagName);
         }
     }
 }
