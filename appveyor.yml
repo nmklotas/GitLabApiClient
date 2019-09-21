@@ -3,29 +3,33 @@ version: 1.0.{build}-alpha
 configuration: Release
 build:
   verbosity: minimal
-  
+
 environment:
   # Don't report back to the mothership
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-  
+
 skip_branch_with_pr: true
+
+before_build:
+  - ps: dotnet tool install -g dotnet-format
+  - ps: dotnet format --check --dry-run
 
 build_script:
 - ps: .\build.ps1
 
 test_script:
 - ps: .\test.ps1
-  
+
 artifacts:
   - path: 'src\bin\Release\*.nupkg'
     name: Package
 
 deploy:
-  provider: NuGet  
+  provider: NuGet
   api_key:
     secure: nsG5rMfSr/gLzEdOpIEAj7p0n2LKQrjO1hHR4C+kFyuQXBC8KlcAJrjgP5vnm1XA
-  skip_symbols: false  
+  skip_symbols: false
   artifact: /.*\.nupkg/
   on:
     appveyor_repo_tag: true
