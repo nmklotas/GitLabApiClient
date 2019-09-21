@@ -12,7 +12,7 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 
-        internal MarkdownClient(GitLabHttpFacade httpFacade) => 
+        internal MarkdownClient(GitLabHttpFacade httpFacade) =>
             _httpFacade = httpFacade;
 
         public async Task<Markdown> RenderAsync(RenderMarkdownRequest request) =>

@@ -21,7 +21,7 @@ namespace GitLabApiClient.Models.Notes.Responses
 
         [JsonProperty("avatar_url")]
         public string AvatarUrl { get; set; }
-        
+
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
     }

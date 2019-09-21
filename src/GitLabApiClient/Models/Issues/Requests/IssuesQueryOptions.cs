@@ -8,13 +8,13 @@ namespace GitLabApiClient.Models.Issues.Requests
     /// </summary>
     public class IssuesQueryOptions
     {
-        internal IssuesQueryOptions() {}
+        internal IssuesQueryOptions() { }
 
         /// <summary>
         /// Return all issues or just those that are opened or closed.
         /// Default is Opened.
         /// </summary>
-        public IssueState State { get; set; } 
+        public IssueState State { get; set; }
 
         /// <summary>
         /// List of label names, issues must have all labels to be returned. 

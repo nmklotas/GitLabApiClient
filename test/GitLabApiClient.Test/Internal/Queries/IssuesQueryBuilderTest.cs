@@ -10,7 +10,7 @@ namespace GitLabApiClient.Test.Internal.Queries
     public class IssuesQueryBuilderTest
     {
         [Fact]
-        public void NonDefaultQueryBuilt() 
+        public void NonDefaultQueryBuilt()
         {
             var sut = new IssuesQueryBuilder();
 

@@ -10,7 +10,7 @@ namespace GitLabApiClient.Models.Branches.Responses
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-        
+
         [JsonProperty("merged")]
         public bool Merged { get; set; }
 

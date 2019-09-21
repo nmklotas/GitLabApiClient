@@ -15,7 +15,7 @@ namespace GitLabApiClient.Models.Notes.Responses
 
         [JsonProperty("body")]
         public string Body { get; set; }
-        
+
         [JsonProperty("author")]
         public Author Author { get; set; }
 

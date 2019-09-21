@@ -27,16 +27,16 @@ namespace GitLabApiClient.Test
             A.CallTo(() => handler.SendAsync(HttpMethod.Get, url))
                 .ReturnsLazily(() => HttpResponseMessageProducer.Success(
                     $"{{\"id\": \"{sha}\", }}"));
-            using (var client = new HttpClient(handler) {BaseAddress = new Uri(gitlabServer)})
+            using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
                 var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder());
-                
+
                 var commitFromClient = await commitsClient.GetAsync(projectId, sha);
                 commitFromClient.Id.Should().BeEquivalentTo(sha);
             }
         }
-        
+
         [Fact]
         public async void GetCommitsByRefName()
         {
@@ -49,16 +49,16 @@ namespace GitLabApiClient.Test
             A.CallTo(() => handler.SendAsync(HttpMethod.Get, url))
                 .ReturnsLazily(() => HttpResponseMessageProducer.Success(
                     $"[  {{ \"id\": \"id1\",}},\n  {{\"id\": \"id2\",}}]"));
-            using (var client = new HttpClient(handler) {BaseAddress = new Uri(gitlabServer)})
+            using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
                 var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder());
-                
+
                 var commitsFromClient = await commitsClient.GetAsync(projectId, o => o.RefName = refName);
                 commitsFromClient[0].Id.Should().BeEquivalentTo("id1");
                 commitsFromClient[1].Id.Should().BeEquivalentTo("id2");
             }
-            
+
         }
     }
 }

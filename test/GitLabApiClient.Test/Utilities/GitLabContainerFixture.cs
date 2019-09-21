@@ -9,9 +9,9 @@ namespace GitLabApiClient.Test.Utilities
     public class GitLabContainerFixture : IAsyncLifetime
     {
         private const string GitLabContainerPath = "../../../../docker";
- 
+
         private const string GitLabApiPath = "http://localhost:9190/";
- 
+
         private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(10);
 
         private HttpClient _gitLabPingClient;
@@ -43,7 +43,7 @@ namespace GitLabApiClient.Test.Utilities
                     $"-f {GitLabContainerPath}/docker-compose.yml up -d"
             });
         }
- 
+
         private void StopContainer()
         {
             var processStartInfo = new ProcessStartInfo
@@ -104,7 +104,7 @@ namespace GitLabApiClient.Test.Utilities
 
                 await Task.Delay(15000);
             }
- 
+
             return false;
         }
     }

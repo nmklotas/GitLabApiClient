@@ -8,7 +8,7 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(MilestonesQueryOptions options)
         {
-            if(options.MilestoneIds.Count > 0)
+            if (options.MilestoneIds.Count > 0)
                 Add(options.MilestoneIds);
 
             string stateQueryValue = GetStateQueryValue(options.State);
