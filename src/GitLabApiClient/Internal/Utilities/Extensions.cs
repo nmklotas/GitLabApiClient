@@ -44,15 +44,11 @@ namespace GitLabApiClient.Internal.Utilities
                     {
                         int id = project.Id;
                         if (id > 0)
-                        {
                             return id.ToString();
-                        }
 
                         string path = project.PathWithNamespace?.Trim();
                         if (!string.IsNullOrEmpty(path))
-                        {
                             return path.UrlEncode();
-                        }
 
                         break;
                     }
@@ -75,15 +71,11 @@ namespace GitLabApiClient.Internal.Utilities
                     {
                         int id = group.Id;
                         if (id > 0)
-                        {
                             return id.ToString();
-                        }
 
                         string path = group.FullPath?.Trim();
                         if (!string.IsNullOrEmpty(path))
-                        {
                             return path.UrlEncode();
-                        }
 
                         break;
                     }
@@ -106,15 +98,11 @@ namespace GitLabApiClient.Internal.Utilities
                     {
                         int id = user.Id;
                         if (id > 0)
-                        {
                             return id.ToString();
-                        }
 
                         string path = user.Username?.Trim();
                         if (!string.IsNullOrEmpty(path))
-                        {
                             return path.UrlEncode();
-                        }
 
                         break;
                     }
