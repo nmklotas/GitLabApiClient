@@ -8,7 +8,7 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
     /// </summary>
     public class MergeRequestsQueryOptions
     {
-        internal MergeRequestsQueryOptions() {}
+        internal MergeRequestsQueryOptions() { }
 
         /// <summary>
         /// Return all merge requests or just those that are opened, closed, or merged.

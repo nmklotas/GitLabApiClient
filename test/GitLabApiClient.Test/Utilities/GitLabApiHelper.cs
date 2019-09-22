@@ -29,7 +29,7 @@ namespace GitLabApiClient.Test.Utilities
 
         public static string TestUserName { get; set; } = "root";
 
-        public static string TestName { get; set;} = "Administrator";
+        public static string TestName { get; set; } = "Administrator";
 
         public static string TestPassword { get; set; } = "hariseldon";
 

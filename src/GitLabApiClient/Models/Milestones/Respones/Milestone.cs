@@ -21,10 +21,10 @@ namespace GitLabApiClient.Models.Milestones.Responses
 
         [JsonProperty("title")]
         public string Title { get; set; }
-        
+
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
-        
+
         [JsonProperty("state")]
         public MilestoneState State { get; set; }
     }

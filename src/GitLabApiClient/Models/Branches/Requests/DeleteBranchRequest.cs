@@ -27,7 +27,7 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// Project Id.
         /// </summary>
         public string ProjectId { get; set; }
-        
+
         /// <summary>
         /// Branch Name.
         /// </summary>

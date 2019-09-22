@@ -165,7 +165,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectLabelCanBeUpdated()
         {
             //arrange
-            var createdLabel= await _sut.CreateLabelAsync(new CreateProjectLabelRequest(GitLabApiHelper.TestProjectTextId, "Label 1")
+            var createdLabel = await _sut.CreateLabelAsync(new CreateProjectLabelRequest(GitLabApiHelper.TestProjectTextId, "Label 1")
             {
                 Color = "#FFFFFF",
                 Description = "description1",
@@ -177,7 +177,7 @@ namespace GitLabApiClient.Test
             updateRequest.Color = "#000000";
             updateRequest.Description = "description11";
             updateRequest.Priority = 11;
-            
+
             var updatedLabel = await _sut.UpdateLabelAsync(updateRequest);
             await _sut.DeleteLabelAsync(GitLabApiHelper.TestProjectId, updatedLabel.Name);
 
@@ -209,7 +209,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-11-10",
                 Description = "description22"
             });
-            
+
             //assert
             updatedMilestone.Should().Match<Milestone>(m =>
                 m.ProjectId == GitLabApiHelper.TestProjectId &&

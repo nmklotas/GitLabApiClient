@@ -18,7 +18,7 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
             _commitQueryBuilder = commitQueryBuilder;
         }
-            
+
         public async Task<Commit> GetAsync(string projectId, string sha) =>
            await _httpFacade.Get<Commit>(CommitsBaseUrl(projectId) + "/" + sha);
 

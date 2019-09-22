@@ -9,7 +9,7 @@ namespace GitLabApiClient.Models.Releases.Responses
     {
         [JsonProperty("format")]
         public string Format { get; set; }
-        
+
         [JsonProperty("url")]
         public string Url { get; set; }
     }

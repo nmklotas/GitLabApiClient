@@ -67,7 +67,7 @@ namespace GitLabApiClient.Test
                 AssigneeId = 1,
                 Description = "Description11",
                 Title = "Title11",
-                Labels = new[] { "Label11"},
+                Labels = new[] { "Label11" },
                 MilestoneId = 11,
                 TargetBranch = "master11",
                 RemoveSourceBranch = true
@@ -77,7 +77,7 @@ namespace GitLabApiClient.Test
                 m => m.Assignee.Id == 1 &&
                      m.Description == "Description11" &&
                      m.Title == "Title11" &&
-                     m.Labels.SequenceEqual(new[] {"Label11"}) &&
+                     m.Labels.SequenceEqual(new[] { "Label11" }) &&
                      m.TargetBranch == "master11" &&
                      m.ForceRemoveSourceBranch == true);
         }
@@ -93,7 +93,7 @@ namespace GitLabApiClient.Test
                 MilestoneId = 1
             });
 
-            Func<Task<MergeRequest>> acceptAction = () => 
+            Func<Task<MergeRequest>> acceptAction = () =>
                 _sut.AcceptAsync(new AcceptMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid));
 
             acceptAction.ShouldThrow<GitLabException>().

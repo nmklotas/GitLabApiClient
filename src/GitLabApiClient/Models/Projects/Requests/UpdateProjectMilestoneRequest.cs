@@ -27,7 +27,7 @@ namespace GitLabApiClient.Models.Projects.Requests
         /// </summary>
         [JsonProperty("id")]
         public string ProjectId { get; private set; }
-        
+
         /// <summary>
         /// The ID of a project milestone.
         /// </summary>
