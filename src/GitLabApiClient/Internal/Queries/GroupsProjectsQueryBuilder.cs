@@ -45,7 +45,7 @@ namespace GitLabApiClient.Internal.Queries
                 Add("include_subgroups", options.IncludeSubgroups);
 
             if (options.MinAccessLevel != null)
-                Add("min_access_level", (int) options.MinAccessLevel);
+                Add("min_access_level", (int)options.MinAccessLevel);
 
             if (options.WithCustomAttributes)
                 Add("with_custom_attributes", options.WithCustomAttributes);

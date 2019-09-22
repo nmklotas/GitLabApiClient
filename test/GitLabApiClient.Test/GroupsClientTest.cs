@@ -201,10 +201,10 @@ namespace GitLabApiClient.Test
             updatedMilestone.Should().Match<Milestone>(i => i.State == MilestoneState.Closed);
         }
 
-        public Task InitializeAsync() 
+        public Task InitializeAsync()
             => CleanupGroups();
 
-        public Task DisposeAsync() 
+        public Task DisposeAsync()
             => CleanupGroups();
 
         private async Task CleanupGroups()
@@ -216,7 +216,7 @@ namespace GitLabApiClient.Test
                 await _sut.DeleteAsync(groupId.ToString());
         }
 
-        private static string GetRandomGroupName() 
+        private static string GetRandomGroupName()
             => "test-gitlabapiclient" + Path.GetRandomFileName();
     }
 }

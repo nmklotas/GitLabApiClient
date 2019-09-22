@@ -7,7 +7,7 @@ namespace GitLabApiClient.Test.TestUtilities
     {
         public static HttpResponseMessage Success(string content)
         {
-            var response = new HttpResponseMessage(HttpStatusCode.OK) {Content = new StringContent(content)};
+            var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(content) };
             return response;
         }
     }

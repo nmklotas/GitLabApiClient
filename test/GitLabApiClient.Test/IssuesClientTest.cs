@@ -131,7 +131,7 @@ namespace GitLabApiClient.Test
             {
                 Description = "Description"
             });
-            
+
             //act
             var note = await _sut.CreateNoteAsync(new CreateIssueNoteRequest(TestProjectTextId, issue.Iid, body)
             {

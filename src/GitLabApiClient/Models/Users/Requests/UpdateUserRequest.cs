@@ -65,7 +65,7 @@ namespace GitLabApiClient.Models.Users.Requests
         /// </summary>
         [JsonProperty("website_url")]
         public string WebSiteUrl { get; set; }
-        
+
         /// <summary>
         /// Organization name.
         /// </summary>

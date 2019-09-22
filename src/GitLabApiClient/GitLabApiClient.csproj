@@ -7,12 +7,12 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Copyright />
+    <Copyright/>
     <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
     <Authors>nmklotas</Authors>
     <PackageProjectUrl>https://github.com/nmklotas/GitLabApiClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
-    <RepositoryType />
+    <RepositoryType/>
     <PackageTags>GitLab REST API CI Client</PackageTags>
     <PackageId>GitLabApiClient</PackageId>
     <Company>nmklotas</Company>
@@ -35,12 +35,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3"/>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Net.Http"/>
+    <Reference Include="System.Web"/>
   </ItemGroup>
 
 </Project>

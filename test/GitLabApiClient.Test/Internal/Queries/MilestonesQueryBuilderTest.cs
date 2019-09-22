@@ -19,7 +19,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                 {
                     MilestoneIds = { 3, 4 },
                     State = MilestoneState.Active,
-                    Search ="filter"
+                    Search = "filter"
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/projects/projectId/milestones?" +

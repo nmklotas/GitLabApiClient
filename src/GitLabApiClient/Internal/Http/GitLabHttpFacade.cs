@@ -26,10 +26,10 @@ namespace GitLabApiClient.Internal.Http
                 BaseAddress = new Uri(hostUrl)
             };
             httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
-            
+
             Setup(jsonSerializer, httpClient);
         }
-        
+
         public GitLabHttpFacade(RequestsJsonSerializer jsonSerializer, HttpClient httpClient) => Setup(jsonSerializer, httpClient);
 
         private void Setup(RequestsJsonSerializer jsonSerializer, HttpClient httpClient)

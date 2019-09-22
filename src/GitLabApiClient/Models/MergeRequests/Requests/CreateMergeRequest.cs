@@ -19,9 +19,9 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// <param name="title">Title of the merge request.</param>
         public CreateMergeRequest(string projectId, string sourceBranch, string targetBranch, string title)
         {
-            Guard.NotEmpty(sourceBranch,nameof(sourceBranch));
+            Guard.NotEmpty(sourceBranch, nameof(sourceBranch));
             Guard.NotEmpty(targetBranch, nameof(targetBranch));
-            Guard.NotEmpty(title,nameof(title));
+            Guard.NotEmpty(title, nameof(title));
             SourceBranch = sourceBranch;
             TargetBranch = targetBranch;
             Title = title;

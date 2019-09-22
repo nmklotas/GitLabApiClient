@@ -58,7 +58,7 @@ namespace GitLabApiClient
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
-    }
+        }
 
         /// <summary>
         /// Access GitLab's issues API.

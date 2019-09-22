@@ -14,23 +14,23 @@ namespace GitLabApiClient.Test.Internal.Queries
             var sut = new ProjectsQueryBuilder();
 
             string query = sut.Build(
-                "https://gitlab.com/api/v4/projects", 
+                "https://gitlab.com/api/v4/projects",
                 new ProjectQueryOptions
-            {
-                UserId = "1",
-                Archived = true,
-                Visibility = QueryProjectVisibilityLevel.Internal,
-                Order = ProjectsOrder.UpdatedAt,
-                SortOrder = SortOrder.Ascending,
-                Filter = "filter",
-                Simple = true,
-                Owned = true,
-                IsMemberOf = true,
-                Starred = true,
-                IncludeStatistics = true,
-                WithIssuesEnabled = true,
-                WithMergeRequestsEnabled = true
-            });
+                {
+                    UserId = "1",
+                    Archived = true,
+                    Visibility = QueryProjectVisibilityLevel.Internal,
+                    Order = ProjectsOrder.UpdatedAt,
+                    SortOrder = SortOrder.Ascending,
+                    Filter = "filter",
+                    Simple = true,
+                    Owned = true,
+                    IsMemberOf = true,
+                    Starred = true,
+                    IncludeStatistics = true,
+                    WithIssuesEnabled = true,
+                    WithMergeRequestsEnabled = true
+                });
 
             query.Should().Be("https://gitlab.com/api/v4/projects?" +
                               "user_id=1&" +
