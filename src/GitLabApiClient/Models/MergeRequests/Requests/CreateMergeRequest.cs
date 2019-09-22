@@ -13,11 +13,10 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMergeRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
         /// <param name="sourceBranch">The source branch.</param>
         /// <param name="targetBranch">The target branch.</param>
         /// <param name="title">Title of the merge request.</param>
-        public CreateMergeRequest(string projectId, string sourceBranch, string targetBranch, string title)
+        public CreateMergeRequest(string sourceBranch, string targetBranch, string title)
         {
             Guard.NotEmpty(sourceBranch, nameof(sourceBranch));
             Guard.NotEmpty(targetBranch, nameof(targetBranch));
@@ -25,14 +24,7 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
             SourceBranch = sourceBranch;
             TargetBranch = targetBranch;
             Title = title;
-            ProjectId = projectId;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; }
 
         /// <summary>
         /// The source branch.

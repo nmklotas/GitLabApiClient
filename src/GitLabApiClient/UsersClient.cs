@@ -60,10 +60,11 @@ namespace GitLabApiClient
         /// <summary>
         /// Updates existing user
         /// </summary>
+        /// <param name="userId"></param>
         /// <param name="request">Request to update user.</param>
         /// <returns>Newly modified user.</returns>
-        public async Task<User> UpdateAsync(UpdateUserRequest request) =>
-            await _httpFacade.Put<User>($"users/{request.UserId}", request);
+        public async Task<User> UpdateAsync(int userId, UpdateUserRequest request) =>
+            await _httpFacade.Put<User>($"users/{userId}", request);
 
         /// <summary>
         /// Retrieves current, authenticated user session.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Releases.Requests;
 using GitLabApiClient.Models.Releases.Responses;
 
@@ -21,26 +22,28 @@ namespace GitLabApiClient
             _releaseQueryBuilder = releaseQueryBuilder;
         }
 
-        public async Task<Release> GetAsync(string projectId, string tagName) =>
-            await _httpFacade.Get<Release>($"projects/{projectId}/releases/{tagName}");
+        public async Task<Release> GetAsync(object projectId, string tagName) =>
+            await _httpFacade.Get<Release>($"{ReleaseBaseUrl(projectId)}/{tagName}");
 
-        public async Task<IList<Release>> GetAsync(string projectId, Action<ReleaseQueryOptions> options = null)
+        public async Task<IList<Release>> GetAsync(object projectId, Action<ReleaseQueryOptions> options = null)
         {
             var queryOptions = new ReleaseQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _releaseQueryBuilder.Build($"projects/{projectId}/releases", queryOptions);
+            string url = _releaseQueryBuilder.Build(ReleaseBaseUrl(projectId), queryOptions);
             return await _httpFacade.GetPagedList<Release>(url);
         }
 
-        public async Task<Release> CreateAsync(CreateReleaseRequest request) =>
-            await _httpFacade.Post<Release>($"projects/{request.ProjectId}/releases/", request);
+        public async Task<Release> CreateAsync(object projectId, CreateReleaseRequest request) =>
+            await _httpFacade.Post<Release>(ReleaseBaseUrl(projectId), request);
 
-        public async Task<Release> UpdateAsync(UpdateReleaseRequest request) =>
-            await _httpFacade.Put<Release>($"projects/{request.ProjectId}/releases/", request);
+        public async Task<Release> UpdateAsync(object projectId, UpdateReleaseRequest request) =>
+            await _httpFacade.Put<Release>(ReleaseBaseUrl(projectId), request);
 
-        public async Task DeleteAsync(DeleteReleaseRequest request) =>
-            await _httpFacade.Delete($"projects/{request.ProjectId}/releases/{request.TagName}");
+        public async Task DeleteAsync(object projectId, string tagName) =>
+            await _httpFacade.Delete($"{ReleaseBaseUrl(projectId)}/{tagName}");
 
+        public static string ReleaseBaseUrl(object projectId) =>
+            $"{projectId.ProjectBaseUrl()}/releases";
     }
 }

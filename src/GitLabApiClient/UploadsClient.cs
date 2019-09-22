@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Uploads.Requests;
 using GitLabApiClient.Models.Uploads.Responses;
 
@@ -17,15 +18,16 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
 
         /// <summary>
-        /// Uploads a file for the provided project. 
+        /// Uploads a file for the provided project.
         /// </summary>
+        /// <param name="projectId">The ID or path of the project.</param>
         /// <param name="uploadRequest">The upload request containing the filename and stream to be uploaded</param>
         /// <returns>A <see cref="Upload"/> object.
         /// Use the <see cref="Upload.Markdown"/> property to place the image in your markdown text.
         /// </returns>
-        public async Task<Upload> UploadFile(CreateUploadRequest uploadRequest)
+        public async Task<Upload> UploadFile(object projectId, CreateUploadRequest uploadRequest)
         {
-            return await _httpFacade.PostFile($"projects/{uploadRequest.ProjectId}/uploads", uploadRequest);
+            return await _httpFacade.PostFile($"{projectId.ProjectBaseUrl()}/uploads", uploadRequest);
         }
     }
 }

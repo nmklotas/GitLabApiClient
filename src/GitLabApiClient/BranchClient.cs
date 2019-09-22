@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
 
@@ -21,37 +22,37 @@ namespace GitLabApiClient
             _branchQueryBuilder = branchQueryBuilder;
         }
 
-        public async Task<Branch> GetAsync(string projectId, string branchName) =>
-            await _httpFacade.Get<Branch>($"projects/{projectId}/repository/branches/{branchName}");
+        public async Task<Branch> GetAsync(object projectId, string branchName) =>
+            await _httpFacade.Get<Branch>($"{projectId.ProjectBaseUrl()}/repository/branches/{branchName}");
 
-        public async Task<IList<Branch>> GetAsync(string projectId, Action<BranchQueryOptions> options)
+        public async Task<IList<Branch>> GetAsync(object projectId, Action<BranchQueryOptions> options)
         {
             var queryOptions = new BranchQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _branchQueryBuilder.Build($"projects/{projectId}/repository/branches", queryOptions);
+            string url = _branchQueryBuilder.Build($"{projectId.ProjectBaseUrl()}/repository/branches", queryOptions);
             return await _httpFacade.GetPagedList<Branch>(url);
         }
 
-        public async Task<Branch> CreateAsync(CreateBranchRequest request) =>
-            await _httpFacade.Post<Branch>($"projects/{request.ProjectId}/repository/branches", request);
+        public async Task<Branch> CreateAsync(object projectId, CreateBranchRequest request) =>
+            await _httpFacade.Post<Branch>($"{projectId.ProjectBaseUrl()}/repository/branches", request);
 
-        public async Task DeleteBranch(DeleteBranchRequest request) =>
-            await _httpFacade.Delete($"projects/{request.ProjectId}/repository/branches/{request.BranchName}");
+        public async Task DeleteBranch(object projectId, string branchName) =>
+            await _httpFacade.Delete($"{projectId.ProjectBaseUrl()}/repository/branches/{branchName}");
 
-        public async Task DeleteMergedBranches(DeleteMergedBranchesRequest request) =>
-            await _httpFacade.Delete($"projects/{request.ProjectId}/repository/merged_branches");
+        public async Task DeleteMergedBranches(object projectId) =>
+            await _httpFacade.Delete($"{projectId.ProjectBaseUrl()}/repository/merged_branches");
 
-        public async Task<ProtectedBranch> GetProtectedBranchesAsync(string projectId, string branchName) =>
-            await _httpFacade.Get<ProtectedBranch>($"projects/{projectId}/protected_branches/{branchName}");
+        public async Task<ProtectedBranch> GetProtectedBranchesAsync(object projectId, string branchName) =>
+            await _httpFacade.Get<ProtectedBranch>($"{projectId.ProjectBaseUrl()}/protected_branches/{branchName}");
 
-        public async Task<IList<ProtectedBranch>> GetProtectedBranchesAsync(string projectId) =>
-            await _httpFacade.GetPagedList<ProtectedBranch>($"projects/{projectId}/protected_branches");
+        public async Task<IList<ProtectedBranch>> GetProtectedBranchesAsync(object projectId) =>
+            await _httpFacade.GetPagedList<ProtectedBranch>($"{projectId.ProjectBaseUrl()}/protected_branches");
 
-        public async Task<ProtectedBranch> ProtectBranchAsync(ProtectBranchRequest request) =>
-            await _httpFacade.Post<ProtectedBranch>($"projects/{request.ProjectId}/protected_branches", request);
+        public async Task<ProtectedBranch> ProtectBranchAsync(object projectId, ProtectBranchRequest request) =>
+            await _httpFacade.Post<ProtectedBranch>($"{projectId.ProjectBaseUrl()}/protected_branches", request);
 
-        public async Task UnprotectBranchAsync(string projectId, string branchName) =>
-            await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName}");
+        public async Task UnprotectBranchAsync(object projectId, string branchName) =>
+            await _httpFacade.Delete($"{projectId.ProjectBaseUrl()}/protected_branches/{branchName}");
     }
 }

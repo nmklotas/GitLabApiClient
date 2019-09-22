@@ -22,7 +22,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()
         {
-            var mergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title")
+            var mergeRequest = await _sut.CreateAsync(GitLabApiHelper.TestProjectTextId, new CreateMergeRequest("sourcebranch1", "master", "Title")
             {
                 AssigneeId = 1,
                 Description = "Description",
@@ -54,7 +54,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task CreatedMergeRequestCanBeUpdated()
         {
-            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title1")
+            var createdMergeRequest = await _sut.CreateAsync(GitLabApiHelper.TestProjectTextId, new CreateMergeRequest("sourcebranch1", "master", "Title1")
             {
                 AssigneeId = 1,
                 Description = "Description1",
@@ -62,7 +62,7 @@ namespace GitLabApiClient.Test
                 MilestoneId = 1
             });
 
-            var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid)
+            var updatedMergeRequest = await _sut.UpdateAsync(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid, new UpdateMergeRequest()
             {
                 AssigneeId = 1,
                 Description = "Description11",
@@ -85,7 +85,7 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task MergeRequestWithoutCommitsCannotBeAccepted()
         {
-            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title1")
+            var createdMergeRequest = await _sut.CreateAsync(GitLabApiHelper.TestProjectTextId, new CreateMergeRequest("sourcebranch1", "master", "Title1")
             {
                 AssigneeId = 1,
                 Description = "Description1",
@@ -94,7 +94,7 @@ namespace GitLabApiClient.Test
             });
 
             Func<Task<MergeRequest>> acceptAction = () =>
-                _sut.AcceptAsync(new AcceptMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid));
+                _sut.AcceptAsync(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid, new AcceptMergeRequest());
 
             acceptAction.ShouldThrow<GitLabException>().
                 WithMessage("{\"message\":\"405 Method Not Allowed\"}").
@@ -104,9 +104,9 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task MergeRequestCanBeClosed()
         {
-            var createdMergeRequest = await _sut.CreateAsync(new CreateMergeRequest(GitLabApiHelper.TestProjectTextId, "sourcebranch1", "master", "Title1"));
+            var createdMergeRequest = await _sut.CreateAsync(GitLabApiHelper.TestProjectTextId, new CreateMergeRequest("sourcebranch1", "master", "Title1"));
 
-            var updatedMergeRequest = await _sut.UpdateAsync(new UpdateMergeRequest(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid)
+            var updatedMergeRequest = await _sut.UpdateAsync(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid, new UpdateMergeRequest()
             {
                 State = RequestedMergeRequestState.Close
             });

@@ -11,21 +11,12 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateGroupMilestoneRequest"/> class.
         /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
         /// <param name="title">The title of a milestone.</param>
-        public CreateGroupMilestoneRequest(string groupId, string title)
+        public CreateGroupMilestoneRequest(string title)
         {
-            Guard.NotEmpty(groupId, nameof(groupId));
             Guard.NotEmpty(title, nameof(title));
-            GroupId = groupId;
             Title = title;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the group owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string GroupId { get; private set; }
 
         /// <summary>
         /// The title of a milestone.

@@ -13,30 +13,6 @@ namespace GitLabApiClient.Models.Issues.Requests
     public sealed class UpdateIssueRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateIssueRequest"/> class.
-        /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
-        /// <param name="issueId">The internal ID of a project's issue.</param>
-        public UpdateIssueRequest(string projectId, int issueId)
-        {
-            Guard.NotEmpty(projectId, nameof(projectId));
-            ProjectId = projectId;
-            IssueId = issueId;
-        }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; }
-
-        /// <summary>
-        /// The internal ID of a project's issue.
-        /// </summary>
-        [JsonProperty("issue_iid")]
-        public int IssueId { get; }
-
-        /// <summary>
         /// The title of an issue.
         /// </summary>
         [JsonProperty("title")]

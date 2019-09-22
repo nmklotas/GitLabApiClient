@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Commits.Requests;
 using GitLabApiClient.Models.Commits.Responses;
 
@@ -19,21 +20,21 @@ namespace GitLabApiClient
             _commitQueryBuilder = commitQueryBuilder;
         }
 
-        public async Task<Commit> GetAsync(string projectId, string sha) =>
-           await _httpFacade.Get<Commit>(CommitsBaseUrl(projectId) + "/" + sha);
+        public async Task<Commit> GetAsync(object projectId, string sha) =>
+           await _httpFacade.Get<Commit>($"{CommitsBaseUrl(projectId)}/{sha}");
 
-        public async Task<IList<Commit>> GetAsync(string projectId, Action<CommitQueryOptions> options)
+        public async Task<IList<Commit>> GetAsync(object projectId, Action<CommitQueryOptions> options = null)
         {
-            var queryOptions = new CommitQueryOptions(projectId);
+            var queryOptions = new CommitQueryOptions();
             options?.Invoke(queryOptions);
 
             string url = _commitQueryBuilder.Build(CommitsBaseUrl(projectId), queryOptions);
             return await _httpFacade.GetPagedList<Commit>(url);
         }
 
-        private static string CommitsBaseUrl(string projectId)
+        private static string CommitsBaseUrl(object projectId)
         {
-            return $"projects/{projectId}/repository/commits";
+            return $"{projectId.ProjectBaseUrl()}/repository/commits";
         }
     }
 }

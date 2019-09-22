@@ -14,21 +14,12 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateIssueRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
         /// <param name="title">Title of the issue.</param>
-        public CreateIssueRequest(string projectId, string title)
+        public CreateIssueRequest(string title)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(title, nameof(title));
-            ProjectId = projectId;
             Title = title;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; }
 
         /// <summary>
         /// The title of an issue.
@@ -80,7 +71,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         public DateTime? CreatedAt { get; set; }
 
         /// <summary>
-        /// The IID of a merge request in which to resolve all issues. 
+        /// The IID of a merge request in which to resolve all issues.
         /// This will fill the issue with a default description and mark all discussions as resolved.
         /// When passing a description or title, these values will take precedence over the default values.
         /// </summary>
@@ -88,7 +79,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         public int? MergeRequestIdToResolveDiscussions { get; set; }
 
         /// <summary>
-        /// The ID of a discussion to resolve. 
+        /// The ID of a discussion to resolve.
         /// This will fill in the issue with a default description and mark the discussion as resolved.
         ///  Use in combination with <see cref="MergeRequestIdToResolveDiscussions"/>
         /// </summary>
