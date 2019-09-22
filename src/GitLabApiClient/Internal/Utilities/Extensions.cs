@@ -41,21 +41,21 @@ namespace GitLabApiClient.Internal.Utilities
                 case string path:
                     return path.UrlEncode();
                 case Project project:
-                {
-                    int id = project.Id;
-                    if (id > 0)
                     {
-                        return id.ToString();
-                    }
+                        int id = project.Id;
+                        if (id > 0)
+                        {
+                            return id.ToString();
+                        }
 
-                    string path = project.PathWithNamespace?.Trim();
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        return path.UrlEncode();
-                    }
+                        string path = project.PathWithNamespace?.Trim();
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            return path.UrlEncode();
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
             throw new ArgumentException($"Cannot determine project ID or Path from provided {obj.GetType().Name} instance. " +
                                         "Must be int, string, Project instance");
@@ -72,21 +72,21 @@ namespace GitLabApiClient.Internal.Utilities
                 case string path:
                     return path.UrlEncode();
                 case Group group:
-                {
-                    int id = group.Id;
-                    if (id > 0)
                     {
-                        return id.ToString();
-                    }
+                        int id = group.Id;
+                        if (id > 0)
+                        {
+                            return id.ToString();
+                        }
 
-                    string path = group.FullPath?.Trim();
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        return path.UrlEncode();
-                    }
+                        string path = group.FullPath?.Trim();
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            return path.UrlEncode();
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
             throw new ArgumentException($"Cannot determine group ID or Path from provided {obj.GetType().Name} instance. " +
                                         "Must be int, string, Group instance");
@@ -103,21 +103,21 @@ namespace GitLabApiClient.Internal.Utilities
                 case string path:
                     return path.UrlEncode();
                 case User user:
-                {
-                    int id = user.Id;
-                    if (id > 0)
                     {
-                        return id.ToString();
-                    }
+                        int id = user.Id;
+                        if (id > 0)
+                        {
+                            return id.ToString();
+                        }
 
-                    string path = user.Username?.Trim();
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        return path.UrlEncode();
-                    }
+                        string path = user.Username?.Trim();
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            return path.UrlEncode();
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
             throw new ArgumentException($"Cannot determine user ID or Path from provided {obj.GetType().Name} instance. " +
                                         "Must be int, string, User instance");

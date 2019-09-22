@@ -12,7 +12,7 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// Initializes a new instance of the <see cref="AddGroupMemberRequest"/> class.
         /// </summary>
         /// <param name="accessLevel">The access level of the new member.</param>
-        public AddGroupMemberRequest(AccessLevel accessLevel) => AccessLevel = (int) accessLevel;
+        public AddGroupMemberRequest(AccessLevel accessLevel) => AccessLevel = (int)accessLevel;
 
         /// <summary>
         /// The desired access level

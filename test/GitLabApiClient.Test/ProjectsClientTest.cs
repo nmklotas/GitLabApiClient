@@ -165,7 +165,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectLabelCanBeUpdated()
         {
             //arrange
-            var createdLabel= await _sut.CreateLabelAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectLabelRequest("Label 1")
+            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectLabelRequest("Label 1")
             {
                 Color = "#FFFFFF",
                 Description = "description1",
