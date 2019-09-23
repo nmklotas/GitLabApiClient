@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using GitLabApiClient.Internal.Utilities;
 
 namespace GitLabApiClient.Internal.Http
 {
@@ -107,7 +108,7 @@ namespace GitLabApiClient.Internal.Http
                 return toReturn;
 
             string valueString = headerValues.FirstOrDefault();
-            return valueString == null ? toReturn : (T)Convert.ChangeType(valueString, typeof(T));
+            return valueString.IsNullOrEmpty() ? toReturn : (T)Convert.ChangeType(valueString, typeof(T));
         }
     }
 }
