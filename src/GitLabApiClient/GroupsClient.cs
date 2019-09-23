@@ -42,6 +42,7 @@ namespace GitLabApiClient
         /// Get all details of a group.
         /// This endpoint can be accessed without authentication if the group is publicly accessible.
         /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         public async Task<Group> GetAsync(object groupId) =>
             await _httpFacade.Get<Group>(groupId.GroupBaseUrl());
 
@@ -49,6 +50,7 @@ namespace GitLabApiClient
         /// Get all subgroups of a group.
         /// This endpoint can be accessed without authentication if the group is publicly accessible.
         /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         public async Task<IList<Group>> GetSubgroupsAsync(object groupId) =>
             await _httpFacade.GetPagedList<Group>($"{groupId.GroupBaseUrl()}/subgroups");
 
@@ -77,7 +79,7 @@ namespace GitLabApiClient
         /// Get a list of projects in this group.
         /// When accessed without authentication, only public projects are returned.
         /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="options">Groups projects retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Project>> GetProjectsAsync(object groupId, Action<ProjectsGroupQueryOptions> options = null)
@@ -92,7 +94,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Get a list of members in this group.
         /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="search">A query string to search for members.</param>
         /// <returns>Group members satisfying options.</returns>
         public async Task<IList<Member>> GetMembersAsync(object groupId, string search = null)
@@ -110,7 +112,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Get a list of all members (including inherited) in this group.
         /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="search">A query string to search for members.</param>
         /// <returns>Group members satisfying options.</returns>
         public async Task<IList<Member>> GetAllMembersAsync(object groupId, string search = null)
@@ -128,7 +130,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Adds a member to the group.
         /// </summary>
-        /// <param name="groupId"></param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="request">Create milestone request.</param>
         /// <returns>Newly created milestone.</returns>
         public async Task<Milestone> CreateMilestoneAsync(object groupId, CreateGroupMilestoneRequest request)
@@ -140,7 +142,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Get a list of milestones in this group.
         /// </summary>
-        /// <param name="groupId">Id of the group.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="options">Query options.</param>
         public async Task<IList<Milestone>> GetMilestonesAsync(object groupId, Action<MilestonesQueryOptions> options = null)
         {
@@ -154,7 +156,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Retrieves a group milestone by its id.
         /// </summary>
-        /// <param name="groupId"></param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="milestoneId">Id of the milestone.</param>
         public async Task<Milestone> GetMilestoneAsync(object groupId, int milestoneId) =>
             await _httpFacade.Get<Milestone>($"{groupId.GroupBaseUrl()}/milestones/{milestoneId}");
@@ -164,13 +166,14 @@ namespace GitLabApiClient
         /// Available only for users who can create groups.
         /// </summary>
         /// <returns>The newly created group.</returns>
+        /// <param name="request">Create group request.</param>
         public async Task<Group> CreateAsync(CreateGroupRequest request) =>
             await _httpFacade.Post<Group>("groups", request);
 
         /// <summary>
         /// Adds a user to a group.
         /// </summary>
-        /// <param name="groupId"></param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="request">Add group member request.</param>
         /// <returns>Newly created membership.</returns>
         public async Task<Member> AddMemberAsync(object groupId, AddGroupMemberRequest request)
@@ -182,7 +185,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Updates a user's group membership.
         /// </summary>
-        /// <param name="groupId"></param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="userId">The user ID of the member.</param>
         /// <param name="request">Update group member request.</param>
         /// <returns>Updated membership.</returns>
@@ -195,7 +198,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Removes a user as a member of the group.
         /// </summary>
-        /// <param name="groupId">The ID or path of a group.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="userId">The user ID of the member.</param>
         public async Task RemoveMemberAsync(object groupId, int userId) =>
             await _httpFacade.Delete($"{groupId.GroupBaseUrl()}/members/{userId}");
@@ -203,8 +206,8 @@ namespace GitLabApiClient
         /// <summary>
         /// Transfer a project to the Group namespace. Available only for admin
         /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
-        /// <param name="projectId">The ID or path of a project.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>The newly updated group.</returns>
         public async Task<Group> TransferAsync(object groupId, object projectId) =>
             await _httpFacade.Post<Group>($"{groupId.GroupBaseUrl()}/projects/{projectId.ProjectIdOrPath()}");
@@ -214,13 +217,15 @@ namespace GitLabApiClient
         /// Only available to group owners and administrators.
         /// </summary>
         /// <returns>The updated group.</returns>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
+        /// <param name="request">Update group request.</param>
         public async Task<Group> UpdateAsync(object groupId, UpdateGroupRequest request) =>
             await _httpFacade.Put<Group>(groupId.GroupBaseUrl(), request);
 
         /// <summary>
         /// Updates an existing group milestone.
         /// </summary>
-        /// <param name="groupId"></param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="milestoneId">The ID of the group's milestone.</param>
         /// <param name="request">Update milestone request.</param>
         /// <returns>Newly modified milestone.</returns>
@@ -234,14 +239,14 @@ namespace GitLabApiClient
         /// Removes group with all projects inside.
         /// Only available to group owners and administrators.
         /// </summary>
-        /// <param name="groupId">The ID or path of a user group.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         public async Task DeleteAsync(object groupId) =>
             await _httpFacade.Delete(groupId.GroupBaseUrl());
 
         /// <summary>
         /// Deletes a group milestone. Only for user with developer access to the group.
         /// </summary>
-        /// <param name="groupId">The ID or path of the group owned by the authenticated user.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="milestoneId">The ID of the group's milestone.</param>
         public async Task DeleteMilestoneAsync(object groupId, int milestoneId) =>
             await _httpFacade.Delete($"{groupId.GroupBaseUrl()}/milestones/{milestoneId}");
@@ -250,20 +255,22 @@ namespace GitLabApiClient
         /// Syncs the group with its linked LDAP group.
         /// Only available to group owners and administrators.
         /// </summary>
-        /// <param name="groupId">The ID or path of a user group.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         public async Task SyncLdapAsync(object groupId) =>
             await _httpFacade.Post($"{groupId.GroupBaseUrl()}/ldap_sync");
 
         /// <summary>
         /// Creates LDAP group link.
         /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
+        /// <param name="request">Create LDAP group link request.</param>
         public async Task CreateLdapLinkAsync(object groupId, CreateLdapGroupLinkRequest request) =>
             await _httpFacade.Post($"{groupId.GroupBaseUrl()}/ldap_group_links", request);
 
         /// <summary>
         /// Deletes a LDAP group link.
         /// </summary>
-        /// <param name="groupId">Id of the group.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="cn">The CN of a LDAP group</param>
         public async Task DeleteLdapLinkAsync(object groupId, string cn) =>
             await _httpFacade.Delete($"{groupId.GroupBaseUrl()}/ldap_group_links/{cn}");
@@ -272,7 +279,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Deletes a LDAP group link for a specific LDAP provider.
         /// </summary>
-        /// <param name="groupId">Id of the group.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the project.</param>
         /// <param name="provider">Name of a LDAP provider</param>
         /// <param name="cn">The CN of a LDAP group</param>
         public async Task DeleteProviderLdapLinkAsync(object groupId, string provider, string cn) =>

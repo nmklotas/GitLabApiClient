@@ -9,6 +9,7 @@ using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Issues.Responses;
 using GitLabApiClient.Models.Notes.Requests;
 using GitLabApiClient.Models.Notes.Responses;
+using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
 {
@@ -47,7 +48,7 @@ namespace GitLabApiClient
         /// Retrieves issues from a project.
         /// By default retrieves opened issues from all users.
         /// </summary>
-        /// <param name="projectId">Id of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="options">Issues retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Issue>> GetAsync(object projectId, Action<ProjectIssuesQueryOptions> options = null)
@@ -77,7 +78,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Retrieves project issue note.
         /// </summary>
-        /// <param name="projectId">Id of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">Iid of the issue.</param>
         /// <param name="noteId">Id of the note.</param>
         /// <returns>Issues satisfying options.</returns>
@@ -87,7 +88,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Retrieves notes (comments) of an issue.
         /// </summary>
-        /// <param name="projectId">Id of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">Iid of the issue.</param>
         /// <param name="options">IssueNotes retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
@@ -104,6 +105,8 @@ namespace GitLabApiClient
         /// Creates new issue.
         /// </summary>
         /// <returns>The newly created issue.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Create issue request.</param>
         public async Task<Issue> CreateAsync(object projectId, CreateIssueRequest request) =>
             await _httpFacade.Post<Issue>(IssuesBaseUrl(projectId), request);
 
@@ -111,6 +114,9 @@ namespace GitLabApiClient
         /// Creates a new note (comment) to a single project issue.
         /// </summary>
         /// <returns>The newly created issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="request">Create issue note request.</param>
         public async Task<Note> CreateNoteAsync(object projectId, int issueIid, CreateIssueNoteRequest request) =>
             await _httpFacade.Post<Note>($"{IssuesBaseUrl(projectId)}/{issueIid}/notes", request);
 
@@ -118,6 +124,9 @@ namespace GitLabApiClient
         /// Updated existing issue.
         /// </summary>
         /// <returns>The updated issue.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="request">Update issue request.</param>
         public async Task<Issue> UpdateAsync(object projectId, int issueIid, UpdateIssueRequest request) =>
             await _httpFacade.Put<Issue>($"{IssuesBaseUrl(projectId)}/{issueIid}", request);
 
@@ -125,13 +134,17 @@ namespace GitLabApiClient
         /// Modify existing note (comment) of an issue.
         /// </summary>
         /// <returns>The updated issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="noteId">The ID of a note.</param>
+        /// <param name="request">Update issue note request.</param>
         public async Task<Issue> UpdateNoteAsync(object projectId, int issueIid, int noteId, UpdateIssueNoteRequest request) =>
             await _httpFacade.Put<Issue>($"{IssuesBaseUrl(projectId)}/{issueIid}/notes/{noteId}", request);
 
         /// <summary>
         /// Deletes an existing note (comment) of an issue.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">The IID of an issue.</param>
         /// <param name="noteId">The ID of a note.</param>
         public async Task DeleteNoteAsync(object projectId, int issueIid, int noteId) =>

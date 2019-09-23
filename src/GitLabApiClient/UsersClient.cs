@@ -60,7 +60,7 @@ namespace GitLabApiClient
         /// <summary>
         /// Updates existing user
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">Id of the user.</param>
         /// <param name="request">Request to update user.</param>
         /// <returns>Newly modified user.</returns>
         public async Task<User> UpdateAsync(int userId, UpdateUserRequest request) =>
