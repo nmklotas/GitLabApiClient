@@ -10,6 +10,8 @@ using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Users.Responses;
+using GitLabApiClient.Models.Variables.Request;
+using GitLabApiClient.Models.Variables.Response;
 
 namespace GitLabApiClient
 {
@@ -58,6 +60,13 @@ namespace GitLabApiClient
         /// <param name="projectId">Id of the project.</param>
         public async Task<IList<User>> GetUsersAsync(int projectId) =>
             await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
+
+        /// <summary>
+        /// Retrieves project variables by its id.
+        /// </summary>
+        /// <param name="projectId">Id of the project.</param>
+        public async Task<IList<Variable>> GetVariablesAsync(int projectId) =>
+            await _httpFacade.GetPagedList<Variable>($"projects/{projectId}/variables");
 
         /// <summary>
         /// Get the labels list of a project.
@@ -111,6 +120,17 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Creates new project variable.
+        /// </summary>
+        /// <param name="request">Create variable request.</param>
+        /// <returns>Newly created variable.</returns>
+        public async Task<Variable> CreateVariableAsync(CreateVariableRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Variable>($"projects/{request.ProjectId}/variables", request);
+        }
+
+        /// <summary>
         /// Creates new project milestone.
         /// </summary>
         /// <param name="request">Create milestone request.</param>
@@ -155,6 +175,17 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Updates an existing project variable.
+        /// </summary>
+        /// <param name="request">Update variable request.</param>
+        /// <returns>Newly modified variable.</returns>
+        public async Task<Variable> UpdateVariableAsync(UpdateProjectVariableRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Put<Variable>($"projects/{request.ProjectId}/variables/{request.Key}", request);
+        }
+
+        /// <summary>
         /// Deletes project.
         /// </summary>
         /// <param name="id">Id of the project.</param>
@@ -176,6 +207,14 @@ namespace GitLabApiClient
         /// <param name="milestoneId">The ID of the project�s milestone.</param>
         public async Task DeleteMilestoneAsync(int id, int milestoneId) =>
             await _httpFacade.Delete($"projects/{id}/milestones/{milestoneId}");
+
+        /// <summary>
+        /// Deletes project variable
+        /// </summary>
+        /// <param name="id">Id of the project.</param>
+        /// <param name="key">The Key ID of the variable.</param>
+        public async Task DeleteVariableAsync(int id, string key) =>
+            await _httpFacade.Delete($"projects/{id}/variables/{key}");
 
         /// <summary>
         /// Archive project.
