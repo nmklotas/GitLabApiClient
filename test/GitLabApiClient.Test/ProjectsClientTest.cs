@@ -153,16 +153,15 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectVariablesCreated()
         {
-            var request = new CreateVariableRequest
-            {
-                ProjectId = GitLabApiHelper.TestProjectId.ToString(),
-                VariableType = "env_var",
-                Key = "SOME_VAR_KEY_CREATED",
-                Value = "VALUE_VAR",
-                EnvironmentScope = "*",
-                Masked = true,
-                Protected = true
-            };
+            var request = new CreateVariableRequest(){};
+            request.ProjectId = GitLabApiHelper.TestProjectId.ToString();
+            request.VariableType = "env_var";
+            request.Key = "SOME_VAR_KEY_CREATED";
+            request.Value = "VALUE_VAR";
+            request.EnvironmentScope = "*";
+            request.Masked = true;
+            request.Protected = true;
+            
 
             var variable = await _sut.CreateVariableAsync(request);
 
