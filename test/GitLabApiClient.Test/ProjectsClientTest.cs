@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
@@ -20,6 +21,7 @@ namespace GitLabApiClient.Test
     {
         private List<int> ProjectIdsToClean { get; } = new List<int>();
         private List<int> MilestoneIdsToClean { get; } = new List<int>();
+        private List<string> VariableIdsToClean { get; } = new List<string>();
 
         private readonly ProjectsClient _sut = new ProjectsClient(
             GitLabApiHelper.GetFacade(),
@@ -51,12 +53,13 @@ namespace GitLabApiClient.Test
         public async Task ProjectMilestonesRetrieved()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(new CreateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, "milestone1")
-            {
-                StartDate = "2018-11-01",
-                DueDate = "2018-11-30",
-                Description = "description1"
-            });
+            var createdMilestone = await _sut.CreateMilestoneAsync(
+                new CreateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, "milestone1")
+                {
+                    StartDate = "2018-11-01",
+                    DueDate = "2018-11-30",
+                    Description = "description1"
+                });
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
@@ -71,6 +74,38 @@ namespace GitLabApiClient.Test
                 m.StartDate == "2018-11-05" &&
                 m.DueDate == "2018-11-10" &&
                 m.Description == "description1");
+        }
+
+        [Fact]
+        public async Task ProjectVariablesRetrieved()
+        {
+            //arrange
+            var createdVariable = await _sut.CreateVariableAsync(new CreateVariableRequest
+            {
+                ProjectId = GitLabApiHelper.TestProjectId.ToString(),
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_RETRIEVE",
+                Value = "VALUE_VAR",
+                EnvironmentScope = "*",
+                Masked = true,
+                Protected = true
+            });
+
+            VariableIdsToClean.Add(createdVariable.Key);
+
+            //act
+            var variables = await _sut.GetVariablesAsync(GitLabApiHelper.TestProjectId);
+            var variable = variables.First(v => v.Key == createdVariable.Key);
+
+            //assert
+            variables.Should().NotBeEmpty();
+            variable.Should().Match<Variable>(v =>
+                v.VariableType == createdVariable.VariableType &&
+                v.Key == createdVariable.Key &&
+                v.Value == createdVariable.Value &&
+                v.EnvironmentScope == createdVariable.EnvironmentScope &&
+                v.Masked == createdVariable.Masked &&
+                v.Protected == createdVariable.Protected);
         }
 
         [Fact]
@@ -116,13 +151,13 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
-        public async Task ProjectVariableCreatedUpdateDeleted()
+        public async Task ProjectVariablesCreated()
         {
             var request = new CreateVariableRequest
             {
                 ProjectId = GitLabApiHelper.TestProjectId.ToString(),
                 VariableType = "env_var",
-                Key = "SOME_VAR_KEY",
+                Key = "SOME_VAR_KEY_CREATED",
                 Value = "VALUE_VAR",
                 EnvironmentScope = "*",
                 Masked = true,
@@ -138,28 +173,7 @@ namespace GitLabApiClient.Test
                                                    && v.Masked == request.Masked
                                                    && v.Protected == request.Protected);
 
-
-            var updateRequest = new UpdateProjectVariableRequest
-            {
-                ProjectId = request.ProjectId,
-                VariableType = "file",
-                Key = request.Key,
-                Value = "UpdatedValue",
-                EnvironmentScope = "*",
-                Masked = request.Masked,
-                Protected = request.Protected,
-            };
-
-            var variableUpdated = await _sut.UpdateVariableAsync(updateRequest);
-
-            variableUpdated.Should().Match<Variable>(v => v.VariableType == updateRequest.VariableType
-                                                   && v.Key == updateRequest.Key
-                                                   && v.Value == updateRequest.Value
-                                                   && v.EnvironmentScope == updateRequest.EnvironmentScope
-                                                   && v.Masked == updateRequest.Masked
-                                                   && v.Protected == updateRequest.Protected);
-
-            await _sut.DeleteVariableAsync(GitLabApiHelper.TestProjectId, request.Key);
+            VariableIdsToClean.Add(request.Key);
         }
 
         [Fact]
@@ -269,6 +283,45 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
+        public async Task ProjectVariableCanBeUpdated()
+        {
+            var request = new CreateVariableRequest
+            {
+                ProjectId = GitLabApiHelper.TestProjectId.ToString(),
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_TO_UPDATE",
+                Value = "VALUE_VAR",
+                EnvironmentScope = "*",
+                Masked = true,
+                Protected = true
+            };
+
+            var variable = await _sut.CreateVariableAsync(request);
+
+            VariableIdsToClean.Add(request.Key);
+
+            var updateRequest = new UpdateProjectVariableRequest
+            {
+                ProjectId = request.ProjectId,
+                VariableType = "file",
+                Key = request.Key,
+                Value = "UpdatedValue",
+                EnvironmentScope = "*",
+                Masked = request.Masked,
+                Protected = request.Protected,
+            };
+
+            var variableUpdated = await _sut.UpdateVariableAsync(updateRequest);
+
+            variableUpdated.Should().Match<Variable>(v => v.VariableType == updateRequest.VariableType
+                                                          && v.Key == updateRequest.Key
+                                                          && v.Value == updateRequest.Value
+                                                          && v.EnvironmentScope == updateRequest.EnvironmentScope
+                                                          && v.Masked == updateRequest.Masked
+                                                          && v.Protected == updateRequest.Protected);
+        }
+
+        [Fact]
         public async Task CreatedProjectMilestoneCanBeClosed()
         {
             //arrange
@@ -302,6 +355,9 @@ namespace GitLabApiClient.Test
 
             foreach (int projectId in ProjectIdsToClean)
                 await _sut.DeleteAsync(projectId);
+
+            foreach (string variableId in VariableIdsToClean)
+                await _sut.DeleteVariableAsync(GitLabApiHelper.TestProjectId, variableId);
         }
 
         private static string GetRandomProjectName() => "test-gitlabapiclient" + Path.GetRandomFileName();
