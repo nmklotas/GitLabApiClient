@@ -35,5 +35,8 @@ namespace GitLabApiClient
 
         public async Task<PipelineDetail> CreateAsync(CreatePipelineRequest request) =>
             await _httpFacade.Post<PipelineDetail>($"projects/{request.ProjectId}/pipeline", request);
+
+        public async Task DeleteBranch(DeletePipelineRequest request) =>
+            await _httpFacade.Delete($"projects/{request.ProjectId}/pipelines/{request.PipelineId}");
     }
 }
