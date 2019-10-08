@@ -3,7 +3,7 @@ using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Pipelines.Responses;
 using Newtonsoft.Json;
 
-namespace GitLabApiClient.Models.Branches.Requests
+namespace GitLabApiClient.Models.Pipelines.Requests
 {
     public class CreatePipelineRequest
     {

@@ -32,5 +32,8 @@ namespace GitLabApiClient
 
         public async Task<IList<PipelineVariable>> GetVariablesAsync(string projectId, int pipelineId) =>
             await _httpFacade.Get<IList<PipelineVariable>>($"projects/{projectId}/pipelines/{pipelineId}/variables");
+
+        public async Task<PipelineDetail> CreateAsync(CreatePipelineRequest request) =>
+            await _httpFacade.Post<PipelineDetail>($"projects/{request.ProjectId}/pipeline", request);
     }
 }
