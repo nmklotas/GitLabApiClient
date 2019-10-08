@@ -40,6 +40,11 @@ namespace GitLabApiClient
             await _httpFacade.Delete($"projects/{request.ProjectId}/pipelines/{request.PipelineId}");
 
         public async Task<PipelineDetail> CancelAsync(CancelPipelineRequest request) =>
-            await _httpFacade.Post<PipelineDetail>($"projects/{request.ProjectId}/pipelines/{request.PipelineId}/cancel", request);
+            await _httpFacade.Post<PipelineDetail>(
+                $"projects/{request.ProjectId}/pipelines/{request.PipelineId}/cancel", request);
+
+        public async Task<PipelineDetail> RetryAsync(RetryPipelineRequest request) =>
+            await _httpFacade.Post<PipelineDetail>($"projects/{request.ProjectId}/pipelines/{request.PipelineId}/retry",
+                request);
     }
 }

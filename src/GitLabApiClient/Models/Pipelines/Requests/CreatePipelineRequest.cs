@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Pipelines.Requests
 {
-    public class CreatePipelineRequest
+    public sealed class CreatePipelineRequest
     {
         public CreatePipelineRequest(string projectId, string reference, IList<PipelineVariable> variables = null)
         {
