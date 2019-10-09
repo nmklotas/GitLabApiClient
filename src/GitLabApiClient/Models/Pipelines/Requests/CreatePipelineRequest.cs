@@ -22,19 +22,19 @@ namespace GitLabApiClient.Models.Pipelines.Requests
         ///     The ID or URL-encoded path of the project owned by the authenticated user
         /// </summary>
         [JsonProperty("id")]
-        public string ProjectId { get; set; }
+        public string ProjectId { get; }
 
         /// <summary>
         ///     Reference to commit
         /// </summary>
         [JsonProperty("ref")]
-        public string Reference { get; set; }
+        public string Reference { get; }
 
         /// <summary>
         ///     An array containing the variables available in the pipeline, matching the structure [{ 'key' => 'UPLOAD_TO_S3',
         ///     'variable_type' => 'file', 'value' => 'true' }]
         /// </summary>
         [JsonProperty("variables")]
-        public IList<PipelineVariable> Variables { get; set; }
+        public IList<PipelineVariable> Variables { get; }
     }
 }
