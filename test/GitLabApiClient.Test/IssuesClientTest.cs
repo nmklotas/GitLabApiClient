@@ -117,9 +117,9 @@ namespace GitLabApiClient.Test
                 i.Confidential && i.Title == title && i.Description == "Description" &&
                 i.Labels.SequenceEqual(new[] { "Label1" }));
 
-            issueById.ShouldBeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
-            issueByProjectId.ShouldBeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
-            ownedIssue.ShouldBeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
+            issueById.Should().BeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
+            issueByProjectId.Should().BeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
+            ownedIssue.Should().BeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
         }
 
         [Fact]
@@ -145,8 +145,8 @@ namespace GitLabApiClient.Test
             note.Should().Match<Note>(n =>
                 n.Body == body);
 
-            issueNotes.ShouldBeEquivalentTo(note, o => o.Excluding(s => s.UpdatedAt));
-            issueNote.ShouldBeEquivalentTo(note, o => o.Excluding(s => s.UpdatedAt));
+            issueNotes.Should().BeEquivalentTo(note, o => o.Excluding(s => s.UpdatedAt));
+            issueNote.Should().BeEquivalentTo(note, o => o.Excluding(s => s.UpdatedAt));
         }
 
         [Fact]
