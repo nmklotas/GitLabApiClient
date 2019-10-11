@@ -27,10 +27,10 @@ namespace GitLabApiClient.Internal.Queries
                 Add("all", options.All.Value);
 
             if (options.WithStats.HasValue)
-                Add("all", options.WithStats.Value);
+                Add("with_stats", options.WithStats.Value);
 
             if (options.FirstParent.HasValue)
-                Add("all", options.FirstParent.Value);
+                Add("first_parent", options.FirstParent.Value);
 
         }
     }
