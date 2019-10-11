@@ -33,7 +33,7 @@ namespace GitLabApiClient.Internal.Paths
 
             int id = project.Id;
             if (id > 0)
-                return new ProjectId(id.ToString());;
+                return new ProjectId(id.ToString());
 
             throw new ArgumentException("Cannot determine project path or id from provided Project instance.");
         }

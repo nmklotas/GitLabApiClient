@@ -33,7 +33,7 @@ namespace GitLabApiClient.Internal.Paths
 
             int id = group.Id;
             if (id > 0)
-                return new GroupId(id.ToString());;
+                return new GroupId(id.ToString());
 
             throw new ArgumentException("Cannot determine group path or id from provided Group instance.");
         }

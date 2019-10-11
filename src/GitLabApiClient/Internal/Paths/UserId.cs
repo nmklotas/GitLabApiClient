@@ -18,7 +18,7 @@ namespace GitLabApiClient.Internal.Paths
         {
             int id = user.Id;
             if (id > 0)
-                return new UserId(id.ToString());;
+                return new UserId(id.ToString());
 
             throw new ArgumentException("Cannot determine user id from provided User instance.");
         }

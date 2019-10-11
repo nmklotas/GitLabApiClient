@@ -11,7 +11,6 @@ namespace GitLabApiClient.Test.Internal
     /// </summary>
     public class UserIdConversionTest
     {
-
         [Fact]
         public void UserId_Int_Conversion()
         {
@@ -25,7 +24,7 @@ namespace GitLabApiClient.Test.Internal
         public void UserId_User_Id_Conversion()
         {
             string expected = "users/5";
-            UserId sut = new User {Id = 5};
+            UserId sut = new User { Id = 5 };
             string result = $"users/{sut}";
             result.Should().Be(expected);
         }
