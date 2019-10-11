@@ -201,9 +201,11 @@ namespace GitLabApiClient.Test
             updatedMilestone.Should().Match<Milestone>(i => i.State == MilestoneState.Closed);
         }
 
+        [Fact]
         public Task InitializeAsync()
             => CleanupGroups();
 
+        [Fact]
         public Task DisposeAsync()
             => CleanupGroups();
 
