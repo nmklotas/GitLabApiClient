@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Users.Requests;
 using GitLabApiClient.Models.Users.Responses;
@@ -63,7 +64,7 @@ namespace GitLabApiClient
         /// <param name="userId">Id of the user.</param>
         /// <param name="request">Request to update user.</param>
         /// <returns>Newly modified user.</returns>
-        public async Task<User> UpdateAsync(int userId, UpdateUserRequest request) =>
+        public async Task<User> UpdateAsync(UserId userId, UpdateUserRequest request) =>
             await _httpFacade.Put<User>($"users/{userId}", request);
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace GitLabApiClient
         /// Deletes user.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        public async Task DeleteAsync(int userId) =>
+        public async Task DeleteAsync(UserId userId) =>
             await _httpFacade.Delete($"users/{userId}");
     }
 }

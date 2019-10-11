@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -35,8 +36,8 @@ namespace GitLabApiClient
         /// Retrieves project by its id, path or <see cref="Project"/>.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task<Project> GetAsync(object projectId) =>
-            await _httpFacade.Get<Project>(projectId.ProjectBaseUrl());
+        public async Task<Project> GetAsync(ProjectId projectId) =>
+            await _httpFacade.Get<Project>($"projects/{projectId}");
 
         /// <summary>
         /// Get a list of visible projects for authenticated user.
@@ -56,27 +57,27 @@ namespace GitLabApiClient
         /// Get the users list of a project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task<IList<User>> GetUsersAsync(object projectId) =>
-            await _httpFacade.GetPagedList<User>($"{projectId.ProjectBaseUrl()}/users");
+        public async Task<IList<User>> GetUsersAsync(ProjectId projectId) =>
+            await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
 
         /// <summary>
         /// Get the labels list of a project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task<IList<Label>> GetLabelsAsync(object projectId) =>
-            await _httpFacade.GetPagedList<Label>($"{projectId.ProjectBaseUrl()}/labels");
+        public async Task<IList<Label>> GetLabelsAsync(ProjectId projectId) =>
+            await _httpFacade.GetPagedList<Label>($"projects/{projectId}/labels");
 
         /// <summary>
         /// Get the milestone list of a project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="options">Query options.</param>
-        public async Task<IList<Milestone>> GetMilestonesAsync(object projectId, Action<MilestonesQueryOptions> options = null)
+        public async Task<IList<Milestone>> GetMilestonesAsync(ProjectId projectId, Action<MilestonesQueryOptions> options = null)
         {
             var queryOptions = new MilestonesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryMilestonesBuilder.Build($"{projectId.ProjectBaseUrl()}/milestones", queryOptions);
+            string url = _queryMilestonesBuilder.Build($"projects/{projectId}/milestones", queryOptions);
             return await _httpFacade.GetPagedList<Milestone>(url);
         }
 
@@ -85,8 +86,8 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="milestoneId">Id of the milestone.</param>
-        public async Task<Milestone> GetMilestoneAsync(object projectId, int milestoneId) =>
-            await _httpFacade.Get<Milestone>($"{projectId.ProjectBaseUrl()}/milestones/{milestoneId}");
+        public async Task<Milestone> GetMilestoneAsync(ProjectId projectId, int milestoneId) =>
+            await _httpFacade.Get<Milestone>($"projects/{projectId}/milestones/{milestoneId}");
 
         /// <summary>
         /// Creates new project.
@@ -105,10 +106,10 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create label request.</param>
         /// <returns>Newly created label.</returns>
-        public async Task<Label> CreateLabelAsync(object projectId, CreateProjectLabelRequest request)
+        public async Task<Label> CreateLabelAsync(ProjectId projectId, CreateProjectLabelRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Post<Label>($"{projectId.ProjectBaseUrl()}/labels", request);
+            return await _httpFacade.Post<Label>($"projects/{projectId}/labels", request);
         }
 
         /// <summary>
@@ -117,10 +118,10 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create milestone request.</param>
         /// <returns>Newly created milestone.</returns>
-        public async Task<Milestone> CreateMilestoneAsync(object projectId, CreateProjectMilestoneRequest request)
+        public async Task<Milestone> CreateMilestoneAsync(ProjectId projectId, CreateProjectMilestoneRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Post<Milestone>($"{projectId.ProjectBaseUrl()}/milestones", request);
+            return await _httpFacade.Post<Milestone>($"projects/{projectId}/milestones", request);
         }
 
         /// <summary>
@@ -129,10 +130,10 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Update project request.</param>
         /// <returns>Newly modified project.</returns>
-        public async Task<Project> UpdateAsync(object projectId, UpdateProjectRequest request)
+        public async Task<Project> UpdateAsync(ProjectId projectId, UpdateProjectRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Project>(projectId.ProjectBaseUrl(), request);
+            return await _httpFacade.Put<Project>($"projects/{projectId}", request);
         }
 
         /// <summary>
@@ -141,10 +142,10 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Update label request.</param>
         /// <returns>Newly modified label.</returns>
-        public async Task<Label> UpdateLabelAsync(object projectId, UpdateProjectLabelRequest request)
+        public async Task<Label> UpdateLabelAsync(ProjectId projectId, UpdateProjectLabelRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Label>($"{projectId.ProjectBaseUrl()}/labels", request);
+            return await _httpFacade.Put<Label>($"projects/{projectId}/labels", request);
         }
 
         /// <summary>
@@ -154,53 +155,53 @@ namespace GitLabApiClient
         /// <param name="milestoneId">The ID of a project milestone.</param>
         /// <param name="request">Update milestone request.</param>
         /// <returns>Newly modified milestone.</returns>
-        public async Task<Milestone> UpdateMilestoneAsync(object projectId, int milestoneId, UpdateProjectMilestoneRequest request)
+        public async Task<Milestone> UpdateMilestoneAsync(ProjectId projectId, int milestoneId, UpdateProjectMilestoneRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Milestone>($"{projectId.ProjectBaseUrl()}/milestones/{milestoneId}", request);
+            return await _httpFacade.Put<Milestone>($"projects/{projectId}/milestones/{milestoneId}", request);
         }
 
         /// <summary>
         /// Deletes project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task DeleteAsync(object projectId) =>
-            await _httpFacade.Delete(projectId.ProjectBaseUrl());
+        public async Task DeleteAsync(ProjectId projectId) =>
+            await _httpFacade.Delete($"projects/{projectId}");
 
         /// <summary>
         /// Deletes project labels.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="name">Name of the label.</param>
-        public async Task DeleteLabelAsync(object projectId, string name) =>
-            await _httpFacade.Delete($"{projectId.ProjectBaseUrl()}/labels?name={name}");
+        public async Task DeleteLabelAsync(ProjectId projectId, string name) =>
+            await _httpFacade.Delete($"projects/{projectId}/labels?name={name}");
 
         /// <summary>
         /// Deletes project milestone. Only for user with developer access to the project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="milestoneId">The ID of the project�s milestone.</param>
-        public async Task DeleteMilestoneAsync(object projectId, int milestoneId) =>
-            await _httpFacade.Delete($"{projectId.ProjectBaseUrl()}/milestones/{milestoneId}");
+        public async Task DeleteMilestoneAsync(ProjectId projectId, int milestoneId) =>
+            await _httpFacade.Delete($"projects/{projectId}/milestones/{milestoneId}");
 
         /// <summary>
         /// Archive project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task ArchiveAsync(object projectId) =>
-            await _httpFacade.Post($"{projectId.ProjectBaseUrl()}/archive");
+        public async Task ArchiveAsync(ProjectId projectId) =>
+            await _httpFacade.Post($"projects/{projectId}/archive");
 
         /// <summary>
         /// Unarchive project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task UnArchiveAsync(object projectId) =>
-            await _httpFacade.Post($"{projectId.ProjectBaseUrl()}/unarchive");
+        public async Task UnArchiveAsync(ProjectId projectId) =>
+            await _httpFacade.Post($"projects/{projectId}/unarchive");
 
-        public async Task<Project> Transfer(object projectId, TransferProjectRequest request)
+        public async Task<Project> Transfer(ProjectId projectId, TransferProjectRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Project>($"{projectId.ProjectBaseUrl()}/transfer", request);
+            return await _httpFacade.Put<Project>($"projects/{projectId}/transfer", request);
         }
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
-using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Tags.Requests;
 using GitLabApiClient.Models.Tags.Responses;
@@ -29,7 +29,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag, you want to retrieve.</param>
         /// <returns></returns>
-        public async Task<Tag> GetAsync(object projectId, string tagName) =>
+        public async Task<Tag> GetAsync(ProjectId projectId, string tagName) =>
             await _httpFacade.Get<Tag>($"{TagsBaseUrl(projectId)}/{tagName}");
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="options">Query options for tags <see cref="TagQueryOptions"/></param>
         /// <returns></returns>
-        public async Task<IList<Tag>> GetAsync(object projectId, Action<TagQueryOptions> options = null)
+        public async Task<IList<Tag>> GetAsync(ProjectId projectId, Action<TagQueryOptions> options = null)
         {
             var queryOptions = new TagQueryOptions();
             options?.Invoke(queryOptions);
@@ -53,7 +53,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create Tag request.</param>
         /// <returns>newly created Tag</returns>
-        public async Task<Tag> CreateAsync(object projectId, CreateTagRequest request) =>
+        public async Task<Tag> CreateAsync(ProjectId projectId, CreateTagRequest request) =>
             await _httpFacade.Post<Tag>(TagsBaseUrl(projectId), request);
 
         /// <summary>
@@ -61,10 +61,10 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name, you want to delete.</param>
-        public async Task DeleteAsync(object projectId, string tagName) =>
+        public async Task DeleteAsync(ProjectId projectId, string tagName) =>
             await _httpFacade.Delete($"{TagsBaseUrl(projectId)}/{tagName}");
 
-        public static string TagsBaseUrl(object projectId) =>
-            $"{projectId.ProjectBaseUrl()}/repository/tags";
+        public static string TagsBaseUrl(ProjectId projectId) =>
+            $"projects/{projectId}/repository/tags";
     }
 }
