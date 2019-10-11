@@ -7,13 +7,5 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class TagsClientTest
     {
-        private const string ProjectId = "testProjectId";
-
-        [Fact]
-        public void TagsBaseUrlTest()
-        {
-            string baseUrl = TagClient.TagsBaseUrl(ProjectId);
-            baseUrl.Should().Be("projects/" + ProjectId + "/repository/tags");
-        }
     }
 }

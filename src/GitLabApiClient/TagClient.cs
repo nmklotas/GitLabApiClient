@@ -30,7 +30,7 @@ namespace GitLabApiClient
         /// <param name="tagName">The tag, you want to retrieve.</param>
         /// <returns></returns>
         public async Task<Tag> GetAsync(ProjectId projectId, string tagName) =>
-            await _httpFacade.Get<Tag>($"{TagsBaseUrl(projectId)}/{tagName}");
+            await _httpFacade.Get<Tag>($"projects/{projectId}/repository/tags/{tagName}");
 
         /// <summary>
         ///
@@ -43,7 +43,7 @@ namespace GitLabApiClient
             var queryOptions = new TagQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _tagQueryBuilder.Build(TagsBaseUrl(projectId), queryOptions);
+            string url = _tagQueryBuilder.Build($"projects/{projectId}/repository/tags", queryOptions);
             return await _httpFacade.GetPagedList<Tag>(url);
         }
 
@@ -54,7 +54,7 @@ namespace GitLabApiClient
         /// <param name="request">Create Tag request.</param>
         /// <returns>newly created Tag</returns>
         public async Task<Tag> CreateAsync(ProjectId projectId, CreateTagRequest request) =>
-            await _httpFacade.Post<Tag>(TagsBaseUrl(projectId), request);
+            await _httpFacade.Post<Tag>($"projects/{projectId}/repository/tags", request);
 
         /// <summary>
         /// Delete a tag
@@ -62,9 +62,6 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name, you want to delete.</param>
         public async Task DeleteAsync(ProjectId projectId, string tagName) =>
-            await _httpFacade.Delete($"{TagsBaseUrl(projectId)}/{tagName}");
-
-        public static string TagsBaseUrl(ProjectId projectId) =>
-            $"projects/{projectId}/repository/tags";
+            await _httpFacade.Delete($"projects/{projectId}/repository/tags/{tagName}");
     }
 }

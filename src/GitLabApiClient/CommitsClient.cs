@@ -28,7 +28,7 @@ namespace GitLabApiClient
         /// <param name="sha">The commit hash or name of a repository branch or tag</param>
         /// <returns></returns>
         public async Task<Commit> GetAsync(ProjectId projectId, string sha) =>
-           await _httpFacade.Get<Commit>($"{CommitsBaseUrl(projectId)}/{sha}");
+           await _httpFacade.Get<Commit>($"projects/{projectId}/repository/commits/{sha}");
 
         /// <summary>
         /// Retrieve a list of commits from a project
@@ -41,13 +41,8 @@ namespace GitLabApiClient
             var queryOptions = new CommitQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _commitQueryBuilder.Build(CommitsBaseUrl(projectId), queryOptions);
+            string url = _commitQueryBuilder.Build($"projects/{projectId}/repository/commits", queryOptions);
             return await _httpFacade.GetPagedList<Commit>(url);
-        }
-
-        private static string CommitsBaseUrl(ProjectId projectId)
-        {
-            return $"projects/{projectId}/repository/commits";
         }
     }
 }
