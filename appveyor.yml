@@ -11,7 +11,7 @@ environment:
 skip_branch_with_pr: true
 
 before_build:
-  - ps: cinst -y codecov
+  - ps: cinst -y codecov --no-progress
   - ps: dotnet tool install -g dotnet-format
   - ps: dotnet format --check --dry-run
 
