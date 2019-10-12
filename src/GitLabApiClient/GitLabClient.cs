@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models.Pipelines.Requests;
 using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
@@ -46,6 +47,7 @@ namespace GitLabApiClient
             var releaseQueryBuilder = new ReleaseQueryBuilder();
             var tagQueryBuilder = new TagQueryBuilder();
             var commitQueryBuilder = new CommitQueryBuilder();
+            var pipelineQueryBuilder = new PipelineQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -58,6 +60,7 @@ namespace GitLabApiClient
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
+            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
         }
 
         /// <summary>
@@ -114,6 +117,11 @@ namespace GitLabApiClient
         /// Access GitLab's Markdown API.
         /// </summary>
         public MarkdownClient Markdown { get; }
+
+        /// <summary>
+        /// Acess GitLab's Pipeline API.
+        /// </summary>
+        public PipelineClient Pipelines { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
