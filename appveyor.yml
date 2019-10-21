@@ -8,10 +8,10 @@ environment:
   # Don't report back to the mothership
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-
 skip_branch_with_pr: true
 
 before_build:
+  - ps: cinst -y codecov
   - ps: dotnet tool install -g dotnet-format
   - ps: dotnet format --check --dry-run
 
