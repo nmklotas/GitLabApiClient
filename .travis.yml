@@ -6,7 +6,7 @@ sudo: required
 services:
  - docker
 script:
- - dotnet build --framework netstandard2.0
+ - dotnet build
  - dotnet test
 cache:
   directories:
