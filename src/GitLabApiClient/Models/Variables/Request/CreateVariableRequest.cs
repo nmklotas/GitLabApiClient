@@ -5,12 +5,6 @@ namespace GitLabApiClient.Models.Variables.Request
     public class CreateVariableRequest
     {
         /// <summary>
-        /// The ID of the project   
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; set; }
-
-        /// <summary>
         /// The type of a variable.
         /// Available types are: env_var (default) and file
         /// </summary>

@@ -124,12 +124,13 @@ namespace GitLabApiClient
         /// <summary>
         /// Creates new project variable.
         /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create variable request.</param>
         /// <returns>Newly created variable.</returns>
-        public async Task<Variable> CreateVariableAsync(CreateVariableRequest request)
+        public async Task<Variable> CreateVariableAsync(ProjectId projectId, CreateVariableRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Post<Variable>($"projects/{request.ProjectId}/variables", request);
+            return await _httpFacade.Post<Variable>($"projects/{projectId}/variables", request);
         }
 
         /// <summary>
@@ -184,12 +185,13 @@ namespace GitLabApiClient
         /// <summary>
         /// Updates an existing project variable.
         /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Update variable request.</param>
         /// <returns>Newly modified variable.</returns>
-        public async Task<Variable> UpdateVariableAsync(UpdateProjectVariableRequest request)
+        public async Task<Variable> UpdateVariableAsync(ProjectId projectId, UpdateProjectVariableRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            return await _httpFacade.Put<Variable>($"projects/{request.ProjectId}/variables/{request.Key}", request);
+            return await _httpFacade.Put<Variable>($"projects/{projectId}/variables/{request.Key}", request);
         }
 
         /// <summary>
@@ -218,10 +220,10 @@ namespace GitLabApiClient
         /// <summary>
         /// Deletes project variable
         /// </summary>
-        /// <param name="id">Id of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="key">The Key ID of the variable.</param>
-        public async Task DeleteVariableAsync(int id, string key) =>
-            await _httpFacade.Delete($"projects/{id}/variables/{key}");
+        public async Task DeleteVariableAsync(ProjectId projectId, string key) =>
+            await _httpFacade.Delete($"projects/{projectId}/variables/{key}");
 
         /// <summary>
         /// Archive project.

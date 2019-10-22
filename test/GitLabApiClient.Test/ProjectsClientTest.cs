@@ -79,9 +79,8 @@ namespace GitLabApiClient.Test
         public async Task ProjectVariablesRetrieved()
         {
             //arrange
-            var createdVariable = await _sut.CreateVariableAsync(new CreateVariableRequest
+            var createdVariable = await _sut.CreateVariableAsync(GitLabApiHelper.TestProjectId, new CreateVariableRequest
             {
-                ProjectId = GitLabApiHelper.TestProjectId.ToString(),
                 VariableType = "env_var",
                 Key = "SOME_VAR_KEY_RETRIEVE",
                 Value = "VALUE_VAR",
@@ -152,17 +151,17 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectVariablesCreated()
         {
-            var request = new CreateVariableRequest(){};
-            request.ProjectId = GitLabApiHelper.TestProjectId.ToString();
-            request.VariableType = "env_var";
-            request.Key = "SOME_VAR_KEY_CREATED";
-            request.Value = "VALUE_VAR";
-            request.EnvironmentScope = "*";
-            request.Masked = true;
-            request.Protected = true;
+            var request = new CreateVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_CREATED",
+                Value = "VALUE_VAR",
+                EnvironmentScope = "*",
+                Masked = true,
+                Protected = true
+            };
 
-
-            var variable = await _sut.CreateVariableAsync(request);
+            var variable = await _sut.CreateVariableAsync(GitLabApiHelper.TestProjectId, request);
 
             variable.Should().Match<Variable>(v => v.VariableType == request.VariableType
                                                    && v.Key == request.Key
@@ -285,7 +284,6 @@ namespace GitLabApiClient.Test
         {
             var request = new CreateVariableRequest
             {
-                ProjectId = GitLabApiHelper.TestProjectId.ToString(),
                 VariableType = "env_var",
                 Key = "SOME_VAR_KEY_TO_UPDATE",
                 Value = "VALUE_VAR",
@@ -294,13 +292,12 @@ namespace GitLabApiClient.Test
                 Protected = true
             };
 
-            var variable = await _sut.CreateVariableAsync(request);
+            var variable = await _sut.CreateVariableAsync(GitLabApiHelper.TestProjectId, request);
 
             VariableIdsToClean.Add(request.Key);
 
             var updateRequest = new UpdateProjectVariableRequest
             {
-                ProjectId = request.ProjectId,
                 VariableType = "file",
                 Key = request.Key,
                 Value = "UpdatedValue",
@@ -309,7 +306,7 @@ namespace GitLabApiClient.Test
                 Protected = request.Protected,
             };
 
-            var variableUpdated = await _sut.UpdateVariableAsync(updateRequest);
+            var variableUpdated = await _sut.UpdateVariableAsync(GitLabApiHelper.TestProjectId, updateRequest);
 
             variableUpdated.Should().Match<Variable>(v => v.VariableType == updateRequest.VariableType
                                                           && v.Key == updateRequest.Key
