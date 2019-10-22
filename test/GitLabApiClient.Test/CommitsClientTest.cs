@@ -43,7 +43,7 @@ namespace GitLabApiClient.Test
             string gitlabServer = "http://fake-gitlab.com/";
             string projectId = "id";
             string refName = "6104942438c14ec7bd21c6cd5bd995272b3faff6";
-            string url = $"/projects/id/repository/commits?id=id&ref_name={refName}&per_page=100&page=1";
+            string url = $"/projects/id/repository/commits?ref_name={refName}&per_page=100&page=1";
 
             var handler = A.Fake<MockHandler>(opt => opt.CallsBaseMethods());
             A.CallTo(() => handler.SendAsync(HttpMethod.Get, url))

@@ -12,21 +12,12 @@ namespace GitLabApiClient.Models.Projects.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateProjectLabelRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
         /// <param name="name">Name of the label.</param>
-        public CreateProjectLabelRequest(string projectId, string name)
+        public CreateProjectLabelRequest(string name)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(name, nameof(name));
-            ProjectId = projectId;
             Name = name;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; private set; }
 
         /// <summary>
         /// The name of the label.

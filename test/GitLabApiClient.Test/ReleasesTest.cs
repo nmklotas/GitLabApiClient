@@ -20,14 +20,13 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeUpdated()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(new CreateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
 
             //act
-            var updatedRelease = await _sut.UpdateAsync(new UpdateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, "Updated Description", DateTime.MinValue));
+            var updatedRelease = await _sut.UpdateAsync(TestProjectTextId, new UpdateReleaseRequest(TestRelease, TestTagName, "Updated Description", DateTime.MinValue));
 
             //assert
             updatedRelease.Should().Match<Release>(i =>
-                i.ProjectId == TestProjectTextId &&
                 i.ReleaseName == TestRelease &&
                 i.TagName == TestTagName &&
                 i.ReleasedAt == DateTime.MinValue);
@@ -37,14 +36,13 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeFetched()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(new CreateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
 
             //act
             var fetchedRelease = await _sut.GetAsync(TestProjectTextId, TestTagName);
 
             //assert
             fetchedRelease.Should().Match<Release>(i =>
-                i.ProjectId == TestProjectTextId &&
                 i.ReleaseName == TestRelease &&
                 i.TagName == TestTagName &&
                 i.ReleasedAt == DateTime.MinValue);
@@ -54,14 +52,13 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeListed()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(new CreateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
 
             //act
             var releaseList = await _sut.GetAsync(TestProjectTextId);
 
             //assert
             releaseList[0].Should().Match<Release>(i =>
-                i.ProjectId == TestProjectTextId &&
                 i.ReleaseName == TestRelease &&
                 i.TagName == TestTagName &&
                 i.ReleasedAt == DateTime.MinValue);
@@ -71,10 +68,10 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeDeleted()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(new CreateReleaseRequest(TestProjectTextId, TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
 
             //act
-            await _sut.DeleteAsync(new DeleteReleaseRequest(TestProjectTextId, TestTagName));
+            await _sut.DeleteAsync(TestProjectTextId, TestTagName);
 
             //assert
             var fetcheRelease = await _sut.GetAsync(TestProjectTextId, TestTagName);

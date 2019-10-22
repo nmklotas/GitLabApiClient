@@ -11,26 +11,18 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateLdapGroupLinkRequest"/> class.
         /// </summary>
-        /// <param name="id">The ID of a group.</param>
         /// <param name="cn">Minimum access level for members of the LDAP group.</param>
         /// <param name="groupAccess">The group's visibility.</param>
         /// <param name="provider">LDAP provider for the LDAP group (when using several providers).</param>
-        public CreateLdapGroupLinkRequest(int id, string cn, string groupAccess, string provider)
+        public CreateLdapGroupLinkRequest(string cn, string groupAccess, string provider)
         {
             Guard.NotEmpty(cn, nameof(cn));
             Guard.NotEmpty(groupAccess, nameof(groupAccess));
             Guard.NotEmpty(provider, nameof(provider));
-            Id = id;
             Cn = cn;
             GroupAccess = groupAccess;
             Provider = provider;
         }
-
-        /// <summary>
-        /// The ID of a group
-        /// </summary>
-        [JsonProperty("id")]
-        public int Id { get; }
 
         /// <summary>
         /// The CN of a LDAP group

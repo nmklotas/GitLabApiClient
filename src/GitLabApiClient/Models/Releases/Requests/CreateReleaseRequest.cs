@@ -15,18 +15,15 @@ namespace GitLabApiClient.Models.Releases.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateReleaseRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project.</param>
         /// <param name="releaseName">The name of the release.</param>
         /// <param name="tagName">The name of the tag the release correspons to.</param>
         /// <param name="description">A description of the release</param>
         /// <param name="releasedAt">The date the release will be/was ready.</param>
-        public CreateReleaseRequest(string projectId, string releaseName, string tagName, string description, DateTime? releasedAt = null)
+        public CreateReleaseRequest(string releaseName, string tagName, string description, DateTime? releasedAt = null)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(releaseName, nameof(releaseName));
             Guard.NotEmpty(tagName, nameof(tagName));
 
-            ProjectId = projectId;
             ReleaseName = releaseName;
             TagName = tagName;
             Description = description;

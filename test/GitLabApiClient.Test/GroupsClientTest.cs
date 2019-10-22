@@ -69,7 +69,7 @@ namespace GitLabApiClient.Test
         public async Task GroupMilestonesCanBeRetrieved()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(new CreateGroupMilestoneRequest(TestGroupTextId, "milestone1")
+            var createdMilestone = await _sut.CreateMilestoneAsync(TestGroupTextId, new CreateGroupMilestoneRequest("milestone1")
             {
                 StartDate = "2018-11-01",
                 DueDate = "2018-11-30",
@@ -132,7 +132,7 @@ namespace GitLabApiClient.Test
 
             string updateGroupName = GetRandomGroupName();
 
-            var updateRequest = new UpdateGroupRequest(createGroupResponse.Id)
+            var updateRequest = new UpdateGroupRequest()
             {
                 Name = updateGroupName,
                 Description = "description2",
@@ -141,7 +141,7 @@ namespace GitLabApiClient.Test
                 RequestAccessEnabled = false
             };
 
-            var updateGroupResponse = await _sut.UpdateAsync(updateRequest);
+            var updateGroupResponse = await _sut.UpdateAsync(createGroupResponse.Id, updateRequest);
             updateGroupResponse.Name.Should().Be(updateGroupName);
             updateGroupResponse.Description.Should().Be("description2");
             updateGroupResponse.Visibility.Should().Be(GroupsVisibility.Internal);
@@ -153,7 +153,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedGroupMilestoneCanBeUpdated()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(new CreateGroupMilestoneRequest(TestGroupTextId, "milestone2")
+            var createdMilestone = await _sut.CreateMilestoneAsync(TestGroupTextId, new CreateGroupMilestoneRequest("milestone2")
             {
                 StartDate = "2018-11-01",
                 DueDate = "2018-11-30",
@@ -162,7 +162,7 @@ namespace GitLabApiClient.Test
             _milestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
-            var updatedMilestone = await _sut.UpdateMilestoneAsync(new UpdateGroupMilestoneRequest(TestGroupTextId, createdMilestone.Id)
+            var updatedMilestone = await _sut.UpdateMilestoneAsync(TestGroupTextId, createdMilestone.Id, new UpdateGroupMilestoneRequest()
             {
                 Title = "milestone22",
                 StartDate = "2018-11-05",
@@ -183,7 +183,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedGroupMilestoneCanBeClosed()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(new CreateGroupMilestoneRequest(TestGroupTextId, "milestone3")
+            var createdMilestone = await _sut.CreateMilestoneAsync(TestGroupTextId, new CreateGroupMilestoneRequest("milestone3")
             {
                 StartDate = "2018-12-01",
                 DueDate = "2018-12-31",
@@ -192,7 +192,7 @@ namespace GitLabApiClient.Test
             _milestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
-            var updatedMilestone = await _sut.UpdateMilestoneAsync(new UpdateGroupMilestoneRequest(TestGroupTextId, createdMilestone.Id)
+            var updatedMilestone = await _sut.UpdateMilestoneAsync(TestGroupTextId, createdMilestone.Id, new UpdateGroupMilestoneRequest()
             {
                 State = UpdatedMilestoneState.Close
             });
@@ -201,9 +201,11 @@ namespace GitLabApiClient.Test
             updatedMilestone.Should().Match<Milestone>(i => i.State == MilestoneState.Closed);
         }
 
+        [Fact]
         public Task InitializeAsync()
             => CleanupGroups();
 
+        [Fact]
         public Task DisposeAsync()
             => CleanupGroups();
 
