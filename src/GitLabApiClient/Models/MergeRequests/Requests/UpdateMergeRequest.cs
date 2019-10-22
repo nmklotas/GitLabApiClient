@@ -11,30 +11,6 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
     public sealed class UpdateMergeRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateMergeRequest"/> class.
-        /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
-        /// <param name="mergeRequestId">The ID of the merge request.</param>
-        public UpdateMergeRequest(string projectId, int mergeRequestId)
-        {
-            Guard.NotEmpty(projectId, nameof(projectId));
-            ProjectId = projectId;
-            MergeRequestId = mergeRequestId;
-        }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; }
-
-        /// <summary>
-        /// The ID of the merge request.
-        /// </summary>
-        [JsonProperty("merge_request_iid")]
-        public int MergeRequestId { get; }
-
-        /// <summary>
         /// The target branch.
         /// </summary>
         [JsonProperty("target_branch")]

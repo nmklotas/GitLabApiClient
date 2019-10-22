@@ -9,22 +9,6 @@ namespace GitLabApiClient.Models.Groups.Requests
     public sealed class UpdateGroupRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateGroupRequest"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the group.</param>
-        public UpdateGroupRequest(int id)
-        {
-            Guard.NotNullOrDefault(id, nameof(id));
-            Id = id;
-        }
-
-        /// <summary>
-        /// The id of the group
-        /// </summary>
-        [JsonProperty("id")]
-        public int Id { get; }
-
-        /// <summary>
         /// The name of the group
         /// </summary>
         [JsonProperty("name")]

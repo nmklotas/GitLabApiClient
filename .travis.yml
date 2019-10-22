@@ -1,15 +1,13 @@
 language: csharp
-mono: 5.2.0
-dotnet: 2.0.0
-dist: trusty
+mono: none
+dotnet: 3.0.100
+dist: bionic
 sudo: required
-install:
- - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
 services:
  - docker
 script:
  - dotnet build
- - (cd ./test/GitLabApiClient.Test && dotnet test)
+ - dotnet test
 cache:
   directories:
   - $HOME/.nuget

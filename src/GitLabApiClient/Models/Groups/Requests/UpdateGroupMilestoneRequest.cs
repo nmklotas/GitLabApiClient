@@ -11,30 +11,6 @@ namespace GitLabApiClient.Models.Groups.Requests
     public sealed class UpdateGroupMilestoneRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateGroupMilestoneRequest"/> class.
-        /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
-        /// <param name="milestoneId">The ID of a group milestone.</param>
-        public UpdateGroupMilestoneRequest(string groupId, int milestoneId)
-        {
-            Guard.NotEmpty(groupId, nameof(groupId));
-            GroupId = groupId;
-            MilestoneId = milestoneId;
-        }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the group owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string GroupId { get; private set; }
-
-        /// <summary>
-        /// The ID of a group milestone.
-        /// </summary>
-        [JsonProperty("milestone_id")]
-        public int MilestoneId { get; private set; }
-
-        /// <summary>
         /// The title of a milestone.
         /// </summary>
         [JsonProperty("title")]

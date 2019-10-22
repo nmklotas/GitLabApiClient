@@ -7,22 +7,14 @@ namespace GitLabApiClient.Models.Pipelines.Requests
 {
     public sealed class CreatePipelineRequest
     {
-        public CreatePipelineRequest(string projectId, string reference, IList<PipelineVariable> variables = null)
+        public CreatePipelineRequest(string reference, IList<PipelineVariable> variables = null)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(reference, nameof(reference));
 
-            ProjectId = projectId;
             Reference = reference;
 
             Variables = variables ?? new List<PipelineVariable>();
         }
-
-        /// <summary>
-        ///     The ID or URL-encoded path of the project owned by the authenticated user
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; }
 
         /// <summary>
         ///     Reference to commit

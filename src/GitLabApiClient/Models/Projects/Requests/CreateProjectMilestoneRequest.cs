@@ -11,21 +11,12 @@ namespace GitLabApiClient.Models.Projects.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateProjectMilestoneRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
         /// <param name="title">The title of a milestone.</param>
-        public CreateProjectMilestoneRequest(string projectId, string title)
+        public CreateProjectMilestoneRequest(string title)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(title, nameof(title));
-            ProjectId = projectId;
             Title = title;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; private set; }
 
         /// <summary>
         /// The title of a milestone.

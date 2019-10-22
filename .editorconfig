@@ -180,6 +180,9 @@ csharp_style_var_for_built_in_types = false:error
 # http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_style_var_when_type_is_apparent
 csharp_style_var_when_type_is_apparent = true:error
 
+# https://www.jetbrains.com/help/resharper/EditorConfig_CSHARP_SpacesPageSchema.html#resharper_csharp_space_in_singleline_method
+csharp_space_in_singleline_method = true
+
 # http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#dotnet_sort_system_directives_first
 dotnet_sort_system_directives_first = true
 

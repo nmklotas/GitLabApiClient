@@ -8,17 +8,6 @@ namespace GitLabApiClient.Models.Users.Requests
     public sealed class UpdateUserRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateUserRequest"/> class.
-        /// <param name="userId">The ID of the user.</param>
-        /// </summary>
-        public UpdateUserRequest(int userId) => UserId = userId;
-
-        /// <summary>
-        /// The ID of the user.
-        /// </summary>
-        public int UserId { get; }
-
-        /// <summary>
         /// Email.
         /// </summary>
         [JsonProperty("email")]

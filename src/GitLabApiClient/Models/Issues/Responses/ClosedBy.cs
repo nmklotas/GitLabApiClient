@@ -19,9 +19,6 @@ namespace GitLabApiClient.Models.Issues.Responses
         [JsonProperty("username")]
         public string Username;
 
-        [JsonProperty("id")]
-        public string Id;
-
         [JsonProperty("name")]
         public string Name;
     }

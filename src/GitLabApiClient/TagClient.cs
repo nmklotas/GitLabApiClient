@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Tags.Requests;
 using GitLabApiClient.Models.Tags.Responses;
 
@@ -21,27 +23,45 @@ namespace GitLabApiClient
             _tagQueryBuilder = tagQueryBuilder;
         }
 
-        public async Task<Tag> GetAsync(string projectId, string tagName) =>
-            await _httpFacade.Get<Tag>($"{TagsBaseUrl(projectId)}/{tagName}");
+        /// <summary>
+        /// Retrieves a tag by its name
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="tagName">The tag, you want to retrieve.</param>
+        /// <returns></returns>
+        public async Task<Tag> GetAsync(ProjectId projectId, string tagName) =>
+            await _httpFacade.Get<Tag>($"projects/{projectId}/repository/tags/{tagName}");
 
-        public async Task<IList<Tag>> GetAsync(string projectId, Action<TagQueryOptions> options)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query options for tags <see cref="TagQueryOptions"/></param>
+        /// <returns></returns>
+        public async Task<IList<Tag>> GetAsync(ProjectId projectId, Action<TagQueryOptions> options = null)
         {
             var queryOptions = new TagQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _tagQueryBuilder.Build(TagsBaseUrl(projectId), queryOptions);
+            string url = _tagQueryBuilder.Build($"projects/{projectId}/repository/tags", queryOptions);
             return await _httpFacade.GetPagedList<Tag>(url);
         }
 
-        public async Task<Tag> CreateAsync(CreateTagRequest request) =>
-            await _httpFacade.Post<Tag>(TagsBaseUrl(request.ProjectId), request);
+        /// <summary>
+        /// Create new tag
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Create Tag request.</param>
+        /// <returns>newly created Tag</returns>
+        public async Task<Tag> CreateAsync(ProjectId projectId, CreateTagRequest request) =>
+            await _httpFacade.Post<Tag>($"projects/{projectId}/repository/tags", request);
 
-        public async Task DeleteAsync(DeleteTagRequest request) =>
-            await _httpFacade.Delete($"{TagsBaseUrl(request.ProjectId)}/{request.TagName}");
-
-        public static string TagsBaseUrl(string projectId)
-        {
-            return $"projects/{projectId}/repository/tags";
-        }
+        /// <summary>
+        /// Delete a tag
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="tagName">The tag name, you want to delete.</param>
+        public async Task DeleteAsync(ProjectId projectId, string tagName) =>
+            await _httpFacade.Delete($"projects/{projectId}/repository/tags/{tagName}");
     }
 }

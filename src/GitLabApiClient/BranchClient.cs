@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
+using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
 {
@@ -21,10 +23,22 @@ namespace GitLabApiClient
             _branchQueryBuilder = branchQueryBuilder;
         }
 
-        public async Task<Branch> GetAsync(string projectId, string branchName) =>
+        /// <summary>
+        /// Retrieves a single branch
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="branchName">The branch name.</param>
+        /// <returns></returns>
+        public async Task<Branch> GetAsync(ProjectId projectId, string branchName) =>
             await _httpFacade.Get<Branch>($"projects/{projectId}/repository/branches/{branchName}");
 
-        public async Task<IList<Branch>> GetAsync(string projectId, Action<BranchQueryOptions> options)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query options <see cref="BranchQueryOptions"/></param>
+        /// <returns></returns>
+        public async Task<IList<Branch>> GetAsync(ProjectId projectId, Action<BranchQueryOptions> options)
         {
             var queryOptions = new BranchQueryOptions();
             options?.Invoke(queryOptions);
@@ -33,25 +47,62 @@ namespace GitLabApiClient
             return await _httpFacade.GetPagedList<Branch>(url);
         }
 
-        public async Task<Branch> CreateAsync(CreateBranchRequest request) =>
-            await _httpFacade.Post<Branch>($"projects/{request.ProjectId}/repository/branches", request);
+        /// <summary>
+        /// Creates a branch
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Create branch request</param>
+        /// <returns></returns>
+        public async Task<Branch> CreateAsync(ProjectId projectId, CreateBranchRequest request) =>
+            await _httpFacade.Post<Branch>($"projects/{projectId}/repository/branches", request);
 
-        public async Task DeleteBranch(DeleteBranchRequest request) =>
-            await _httpFacade.Delete($"projects/{request.ProjectId}/repository/branches/{request.BranchName}");
+        /// <summary>
+        /// Deletes a branch
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="branchName">The branch, you want deleted.</param>
+        public async Task DeleteBranch(ProjectId projectId, string branchName) =>
+            await _httpFacade.Delete($"projects/{projectId}/repository/branches/{branchName}");
 
-        public async Task DeleteMergedBranches(DeleteMergedBranchesRequest request) =>
-            await _httpFacade.Delete($"projects/{request.ProjectId}/repository/merged_branches");
+        /// <summary>
+        /// Deletes the merged branches
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        public async Task DeleteMergedBranches(ProjectId projectId) =>
+            await _httpFacade.Delete($"projects/{projectId}/repository/merged_branches");
 
-        public async Task<ProtectedBranch> GetProtectedBranchesAsync(string projectId, string branchName) =>
+        /// <summary>
+        /// Retrieve a single protected branch information.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="branchName">The protected branch</param>
+        /// <returns>A protected branch</returns>
+        public async Task<ProtectedBranch> GetProtectedBranchesAsync(ProjectId projectId, string branchName) =>
             await _httpFacade.Get<ProtectedBranch>($"projects/{projectId}/protected_branches/{branchName}");
 
-        public async Task<IList<ProtectedBranch>> GetProtectedBranchesAsync(string projectId) =>
+        /// <summary>
+        /// Retrieves a list of Protected Branches from a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>List of protected branches.</returns>
+        public async Task<IList<ProtectedBranch>> GetProtectedBranchesAsync(ProjectId projectId) =>
             await _httpFacade.GetPagedList<ProtectedBranch>($"projects/{projectId}/protected_branches");
 
-        public async Task<ProtectedBranch> ProtectBranchAsync(ProtectBranchRequest request) =>
-            await _httpFacade.Post<ProtectedBranch>($"projects/{request.ProjectId}/protected_branches", request);
+        /// <summary>
+        /// Protect a branch
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Protect branch request <see cref="ProtectBranchRequest"/>.</param>
+        /// <returns>The newly protected branch.</returns>
+        public async Task<ProtectedBranch> ProtectBranchAsync(ProjectId projectId, ProtectBranchRequest request) =>
+            await _httpFacade.Post<ProtectedBranch>($"projects/{projectId}/protected_branches", request);
 
-        public async Task UnprotectBranchAsync(string projectId, string branchName) =>
+        /// <summary>
+        /// Unprotect a branch
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="branchName">The Branch, you want to unprotect.</param>
+        public async Task UnprotectBranchAsync(ProjectId projectId, string branchName) =>
             await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName}");
     }
 }

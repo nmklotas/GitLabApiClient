@@ -11,28 +11,8 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="AddGroupMemberRequest"/> class.
         /// </summary>
-        /// <param name="groupId">The ID or URL-encoded path of the group owned by the authenticated user.</param>
-        /// <param name="userId">The id of the user to add as member.</param>
         /// <param name="accessLevel">The access level of the new member.</param>
-        public AddGroupMemberRequest(string groupId, int userId, AccessLevel accessLevel)
-        {
-            Guard.NotEmpty(groupId, nameof(groupId));
-            GroupId = groupId;
-            UserId = userId;
-            AccessLevel = (int)accessLevel;
-        }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the group owned by the authenticated user.
-        /// </summary>
-        [JsonProperty("id")]
-        public string GroupId { get; private set; }
-
-        /// <summary>
-        /// The id of the user.
-        /// </summary>
-        [JsonProperty("user_id")]
-        public int UserId { get; private set; }
+        public AddGroupMemberRequest(AccessLevel accessLevel) => AccessLevel = (int)accessLevel;
 
         /// <summary>
         /// The desired access level
