@@ -12,22 +12,12 @@ namespace GitLabApiClient.Models.Projects.Requests
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateProjectRequest"/> class.
         /// </summary>
-        /// <param name="projectId">The ID or URL-encoded path of the project owned by the authenticated user.</param>
         /// <param name="name">The name of the project.</param>
-        public UpdateProjectRequest(string projectId, string name)
+        public UpdateProjectRequest(string name)
         {
-            Guard.NotEmpty(projectId, nameof(projectId));
             Guard.NotEmpty(name, nameof(name));
-            ProjectId = projectId;
             Name = name;
         }
-
-        /// <summary>
-        /// The ID or URL-encoded path of the project.
-        /// </summary>
-        [JsonProperty("id")]
-        public string ProjectId { get; }
-
         /// <summary>
         /// The name of the project.
         /// </summary>

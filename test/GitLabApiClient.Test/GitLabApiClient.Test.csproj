@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,20 +12,21 @@
     <OutputPath>..\bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Ressources\gitlabtest.png"/>
+    <None Remove="Ressources\gitlabtest.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Ressources\gitlabtest.png"/>
+    <EmbeddedResource Include="Ressources\gitlabtest.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FakeItEasy" Version="5.2.0"/>
-    <PackageReference Include="FluentAssertions" Version="4.19.4"/>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0"/>
-    <PackageReference Include="xunit" Version="2.2.0"/>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0"/>
+    <PackageReference Include="coverlet.collector" Version="1.1.0" />
+    <PackageReference Include="FakeItEasy" Version="5.2.0" />
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GitLabApiClient\GitLabApiClient.csproj"/>
+    <ProjectReference Include="..\..\src\GitLabApiClient\GitLabApiClient.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="xunit.runner.json">

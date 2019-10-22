@@ -53,13 +53,12 @@ namespace GitLabApiClient.Test
         public async Task ProjectMilestonesRetrieved()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(
-                new CreateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, "milestone1")
-                {
-                    StartDate = "2018-11-01",
-                    DueDate = "2018-11-30",
-                    Description = "description1"
-                });
+            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone1")
+            {
+                StartDate = "2018-11-01",
+                DueDate = "2018-11-30",
+                Description = "description1"
+            });
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
@@ -161,7 +160,7 @@ namespace GitLabApiClient.Test
             request.EnvironmentScope = "*";
             request.Masked = true;
             request.Protected = true;
-            
+
 
             var variable = await _sut.CreateVariableAsync(request);
 
@@ -195,7 +194,7 @@ namespace GitLabApiClient.Test
             var createdProject = await _sut.CreateAsync(createRequest);
             ProjectIdsToClean.Add(createdProject.Id);
 
-            var updatedProject = await _sut.UpdateAsync(new UpdateProjectRequest(createdProject.Id.ToString(), createdProject.Name)
+            var updatedProject = await _sut.UpdateAsync(createdProject.Id.ToString(), new UpdateProjectRequest(createdProject.Name)
             {
                 Description = "description11",
                 EnableContainerRegistry = false,
@@ -227,7 +226,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectLabelCanBeUpdated()
         {
             //arrange
-            var createdLabel = await _sut.CreateLabelAsync(new CreateProjectLabelRequest(GitLabApiHelper.TestProjectTextId, "Label 1")
+            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectLabelRequest("Label 1")
             {
                 Color = "#FFFFFF",
                 Description = "description1",
@@ -235,12 +234,12 @@ namespace GitLabApiClient.Test
             });
 
             //act
-            var updateRequest = UpdateProjectLabelRequest.FromNewName(GitLabApiHelper.TestProjectTextId, createdLabel.Name, "Label 11");
+            var updateRequest = UpdateProjectLabelRequest.FromNewName(createdLabel.Name, "Label 11");
             updateRequest.Color = "#000000";
             updateRequest.Description = "description11";
             updateRequest.Priority = 11;
 
-            var updatedLabel = await _sut.UpdateLabelAsync(updateRequest);
+            var updatedLabel = await _sut.UpdateLabelAsync(GitLabApiHelper.TestProjectTextId, updateRequest);
             await _sut.DeleteLabelAsync(GitLabApiHelper.TestProjectId, updatedLabel.Name);
 
             //assert
@@ -255,7 +254,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectMilestoneCanBeUpdated()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(new CreateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, "milestone2")
+            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone2")
             {
                 StartDate = "2018-11-01",
                 DueDate = "2018-11-30",
@@ -264,7 +263,7 @@ namespace GitLabApiClient.Test
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
-            var updatedMilestone = await _sut.UpdateMilestoneAsync(new UpdateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, createdMilestone.Id)
+            var updatedMilestone = await _sut.UpdateMilestoneAsync(GitLabApiHelper.TestProjectTextId, createdMilestone.Id, new UpdateProjectMilestoneRequest()
             {
                 Title = "milestone22",
                 StartDate = "2018-11-05",
@@ -324,7 +323,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectMilestoneCanBeClosed()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(new CreateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, "milestone3")
+            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone3")
             {
                 StartDate = "2018-12-01",
                 DueDate = "2018-12-31",
@@ -333,7 +332,7 @@ namespace GitLabApiClient.Test
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
-            var updatedMilestone = await _sut.UpdateMilestoneAsync(new UpdateProjectMilestoneRequest(GitLabApiHelper.TestProjectTextId, createdMilestone.Id)
+            var updatedMilestone = await _sut.UpdateMilestoneAsync(GitLabApiHelper.TestProjectTextId, createdMilestone.Id, new UpdateProjectMilestoneRequest()
             {
                 State = UpdatedMilestoneState.Close
             });
