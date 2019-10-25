@@ -48,6 +48,8 @@ namespace GitLabApiClient
             var tagQueryBuilder = new TagQueryBuilder();
             var commitQueryBuilder = new CommitQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
+            var treeQueryBuilder = new TreeQueryBuilder();
+            var fileQueryBuilder = new FileQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -61,6 +63,8 @@ namespace GitLabApiClient
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
+            Trees = new TreesClient(_httpFacade, treeQueryBuilder);
+            Files = new FilesClient(_httpFacade, fileQueryBuilder);
         }
 
         /// <summary>
@@ -112,6 +116,16 @@ namespace GitLabApiClient
         /// Access GitLab's commits API.
         /// </summary>
         public CommitsClient Commits { get; }
+
+        /// <summary>
+        /// Access GitLab's trees API.
+        /// </summary>
+        public TreesClient Trees { get; }
+
+        /// <summary>
+        /// Access GitLab's files API.
+        /// </summary>
+        public FilesClient Files { get; }
 
         /// <summary>
         /// Access GitLab's Markdown API.
