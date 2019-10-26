@@ -36,7 +36,7 @@ await client.Issues.CreateAsync(new CreateIssueRequest("projectId", "issue title
 await client.Issues.GetAsync("projectId", o => o.AssigneeId = 100 && o.Labels == new[] { "test-label" });
 
 // create a new merge request featureBranch -> master.
-await client.MergeRequests.CreateAsync(new CreateMergeRequest("featureBranch", "master", "Merge request title")
+await client.MergeRequests.CreateAsync("projectPath", new CreateMergeRequest("featureBranch", "master", "Merge request title")
 {
     Labels = new[] { "bugfix" },
     Description = "Implement feature"
