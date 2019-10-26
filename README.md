@@ -30,7 +30,7 @@ await client.LoginAsync("username", "password");
 2. Use it:
 ```csharp
 // create a new issue.
-await client.Issues.CreateAsync(new CreateIssueRequest("projectId", "issue title"));  
+await client.Issues.CreateAsync(new CreateIssueRequest("issue title"));  
 
 // list issues for a project  with specified assignee and labels.
 await client.Issues.GetAsync("projectId", o => o.AssigneeId = 100 && o.Labels == new[] { "test-label" });
