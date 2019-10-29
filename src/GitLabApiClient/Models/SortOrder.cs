@@ -1,4 +1,4 @@
-﻿namespace GitLabApiClient.Models
+namespace GitLabApiClient.Models
 {
     public enum SortOrder
     {

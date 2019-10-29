@@ -1,4 +1,4 @@
-﻿namespace GitLabApiClient.Models.Notes.Requests
+namespace GitLabApiClient.Models.Notes.Requests
 {
     public enum NoteOrder
     {
