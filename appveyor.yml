@@ -27,7 +27,7 @@ test_script:
 artifacts:
   - path: 'src\**\Release\*.nupkg'
     name: NuGet Packages
-  - path: 'src\**\*.snupkg'
+  - path: 'src\**\Release\*.snupkg'
     name: NuGet Symbol Packages
 
 deploy:
