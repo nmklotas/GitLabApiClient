@@ -22,7 +22,7 @@ test_script:
   - ps: .\test.ps1
 
 artifacts:
-  - path: 'src\bin\Release\*.nupkg'
+  - path: 'src\**\Release\*.nupkg'
     name: Package
 
 deploy:
