@@ -16,7 +16,7 @@ namespace GitLabApiClient.Models.Webhooks.Requests
         public string Url { get; set; }
 
         [JsonProperty("project_id")]
-        public long ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         [JsonProperty("push_events")]
         public bool PushEvents { get; set; }
@@ -52,13 +52,12 @@ namespace GitLabApiClient.Models.Webhooks.Requests
         public bool EnableSslVerification { get; set; }
 
         [JsonProperty("token")]
-        public bool Token { get; set; }
+        public string Token { get; set; }
 
         public CreateWebhookRequest(string url)
         {
             Guard.NotEmpty(url, nameof(url));
-
-            Url = HttpUtility.UrlEncode(url);
+            Url = url;
         }
     }
 }
