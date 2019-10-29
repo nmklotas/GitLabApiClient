@@ -58,6 +58,7 @@ namespace GitLabApiClient
             Branches = new BranchClient(_httpFacade, branchQueryBuilder);
             Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
+            Webhooks = new WebhookClient(_httpFacade);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
@@ -107,6 +108,11 @@ namespace GitLabApiClient
         /// Access GitLab's tags API.
         /// </summary>
         public TagClient Tags { get; }
+
+        /// <summary>
+        /// Access GitLab's webhook API.
+        /// </summary>
+        public WebhookClient Webhooks { get; }
 
         /// <summary>
         /// Access GitLab's commits API.
