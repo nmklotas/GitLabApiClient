@@ -15,9 +15,6 @@ namespace GitLabApiClient.Models.Webhooks.Requests
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        [JsonProperty("project_id")]
-        public string ProjectId { get; set; }
-
         [JsonProperty("push_events")]
         public bool PushEvents { get; set; }
 
