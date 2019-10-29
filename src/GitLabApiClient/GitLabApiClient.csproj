@@ -18,6 +18,8 @@
     <PackageId>GitLabApiClient</PackageId>
     <Company>nmklotas</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@ function Build()
 	{
 		exit 1
 	}
-	
+
 	& dotnet build src\GitLabApiClient\GitLabApiClient.csproj | Write-Host
 	if ($LastExitCode -ne 0)
 	{

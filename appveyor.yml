@@ -23,13 +23,13 @@ test_script:
 
 artifacts:
   - path: 'src\**\Release\*.nupkg'
-    name: Package
+    name: NuGet Packages
+  - path: 'src\**\*.snupkg'
+    name: NuGet Symbol Packages
 
 deploy:
   - provider: NuGet
     api_key:
       secure: nsG5rMfSr/gLzEdOpIEAj7p0n2LKQrjO1hHR4C+kFyuQXBC8KlcAJrjgP5vnm1XA
-    skip_symbols: false
-    artifact: /.*\.nupkg/
     on:
       appveyor_repo_tag: true
