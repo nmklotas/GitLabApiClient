@@ -3,17 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks Condition="'$(OS)' != 'Unix'">netstandard2.0;net452</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' == 'Unix'">netstandard2.0</TargetFrameworks>
-    <Version>1.0.0</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Copyright />
     <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
     <Authors>nmklotas</Authors>
     <PackageProjectUrl>https://github.com/nmklotas/GitLabApiClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
-    <RepositoryType />
     <PackageTags>GitLab REST API CI Client</PackageTags>
     <PackageId>GitLabApiClient</PackageId>
     <Company>nmklotas</Company>
