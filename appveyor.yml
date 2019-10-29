@@ -1,5 +1,4 @@
 image: Visual Studio 2019
-version: 1.0.{build}-alpha
 configuration: Release
 build:
   verbosity: minimal
@@ -10,10 +9,14 @@ environment:
 
 skip_branch_with_pr: true
 
-before_build:
-  - ps: cinst -y codecov --no-progress
+install:
+  - ps: dotnet tool install -g Codecov.Tool
+  - ps: dotnet tool install -g GitVersion.Tool
   - ps: dotnet tool install -g dotnet-format
+
+before_build:
   - ps: dotnet format --check --dry-run
+  - ps: dotnet gitversion /l console /output buildserver
 
 build_script:
   - ps: .\build.ps1
