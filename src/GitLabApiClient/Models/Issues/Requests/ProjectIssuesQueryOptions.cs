@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using GitLabApiClient.Internal.Utilities;
 
 namespace GitLabApiClient.Models.Issues.Requests

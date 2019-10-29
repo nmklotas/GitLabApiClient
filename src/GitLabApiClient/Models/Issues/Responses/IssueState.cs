@@ -1,4 +1,4 @@
-﻿namespace GitLabApiClient.Models.Issues.Responses
+namespace GitLabApiClient.Models.Issues.Responses
 {
     public enum IssueState
     {

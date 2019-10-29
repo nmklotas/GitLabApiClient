@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http;
 
 namespace GitLabApiClient.Test.TestUtilities

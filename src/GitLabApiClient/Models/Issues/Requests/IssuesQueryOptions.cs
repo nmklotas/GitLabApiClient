@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using GitLabApiClient.Models.Issues.Responses;
 
 namespace GitLabApiClient.Models.Issues.Requests

@@ -1,5 +1,4 @@
 image: Visual Studio 2019
-version: 1.0.{build}-alpha
 configuration: Release
 build:
   verbosity: minimal
@@ -10,26 +9,28 @@ environment:
 
 skip_branch_with_pr: true
 
-before_build:
-  - ps: cinst -y codecov --no-progress
+install:
+  - ps: dotnet tool install -g Codecov.Tool
+  - ps: dotnet tool install -g GitVersion.Tool
   - ps: dotnet tool install -g dotnet-format
+
+before_build:
   - ps: dotnet format --check --dry-run
+  - ps: dotnet gitversion /l console /output buildserver
 
 build_script:
-- ps: .\build.ps1
+  - ps: .\build.ps1
 
 test_script:
-- ps: .\test.ps1
+  - ps: .\test.ps1
 
 artifacts:
-  - path: 'src\bin\Release\*.nupkg'
-    name: Package
+  - path: 'src\**\Release\*.nupkg'
+    name: NuGet Packages
+  - path: 'src\**\Release\*.snupkg'
+    name: NuGet Symbol Packages
 
 deploy:
-  provider: NuGet
-  api_key:
-    secure: nsG5rMfSr/gLzEdOpIEAj7p0n2LKQrjO1hHR4C+kFyuQXBC8KlcAJrjgP5vnm1XA
-  skip_symbols: false
-  artifact: /.*\.nupkg/
-  on:
-    appveyor_repo_tag: true
+  - provider: NuGet
+    api_key:
+      secure: nsG5rMfSr/gLzEdOpIEAj7p0n2LKQrjO1hHR4C+kFyuQXBC8KlcAJrjgP5vnm1XA
