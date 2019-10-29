@@ -1,4 +1,4 @@
-﻿namespace GitLabApiClient.Models.Issues.Requests
+namespace GitLabApiClient.Models.Issues.Requests
 {
     public enum IssuesOrder
     {
