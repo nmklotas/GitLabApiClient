@@ -60,7 +60,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _commitRefsQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/refs", queryOptions);
-            return await _httpFacade.GetPagedList<CommitRef>( url);
+            return await _httpFacade.GetPagedList<CommitRef>(url);
         }
     }
 }
