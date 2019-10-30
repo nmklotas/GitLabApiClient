@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GitLabApiClient.Models.Releases.Responses;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Webhooks.Responses
@@ -13,9 +10,6 @@ namespace GitLabApiClient.Models.Webhooks.Responses
 
         [JsonProperty("url")]
         public string Url { get; set; }
-
-        [JsonProperty("project_id")]
-        public long ProjectId { get; }
 
         [JsonProperty("push_events")]
         public bool PushEvents { get; set; }
