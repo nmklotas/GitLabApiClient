@@ -4,10 +4,10 @@ dotnet: 3.0.100
 dist: bionic
 sudo: required
 services:
- - docker
+  - docker
 script:
- - dotnet build
- - dotnet test
+  - dotnet build
+  - dotnet test
 cache:
   directories:
-  - $HOME/.nuget
+    - $HOME/.nuget
