@@ -1,4 +1,4 @@
-& dotnet test --filter Category!=LinuxIntegration --settings coverletArgs.runsettings
+& dotnet test --filter Category!=LinuxIntegration --settings coverletArgs.runsettings --no-build --no-restore
 
 if ($LastExitCode -ne 0)
 {
