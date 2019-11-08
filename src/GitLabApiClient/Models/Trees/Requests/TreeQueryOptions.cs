@@ -6,13 +6,13 @@ namespace GitLabApiClient.Models.Trees.Requests
 {
     public sealed class TreeQueryOptions
     {
-        public string Branch { get; set; }
+        public string Reference { get; set; }
         public string Path { get; set; }
         public bool Recursive { get; set; }
 
-        internal TreeQueryOptions(string branch = null, string path = null, bool recursive = true)
+        internal TreeQueryOptions(string reference = null, string path = null, bool recursive = true)
         {
-            Branch = branch;
+            Reference = reference;
             Path = path;
             Recursive = recursive;
         }

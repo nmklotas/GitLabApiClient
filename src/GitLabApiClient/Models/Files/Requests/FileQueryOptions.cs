@@ -6,7 +6,7 @@ namespace GitLabApiClient.Models.Files.Requests
 {
     public sealed class FileQueryOptions
     {
-        public string Branch { get; set; }
-        internal FileQueryOptions(string branch = null, string path = null, bool recursive = true) => Branch = branch;
+        public string Reference { get; set; }
+        internal FileQueryOptions(string reference = null) => Reference = reference;
     }
 }

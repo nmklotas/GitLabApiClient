@@ -9,8 +9,8 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(FileQueryOptions options)
         {
-            if (!string.IsNullOrEmpty(options.Branch))
-                Add("ref", options.Branch);
+            if (!string.IsNullOrEmpty(options.Reference))
+                Add("ref", options.Reference);
 
         }
     }

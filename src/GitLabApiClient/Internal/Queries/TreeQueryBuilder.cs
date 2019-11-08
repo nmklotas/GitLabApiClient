@@ -10,8 +10,8 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(TreeQueryOptions options)
         {
-            if (!string.IsNullOrEmpty(options.Branch))
-                Add("ref", options.Branch);
+            if (!string.IsNullOrEmpty(options.Reference))
+                Add("ref", options.Reference);
 
             if (!string.IsNullOrEmpty(options.Path))
                 Add("path", options.Path);
