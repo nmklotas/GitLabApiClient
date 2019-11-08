@@ -50,7 +50,6 @@ namespace GitLabApiClient
             var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
             var treeQueryBuilder = new TreeQueryBuilder();
-            var fileQueryBuilder = new FileQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -66,7 +65,7 @@ namespace GitLabApiClient
             Markdown = new MarkdownClient(_httpFacade);
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
-            Files = new FilesClient(_httpFacade, fileQueryBuilder);
+            Files = new FilesClient(_httpFacade);
         }
 
         /// <summary>
