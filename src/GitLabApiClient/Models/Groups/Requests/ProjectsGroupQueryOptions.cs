@@ -1,4 +1,4 @@
-﻿namespace GitLabApiClient.Models.Groups.Requests
+namespace GitLabApiClient.Models.Groups.Requests
 {
     /// <summary>
     /// Options for Groups listing

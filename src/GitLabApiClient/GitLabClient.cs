@@ -47,6 +47,7 @@ namespace GitLabApiClient
             var releaseQueryBuilder = new ReleaseQueryBuilder();
             var tagQueryBuilder = new TagQueryBuilder();
             var commitQueryBuilder = new CommitQueryBuilder();
+            var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
             var treeQueryBuilder = new TreeQueryBuilder();
             var fileQueryBuilder = new FileQueryBuilder();
@@ -60,7 +61,8 @@ namespace GitLabApiClient
             Branches = new BranchClient(_httpFacade, branchQueryBuilder);
             Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
-            Commits = new CommitsClient(_httpFacade, commitQueryBuilder);
+            Webhooks = new WebhookClient(_httpFacade);
+            Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
@@ -111,6 +113,11 @@ namespace GitLabApiClient
         /// Access GitLab's tags API.
         /// </summary>
         public TagClient Tags { get; }
+
+        /// <summary>
+        /// Access GitLab's webhook API.
+        /// </summary>
+        public WebhookClient Webhooks { get; }
 
         /// <summary>
         /// Access GitLab's commits API.

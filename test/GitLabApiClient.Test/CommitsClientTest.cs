@@ -30,7 +30,7 @@ namespace GitLabApiClient.Test
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
-                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder());
+                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder());
 
                 var commitFromClient = await commitsClient.GetAsync(projectId, sha);
                 commitFromClient.Id.Should().BeEquivalentTo(sha);
@@ -52,7 +52,7 @@ namespace GitLabApiClient.Test
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
-                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder());
+                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder());
 
                 var commitsFromClient = await commitsClient.GetAsync(projectId, o => o.RefName = refName);
                 commitsFromClient[0].Id.Should().BeEquivalentTo("id1");

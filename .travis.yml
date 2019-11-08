@@ -2,12 +2,17 @@ language: csharp
 mono: none
 dotnet: 3.0.100
 dist: bionic
+git:
+  depth: false
 sudo: required
 services:
- - docker
+  - docker
 script:
- - dotnet build
- - dotnet test
+  - export PATH="$PATH:$HOME/.dotnet/tools"
+  - dotnet tool install --global GitVersion.Tool --version 5.1.2
+  - dotnet gitversion
+  - dotnet build
+  - dotnet test
 cache:
   directories:
-  - $HOME/.nuget
+    - $HOME/.nuget
