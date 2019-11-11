@@ -244,5 +244,35 @@ namespace GitLabApiClient
             Guard.NotNull(request, nameof(request));
             return await _httpFacade.Put<Project>($"projects/{projectId}/transfer", request);
         }
+
+        /// <summary>
+        /// Request the export of a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        public async Task ExportAsync(ProjectId projectId)
+        {
+            await _httpFacade.Post($"projects/{projectId}/export");
+        }
+
+        /// <summary>
+        /// Get status of the export.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>Status of the export</returns>
+        public async Task<ExportStatus> GetExportStatusAsync(ProjectId projectId)
+        {
+            return await _httpFacade.Get<ExportStatus>($"projects/{projectId}/export");
+        }
+
+        /// <summary>
+        /// Download an exported project if it exists
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="outputPath">The filename that should contain the contents of the download after the download completes</param>
+        /// <returns>Status of the export</returns>
+        public async Task ExportDownloadAsync(ProjectId projectId, string outputPath)
+        {
+            await _httpFacade.GetFile($"projects/{projectId}/export/download", outputPath);
+        }
     }
 }
