@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
@@ -10,6 +11,7 @@ using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Uploads.Requests;
 using GitLabApiClient.Models.Users.Responses;
 using GitLabApiClient.Models.Variables.Request;
 using GitLabApiClient.Models.Variables.Response;
@@ -273,6 +275,40 @@ namespace GitLabApiClient
         public async Task ExportDownloadAsync(ProjectId projectId, string outputPath)
         {
             await _httpFacade.GetFile($"projects/{projectId}/export/download", outputPath);
+        }
+
+        /// <summary>
+        /// Request the import of a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>Status of the import (including the id of the new project)</returns>
+        public async Task<ImportStatus> ImportAsync(ImportProjectRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+
+            var parameters = new Dictionary<string, string>();
+            foreach(var prop in request.GetType().GetProperties())
+            {
+                if(prop.GetValue(request) != null && prop.Name != nameof(ImportProjectRequest.File))
+                {
+                    parameters.Add((prop.GetCustomAttributes(typeof(Newtonsoft.Json.JsonPropertyAttribute), false)[0] as Newtonsoft.Json.JsonPropertyAttribute).PropertyName, prop.GetValue(request).ToString());
+                }
+            }
+
+            using(var stream = System.IO.File.OpenRead(request.File))
+            {
+                return await _httpFacade.PostFile<ImportStatus>($"projects/import", parameters, new CreateUploadRequest(stream, request.Path + ".tar.gz"));
+            }
+        }
+
+        /// <summary>
+        /// Get status of the import.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>Status of the import</returns>
+        public async Task<ImportStatus> GetImportStatusAsync(ProjectId projectId)
+        {
+            return await _httpFacade.Get<ImportStatus>($"projects/{projectId}/import");
         }
     }
 }

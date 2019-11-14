@@ -59,6 +59,9 @@ namespace GitLabApiClient.Internal.Http
         public Task<Upload> PostFile(string uri, CreateUploadRequest uploadRequest) =>
             _requestor.PostFile(uri, uploadRequest);
 
+        public Task<T> PostFile<T>(string uri, Dictionary<string, string> keyValues, CreateUploadRequest uploadRequest) =>
+            _requestor.PostFile<T>(uri, keyValues, uploadRequest);
+
         public Task<T> Put<T>(string uri, object data) =>
             _requestor.Put<T>(uri, data);
 
