@@ -25,7 +25,7 @@ namespace GitLabApiClient.Internal.Http
             {
                 BaseAddress = new Uri(hostUrl),
             };
-            if(clientTimeout.HasValue)
+            if (clientTimeout.HasValue)
                 httpClient.Timeout = clientTimeout.Value;
             httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
 

@@ -287,15 +287,15 @@ namespace GitLabApiClient
             Guard.NotNull(request, nameof(request));
 
             var parameters = new Dictionary<string, string>();
-            foreach(var prop in request.GetType().GetProperties())
+            foreach (var prop in request.GetType().GetProperties())
             {
-                if(prop.GetValue(request) != null && prop.Name != nameof(ImportProjectRequest.File))
+                if (prop.GetValue(request) != null && prop.Name != nameof(ImportProjectRequest.File))
                 {
                     parameters.Add((prop.GetCustomAttributes(typeof(Newtonsoft.Json.JsonPropertyAttribute), false)[0] as Newtonsoft.Json.JsonPropertyAttribute).PropertyName, prop.GetValue(request).ToString());
                 }
             }
 
-            using(var stream = System.IO.File.OpenRead(request.File))
+            using (var stream = System.IO.File.OpenRead(request.File))
             {
                 return await _httpFacade.PostFile<ImportStatus>($"projects/import", parameters, new CreateUploadRequest(stream, request.Path + ".tar.gz"));
             }

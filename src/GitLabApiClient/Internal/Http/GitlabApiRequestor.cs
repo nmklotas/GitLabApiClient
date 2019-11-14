@@ -33,7 +33,7 @@ namespace GitLabApiClient.Internal.Http
         {
             var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
             var inputStream = await response.Content.ReadAsStreamAsync();
-            using(var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
+            using (var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
             {
                 await inputStream.CopyToAsync(outputStream);
             }
@@ -66,9 +66,9 @@ namespace GitLabApiClient.Internal.Http
             {
                 uploadContent.Add(new StreamContent(uploadRequest.Stream), "file", uploadRequest.FileName);
 
-                if(keyValues != null)
+                if (keyValues != null)
                 {
-                    foreach(var kv in keyValues)
+                    foreach (var kv in keyValues)
                     {
                         uploadContent.Add(new StringContent(kv.Value), kv.Key);
                     }
