@@ -21,7 +21,8 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="hostUrl">Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/ </param>
         /// <param name="authenticationToken">Personal access token. Obtained from GitLab profile settings.</param>
-        public GitLabClient(string hostUrl, string authenticationToken = "")
+        /// <param name="clientTimeout">Timespan with the HTTP client timeout if null default timeout is used. Sometimes required to upload files to a gitlab instance depending on filesize and networkspeed.</param>
+        public GitLabClient(string hostUrl, string authenticationToken = "", TimeSpan? clientTimeout = null)
         {
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
@@ -32,7 +33,8 @@ namespace GitLabApiClient
             _httpFacade = new GitLabHttpFacade(
                 HostUrl,
                 jsonSerializer,
-                authenticationToken);
+                authenticationToken,
+                clientTimeout);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
             var projectIssuesQueryBuilder = new ProjectIssuesQueryBuilder();
