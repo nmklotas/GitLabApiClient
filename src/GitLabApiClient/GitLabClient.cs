@@ -63,6 +63,7 @@ namespace GitLabApiClient
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
+            Runners = new RunnersClient(_httpFacade);
         }
 
         /// <summary>
@@ -129,6 +130,11 @@ namespace GitLabApiClient
         /// Acess GitLab's Pipeline API.
         /// </summary>
         public PipelineClient Pipelines { get; }
+
+        /// <summary>
+        /// Access GitLab's Runners API.
+        /// </summary>
+        public RunnersClient Runners { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
