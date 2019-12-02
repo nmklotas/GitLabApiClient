@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
@@ -26,7 +27,8 @@ namespace GitLabApiClient.Test
         private readonly ProjectsClient _sut = new ProjectsClient(
             GitLabApiHelper.GetFacade(),
             new ProjectsQueryBuilder(),
-            new MilestonesQueryBuilder());
+            new MilestonesQueryBuilder(),
+            new JobQueryBuilder());
 
         [Fact]
         public async Task ProjectRetrieved()
