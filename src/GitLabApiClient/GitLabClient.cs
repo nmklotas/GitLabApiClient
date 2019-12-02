@@ -4,6 +4,7 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Pipelines.Requests;
 using GitLabApiClient.Models.Users.Responses;
 
@@ -49,11 +50,12 @@ namespace GitLabApiClient
             var commitQueryBuilder = new CommitQueryBuilder();
             var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
+            var jobQueryBuilder = new JobQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
             MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder);
-            Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder);
+            Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder, jobQueryBuilder);
             Users = new UsersClient(_httpFacade);
             Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder);
             Branches = new BranchClient(_httpFacade, branchQueryBuilder);
@@ -62,7 +64,7 @@ namespace GitLabApiClient
             Webhooks = new WebhookClient(_httpFacade);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
-            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
+            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
             Runners = new RunnersClient(_httpFacade);
         }
 
