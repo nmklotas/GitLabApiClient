@@ -25,7 +25,7 @@ namespace GitLabApiClient.Models.Job.Responses
         public double Duration { get; set; }
 
         [JsonProperty("finished_at")]
-        public DateTime FinishedAt { get; set; }
+        public DateTime? FinishedAt { get; set; }
 
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -46,7 +46,7 @@ namespace GitLabApiClient.Models.Job.Responses
         public string Stage { get; set; }
 
         [JsonProperty("started_at")]
-        public DateTime StartedAt { get; set; }
+        public DateTime? StartedAt { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
