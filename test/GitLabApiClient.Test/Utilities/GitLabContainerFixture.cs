@@ -1,111 +1,92 @@
 using System;
-using System.Diagnostics;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Ductus.FluentDocker.Builders;
+using Ductus.FluentDocker.Model.Common;
+using Ductus.FluentDocker.Services;
+using Ductus.FluentDocker.Services.Extensions;
+using FluentAssertions;
 using Xunit;
 
 namespace GitLabApiClient.Test.Utilities
 {
     public class GitLabContainerFixture : IAsyncLifetime
     {
-        private const string GitLabContainerPath = "../../../../docker";
+        private const string InitRb = "/tmp/init.rb";
+        private const string GitlabRb = "/tmp/gitlab.rb";
+        private static readonly TemplateString SolutionRootFolder = "${PWD}/../../../../..";
 
-        private const string GitLabApiPath = "http://localhost:9190/";
+        public static string Token { get; private set; }
+        public static string GitlabHost { get; private set; }
 
-        private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(10);
-
-        private HttpClient _gitLabPingClient;
+        private IContainerService _gitlabContainer;
+        private readonly string _gitlabDockerImage = "gitlab/gitlab-ce:12.5.4-ce.0";
 
         public async Task InitializeAsync()
         {
-            _gitLabPingClient = new HttpClient
-            {
-                Timeout = TimeSpan.FromSeconds(1)
-            };
-
-            StartContainer();
-            if (!await WaitForService())
-                throw new Exception("Failed to start container, timeout hit.");
+            await StartContainer();
+            Token = InitializeData();
+            string hostAndPort = GetContainerHostPort(_gitlabContainer, "80/tcp");
+            GitlabHost = $"http://{hostAndPort}/api/v4/";
         }
 
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
-            StopContainer();
+            await StopContainer();
+        }
+
+        private Task StartContainer()
+        {
+            _gitlabContainer = new Builder()
+                .UseContainer()
+                .UseImage(_gitlabDockerImage)
+                .WithEnvironment(
+                    $"GITLAB_OMNIBUS_CONFIG=from_file('{GitlabRb}')"
+                )
+                .ExposePort(80)
+                .CopyOnStart($"{SolutionRootFolder}/docker/gitlab.rb", GitlabRb)
+                .CopyOnStart($"{SolutionRootFolder}/docker/init.rb", InitRb)
+                .WaitForHealthy()
+                .Build()
+                .Start();
+
             return Task.CompletedTask;
         }
 
-        private void StartContainer()
+        private Task StopContainer()
         {
-            StartProcessAndWaitForExit(new ProcessStartInfo
-            {
-                FileName = "docker-compose",
-                Arguments =
-                    $"-f {GitLabContainerPath}/docker-compose.yml up -d"
-            });
+            _gitlabContainer?.Stop();
+            _gitlabContainer?.Dispose();
+
+            return Task.CompletedTask;
         }
 
-        private void StopContainer()
+        private string InitializeData()
         {
-            var processStartInfo = new ProcessStartInfo
-            {
-                FileName = "docker-compose",
-                Arguments =
-                    $"-f {GitLabContainerPath}/docker-compose.yml down"
-            };
-
-            StartProcessAndWaitForExit(processStartInfo);
+            string command = $"/opt/gitlab/bin/gitlab-rails r {InitRb}";
+            var output = ExecuteCommandAgainstDockerWithOutput(_gitlabContainer, command);
+            string token = output.FirstOrDefault();
+            token.Should().NotBeNullOrEmpty();
+            return token;
         }
 
-        private void StartProcessAndWaitForExit(ProcessStartInfo processStartInfo)
+        private static IEnumerable<string> ExecuteCommandAgainstDockerWithOutput(IContainerService container, string command)
         {
-            processStartInfo.UseShellExecute = false;
-            processStartInfo.RedirectStandardOutput = true;
-            processStartInfo.CreateNoWindow = true;
-            processStartInfo.Environment["COMPUTERNAME"] = Environment.MachineName;
+            var output = container.Execute(command);
+            string error = output.Error;
+            error.Should().BeEmpty();
+            output.Success.Should().BeTrue();
+            output.Data.Should().NotBeNullOrEmpty();
 
-            var process = new Process
-            {
-                StartInfo = processStartInfo
-            };
-
-            process.OutputDataReceived += LogOutputData;
-            process.Start();
-            process.BeginOutputReadLine();
-            process.WaitForExit();
-
-            Assert.Equal(0, process.ExitCode);
-
-            void LogOutputData(object sender, DataReceivedEventArgs e)
-            //TODO: find out how to log data in XUnit fixtures
-                => Trace.WriteLine(e.Data);
+            return output.Data;
         }
 
-        private async Task<bool> WaitForService()
+        private static string GetContainerHostPort(IContainerService containerService, string portAndProto)
         {
-            var startTime = DateTime.Now;
-
-            while (DateTime.Now - startTime < TestTimeout)
-            {
-                try
-                {
-                    var response = await _gitLabPingClient.GetAsync(GitLabApiPath);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        Trace.WriteLine("GitLab started to respond!");
-                        return true;
-                    }
-                }
-                catch (HttpRequestException)
-                {
-                }
-                catch (OperationCanceledException)
-                {
-                }
-
-                await Task.Delay(15000);
-            }
-
-            return false;
+            var ep = containerService.ToHostExposedEndpoint(portAndProto);
+            string hostAndPort = $"localhost:{ep.Port}";
+            return hostAndPort;
         }
     }
 }
