@@ -5,12 +5,10 @@ namespace GitLabApiClient.Test.Utilities
 {
     internal static class GitLabApiHelper
     {
-        private const string PrivateAuthenticationToken = "ElijahBaley";
-
         public static GitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
-                "http://localhost:9190/api/v4/", new RequestsJsonSerializer(), PrivateAuthenticationToken);
+                GitLabContainerFixture.GitlabHost, new RequestsJsonSerializer(), GitLabContainerFixture.Token);
 
             return facade;
         }
