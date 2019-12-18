@@ -24,7 +24,8 @@ namespace GitLabApiClient.Test
             GetFacade(),
             new GroupsQueryBuilder(),
             new ProjectsGroupQueryBuilder(),
-            new MilestonesQueryBuilder());
+            new MilestonesQueryBuilder(),
+            new GroupLabelsQueryBuilder());
 
         [Fact]
         public async Task GroupCanBeRetrievedByGroupId()

@@ -26,17 +26,20 @@ namespace GitLabApiClient
         private readonly GroupsQueryBuilder _queryBuilder;
         private readonly ProjectsGroupQueryBuilder _projectsQueryBuilder;
         private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
+        private readonly GroupLabelsQueryBuilder _queryGroupLabelBuilder;
 
         internal GroupsClient(
             GitLabHttpFacade httpFacade,
             GroupsQueryBuilder queryBuilder,
             ProjectsGroupQueryBuilder projectsQueryBuilder,
-            MilestonesQueryBuilder queryMilestonesBuilder)
+            MilestonesQueryBuilder queryMilestonesBuilder,
+            GroupLabelsQueryBuilder queryGroupLabelBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
             _projectsQueryBuilder = projectsQueryBuilder;
             _queryMilestonesBuilder = queryMilestonesBuilder;
+            _queryGroupLabelBuilder = queryGroupLabelBuilder;
         }
 
         /// <summary>
@@ -291,8 +294,16 @@ namespace GitLabApiClient
         /// Get all labels for a given group.
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
-        public async Task<IList<GroupLabel>> GetLabelsAsync(GroupId groupId) =>
-            await _httpFacade.GetPagedList<GroupLabel>($"groups/{groupId}/labels");
+        /// <param name="options">Query options</param>
+        public async Task<IList<GroupLabel>> GetLabelsAsync(GroupId groupId,
+            Action<GroupLabelsQueryOptions> options = null)
+        {
+            var labelOptions = new GroupLabelsQueryOptions();
+            options?.Invoke(labelOptions);
+
+            string url = _queryGroupLabelBuilder.Build($"groups/{groupId}/labels", labelOptions);
+            return await _httpFacade.GetPagedList<GroupLabel>(url);
+        }
 
         /// <summary>
         /// Creates new group label.
