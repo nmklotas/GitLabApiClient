@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Issues.Responses;
 using GitLabApiClient.Models.Notes.Requests;
@@ -23,19 +24,46 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly IssuesQueryBuilder _queryBuilder;
-        private readonly ProjectIssuesQueryBuilder _projectIssuesQueryBuilder;
         private readonly ProjectIssueNotesQueryBuilder _projectIssueNotesQueryBuilder;
 
         internal IssuesClient(
             GitLabHttpFacade httpFacade,
             IssuesQueryBuilder queryBuilder,
-            ProjectIssuesQueryBuilder projectIssuesQueryBuilder,
             ProjectIssueNotesQueryBuilder projectIssueNotesQueryBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
-            _projectIssuesQueryBuilder = projectIssuesQueryBuilder;
             _projectIssueNotesQueryBuilder = projectIssueNotesQueryBuilder;
+        }
+
+        /// <summary>
+        /// Retrieves issues.
+        /// By default retrieves opened issues from all users.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="options">Issues retrieval options.</param>
+        /// <returns>Issues satisfying options.</returns>
+        public async Task<IList<Issue>> GetAllAsync(ProjectId projectId = null, GroupId groupId = null,
+            Action<IssuesQueryOptions> options = null)
+        {
+            var queryOptions = new IssuesQueryOptions();
+            options?.Invoke(queryOptions);
+
+            string url = null;
+            if (projectId != null)
+            {
+                url = _queryBuilder.Build($"projects/{projectId}/issues", queryOptions);
+            } else if (groupId != null)
+            {
+                url = _queryBuilder.Build($"groups/{groupId}/issues", queryOptions);
+            }
+            else
+            {
+                url = _queryBuilder.Build("issues", queryOptions);
+            }
+
+            return await _httpFacade.GetPagedList<Issue>(url);
         }
 
         /// <summary>
@@ -51,14 +79,9 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="options">Issues retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
-        public async Task<IList<Issue>> GetAsync(ProjectId projectId, Action<ProjectIssuesQueryOptions> options = null)
-        {
-            var queryOptions = new ProjectIssuesQueryOptions();
-            options?.Invoke(queryOptions);
-
-            string url = _projectIssuesQueryBuilder.Build($"projects/{projectId}/issues", queryOptions);
-            return await _httpFacade.GetPagedList<Issue>(url);
-        }
+        [Obsolete("Use GetAllAsync instead")]
+        public Task<IList<Issue>> GetAsync(ProjectId projectId, Action<IssuesQueryOptions> options = null) =>
+            GetAllAsync(projectId: projectId, options: options);
 
         /// <summary>
         /// Retrieves issues from all projects.
@@ -66,14 +89,9 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="options">Issues retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
-        public async Task<IList<Issue>> GetAsync(Action<IssuesQueryOptions> options = null)
-        {
-            var queryOptions = new IssuesQueryOptions();
-            options?.Invoke(queryOptions);
-
-            string url = _queryBuilder.Build("issues", queryOptions);
-            return await _httpFacade.GetPagedList<Issue>(url);
-        }
+        [Obsolete("Use GetAllAsync instead")]
+        public Task<IList<Issue>> GetAsync(Action<IssuesQueryOptions> options = null) =>
+            GetAllAsync(options: options);
 
         /// <summary>
         /// Retrieves project issue note.

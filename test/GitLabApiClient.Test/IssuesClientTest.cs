@@ -19,7 +19,7 @@ namespace GitLabApiClient.Test
     public class IssuesClientTest
     {
         private readonly IssuesClient _sut = new IssuesClient(
-            GetFacade(), new IssuesQueryBuilder(), new ProjectIssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
+            GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
 
         [Fact]
         public async Task CreatedIssueCanBeUpdated()
