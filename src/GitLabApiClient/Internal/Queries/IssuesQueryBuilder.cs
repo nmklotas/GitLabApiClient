@@ -40,19 +40,19 @@ namespace GitLabApiClient.Internal.Queries
             if (!options.Filter.IsNullOrEmpty())
                 Add("search", options.Filter);
 
-            if(options.IsConfidential)
+            if (options.IsConfidential)
                 Add("confidential", true);
 
-            if(options.CreatedBefore.HasValue)
+            if (options.CreatedBefore.HasValue)
                 Add("created_before", options.CreatedBefore.Value);
 
-            if(options.CreatedAfter.HasValue)
+            if (options.CreatedAfter.HasValue)
                 Add("created_after", options.CreatedAfter.Value);
 
-            if(options.UpdatedBefore.HasValue)
+            if (options.UpdatedBefore.HasValue)
                 Add("updated_before", options.UpdatedBefore.Value);
 
-            if(options.UpdatedAfter.HasValue)
+            if (options.UpdatedAfter.HasValue)
                 Add("updated_after", options.UpdatedAfter.Value);
         }
 

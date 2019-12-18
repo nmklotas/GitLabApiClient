@@ -32,7 +32,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                     CreatedAfter = new DateTime(1991, 11, 11, 1, 1, 1),
                     CreatedBefore = new DateTime(1991, 12, 12, 2, 2, 2),
                     UpdatedAfter = new DateTime(1991, 4, 4, 4, 4, 4),
-                    UpdatedBefore= new DateTime(1991, 5, 5, 5, 5, 5),
+                    UpdatedBefore = new DateTime(1991, 5, 5, 5, 5, 5),
                     IsConfidential = true
                 });
 
@@ -46,7 +46,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                               "iids%5b%5d=3&iids%5b%5d=4&" +
                               "order_by=updated_at&" +
                               "sort=asc&" +
-                              "search=filter&"+
+                              "search=filter&" +
                               "confidential=true&" +
                               "created_before=1991-12-12T02%3a02%3a02.0000000&" +
                               "created_after=1991-11-11T01%3a01%3a01.0000000&" +

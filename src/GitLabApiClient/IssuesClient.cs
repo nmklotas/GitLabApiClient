@@ -54,7 +54,8 @@ namespace GitLabApiClient
             if (projectId != null)
             {
                 url = _queryBuilder.Build($"projects/{projectId}/issues", queryOptions);
-            } else if (groupId != null)
+            }
+            else if (groupId != null)
             {
                 url = _queryBuilder.Build($"groups/{groupId}/issues", queryOptions);
             }
