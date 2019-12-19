@@ -138,8 +138,8 @@ namespace GitLabApiClient
         /// <param name="issueIid">The IID of an issue.</param>
         /// <param name="noteId">The ID of a note.</param>
         /// <param name="request">Update issue note request.</param>
-        public async Task<Issue> UpdateNoteAsync(ProjectId projectId, int issueIid, int noteId, UpdateIssueNoteRequest request) =>
-            await _httpFacade.Put<Issue>($"projects/{projectId}/issues/{issueIid}/notes/{noteId}", request);
+        public async Task<Note> UpdateNoteAsync(ProjectId projectId, int issueIid, int noteId, UpdateIssueNoteRequest request) =>
+            await _httpFacade.Put<Note>($"projects/{projectId}/issues/{issueIid}/notes/{noteId}", request);
 
         /// <summary>
         /// Deletes an existing note (comment) of an issue.
