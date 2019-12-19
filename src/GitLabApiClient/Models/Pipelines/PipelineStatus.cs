@@ -16,6 +16,10 @@ namespace GitLabApiClient.Models.Pipelines
         [EnumMember(Value = "canceled")]
         Canceled,
         [EnumMember(Value = "skipped")]
-        Skipped
+        Skipped,
+        [EnumMember(Value = "preparing")]
+        Preparing,
+        [EnumMember(Value = "scheduled")]
+        Scheduled,
     }
 }
