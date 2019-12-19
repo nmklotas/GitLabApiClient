@@ -1,0 +1,36 @@
+name: DotNet CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: DotNet Test
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - name: Fetch tags and master for GitVersion
+        run: |
+          git fetch --tags
+          git branch --create-reflog master origin/master
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '2.1.607'
+      - name: Setup dotnet
+        uses: casz/setup-dotnet@fix/dotnet-global-tool
+        with:
+          dotnet-version: '3.1.100'
+
+      # workaround for using multiple dotnet core installs
+      - name: .net SxS
+        run: rsync -a ${DOTNET_ROOT/3.1.100/2.1.607}/* $DOTNET_ROOT/
+
+      - run: dotnet tool install -g Codecov.Tool
+        shell: pwsh
+      - run: dotnet build
+        shell: pwsh
+      - run: ./test.ps1
+        shell: pwsh
