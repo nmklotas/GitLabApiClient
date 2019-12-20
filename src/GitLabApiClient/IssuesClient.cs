@@ -38,8 +38,37 @@ namespace GitLabApiClient
 
         /// <summary>
         /// Retrieves issues.
-        /// By default retrieves opened issues from all users.
+        /// By default retrieves opened issues from all users. The more specific setting win (if both project and group are set, only project issues will be retrieved).
         /// </summary>
+        /// <example>
+        /// <code>
+        /// /* Get all issues */
+        /// var client = new GitLabClient("https://gitlab.com", "PRIVATE-TOKEN");
+        /// var allIssues = await client.Issues.GetAllAsync();
+        /// </code>
+        /// <code>
+        /// /* Get project issues */
+        /// var client = new GitLabClient("https://gitlab.com", "PRIVATE-TOKEN");
+        /// string projectPath = "dev/group/project-1";
+        /// var allIssues = await client.Issues.GetAllAsync(projectId: projectPath);
+        /// // OR
+        /// int projectId = 55;
+        /// var allIssues = await client.Issues.GetAllAsync(projectId: projectId);
+        /// // OR - Group ID is skipped, project ID is more specific
+        /// int projectId = 55;
+        /// int groupId = 181;
+        /// var allIssues = await client.Issues.GetAllAsync(projectId: projectId, groupId: groupId);
+        /// </code>
+        /// <code>
+        /// /* Get group issues */
+        /// var client = new GitLabClient("https://gitlab.com", "PRIVATE-TOKEN");
+        /// string groupPath = "dev/group1/subgroup-1";
+        /// var allIssues = await client.Issues.GetAllAsync(groupId: groupPath);
+        /// // OR
+        /// int groupId = 55;
+        /// var allIssues = await client.Issues.GetAllAsync(groupId: groupId);
+        /// </code>
+        /// </example>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="options">Issues retrieval options.</param>
@@ -50,19 +79,17 @@ namespace GitLabApiClient
             var queryOptions = new IssuesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = null;
+            string path = "issues";
             if (projectId != null)
             {
-                url = _queryBuilder.Build($"projects/{projectId}/issues", queryOptions);
+                path = $"projects/{projectId}/issues";
             }
             else if (groupId != null)
             {
-                url = _queryBuilder.Build($"groups/{groupId}/issues", queryOptions);
+                path = $"groups/{groupId}/issues";
             }
-            else
-            {
-                url = _queryBuilder.Build("issues", queryOptions);
-            }
+
+            string url = _queryBuilder.Build(path, queryOptions);
 
             return await _httpFacade.GetPagedList<Issue>(url);
         }
