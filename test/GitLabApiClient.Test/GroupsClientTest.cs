@@ -86,8 +86,8 @@ namespace GitLabApiClient.Test
             milestone.Should().Match<Milestone>(m =>
                 m.GroupId == TestGroupId &&
                 m.Title == "milestone1" &&
-                m.StartDate == "2018-11-05" &&
-                m.DueDate == "2018-11-10" &&
+                m.StartDate == "2018-11-01" &&
+                m.DueDate == "2018-11-30" &&
                 m.Description == "description1");
         }
 
