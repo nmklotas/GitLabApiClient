@@ -33,8 +33,7 @@ namespace GitLabApiClient.Test
                 Labels = new[] { "Label1" },
                 MilestoneId = 2,
                 DiscussionToResolveId = 3,
-                MergeRequestIdToResolveDiscussions = 4,
-                Weight = 3
+                MergeRequestIdToResolveDiscussions = 4
             });
 
             //act
@@ -45,8 +44,7 @@ namespace GitLabApiClient.Test
                 Description = "Description11",
                 Labels = new[] { "Label11" },
                 Title = "Title11",
-                MilestoneId = 22,
-                Weight = 33
+                MilestoneId = 22
             });
 
             //assert
@@ -55,8 +53,7 @@ namespace GitLabApiClient.Test
                 i.Confidential == false &&
                 i.Description == "Description11" &&
                 i.Labels.SequenceEqual(new[] { "Label11" }) &&
-                i.Title == "Title11" &&
-                i.Weight == 33);
+                i.Title == "Title11");
         }
 
         [Fact]
