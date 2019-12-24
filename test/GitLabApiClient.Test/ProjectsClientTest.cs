@@ -53,11 +53,11 @@ namespace GitLabApiClient.Test
         public async Task ProjectMilestonesRetrieved()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone1")
+            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone6")
             {
                 StartDate = "2018-11-01",
                 DueDate = "2018-11-30",
-                Description = "description1"
+                Description = "description6"
             });
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
@@ -69,10 +69,10 @@ namespace GitLabApiClient.Test
             milestones.Should().NotBeEmpty();
             milestone.Should().Match<Milestone>(m =>
                 m.ProjectId == GitLabApiHelper.TestProjectId &&
-                m.Title == "milestone1" &&
+                m.Title == "milestone6" &&
                 m.StartDate == "2018-11-01" &&
                 m.DueDate == "2018-11-30" &&
-                m.Description == "description1");
+                m.Description == "description6");
         }
 
         [Fact]
@@ -253,30 +253,30 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectMilestoneCanBeUpdated()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone2")
+            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone4")
             {
                 StartDate = "2018-11-01",
                 DueDate = "2018-11-30",
-                Description = "description2"
+                Description = "description4"
             });
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var updatedMilestone = await _sut.UpdateMilestoneAsync(GitLabApiHelper.TestProjectTextId, createdMilestone.Id, new UpdateProjectMilestoneRequest()
             {
-                Title = "milestone22",
+                Title = "milestone23",
                 StartDate = "2018-11-05",
                 DueDate = "2018-11-10",
-                Description = "description22"
+                Description = "description23"
             });
 
             //assert
             updatedMilestone.Should().Match<Milestone>(m =>
                 m.ProjectId == GitLabApiHelper.TestProjectId &&
-                m.Title == "milestone22" &&
+                m.Title == "milestone23" &&
                 m.StartDate == "2018-11-05" &&
                 m.DueDate == "2018-11-10" &&
-                m.Description == "description22");
+                m.Description == "description23");
         }
 
         [Fact]
@@ -320,11 +320,11 @@ namespace GitLabApiClient.Test
         public async Task CreatedProjectMilestoneCanBeClosed()
         {
             //arrange
-            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone3")
+            var createdMilestone = await _sut.CreateMilestoneAsync(GitLabApiHelper.TestProjectTextId, new CreateProjectMilestoneRequest("milestone5")
             {
                 StartDate = "2018-12-01",
                 DueDate = "2018-12-31",
-                Description = "description3"
+                Description = "description5"
             });
             MilestoneIdsToClean.Add(createdMilestone.Id);
 
