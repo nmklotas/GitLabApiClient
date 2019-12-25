@@ -12,7 +12,7 @@ namespace GitLabApiClient.Test
 {
     [Trait("Category", "LinuxIntegration")]
     [Collection("GitLabContainerFixture")]
-    public class ReeasesTest
+    public class ReleasesTest
     {
         private readonly ReleaseClient _sut = new ReleaseClient(GetFacade(), new ReleaseQueryBuilder());
 
