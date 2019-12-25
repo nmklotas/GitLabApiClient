@@ -29,10 +29,6 @@ namespace GitLabApiClient.Test.Utilities
 
         public static string TestName { get; set; } = "Administrator";
 
-        public static string TestPassword { get; set; } = "hariseldon";
-
-        public static string TestRelease { get; set; } = "release-test";
-        public static string TestTagName { get; set; } = "tag/test";
         public static string TestDescription { get; set; } = "This is just a test-description";
     }
 }
