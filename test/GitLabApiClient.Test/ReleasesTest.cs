@@ -7,6 +7,7 @@ using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 using GitLabApiClient.Models.Releases.Responses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GitLabApiClient.Test
 {
@@ -20,31 +21,40 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeUpdated()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            const string testRelease = "v1";
+            const string testTagName = "v1.0.0";
+            const string description = "Updated Description";
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId,
+                new CreateReleaseRequest(testRelease, testTagName, TestDescription, DateTime.MinValue) { Ref = "master" });
 
             //act
-            var updatedRelease = await _sut.UpdateAsync(TestProjectTextId, new UpdateReleaseRequest(TestRelease, TestTagName, "Updated Description", DateTime.MinValue));
+            var updatedRelease = await _sut.UpdateAsync(TestProjectTextId, testTagName,
+                new UpdateReleaseRequest(testRelease, description, DateTime.MinValue));
 
             //assert
             updatedRelease.Should().Match<Release>(i =>
-                i.ReleaseName == TestRelease &&
-                i.TagName == TestTagName &&
-                i.ReleasedAt == DateTime.MinValue);
+                i.ReleaseName == testRelease &&
+                i.TagName == testTagName &&
+                i.ReleasedAt == DateTime.MinValue &&
+                i.Description == description);
         }
 
         [Fact]
         public async Task CreatedReleaseCanBeFetched()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            const string testRelease = "v2";
+            const string testTagName = "v2.0.0";
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId,
+                new CreateReleaseRequest(testRelease, testTagName, TestDescription, DateTime.MinValue) { Ref = "master" });
 
             //act
-            var fetchedRelease = await _sut.GetAsync(TestProjectTextId, TestTagName);
+            var fetchedRelease = await _sut.GetAsync(TestProjectTextId, testTagName);
 
             //assert
             fetchedRelease.Should().Match<Release>(i =>
-                i.ReleaseName == TestRelease &&
-                i.TagName == TestTagName &&
+                i.ReleaseName == testRelease &&
+                i.TagName == testTagName &&
                 i.ReleasedAt == DateTime.MinValue);
         }
 
@@ -52,15 +62,19 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeListed()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            const string testRelease = "v3";
+            const string testTagName = "v3.0.0";
+
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId,
+                new CreateReleaseRequest(testRelease, testTagName, TestDescription, DateTime.MinValue) { Ref = "master" });
 
             //act
             var releaseList = await _sut.GetAsync(TestProjectTextId);
 
             //assert
-            releaseList[0].Should().Match<Release>(i =>
-                i.ReleaseName == TestRelease &&
-                i.TagName == TestTagName &&
+            releaseList.Should().Contain(i =>
+                i.ReleaseName == testRelease &&
+                i.TagName == testTagName &&
                 i.ReleasedAt == DateTime.MinValue);
         }
 
@@ -68,15 +82,17 @@ namespace GitLabApiClient.Test
         public async Task CreatedReleaseCanBeDeleted()
         {
             //arrange
-            var createdRelease = await _sut.CreateAsync(TestProjectTextId, new CreateReleaseRequest(TestRelease, TestTagName, TestDescription, DateTime.MinValue));
+            const string testRelease = "v4";
+            const string testTagName = "v4.0.0";
+            var createdRelease = await _sut.CreateAsync(TestProjectTextId,
+                new CreateReleaseRequest(testRelease, testTagName, TestDescription, DateTime.MinValue) { Ref = "master" });
 
             //act
-            await _sut.DeleteAsync(TestProjectTextId, TestTagName);
+            await _sut.DeleteAsync(TestProjectTextId, testTagName);
 
             //assert
-            var fetcheRelease = await _sut.GetAsync(TestProjectTextId, TestTagName);
-            fetcheRelease.Should().BeNull();
+            var fetchedReleases = await _sut.GetAsync(TestProjectTextId);
+            fetchedReleases.Should().BeEmpty();
         }
-
     }
 }

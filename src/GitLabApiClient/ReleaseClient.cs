@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Releases.Requests;
 using GitLabApiClient.Models.Releases.Responses;
@@ -60,10 +61,11 @@ namespace GitLabApiClient
         /// Update a release
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="tagName">The tag name of the release, you want to update.</param>
         /// <param name="request">Update release request</param>
         /// <returns></returns>
-        public async Task<Release> UpdateAsync(ProjectId projectId, UpdateReleaseRequest request) =>
-            await _httpFacade.Put<Release>($"projects/{projectId}/releases", request);
+        public async Task<Release> UpdateAsync(ProjectId projectId, string tagName, UpdateReleaseRequest request) =>
+            await _httpFacade.Put<Release>($"projects/{projectId}/releases/{tagName.UrlEncode()}", request);
 
         /// <summary>
         /// Delete a release
@@ -72,6 +74,6 @@ namespace GitLabApiClient
         /// <param name="tagName">The tag name of the release, you want to delete.</param>
         /// <returns></returns>
         public async Task DeleteAsync(ProjectId projectId, string tagName) =>
-            await _httpFacade.Delete($"projects/{projectId}/releases/{tagName}");
+            await _httpFacade.Delete($"projects/{projectId}/releases/{tagName.UrlEncode()}");
     }
 }
