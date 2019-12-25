@@ -34,9 +34,8 @@ namespace GitLabApiClient.Test
                 var upload = await _sut.UploadFile(TestProjectTextId, new CreateUploadRequest(stream, fileNameWithExtension));
 
                 upload.Alt.Should().Be(fileName, "Provided Alt tag should only contain the filename without the extension.");
-                upload.Alt.Should().EndWith(fileName, "Provided Url should end with the filename provided to the upload method.");
-                upload.Alt.Should().EndWith(fileName, "Provided Markdown should end with the filename provided to the upload method.");
-                upload.Alt.Should().StartWith($"![{fileName}]", "Provided markdown should start with ![{fileName without extension}].");
+                upload.Url.Should().EndWith(fileNameWithExtension, "Provided Url should end with the filename provided to the upload method.");
+                upload.Markdown.Should().Be($"![{fileName}]({upload.Url})", "Provided markdown should start be ![{fileName without extension}](upload url).");
             }
         }
     }
