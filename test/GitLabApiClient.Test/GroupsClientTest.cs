@@ -55,7 +55,7 @@ namespace GitLabApiClient.Test
         {
             var group = await _sut.GetAsync(o =>
             {
-                o.Search = "gitlab";
+                o.Search = "txxxest";
                 o.Order = GroupsOrder.Name;
                 o.Sort = GroupsSort.Descending;
                 o.AllAvailable = true;
