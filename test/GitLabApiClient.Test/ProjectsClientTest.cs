@@ -45,8 +45,17 @@ namespace GitLabApiClient.Test
         [Fact]
         public async Task ProjectLabelsRetrieved()
         {
+            //arrange
+            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestProjectId, new CreateProjectLabelRequest("Label 5")
+            {
+                Color = "#FFFFFF",
+                Description = "description5",
+                Priority = 1
+            });
+
             var labels = await _sut.GetLabelsAsync(GitLabApiHelper.TestProjectId);
             labels.Should().NotBeEmpty();
+            await _sut.DeleteLabelAsync(GitLabApiHelper.TestProjectId, createdLabel.Name);
         }
 
         [Fact]
