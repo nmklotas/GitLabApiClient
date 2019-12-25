@@ -1,4 +1,4 @@
-mode: Mainline
+assembly-versioning-scheme: MajorMinorPatch
 branches:
   master:
     tag: beta
