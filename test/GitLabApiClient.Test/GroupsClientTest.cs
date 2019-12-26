@@ -16,7 +16,7 @@ namespace GitLabApiClient.Test
     public class GroupsClientTest
     {
         private readonly List<int> _groupIdsToClean = new List<int>();
-        private List<int> _milestoneIdsToClean { get; } = new List<int>();
+        private List<int> MilestoneIdsToClean { get; } = new List<int>();
 
         private readonly GroupsClient _sut = new GroupsClient(
             GetFacade(),
@@ -32,7 +32,7 @@ namespace GitLabApiClient.Test
             group.FullPath.Should().Be(TestGroupName);
             group.Name.Should().Be(TestGroupName);
             group.Path.Should().Be(TestGroupName);
-            group.Visibility.Should().Be(GroupsVisibility.Private);
+            group.Visibility.Should().Be(GroupsVisibility.Public);
             group.Description.Should().BeEmpty();
         }
 
@@ -55,7 +55,7 @@ namespace GitLabApiClient.Test
         {
             var group = await _sut.GetAsync(o =>
             {
-                o.Search = "gitlab";
+                o.Search = "txxxest";
                 o.Order = GroupsOrder.Name;
                 o.Sort = GroupsSort.Descending;
                 o.AllAvailable = true;
@@ -75,7 +75,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-11-30",
                 Description = "description1"
             });
-            _milestoneIdsToClean.Add(createdMilestone.Id);
+            MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var milestones = await _sut.GetMilestonesAsync(TestGroupId);
@@ -86,8 +86,8 @@ namespace GitLabApiClient.Test
             milestone.Should().Match<Milestone>(m =>
                 m.GroupId == TestGroupId &&
                 m.Title == "milestone1" &&
-                m.StartDate == "2018-11-05" &&
-                m.DueDate == "2018-11-10" &&
+                m.StartDate == "2018-11-01" &&
+                m.DueDate == "2018-11-30" &&
                 m.Description == "description1");
         }
 
@@ -159,7 +159,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-11-30",
                 Description = "description2"
             });
-            _milestoneIdsToClean.Add(createdMilestone.Id);
+            MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var updatedMilestone = await _sut.UpdateMilestoneAsync(TestGroupTextId, createdMilestone.Id, new UpdateGroupMilestoneRequest()
@@ -189,7 +189,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-12-31",
                 Description = "description3"
             });
-            _milestoneIdsToClean.Add(createdMilestone.Id);
+            MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var updatedMilestone = await _sut.UpdateMilestoneAsync(TestGroupTextId, createdMilestone.Id, new UpdateGroupMilestoneRequest()
@@ -211,7 +211,7 @@ namespace GitLabApiClient.Test
 
         private async Task CleanupGroups()
         {
-            foreach (int milestoneId in _milestoneIdsToClean)
+            foreach (int milestoneId in MilestoneIdsToClean)
                 await _sut.DeleteMilestoneAsync(TestGroupId, milestoneId);
 
             foreach (int groupId in _groupIdsToClean)

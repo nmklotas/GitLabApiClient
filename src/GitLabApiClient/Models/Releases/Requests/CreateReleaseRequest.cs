@@ -29,5 +29,8 @@ namespace GitLabApiClient.Models.Releases.Requests
             Description = description;
             ReleasedAt = (releasedAt == null) ? DateTime.Now : releasedAt;
         }
+
+        [JsonProperty("ref")]
+        public string Ref { get; set; }
     }
 }
