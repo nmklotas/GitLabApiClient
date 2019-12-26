@@ -1,0 +1,7 @@
+codecov:
+  ci:
+    - github.com
+    - appveyor
+
+  comment:
+    layout: "header, diff, tree, changes"
