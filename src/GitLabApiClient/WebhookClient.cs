@@ -53,7 +53,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="hookId">The hook ID, you want to delete.</param>
         public async Task DeleteAsync(ProjectId projectId, int hookId) =>
-            await _httpFacade.Delete($"projects/{projectId}/hooks/${hookId}");
+            await _httpFacade.Delete($"projects/{projectId}/hooks/{hookId}");
     }
 
 
