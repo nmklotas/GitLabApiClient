@@ -13,7 +13,7 @@ jobs:
       - name: Fetch tags and master for GitVersion
         run: |
           git fetch --tags
-          git branch --create-reflog master origin/master
+          git branch --create-reflog master origin/master || true
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
