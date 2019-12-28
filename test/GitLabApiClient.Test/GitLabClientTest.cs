@@ -1,4 +1,5 @@
 using FluentAssertions;
+using GitLabApiClient.Test.Utilities;
 using Xunit;
 
 namespace GitLabApiClient.Test
@@ -14,6 +15,19 @@ namespace GitLabApiClient.Test
         {
             var sut = new GitLabClient(hostUrl);
             sut.HostUrl.Should().Be("https://gitlab.com/api/v4/");
+        }
+
+        [Trait("Category", "LinuxIntegration")]
+        [Collection("GitLabContainerFixture")]
+        public class Integration
+        {
+            [Fact]
+            public async void CanLogin()
+            {
+                var sut = new GitLabClient(GitLabContainerFixture.GitlabHost);
+                var session = await sut.LoginAsync(GitLabApiHelper.TestUserName, GitLabApiHelper.TestUserPassword);
+                session.Username.Should().Be(GitLabApiHelper.TestUserName);
+            }
         }
     }
 }
