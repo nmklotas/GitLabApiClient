@@ -73,7 +73,7 @@ namespace GitLabApiClient.Test
 
                 var facadeSut = new GitLabHttpFacade(GitLabContainerFixture.GitlabHost, new RequestsJsonSerializer(),
                     GitLabContainerFixture.Token);
-                currentSessionAsync = await facadeSut.Get<Session>("/user");
+                currentSessionAsync = await facadeSut.Get<Session>("user");
                 currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
                 accessTokenResponse = await facadeSut.LoginAsync(new AccessTokenRequest
                 {
@@ -82,12 +82,12 @@ namespace GitLabApiClient.Test
                     Username = GitLabApiHelper.TestUserName,
                     Password = GitLabApiHelper.TestUserPassword
                 });
-                currentSessionAsync = await facadeSut.Get<Session>("/user");
+                currentSessionAsync = await facadeSut.Get<Session>("user");
                 currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
 
                 facadeSut = new GitLabHttpFacade(GitLabContainerFixture.GitlabHost, new RequestsJsonSerializer(),
                     accessTokenResponse.AccessToken);
-                currentSessionAsync = await facadeSut.Get<Session>("/user");
+                currentSessionAsync = await facadeSut.Get<Session>("user");
                 currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
             }
         }
