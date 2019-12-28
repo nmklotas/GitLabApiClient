@@ -17,6 +17,25 @@ namespace GitLabApiClient.Test
             sut.HostUrl.Should().Be("https://gitlab.com/api/v4/");
         }
 
+        [Fact]
+        public void CheckClients()
+        {
+            var sut = new GitLabClient("https://gitlab.com/api/v4/");
+            sut.Branches.Should().BeAssignableTo(typeof(BranchClient));
+            sut.Commits.Should().BeAssignableTo(typeof(CommitsClient));
+            sut.Groups.Should().BeAssignableTo(typeof(GroupsClient));
+            sut.Issues.Should().BeAssignableTo(typeof(IssuesClient));
+            sut.Markdown.Should().BeAssignableTo(typeof(MarkdownClient));
+            sut.Pipelines.Should().BeAssignableTo(typeof(PipelineClient));
+            sut.Projects.Should().BeAssignableTo(typeof(ProjectsClient));
+            sut.Releases.Should().BeAssignableTo(typeof(ReleaseClient));
+            sut.Tags.Should().BeAssignableTo(typeof(TagClient));
+            sut.Uploads.Should().BeAssignableTo(typeof(UploadsClient));
+            sut.Users.Should().BeAssignableTo(typeof(UsersClient));
+            sut.Webhooks.Should().BeAssignableTo(typeof(WebhookClient));
+            sut.MergeRequests.Should().BeAssignableTo(typeof(MergeRequestsClient));
+        }
+
         [Trait("Category", "LinuxIntegration")]
         [Collection("GitLabContainerFixture")]
         public class Integration
