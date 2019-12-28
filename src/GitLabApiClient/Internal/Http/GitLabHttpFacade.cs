@@ -9,7 +9,6 @@ using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
 using GitLabApiClient.Models.Uploads.Requests;
 using GitLabApiClient.Models.Uploads.Responses;
-using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient.Internal.Http
 {
@@ -18,15 +17,15 @@ namespace GitLabApiClient.Internal.Http
         private const string PrivateToken = "PRIVATE-TOKEN";
 
         private readonly object _locker = new object();
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private GitLabApiRequestor _requestor;
         private GitLabApiPagedRequestor _pagedRequestor;
 
         private GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer)
         {
-            var httpClient = new HttpClient { BaseAddress = new Uri(hostUrl) };
+            _httpClient = new HttpClient { BaseAddress = new Uri(hostUrl) };
 
-            Setup(jsonSerializer, httpClient);
+            Setup(jsonSerializer);
         }
 
         public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "") :
@@ -47,13 +46,17 @@ namespace GitLabApiClient.Internal.Http
             }
         }
 
-        public GitLabHttpFacade(RequestsJsonSerializer jsonSerializer, HttpClient httpClient) => Setup(jsonSerializer, httpClient);
+        public GitLabHttpFacade(RequestsJsonSerializer jsonSerializer, HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+            Setup(jsonSerializer);
+        }
 
-        private void Setup(RequestsJsonSerializer jsonSerializer, HttpClient httpClient)
+        private void Setup(RequestsJsonSerializer jsonSerializer)
         {
             // allow tls 1.1 and 1.2
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            _httpClient = httpClient;
+            // ReSharper disable once InconsistentlySynchronizedField
             _requestor = new GitLabApiRequestor(_httpClient, jsonSerializer);
             _pagedRequestor = new GitLabApiPagedRequestor(_requestor);
         }
@@ -82,17 +85,16 @@ namespace GitLabApiClient.Internal.Http
         public Task Delete(string uri) =>
             _requestor.Delete(uri);
 
-        public async Task<AccessTokenResponse> LoginAsync(string url, AccessTokenRequest accessTokenRequest)
+        public async Task<AccessTokenResponse> LoginAsync(AccessTokenRequest accessTokenRequest)
         {
+            // ReSharper disable once InconsistentlySynchronizedField
+            string url = _httpClient.BaseAddress.GetLeftPart(UriPartial.Authority);
             var accessTokenResponse = await _requestor.Post<AccessTokenResponse>(url, accessTokenRequest);
 
             lock (_locker)
             {
                 if (_httpClient.DefaultRequestHeaders.Contains(PrivateToken))
                     _httpClient.DefaultRequestHeaders.Remove(PrivateToken);
-
-                if (_httpClient.DefaultRequestHeaders.Authorization != null)
-                    _httpClient.DefaultRequestHeaders.Authorization = null;
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessTokenResponse.AccessToken);
             }

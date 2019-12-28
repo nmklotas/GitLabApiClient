@@ -1,4 +1,9 @@
+using System;
 using FluentAssertions;
+using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Http.Serialization;
+using GitLabApiClient.Models.Oauth.Requests;
+using GitLabApiClient.Models.Users.Responses;
 using GitLabApiClient.Test.Utilities;
 using Xunit;
 
@@ -15,6 +20,15 @@ namespace GitLabApiClient.Test
         {
             var sut = new GitLabClient(hostUrl);
             sut.HostUrl.Should().Be("https://gitlab.com/api/v4/");
+        }
+
+        [Fact]
+        public void InvalidToken()
+        {
+            Action action = () => new GitLabClient("https://gitlab.com/api/v4/", "HelloWorld");
+            action.Should()
+                .Throw<ArgumentException>()
+                .WithMessage("Unsupported authentication token provide, please private an oauth or private token");
         }
 
         [Fact]
@@ -51,6 +65,29 @@ namespace GitLabApiClient.Test
                 accessTokenResponse.RefreshToken.Should().HaveLength(64);
                 accessTokenResponse.TokenType.Should().Be("bearer");
                 var currentSessionAsync = await sut.Users.GetCurrentSessionAsync();
+                currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
+
+                sut = new GitLabClient(GitLabContainerFixture.GitlabHost, accessTokenResponse.AccessToken);
+                currentSessionAsync = await sut.Users.GetCurrentSessionAsync();
+                currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
+
+                var facadeSut = new GitLabHttpFacade(GitLabContainerFixture.GitlabHost, new RequestsJsonSerializer(),
+                    GitLabContainerFixture.Token);
+                currentSessionAsync = await facadeSut.Get<Session>("/user");
+                currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
+                accessTokenResponse = await facadeSut.LoginAsync(new AccessTokenRequest
+                {
+                    GrantType = "password",
+                    Scope = "api",
+                    Username = GitLabApiHelper.TestUserName,
+                    Password = GitLabApiHelper.TestUserPassword
+                });
+                currentSessionAsync = await facadeSut.Get<Session>("/user");
+                currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
+
+                facadeSut = new GitLabHttpFacade(GitLabContainerFixture.GitlabHost, new RequestsJsonSerializer(),
+                    accessTokenResponse.AccessToken);
+                currentSessionAsync = await facadeSut.Get<Session>("/user");
                 currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
             }
         }

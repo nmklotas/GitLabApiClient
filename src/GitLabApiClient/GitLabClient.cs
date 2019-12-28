@@ -7,7 +7,6 @@ using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
 using GitLabApiClient.Models.Pipelines.Requests;
-using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
 {
@@ -27,8 +26,7 @@ namespace GitLabApiClient
         {
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
-            HostUrl = FixHostUrl(hostUrl);
-            BaseUrl = FixBaseUrl(hostUrl);
+            HostUrl = FixBaseUrl(hostUrl);
 
             var jsonSerializer = new RequestsJsonSerializer();
 
@@ -138,8 +136,6 @@ namespace GitLabApiClient
         /// </summary>
         public string HostUrl { get; }
 
-        public string BaseUrl { get; }
-
         /// <summary>
         /// Authenticates with GitLab API using user credentials.
         /// </summary>
@@ -154,10 +150,10 @@ namespace GitLabApiClient
                 Username = username,
                 Password = password
             };
-            return _httpFacade.LoginAsync($"{BaseUrl}/oauth/token", accessTokenRequest);
+            return _httpFacade.LoginAsync(accessTokenRequest);
         }
 
-        private static string FixHostUrl(string url)
+        private static string FixBaseUrl(string url)
         {
             url = url.TrimEnd('/');
 
@@ -166,7 +162,5 @@ namespace GitLabApiClient
 
             return url + "/";
         }
-
-        private static string FixBaseUrl(string hostUrl) => new Uri(hostUrl).GetLeftPart(UriPartial.Authority);
     }
 }
