@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace GitLabApiClient.Models.Oauth.Responses
 {
@@ -18,6 +19,7 @@ namespace GitLabApiClient.Models.Oauth.Responses
         public string Scope { get; set; }
 
         [JsonProperty("created_at")]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTime? CreatedAt { get; set; }
     }
 }
