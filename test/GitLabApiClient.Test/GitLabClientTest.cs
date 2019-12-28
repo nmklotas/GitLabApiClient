@@ -44,8 +44,14 @@ namespace GitLabApiClient.Test
             public async void CanLogin()
             {
                 var sut = new GitLabClient(GitLabContainerFixture.GitlabHost);
-                var session = await sut.LoginAsync(GitLabApiHelper.TestUserName, GitLabApiHelper.TestUserPassword);
-                session.Username.Should().Be(GitLabApiHelper.TestUserName);
+                var accessTokenResponse = await sut.LoginAsync(GitLabApiHelper.TestUserName, GitLabApiHelper.TestUserPassword);
+                accessTokenResponse.Scope.Should().Be("api");
+                accessTokenResponse.CreatedAt.Should().NotBeNull();
+                accessTokenResponse.AccessToken.Should().HaveLength(64);
+                accessTokenResponse.RefreshToken.Should().HaveLength(64);
+                accessTokenResponse.TokenType.Should().Be("bearer");
+                var currentSessionAsync = await sut.Users.GetCurrentSessionAsync();
+                currentSessionAsync.Username.Should().Be(GitLabApiHelper.TestUserName);
             }
         }
     }
