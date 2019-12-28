@@ -88,7 +88,7 @@ namespace GitLabApiClient.Internal.Http
         public async Task<AccessTokenResponse> LoginAsync(AccessTokenRequest accessTokenRequest)
         {
             // ReSharper disable once InconsistentlySynchronizedField
-            string url = _httpClient.BaseAddress.GetLeftPart(UriPartial.Authority);
+            string url = $"{_httpClient.BaseAddress.GetLeftPart(UriPartial.Authority)}/oauth/token";
             var accessTokenResponse = await _requestor.Post<AccessTokenResponse>(url, accessTokenRequest);
 
             lock (_locker)
