@@ -4,8 +4,9 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models.Oauth.Requests;
+using GitLabApiClient.Models.Oauth.Responses;
 using GitLabApiClient.Models.Pipelines.Requests;
-using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
 {
@@ -138,11 +139,18 @@ namespace GitLabApiClient
         /// <summary>
         /// Authenticates with GitLab API using user credentials.
         /// </summary>
-        public Task<Session> LoginAsync(string username, string password)
+        public Task<AccessTokenResponse> LoginAsync(string username, string password, string scope = "api")
         {
             Guard.NotEmpty(username, nameof(username));
             Guard.NotEmpty(password, nameof(password));
-            return _httpFacade.LoginAsync(username, password);
+            var accessTokenRequest = new AccessTokenRequest
+            {
+                GrantType = "password",
+                Scope = scope,
+                Username = username,
+                Password = password
+            };
+            return _httpFacade.LoginAsync(accessTokenRequest);
         }
 
         private static string FixBaseUrl(string url)
