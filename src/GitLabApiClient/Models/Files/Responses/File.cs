@@ -24,7 +24,7 @@ namespace GitLabApiClient.Models.Files.Responses
         public string ContentSha256 { get; set; }
 
         [JsonProperty("ref")]
-        public string Branch { get; set; }
+        public string Reference { get; set; }
 
         [JsonProperty("blob_id")]
         public string BlobId { get; set; }
