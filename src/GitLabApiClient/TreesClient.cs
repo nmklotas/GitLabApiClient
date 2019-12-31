@@ -19,6 +19,7 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
             _treeQueryBuilder = treeQueryBuilder;
         }
+
         public async Task<IList<Tree>> GetAsync(ProjectId projectId, Action<TreeQueryOptions> options = null)
         {
             var queryOptions = new TreeQueryOptions();

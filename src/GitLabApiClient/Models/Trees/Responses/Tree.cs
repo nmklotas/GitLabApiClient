@@ -18,7 +18,7 @@ namespace GitLabApiClient.Models.Trees.Responses
         public string Type { get; set; }
 
         [JsonProperty("path")]
-        public string FullPath { get; set; }
+        public string Path { get; set; }
 
         [JsonProperty("mode")]
         public string Mode { get; set; }
