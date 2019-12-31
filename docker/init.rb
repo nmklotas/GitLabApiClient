@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+# Turn off auto devops as it not help for integration testing, causes stuck pipelines.
+Gitlab::CurrentSettings.current_application_settings.update!(auto_devops_enabled: false)
+
 u = User.first
 
 g = Group.create!(name: 'txxxestgrouxxxp', path: 'txxxestgrouxxxp')
