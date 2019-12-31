@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using GitLabApiClient.Models.Releases.Responses;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Files.Responses
@@ -37,5 +34,7 @@ namespace GitLabApiClient.Models.Files.Responses
 
         [JsonProperty("content")]
         public string Content { get; set; }
+
+        public string ContentDecoded => System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(Content));
     }
 }

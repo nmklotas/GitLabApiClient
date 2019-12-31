@@ -37,6 +37,7 @@ namespace GitLabApiClient.Test
             var sut = new GitLabClient("https://gitlab.com/api/v4/");
             sut.Branches.Should().BeAssignableTo(typeof(BranchClient));
             sut.Commits.Should().BeAssignableTo(typeof(CommitsClient));
+            sut.Files.Should().BeAssignableTo(typeof(FilesClient));
             sut.Groups.Should().BeAssignableTo(typeof(GroupsClient));
             sut.Issues.Should().BeAssignableTo(typeof(IssuesClient));
             sut.Markdown.Should().BeAssignableTo(typeof(MarkdownClient));
@@ -44,6 +45,7 @@ namespace GitLabApiClient.Test
             sut.Projects.Should().BeAssignableTo(typeof(ProjectsClient));
             sut.Releases.Should().BeAssignableTo(typeof(ReleaseClient));
             sut.Tags.Should().BeAssignableTo(typeof(TagClient));
+            sut.Trees.Should().BeAssignableTo(typeof(TreesClient));
             sut.Uploads.Should().BeAssignableTo(typeof(UploadsClient));
             sut.Users.Should().BeAssignableTo(typeof(UsersClient));
             sut.Webhooks.Should().BeAssignableTo(typeof(WebhookClient));
