@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models;
 
@@ -86,9 +85,9 @@ namespace GitLabApiClient.Internal.Queries
             var array =
                 from key in nvc.AllKeys
                 from value in nvc.GetValues(key)
-                select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value));
+                select $"{key.UrlEncode()}={value.UrlEncode()}";
 
-            return "?" + string.Join("&", array);
+            return $"?{string.Join("&", array)}";
         }
     }
 }
