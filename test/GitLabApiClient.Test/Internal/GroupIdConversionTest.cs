@@ -20,7 +20,7 @@ namespace GitLabApiClient.Test.Internal
         [Fact]
         public void GroupId_String_Conversion()
         {
-            string expected = "groups/group%2fmy_awe-some.subgroup%2fsubgroup";
+            string expected = "groups/group%2Fmy_awe-some.subgroup%2Fsubgroup";
             GroupId sut = "group/my_awe-some.subgroup/subgroup";
             string result = $"groups/{sut}";
             result.Should().Be(expected);
@@ -38,7 +38,7 @@ namespace GitLabApiClient.Test.Internal
         [Fact]
         public void GroupId_Group_Path_Conversion()
         {
-            string expected = "groups/group%2fmy_awe-some.subgroup%2fsubgroup";
+            string expected = "groups/group%2Fmy_awe-some.subgroup%2Fsubgroup";
             GroupId sut = new Group { FullPath = "group/my_awe-some.subgroup/subgroup" };
             string result = $"groups/{sut}";
             result.Should().Be(expected);

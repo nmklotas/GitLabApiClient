@@ -32,12 +32,12 @@ namespace GitLabApiClient.Test.Internal.Queries
 
             query.Should().Be("https://gitlab.com/api/v4/issues?" +
                               "state=opened&" +
-                              "labels=label1%2clabel2&" +
+                              "labels=label1%2Clabel2&" +
                               "milestone=milestone1&" +
                               "scope=all&" +
                               "author_id=1&" +
                               "assignee_id=2&" +
-                              "iids%5b%5d=3&iids%5b%5d=4&" +
+                              "iids%5B%5D=3&iids%5B%5D=4&" +
                               "order_by=updated_at&" +
                               "sort=asc&" +
                               "search=filter");
