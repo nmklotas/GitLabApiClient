@@ -11,6 +11,7 @@ $openCoverFile = Get-ChildItem -Path "test/*/coverage.opencover.xml" -Recurse | 
 if (Test-Path "$openCoverFile") {
   Write-Host "Uploading coverage file"
   & codecov -f "$openCoverFile" -t bda1c835-c4a2-4a1a-8d38-999b9a8ea80b
+  $exitWithError = $exitWithError -or $LastExitCode -ne 0
 }
 
 if ($exitWithError) {
