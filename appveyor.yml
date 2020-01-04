@@ -10,6 +10,7 @@ environment:
 skip_branch_with_pr: true
 
 install:
+  - ps: Switch-DockerLinux
   - ps: dotnet tool install -g Codecov.Tool
   - ps: dotnet tool install -g GitVersion.Tool --version 5.1.3
   - ps: dotnet tool install -g dotnet-format
