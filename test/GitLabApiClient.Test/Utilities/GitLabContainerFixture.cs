@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ductus.FluentDocker.Builders;
-using Ductus.FluentDocker.Model.Builders;
 using Ductus.FluentDocker.Model.Common;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Extensions;
@@ -39,14 +38,12 @@ namespace GitLabApiClient.Test.Utilities
 
         private Task StartContainer()
         {
-            using var vol = new Builder().UseVolume("gitlab-postgres-db-test-volume").RemoveOnDispose().Build();
             _gitlabContainer = new Builder()
                 .UseContainer()
                 .UseImage(_gitlabDockerImage)
                 .WithEnvironment(
                     $"GITLAB_OMNIBUS_CONFIG=from_file('{GitlabRb}')"
                 )
-                .MountVolume(vol, "/var/log/gitlab/postgresql", MountType.ReadWrite)
                 .ExposePort(80)
                 .CopyOnStart($"{SolutionRootFolder}/docker/gitlab.rb", GitlabRb)
                 .CopyOnStart($"{SolutionRootFolder}/docker/init.rb", InitRb)
