@@ -36,7 +36,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                     IsConfidential = true
                 });
 
-            query.Should().Be("https://gitlab.com/api/v4/issues?" +
+            query.Should().BeEquivalentTo("https://gitlab.com/api/v4/issues?" +
                               "state=opened&" +
                               "labels=label1%2Clabel2&" +
                               "milestone=milestone1&" +

@@ -156,7 +156,7 @@ namespace GitLabApiClient.Test
         public async Task CreatedGroupLabelCanBeUpdated()
         {
             //arrange
-            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestProjectTextId, new CreateGroupLabelRequest("Label 1")
+            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestGroupId, new CreateGroupLabelRequest("Label 1")
             {
                 Color = "#FFFFFF",
                 Description = "description1"
@@ -167,8 +167,8 @@ namespace GitLabApiClient.Test
             updateRequest.Color = "#000000";
             updateRequest.Description = "description11";
 
-            var updatedLabel = await _sut.UpdateLabelAsync(GitLabApiHelper.TestProjectTextId, updateRequest);
-            await _sut.DeleteLabelAsync(GitLabApiHelper.TestProjectId, updatedLabel.Name);
+            var updatedLabel = await _sut.UpdateLabelAsync(GitLabApiHelper.TestGroupId, updateRequest);
+            await _sut.DeleteLabelAsync(GitLabApiHelper.TestGroupId, updatedLabel.Name);
 
             //assert
             updatedLabel.Should().Match<GroupLabel>(l =>
