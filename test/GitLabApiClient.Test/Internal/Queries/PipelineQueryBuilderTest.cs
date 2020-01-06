@@ -27,7 +27,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://https://gitlab.com/api/v4/pipelines?" +
-                              "ref=feature%2ftest" +
+                              "ref=feature%2Ftest" +
                               "&yaml_errors=true" +
                               "&sha=ff11ff11ff11ff11" +
                               "&status=failed" +

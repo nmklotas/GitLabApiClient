@@ -26,7 +26,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/groups?" +
-                              "skip_groups%5b%5d=1&skip_groups%5b%5d=2&" +
+                              "skip_groups%5B%5D=1&skip_groups%5B%5D=2&" +
                               "all_available=true&" +
                               "search=filter&" +
                               "order_by=path&" +

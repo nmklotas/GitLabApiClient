@@ -3,5 +3,5 @@ codecov:
     - github.com
     - appveyor
 
-  comment:
-    layout: "header, diff, tree, changes"
+comment:
+  layout: "header, diff, tree, changes"

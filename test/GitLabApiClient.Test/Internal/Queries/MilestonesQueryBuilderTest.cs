@@ -23,7 +23,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/projects/projectId/milestones?" +
-                              "iids%5b%5d=3&iids%5b%5d=4&" +
+                              "iids%5B%5D=3&iids%5B%5D=4&" +
                               "state=active&" +
                               "search=filter");
         }
