@@ -5,8 +5,9 @@ using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Job.Requests;
+using GitLabApiClient.Models.Oauth.Requests;
+using GitLabApiClient.Models.Oauth.Responses;
 using GitLabApiClient.Models.Pipelines.Requests;
-using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
 {
@@ -36,13 +37,13 @@ namespace GitLabApiClient
                 authenticationToken);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
-            var projectIssuesQueryBuilder = new ProjectIssuesQueryBuilder();
             var projectIssueNotesQueryBuilder = new ProjectIssueNotesQueryBuilder();
             var issuesQueryBuilder = new IssuesQueryBuilder();
             var mergeRequestsQueryBuilder = new MergeRequestsQueryBuilder();
             var projectMilestonesQueryBuilder = new MilestonesQueryBuilder();
             var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
             var groupsQueryBuilder = new GroupsQueryBuilder();
+            var groupLabelsQueryBuilder = new GroupLabelsQueryBuilder();
             var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
             var branchQueryBuilder = new BranchQueryBuilder();
             var releaseQueryBuilder = new ReleaseQueryBuilder();
@@ -50,21 +51,24 @@ namespace GitLabApiClient
             var commitQueryBuilder = new CommitQueryBuilder();
             var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
+            var treeQueryBuilder = new TreeQueryBuilder();
             var jobQueryBuilder = new JobQueryBuilder();
 
-            Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
+            Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
             MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder);
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder, jobQueryBuilder);
             Users = new UsersClient(_httpFacade);
-            Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder);
+            Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder, groupLabelsQueryBuilder);
             Branches = new BranchClient(_httpFacade, branchQueryBuilder);
             Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
             Webhooks = new WebhookClient(_httpFacade);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
-            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
+            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
+            Trees = new TreesClient(_httpFacade, treeQueryBuilder);
+            Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
         }
 
@@ -124,6 +128,16 @@ namespace GitLabApiClient
         public CommitsClient Commits { get; }
 
         /// <summary>
+        /// Access GitLab's trees API.
+        /// </summary>
+        public TreesClient Trees { get; }
+
+        /// <summary>
+        /// Access GitLab's files API.
+        /// </summary>
+        public FilesClient Files { get; }
+
+        /// <summary>
         /// Access GitLab's Markdown API.
         /// </summary>
         public MarkdownClient Markdown { get; }
@@ -146,11 +160,18 @@ namespace GitLabApiClient
         /// <summary>
         /// Authenticates with GitLab API using user credentials.
         /// </summary>
-        public Task<Session> LoginAsync(string username, string password)
+        public Task<AccessTokenResponse> LoginAsync(string username, string password, string scope = "api")
         {
             Guard.NotEmpty(username, nameof(username));
             Guard.NotEmpty(password, nameof(password));
-            return _httpFacade.LoginAsync(username, password);
+            var accessTokenRequest = new AccessTokenRequest
+            {
+                GrantType = "password",
+                Scope = scope,
+                Username = username,
+                Password = password
+            };
+            return _httpFacade.LoginAsync(accessTokenRequest);
         }
 
         private static string FixBaseUrl(string url)

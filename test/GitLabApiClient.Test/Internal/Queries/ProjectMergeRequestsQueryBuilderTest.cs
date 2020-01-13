@@ -33,15 +33,15 @@ namespace GitLabApiClient.Test.Internal.Queries
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/merge_requests?" +
-                              "iids%5b%5d=4&iids%5b%5d=5&" +
+                              "iids%5B%5D=4&iids%5B%5D=5&" +
                               "state=opened&" +
                               "order_by=updated_at&" +
                               "sort=asc&" +
                               "milestone=milestone1&" +
                               "view=simple&" +
-                              "labels=label1%2clabel2&" +
-                              "created_after=1991-11-11T01%3a01%3a01.0000000&" +
-                              "created_before=1991-12-12T02%3a02%3a02.0000000&" +
+                              "labels=label1%2Clabel2&" +
+                              "created_after=1991-11-11T01%3A01%3A01.0000000&" +
+                              "created_before=1991-12-12T02%3A02%3A02.0000000&" +
                               "scope=all&" +
                               "author_id=1&" +
                               "assignee_id=2");

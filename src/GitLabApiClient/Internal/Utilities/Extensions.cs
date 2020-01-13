@@ -1,5 +1,3 @@
-using System.Web;
-
 namespace GitLabApiClient.Internal.Utilities
 {
     internal static class Extensions
@@ -19,6 +17,6 @@ namespace GitLabApiClient.Internal.Utilities
         /// <param name="value">URL path</param>
         /// <returns>Encoded URL path</returns>
         public static string UrlEncode(this string value) =>
-            value.Contains("%") ? value : HttpUtility.UrlEncode(value);
+            value.Contains("%") ? value : System.Uri.EscapeDataString(value);
     }
 }

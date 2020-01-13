@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Groups.Requests;
+using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Test.Utilities;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
@@ -22,7 +24,8 @@ namespace GitLabApiClient.Test
             GetFacade(),
             new GroupsQueryBuilder(),
             new ProjectsGroupQueryBuilder(),
-            new MilestonesQueryBuilder());
+            new MilestonesQueryBuilder(),
+            new GroupLabelsQueryBuilder());
 
         [Fact]
         public async Task GroupCanBeRetrievedByGroupId()
@@ -147,6 +150,31 @@ namespace GitLabApiClient.Test
             updateGroupResponse.Visibility.Should().Be(GroupsVisibility.Internal);
             updateGroupResponse.LfsEnabled.Should().BeFalse();
             updateGroupResponse.RequestAccessEnabled.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task CreatedGroupLabelCanBeUpdated()
+        {
+            //arrange
+            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestGroupId, new CreateGroupLabelRequest("Label 1")
+            {
+                Color = "#FFFFFF",
+                Description = "description1"
+            });
+
+            //act
+            var updateRequest = UpdateGroupLabelRequest.FromNewName(createdLabel.Name, "Label 11");
+            updateRequest.Color = "#000000";
+            updateRequest.Description = "description11";
+
+            var updatedLabel = await _sut.UpdateLabelAsync(GitLabApiHelper.TestGroupId, updateRequest);
+            await _sut.DeleteLabelAsync(GitLabApiHelper.TestGroupId, updatedLabel.Name);
+
+            //assert
+            updatedLabel.Should().Match<GroupLabel>(l =>
+                l.Name == "Label 11" &&
+                l.Color == "#000000" &&
+                l.Description == "description11");
         }
 
         [Fact]
