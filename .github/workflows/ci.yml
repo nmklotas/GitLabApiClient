@@ -30,7 +30,15 @@ jobs:
 
       - run: dotnet tool install -g Codecov.Tool
         shell: pwsh
-      - run: dotnet build
+
+      - run: dotnet tool install -g GitVersion.Tool
         shell: pwsh
+
+      - run: dotnet gitversion /l console /output buildserver
+        shell: pwsh
+
+      - run: ./build.ps1
+        shell: pwsh
+
       - run: ./test.ps1
         shell: pwsh
