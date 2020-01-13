@@ -66,7 +66,7 @@ namespace GitLabApiClient
             Webhooks = new WebhookClient(_httpFacade);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
-            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
+            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
             Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
