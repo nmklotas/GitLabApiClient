@@ -19,7 +19,7 @@ namespace GitLabApiClient.Test
     public class IssuesClientTest
     {
         private readonly IssuesClient _sut = new IssuesClient(
-            GetFacade(), new IssuesQueryBuilder(), new ProjectIssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
+            GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
 
         [Fact]
         public async Task CreatedIssueCanBeUpdated()
@@ -80,7 +80,7 @@ namespace GitLabApiClient.Test
             await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest(title));
 
             //act
-            var listedIssues = await _sut.GetAsync(TestProjectTextId, o => o.Filter = title);
+            var listedIssues = await _sut.GetAllAsync(projectId: TestProjectTextId, options: o => o.Filter = title);
 
             //assert
             listedIssues.Single().Should().Match<Issue>(i =>
@@ -105,8 +105,8 @@ namespace GitLabApiClient.Test
 
             //act
             var issueById = await _sut.GetAsync(TestProjectId, issue.Iid);
-            var issueByProjectId = (await _sut.GetAsync(o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
-            var ownedIssue = (await _sut.GetAsync(o => o.Scope = Scope.CreatedByMe)).FirstOrDefault(i => i.Title == title);
+            var issueByProjectId = (await _sut.GetAllAsync(options: o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
+            var ownedIssue = (await _sut.GetAllAsync(options: o => o.Scope = Scope.CreatedByMe)).FirstOrDefault(i => i.Title == title);
 
             //assert
             issue.Should().Match<Issue>(i =>
