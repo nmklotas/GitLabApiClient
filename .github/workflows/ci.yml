@@ -7,13 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: DotNet Test
     steps:
-      - uses: actions/checkout@master
-        with:
-          fetch-depth: 0
-      - name: Fetch tags and master for GitVersion
-        run: |
-          git fetch --tags
-          git branch --create-reflog master origin/master || true
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
