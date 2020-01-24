@@ -10,8 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch all history for all tags and branches
-        run: |
-          git fetch --prune --unshallow
+        run: git fetch --prune --unshallow
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
