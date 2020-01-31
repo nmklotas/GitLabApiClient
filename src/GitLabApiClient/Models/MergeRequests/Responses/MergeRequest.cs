@@ -82,8 +82,8 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
 
         [JsonProperty("work_in_progress")]
         public bool WorkInProgress { get; set; }
-        
-        [JsonProperty("time_stats")] 
+
+        [JsonProperty("time_stats")]
         public MergeRequestTimeStatistic TimeStats { get; set; }
     }
 }
