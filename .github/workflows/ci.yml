@@ -21,7 +21,7 @@ jobs:
         with:
           dotnet-version: '3.1.101'
 
-      # workaround for using multiple dotnet core installs
+      # workaround for using multiple dotnet core installs https://github.com/actions/setup-dotnet/issues/25
       - name: .net SxS
         run: rsync -a ${DOTNET_ROOT/3.1.101/2.1.803}/* $DOTNET_ROOT/
 
