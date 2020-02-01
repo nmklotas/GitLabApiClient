@@ -1,4 +1,4 @@
-﻿using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Webhooks.Requests
