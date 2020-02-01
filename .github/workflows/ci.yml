@@ -36,10 +36,8 @@ jobs:
       - name: GitVersion
         run: dotnet gitversion /l console /output buildserver
 
-      - name: Build
-        run: ./build.ps1
+      - run: ./build.ps1
         shell: pwsh
 
-      - name: Test
-        run: ./test.ps1
+      - run: ./test.ps1
         shell: pwsh
