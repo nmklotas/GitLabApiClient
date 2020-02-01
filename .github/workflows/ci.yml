@@ -1,11 +1,11 @@
-name: DotNet CI
+name: DotNet
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    name: DotNet Test
+    name: Test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -15,24 +15,26 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '2.1.607'
+          dotnet-version: '2.1.803'
       - name: Setup dotnet
-        uses: casz/setup-dotnet@fix/dotnet-global-tool
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.100'
+          dotnet-version: '3.1.101'
 
-      # workaround for using multiple dotnet core installs
+      # workaround for using multiple dotnet core installs https://github.com/actions/setup-dotnet/issues/25
       - name: .net SxS
-        run: rsync -a ${DOTNET_ROOT/3.1.100/2.1.607}/* $DOTNET_ROOT/
+        run: rsync -a ${DOTNET_ROOT/3.1.101/2.1.803}/* $DOTNET_ROOT/
+
+      # workaround for dotnet tools not being on path https://github.com/actions/virtual-environments/issues/213
+      - name: add .dotnet/tools to path
+        run: echo "::set-env name=PATH::${PATH}:${HOME}/.dotnet/tools"
 
       - run: dotnet tool install -g Codecov.Tool
-        shell: pwsh
 
       - run: dotnet tool install -g GitVersion.Tool
-        shell: pwsh
 
-      - run: dotnet gitversion /l console /output buildserver
-        shell: pwsh
+      - name: GitVersion
+        run: dotnet gitversion /l console /output buildserver
 
       - run: ./build.ps1
         shell: pwsh
