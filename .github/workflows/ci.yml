@@ -3,7 +3,7 @@ name: DotNet
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     name: Test
     steps:
@@ -26,16 +26,20 @@ jobs:
         run: rsync -a ${DOTNET_ROOT/3.1.101/2.1.803}/* $DOTNET_ROOT/
 
       # workaround for dotnet tools not being on path https://github.com/actions/virtual-environments/issues/213
-      - run: echo "::set-env name=PATH::${PATH}:${HOME}/.dotnet/tools"
+      - name: add .dotnet/tools to path
+        run: echo "::set-env name=PATH::${PATH}:${HOME}/.dotnet/tools"
 
       - run: dotnet tool install -g Codecov.Tool
 
       - run: dotnet tool install -g GitVersion.Tool
 
-      - run: dotnet gitversion /l console /output buildserver
+      - name: GitVersion
+        run: dotnet gitversion /l console /output buildserver
 
-      - run: ./build.ps1
+      - name: Build
+        run: ./build.ps1
         shell: pwsh
 
-      - run: ./test.ps1
+      - name: Test
+        run: ./test.ps1
         shell: pwsh
