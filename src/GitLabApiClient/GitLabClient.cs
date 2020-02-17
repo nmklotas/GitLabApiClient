@@ -4,6 +4,7 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
 using GitLabApiClient.Models.Pipelines.Requests;
@@ -52,6 +53,7 @@ namespace GitLabApiClient
             var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
             var treeQueryBuilder = new TreeQueryBuilder();
+            var jobQueryBuilder = new JobQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -65,9 +67,10 @@ namespace GitLabApiClient
             Webhooks = new WebhookClient(_httpFacade);
             Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
-            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder);
+            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
             Files = new FilesClient(_httpFacade);
+            Runners = new RunnersClient(_httpFacade);
         }
 
         /// <summary>
@@ -144,6 +147,11 @@ namespace GitLabApiClient
         /// Acess GitLab's Pipeline API.
         /// </summary>
         public PipelineClient Pipelines { get; }
+
+        /// <summary>
+        /// Access GitLab's Runners API.
+        /// </summary>
+        public RunnersClient Runners { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
