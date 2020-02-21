@@ -62,5 +62,17 @@ namespace GitLabApiClient
             string url = _commitRefsQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/refs", queryOptions);
             return await _httpFacade.GetPagedList<CommitRef>(url);
         }
+
+        /// <summary>
+        /// Retrieve a list of differences in this commit
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="sha">The commit hash or name of a repository branch or tag</param>
+        /// <returns></returns>
+        public async Task<IList<Diff>> GetDiffsAsync(ProjectId projectId, string sha)
+        {
+            string url = $"projects/{projectId}/repository/commits/{sha}/diff";
+            return await _httpFacade.GetPagedList<Diff>(url);
+        }
     }
 }
