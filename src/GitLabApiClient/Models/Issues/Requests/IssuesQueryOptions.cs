@@ -40,9 +40,20 @@ namespace GitLabApiClient.Models.Issues.Requests
         public int? AuthorId { get; set; }
 
         /// <summary>
+        /// Return issues created by the given username. Similar to <see cref="AuthorId"/> and mutually exclusive with <see cref="AuthorId"/>.
+        /// </summary>
+        public string AuthorUsername { get; set; }
+
+        /// <summary>
         /// Return issues assigned to the given user id (Introduced in GitLab 9.5).
         /// </summary>
         public int? AssigneeId { get; set; }
+
+        /// <summary>
+        /// Return issues assigned to the given username. Similar to <see cref="AssigneeId"/> and mutually exclusive with <see cref="AuthorId"/>.
+        /// In CE version <see cref="AuthorUsername"/> list should only contain a single value or an invalid param error will be returned otherwise.
+        /// </summary>
+        public IList<string> AssigneeUsername { get; set; } = new List<string>();
 
         /// <summary>
         /// Return only the issues having the given iid.
