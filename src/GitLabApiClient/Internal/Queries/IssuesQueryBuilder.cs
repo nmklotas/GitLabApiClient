@@ -25,9 +25,13 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.AuthorId.HasValue)
                 Add("author_id", options.AuthorId.Value);
+            else if (!string.IsNullOrWhiteSpace(options.AuthorUsername))
+                Add("author_username", options.AuthorUsername);
 
             if (options.AssigneeId.HasValue)
                 Add("assignee_id", options.AssigneeId.Value);
+            else if (options.AssigneeUsername.Any())
+                Add("assignee_username", options.AssigneeUsername);
 
             Add(options.IssueIds);
 
