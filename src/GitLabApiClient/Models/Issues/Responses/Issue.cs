@@ -57,5 +57,8 @@ namespace GitLabApiClient.Models.Issues.Responses
 
         [JsonProperty("time_stats")]
         public IssueTimeStatistic TimeStats { get; set; }
+
+        [JsonProperty("task_completion_status")]
+        public IssueTaskCompletionStatus TaskCompletionStatus { get; set; }
     }
 }

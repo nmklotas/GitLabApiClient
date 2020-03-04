@@ -163,5 +163,32 @@ namespace GitLabApiClient.Test
             updatedIssueNote.Should().Match<Note>(n =>
                 n.Body == "comment22");
         }
+
+        [Fact]
+        public async Task CreateIssueWithTasks()
+        {
+            //arrange
+            string title = Guid.NewGuid().ToString();
+            await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest(title)
+            {
+                Description = @"Description1
+- [ ] Task 1
+- [ ] Task 2
+- [x] Task 3
+"
+            });
+
+            //act
+            var listedIssues = await _sut.GetAllAsync(projectId: TestProjectTextId, options: o => o.Filter = title);
+
+            //assert
+            listedIssues.Single().Should().Match<Issue>(i =>
+                i.ProjectId == TestProjectTextId &&
+                i.Title == title &&
+                i.TaskCompletionStatus != null &&
+                i.TaskCompletionStatus.Count == 3 &&
+                i.TaskCompletionStatus.Completed == 1 &&
+                i.TimeStats != null);
+        }
     }
 }
