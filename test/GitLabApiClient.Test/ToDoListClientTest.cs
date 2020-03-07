@@ -100,6 +100,24 @@ namespace GitLabApiClient.Test
                 (Action<ToDoListQueryOptions>) ((x) => x.ActionType = ToDoActionType.DirectlyAddressed),
                 (Action<IEnumerable<IToDo>>)((x) => x.Should().NotBeEmpty().And.OnlyContain(t => t.ActionType == ToDoActionType.DirectlyAddressed))
             },
+            new object[]{
+                (Action<ToDoListQueryOptions>) ((x) => {
+                    x.ActionType = ToDoActionType.DirectlyAddressed;
+                    x.AuthorId = GitLabApiHelper.TestUserId;
+                    x.ProjectId = GitLabApiHelper.TestProjectId;
+                    x.GroupId = GitLabApiHelper.TestGroupId;
+                    x.State = ToDoState.Pending;
+                    x.Type = ToDoTargetType.Issue;
+                }),
+                (Action<IEnumerable<IToDo>>)((x) =>
+                    x.Should().NotBeEmpty().And.OnlyContain(t =>
+                        t.ActionType == ToDoActionType.DirectlyAddressed
+                        && t.Author.Username == GitLabApiHelper.TestUserName
+                        && t.Project.Name == GitLabApiHelper.TestProjectName
+                        && t.State == ToDoState.Pending
+                        && t.TargetType == ToDoTargetType.Issue
+                ))
+            },
         };
 
         [Theory]
