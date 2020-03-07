@@ -25,6 +25,8 @@ namespace GitLabApiClient.Test.Utilities
 
         public static string TestProjectName { get; set; } = "txxxestprojecxxxt";
 
+        public static int TestUserId { get; set; } = 1;
+
         public static string TestUserName { get; set; } = "root";
 
         public static string TestUserPassword { get; set; } = "password";
