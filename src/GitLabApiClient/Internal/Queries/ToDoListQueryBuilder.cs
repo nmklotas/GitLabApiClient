@@ -18,7 +18,7 @@ namespace GitLabApiClient.Internal.Queries
                 Add("project_id", options.ProjectId.Value);
 
             if (options.GroupId.HasValue)
-                Add("group_id",options.GroupId.Value);
+                Add("group_id", options.GroupId.Value);
 
             if (options.State != null)
                 Add("state", options.State.GetAttribute<EnumMemberAttribute>().Value);
