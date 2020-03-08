@@ -50,7 +50,7 @@ namespace GitLabApiClient.Models.Pipelines.Requests
         ///     Return pipelines updated before the specified date
         /// </summary>
         public DateTime? UpdatedBefore { get; set; }
-        
+
         /// <summary>
         ///     The username of the user who triggered pipelines
         /// </summary>
