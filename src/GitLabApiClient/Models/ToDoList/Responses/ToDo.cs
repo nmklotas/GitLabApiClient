@@ -82,7 +82,7 @@ namespace GitLabApiClient.Models.ToDoList.Responses
                 case "MergeRequest":
                     return new ToDoMergeRequest();
                 default:
-                    throw new ApplicationException($"ToDo target '{type}' not supported.");
+                    throw new ApplicationException($"ToDo target not supported.");
             }
         }
 
