@@ -8,7 +8,7 @@ namespace GitLabApiClient
     /// <summary>
     /// Used to render a markdown document.
     /// </summary>
-    public sealed class MarkdownClient
+    public sealed class MarkdownClient : IMarkdownClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 

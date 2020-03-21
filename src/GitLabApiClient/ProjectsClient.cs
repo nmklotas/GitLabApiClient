@@ -24,7 +24,7 @@ namespace GitLabApiClient
     /// <exception cref="GitLabException">Thrown if request to GitLab API fails</exception>
     /// <exception cref="HttpRequestException">Thrown if request to GitLab API fails</exception>
     /// </summary>
-    public sealed class ProjectsClient
+    public sealed class ProjectsClient : IProjectsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly ProjectsQueryBuilder _queryBuilder;

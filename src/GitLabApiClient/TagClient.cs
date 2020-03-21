@@ -10,7 +10,7 @@ using GitLabApiClient.Models.Tags.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class TagClient
+    public sealed class TagClient : ITagClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly TagQueryBuilder _tagQueryBuilder;
