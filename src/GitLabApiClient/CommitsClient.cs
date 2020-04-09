@@ -15,12 +15,14 @@ namespace GitLabApiClient
         private readonly GitLabHttpFacade _httpFacade;
         private readonly CommitQueryBuilder _commitQueryBuilder;
         private readonly CommitRefsQueryBuilder _commitRefsQueryBuilder;
+        private readonly CommitStatusesQueryBuilder _commitStatusesQueryBuilder;
 
-        internal CommitsClient(GitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder, CommitRefsQueryBuilder commitRefsQueryBuilder)
+        internal CommitsClient(GitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder, CommitRefsQueryBuilder commitRefsQueryBuilder, CommitStatusesQueryBuilder commitStatusesQueryBuilder)
         {
             _httpFacade = httpFacade;
             _commitQueryBuilder = commitQueryBuilder;
             _commitRefsQueryBuilder = commitRefsQueryBuilder;
+            _commitStatusesQueryBuilder = commitStatusesQueryBuilder;
         }
 
         /// <summary>
@@ -73,6 +75,22 @@ namespace GitLabApiClient
         {
             string url = $"projects/{projectId}/repository/commits/{sha}/diff";
             return await _httpFacade.GetPagedList<Diff>(url);
+        }
+
+        /// <summary>
+        /// Retrieve a list of statuses in this commit
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query Options <see cref="CommitStatusesQueryOptions"/>.</param>
+        /// <param name="sha">The commit hash</param>
+        /// <returns></returns>
+        public async Task<IList<CommitStatuses>> GetStatusesAsync(ProjectId projectId, string sha, Action<CommitStatusesQueryOptions> options = null)
+        {
+            var queryOptions = new CommitStatusesQueryOptions();
+            options?.Invoke(queryOptions);
+
+            string url = _commitStatusesQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/statuses", queryOptions);
+            return await _httpFacade.GetPagedList<CommitStatuses>(url);
         }
     }
 }
