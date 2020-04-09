@@ -9,10 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # workaround for dotnet tools not being on path https://github.com/actions/virtual-environments/issues/213
-      - name: add .dotnet/tools to path
-        run: echo "::set-env name=PATH::${PATH}:${HOME}/.dotnet/tools"
-
       - run: dotnet tool install -g dotnet-format
 
-      - run: dotnet format --folder ./ --dry-run --check
+      - name: Add dotnet-format problem matcher
+        uses: xt0rted/dotnet-format-problem-matcher@v1
+
+      - name: Run dotnet format
+        uses: xt0rted/dotnet-format@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
