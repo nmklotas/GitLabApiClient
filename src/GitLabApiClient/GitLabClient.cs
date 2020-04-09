@@ -54,6 +54,7 @@ namespace GitLabApiClient
             var pipelineQueryBuilder = new PipelineQueryBuilder();
             var treeQueryBuilder = new TreeQueryBuilder();
             var jobQueryBuilder = new JobQueryBuilder();
+            var toDoListBuilder = new ToDoListQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -71,6 +72,7 @@ namespace GitLabApiClient
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
             Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
+            ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
         }
 
         /// <summary>
@@ -152,6 +154,11 @@ namespace GitLabApiClient
         /// Access GitLab's Runners API.
         /// </summary>
         public RunnersClient Runners { get; }
+
+        /// <summary>
+        /// Access GitLab's ToDo-List API.
+        /// </summary>
+        public ToDoListClient ToDoList { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
