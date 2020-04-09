@@ -17,7 +17,7 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class ToDoListClientTest : IAsyncLifetime
     {
-        private readonly MergeRequestsClient mergeRequestsClient = new MergeRequestsClient(GitLabApiHelper.GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder());
+        private readonly MergeRequestsClient mergeRequestsClient = new MergeRequestsClient(GitLabApiHelper.GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder(), new ProjectMergeRequestsNotesQueryBuilder());
         private readonly IssuesClient issuesClient = new IssuesClient(GitLabApiHelper.GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
 
 
