@@ -50,6 +50,7 @@ namespace GitLabApiClient
             var tagQueryBuilder = new TagQueryBuilder();
             var commitQueryBuilder = new CommitQueryBuilder();
             var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
+            var commitStatusesQueryBuilder = new CommitStatusesQueryBuilder();
             var pipelineQueryBuilder = new PipelineQueryBuilder();
             var treeQueryBuilder = new TreeQueryBuilder();
             var jobQueryBuilder = new JobQueryBuilder();
@@ -64,7 +65,7 @@ namespace GitLabApiClient
             Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
             Tags = new TagClient(_httpFacade, tagQueryBuilder);
             Webhooks = new WebhookClient(_httpFacade);
-            Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder);
+            Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder, commitStatusesQueryBuilder);
             Markdown = new MarkdownClient(_httpFacade);
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
