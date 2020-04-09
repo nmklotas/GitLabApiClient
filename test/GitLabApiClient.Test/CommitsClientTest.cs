@@ -110,7 +110,6 @@ namespace GitLabApiClient.Test
             string url = $"/projects/id/repository/commits/{sha}/statuses?name={Name}&per_page=100&page=1";
 
             var handler = A.Fake<MockHandler>(opt => opt.CallsBaseMethods());
-
             A.CallTo(() => handler.SendAsync(HttpMethod.Get, url))
                 .ReturnsLazily(() => HttpResponseMessageProducer.Success(
                     $"[  {{\"id\":1,\"sha\":\"{sha}\",\"ref \":\"\",\"status\":\"success\",\"name\":\"name1\",\"target_url\":\"target_url1\",\"description\":\"success\",\"created_at\":\"2020-04-08T11:57:49.136+05:30\",\"started_at\":\"2020-04-08T11:58:00.362+05:30\",\"finished_at\":\"2020-04-08T11:58:06.121+05:30\",\"allow_failure\":false,\"coverage\":null,\"author\":{{\"id\":1,\"name\":\"name\",\"username\":\"username\",\"state\":\"active\",\"avatar_url\":\"avatar_url1\",\"web_url\":\"web_url1\"}} }},{{\"id\":2,\"sha\":\"{sha}\",\"ref \":\"\",\"status\":\"success\",\"name\":\"name2\",\"target_url\":\"target_url2\",\"description\":\"success\",\"created_at\":\"2020-04-08T11:57:49.136+05:30\",\"started_at\":\"2020-04-08T11:58:00.362+05:30\",\"finished_at\":\"2020-04-08T11:58:06.121+05:30\",\"allow_failure\":false,\"coverage\":null,\"author\":{{\"id\":2,\"name\":\"name2\",\"username\":\"username2\",\"state\":\"activ2\",\"avatar_url2\":\"avatar_url2\",\"web_url\":\"web_url2\"}} }}]"));
@@ -119,12 +118,11 @@ namespace GitLabApiClient.Test
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
                 var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder(), new CommitStatusesQueryBuilder());
 
-                var statusesFromClient = await commitsClient.GetStatusesAsync(projectId, sha,o=>o.Name= Name);
+                var statusesFromClient = await commitsClient.GetStatusesAsync(projectId, sha, o => o.Name = Name);
                 statusesFromClient[0].Status.Should().BeEquivalentTo("success");
                 statusesFromClient[0].Name.Should().BeEquivalentTo("name1");
                 statusesFromClient[0].Target_url.Should().BeEquivalentTo("target_url1");
                 statusesFromClient[0].Id.Should().BeEquivalentTo("1");
-
 
                 statusesFromClient[1].Status.Should().BeEquivalentTo("success");
                 statusesFromClient[1].Name.Should().BeEquivalentTo("name2");
