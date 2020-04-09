@@ -45,6 +45,21 @@ namespace GitLabApiClient.Models.Pipelines.Requests
             {
                 Add("sort", "asc");
             }
+
+            if (options.UpdatedAfter.HasValue)
+            {
+                Add("updated_after", options.UpdatedAfter.Value);
+            }
+
+            if (options.UpdatedBefore.HasValue)
+            {
+                Add("updated_before", options.UpdatedBefore.Value);
+            }
+
+            if (!options.TriggeredBy.IsNullOrEmpty())
+            {
+                Add("username", options.TriggeredBy);
+            }
         }
 
         #endregion
