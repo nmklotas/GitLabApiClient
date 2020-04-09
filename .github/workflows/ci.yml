@@ -15,19 +15,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '2.1.803'
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.101'
-
-      # workaround for using multiple dotnet core installs https://github.com/actions/setup-dotnet/issues/25
-      - name: .net SxS
-        run: rsync -a ${DOTNET_ROOT/3.1.101/2.1.803}/* $DOTNET_ROOT/
-
-      # workaround for dotnet tools not being on path https://github.com/actions/virtual-environments/issues/213
-      - name: add .dotnet/tools to path
-        run: echo "::set-env name=PATH::${PATH}:${HOME}/.dotnet/tools"
+          dotnet-version: '3.1.201'
 
       - run: dotnet tool install -g Codecov.Tool
 
