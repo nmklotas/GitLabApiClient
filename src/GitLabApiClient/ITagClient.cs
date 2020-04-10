@@ -13,11 +13,11 @@ namespace GitLabApiClient
     public interface ITagClient
     {
         /// <summary>
-     /// Retrieves a tag by its name
-     /// </summary>
-     /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-     /// <param name="tagName">The tag, you want to retrieve.</param>
-     /// <returns></returns>
+        /// Retrieves a tag by its name
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="tagName">The tag, you want to retrieve.</param>
+        /// <returns></returns>
         Task<Tag> GetAsync(ProjectId projectId, string tagName);
 
         /// <summary>
