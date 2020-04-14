@@ -136,5 +136,14 @@ namespace GitLabApiClient
             string url = _projectMergeRequestNotesQueryBuilder.Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
+
+        /// <summary>
+        /// List erge request pipelines
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
+        /// <returns>Get a list of merge request pipelines.</returns>
+        public async Task<IList<MergeRequestPipeline>> GetPipelinesAsync(ProjectId projectId, int mergeRequestId)
+            => await _httpFacade.Get<List<MergeRequestPipeline>>($"projects/{projectId}/merge_requests/{mergeRequestId}/pipelines");
     }
 }
