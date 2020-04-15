@@ -88,6 +88,6 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         public MergeRequestTimeStatistic TimeStats { get; set; }
 
         [JsonProperty("pipeline")]
-        public Pipeline Pipelines { get; set; }
+        public Pipeline Pipeline { get; set; }
     }
 }
