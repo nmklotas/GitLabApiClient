@@ -9,6 +9,7 @@ using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
 using GitLabApiClient.Models.Notes.Requests;
 using GitLabApiClient.Models.Notes.Responses;
+using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
@@ -79,16 +80,16 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
         /// <returns>Shows information about a single merge request.</returns>
-        public async Task<MergeRequestDetail> GetAsync(ProjectId projectId, int mergeRequestId)
-            => await _httpFacade.Get<MergeRequestDetail>($"projects/{projectId}/merge_requests/{mergeRequestId}");
+        public async Task<MergeRequest> GetAsync(ProjectId projectId, int mergeRequestId)
+            => await _httpFacade.Get<MergeRequest>($"projects/{projectId}/merge_requests/{mergeRequestId}");
         /// <summary>
         /// Creates merge request.
         /// </summary>
         /// <returns>The newly created merge request.</returns>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create Merge request.</param>
-        public async Task<MergeRequestDetail> CreateAsync(ProjectId projectId, CreateMergeRequest request) =>
-            await _httpFacade.Post<MergeRequestDetail>($"projects/{projectId}/merge_requests", request);
+        public async Task<MergeRequest> CreateAsync(ProjectId projectId, CreateMergeRequest request) =>
+            await _httpFacade.Post<MergeRequest>($"projects/{projectId}/merge_requests", request);
 
         /// <summary>
         /// Updates merge request.
@@ -97,8 +98,8 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
         /// <param name="request">Update Merge request.</param>
-        public async Task<MergeRequestDetail> UpdateAsync(ProjectId projectId, int mergeRequestId, UpdateMergeRequest request) =>
-            await _httpFacade.Put<MergeRequestDetail>($"projects/{projectId}/merge_requests/{mergeRequestId}", request);
+        public async Task<MergeRequest> UpdateAsync(ProjectId projectId, int mergeRequestId, UpdateMergeRequest request) =>
+            await _httpFacade.Put<MergeRequest>($"projects/{projectId}/merge_requests/{mergeRequestId}", request);
 
         /// <summary>
         /// Accepts merge request.
@@ -107,9 +108,9 @@ namespace GitLabApiClient
         /// /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
         /// <param name="request">Accept Merge request.</param>
-        public async Task<MergeRequestDetail> AcceptAsync(ProjectId projectId, int mergeRequestId, AcceptMergeRequest request)
+        public async Task<MergeRequest> AcceptAsync(ProjectId projectId, int mergeRequestId, AcceptMergeRequest request)
         {
-            return await _httpFacade.Put<MergeRequestDetail>(
+            return await _httpFacade.Put<MergeRequest>(
                 $"projects/{projectId}/merge_requests/{mergeRequestId}/merge", request);
         }
 
@@ -143,7 +144,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
         /// <returns>Get a list of merge request pipelines.</returns>
-        public async Task<IList<MergeRequestPipeline>> GetPipelinesAsync(ProjectId projectId, int mergeRequestId)
-            => await _httpFacade.Get<List<MergeRequestPipeline>>($"projects/{projectId}/merge_requests/{mergeRequestId}/pipelines");
+        public async Task<IList<Pipeline>> GetPipelinesAsync(ProjectId projectId, int mergeRequestId)
+            => await _httpFacade.Get<List<Pipeline>>($"projects/{projectId}/merge_requests/{mergeRequestId}/pipelines");
     }
 }

@@ -37,7 +37,7 @@ namespace GitLabApiClient.Test
 
             retrievedMergeRequest.Should().Match(Assert());
 
-            Expression<Func<MergeRequestDetail, bool>> Assert()
+            Expression<Func<MergeRequest, bool>> Assert()
             {
                 return m =>
                     m.Assignee.Id == 1 &&
@@ -74,7 +74,7 @@ namespace GitLabApiClient.Test
                 RemoveSourceBranch = true
             });
 
-            updatedMergeRequest.Should().Match<MergeRequestDetail>(
+            updatedMergeRequest.Should().Match<MergeRequest>(
                 m => m.Assignee.Id == 1 &&
                      m.Description == "Description11" &&
                      m.Title == "Title11" &&
@@ -94,7 +94,7 @@ namespace GitLabApiClient.Test
                 MilestoneId = 1
             });
 
-            Func<Task<MergeRequestDetail>> acceptAction = () =>
+            Func<Task<MergeRequest>> acceptAction = () =>
                 _sut.AcceptAsync(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid, new AcceptMergeRequest());
 
             acceptAction.Should().Throw<GitLabException>().
