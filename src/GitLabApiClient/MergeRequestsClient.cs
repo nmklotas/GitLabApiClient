@@ -123,6 +123,16 @@ namespace GitLabApiClient
             await _httpFacade.Delete($"projects/{projectId}/merge_requests/{mergeRequestId}");
 
         /// <summary>
+        /// Creates a new note (comment) to a single Merge Request.
+        /// </summary>
+        /// <returns>The newly created issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The IID of an Merge Request.</param>
+        /// <param name="request">Create Merge Request note request.</param>
+        public async Task<Note> CreateNoteAsync(ProjectId projectId, int mergeRequestId, CreateMergeRequestNoteRequest request) =>
+            await _httpFacade.Post<Note>($"projects/{projectId}/merge_requests/{mergeRequestId}/notes", request);
+
+        /// <summary>
         /// Retrieves notes (comments) of a merge request.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
