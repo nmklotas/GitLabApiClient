@@ -60,6 +60,14 @@ namespace GitLabApiClient.Models.Pipelines.Requests
             {
                 Add("username", options.TriggeredBy);
             }
+            if (options.Page.HasValue)
+            {
+                Add("page", options.Page.Value);
+            }
+            if (options.Per_Page.HasValue)
+            {
+                Add("per_page", options.Per_Page.Value);
+            }
         }
 
         #endregion

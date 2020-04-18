@@ -2,7 +2,7 @@ using System;
 
 namespace GitLabApiClient.Models.Pipelines.Requests
 {
-    public class PipelineQueryOptions
+    public class PipelineQueryOptions:PageQuery
     {
         internal PipelineQueryOptions() { }
 
