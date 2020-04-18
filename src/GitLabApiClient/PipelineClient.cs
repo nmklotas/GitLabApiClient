@@ -43,7 +43,7 @@ namespace GitLabApiClient
             var queryOptions = new JobQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _jobQueryBuilder.Build($"projects/{projectId}/pipelines/{pipelineId}/jobs", queryOptions);
+            var url = _jobQueryBuilder.Build($"projects/{projectId}/pipelines/{pipelineId}/jobs", queryOptions);
             return await _httpFacade.GetPagedList<Job>(url);
         }
 
