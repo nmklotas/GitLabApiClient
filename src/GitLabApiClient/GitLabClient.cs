@@ -74,6 +74,7 @@ namespace GitLabApiClient
             Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
             ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
+            Connection = new ConnectionClient(_httpFacade);
         }
 
         /// <summary>
@@ -160,6 +161,11 @@ namespace GitLabApiClient
         /// Access GitLab's ToDo-List API.
         /// </summary>
         public ToDoListClient ToDoList { get; }
+
+        /// <summary>
+        /// Provides a client connection to make rest requests to HTTP endpoints.
+        /// </summary>
+        public ConnectionClient Connection { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
