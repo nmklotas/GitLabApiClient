@@ -5,20 +5,19 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal class CommitStatusesQueryBuilder : QueryBuilder<CommitStatusesQueryOptions>
     {
-        protected override void BuildCore(CommitStatusesQueryOptions options)
+        protected override void BuildCore(Query query, CommitStatusesQueryOptions options)
         {
             if (!string.IsNullOrEmpty(options.Ref))
-                Add("ref", options.Ref);
+                query.Add("ref", options.Ref);
 
             if (options.Name.IsNotNullOrEmpty())
-                Add("name", options.Name);
+                query.Add("name", options.Name);
 
             if (options.Stage.IsNotNullOrEmpty())
-                Add("stage", options.Stage);
+                query.Add("stage", options.Stage);
 
             if (options.All.HasValue)
-                Add("all", options.All.Value);
-
+                query.Add("all", options.All.Value);
         }
     }
 }

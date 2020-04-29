@@ -6,17 +6,17 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal sealed class MilestonesQueryBuilder : QueryBuilder<MilestonesQueryOptions>
     {
-        protected override void BuildCore(MilestonesQueryOptions options)
+        protected override void BuildCore(Query query, MilestonesQueryOptions options)
         {
             if (options.MilestoneIds.Count > 0)
-                Add(options.MilestoneIds);
+                query.Add(options.MilestoneIds);
 
             string stateQueryValue = GetStateQueryValue(options.State);
             if (!string.IsNullOrEmpty(stateQueryValue))
-                Add("state", stateQueryValue);
+                query.Add("state", stateQueryValue);
 
             if (!string.IsNullOrEmpty(options.Search))
-                Add("search", options.Search);
+                query.Add("search", options.Search);
         }
 
         private static string GetStateQueryValue(MilestoneState state)
