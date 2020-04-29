@@ -1,4 +1,4 @@
-﻿using GitLabApiClient.Internal.Http;
+using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Wikis.Requests;
