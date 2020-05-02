@@ -21,7 +21,7 @@ namespace GitLabApiClient.Test.Utilities
         public static string GitlabHost { get; private set; }
 
         private IContainerService _gitlabContainer;
-        private readonly string _gitlabDockerImage = "gitlab/gitlab-ce:12.5.4-ce.0";
+        private readonly string _gitlabDockerImage = "gitlab/gitlab-ce:12.10.2-ce.0";
 
         public async Task InitializeAsync()
         {
