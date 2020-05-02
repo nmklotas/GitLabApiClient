@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
@@ -19,6 +20,7 @@ namespace GitLabApiClient.Test
     {
         private readonly List<int> _groupIdsToClean = new List<int>();
         private List<int> MilestoneIdsToClean { get; } = new List<int>();
+        private List<string> VariableIdsToClean { get; } = new List<string>();
 
         private readonly GroupsClient _sut = new GroupsClient(
             GetFacade(),
@@ -230,6 +232,92 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
+        public async Task GroupVariablesRetrieved()
+        {
+            //arrange
+            var createdVariable = await _sut.CreateVariableAsync(GitLabApiHelper.TestGroupId, new CreateGroupVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_RETRIEVE",
+                Value = "VALUE_VAR",
+                Masked = true,
+                Protected = true
+            });
+
+            VariableIdsToClean.Add(createdVariable.Key);
+
+            //act
+            var variables = await _sut.GetVariablesAsync(GitLabApiHelper.TestGroupId);
+            var variable = variables.First(v => v.Key == createdVariable.Key);
+
+            //assert
+            variables.Should().NotBeEmpty();
+            variable.Should().Match<Variable>(v =>
+                v.VariableType == createdVariable.VariableType &&
+                v.Key == createdVariable.Key &&
+                v.Value == createdVariable.Value &&
+                v.Masked == createdVariable.Masked &&
+                v.Protected == createdVariable.Protected);
+        }
+
+        [Fact]
+        public async Task GroupVariablesCreated()
+        {
+            var request = new CreateGroupVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_CREATED",
+                Value = "VALUE_VAR",
+                Masked = true,
+                Protected = true
+            };
+
+            var variable = await _sut.CreateVariableAsync(GitLabApiHelper.TestGroupId, request);
+
+            variable.Should().Match<Variable>(v => v.VariableType == request.VariableType
+                                                   && v.Key == request.Key
+                                                   && v.Value == request.Value
+                                                   && v.Masked == request.Masked
+                                                   && v.Protected == request.Protected);
+
+            VariableIdsToClean.Add(request.Key);
+        }
+
+        [Fact]
+        public async Task GroupVariableCanBeUpdated()
+        {
+            var request = new CreateGroupVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_TO_UPDATE",
+                Value = "VALUE_VAR",
+                Masked = true,
+                Protected = true
+            };
+
+            var variable = await _sut.CreateVariableAsync(GitLabApiHelper.TestGroupId, request);
+
+            VariableIdsToClean.Add(request.Key);
+
+            var updateRequest = new UpdateGroupVariableRequest
+            {
+                VariableType = "file",
+                Key = request.Key,
+                Value = "UpdatedValue",
+                Masked = request.Masked,
+                Protected = request.Protected,
+            };
+
+            var variableUpdated = await _sut.UpdateVariableAsync(GitLabApiHelper.TestGroupId, updateRequest);
+
+            variableUpdated.Should().Match<Variable>(v => v.VariableType == updateRequest.VariableType
+                                                          && v.Key == updateRequest.Key
+                                                          && v.Value == updateRequest.Value
+                                                          && v.Masked == updateRequest.Masked
+                                                          && v.Protected == updateRequest.Protected);
+        }
+
+        [Fact]
         public Task InitializeAsync()
             => CleanupGroups();
 
@@ -244,6 +332,9 @@ namespace GitLabApiClient.Test
 
             foreach (int groupId in _groupIdsToClean)
                 await _sut.DeleteAsync(groupId.ToString());
+
+            foreach (string variableId in VariableIdsToClean)
+                await _sut.DeleteVariableAsync(GitLabApiHelper.TestGroupId, variableId);
         }
 
         private static string GetRandomGroupName()

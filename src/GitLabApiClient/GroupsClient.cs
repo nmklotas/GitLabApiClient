@@ -336,5 +336,44 @@ namespace GitLabApiClient
         /// <param name="name">Name of the label.</param>
         public async Task DeleteLabelAsync(GroupId groupId, string name) =>
             await _httpFacade.Delete($"groups/{groupId}/labels?name={name}");
+
+        /// <summary>
+        /// Retrieves group variables by its id.
+        /// </summary>
+        /// <param name="groupId">Id of the group.</param>
+        public async Task<IList<Variable>> GetVariablesAsync(GroupId groupId) =>
+            await _httpFacade.GetPagedList<Variable>($"groups/{groupId}/variables");
+
+        /// <summary>
+        /// Creates new project variable.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="request">Create variable request.</param>
+        /// <returns>Newly created variable.</returns>
+        public async Task<Variable> CreateVariableAsync(GroupId groupId, CreateGroupVariableRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Variable>($"groups/{groupId}/variables", request);
+        }
+
+        /// <summary>
+        /// Updates an existing group variable.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="request">Update variable request.</param>
+        /// <returns>Newly modified variable.</returns>
+        public async Task<Variable> UpdateVariableAsync(GroupId groupId, UpdateGroupVariableRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Put<Variable>($"groups/{groupId}/variables/{request.Key}", request);
+        }
+
+        /// <summary>
+        /// Deletes group variable
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="key">The Key ID of the variable.</param>
+        public async Task DeleteVariableAsync(GroupId groupId, string key) =>
+            await _httpFacade.Delete($"groups/{groupId}/variables/{key}");
     }
 }
