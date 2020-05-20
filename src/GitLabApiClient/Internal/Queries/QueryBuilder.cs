@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models;
@@ -9,11 +8,10 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal abstract class QueryBuilder<T>
     {
-        private readonly NameValueCollection _nameValues = new NameValueCollection();
+        private readonly List<string> _nameValues = new List<string>();
 
         public string Build(string baseUrl, T options)
         {
-            _nameValues.Clear();
             BuildCore(options);
             return baseUrl + ToQueryString(_nameValues);
         }
@@ -21,7 +19,7 @@ namespace GitLabApiClient.Internal.Queries
         protected abstract void BuildCore(T options);
 
         protected void Add(string name, string value)
-            => _nameValues.Add(name, value);
+            => _nameValues.Add(ToQueryString(name, value));
 
         protected void Add(string name, bool value)
             => Add(name, value.ToLowerCaseString());
@@ -80,14 +78,11 @@ namespace GitLabApiClient.Internal.Queries
             }
         }
 
-        private static string ToQueryString(NameValueCollection nvc)
+        private static string ToQueryString(List<string> dic)
         {
-            var array =
-                from key in nvc.AllKeys
-                from value in nvc.GetValues(key)
-                select $"{key.UrlEncode()}={value.UrlEncode()}";
-
-            return $"?{string.Join("&", array)}";
+            return $"?{string.Join("&", dic)}";
         }
+
+        private static string ToQueryString(string key, string value) => $"{key.UrlEncode()}={value.UrlEncode()}";
     }
 }

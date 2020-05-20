@@ -13,17 +13,8 @@ namespace GitLabApiClient
     public sealed class CommitsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly CommitQueryBuilder _commitQueryBuilder;
-        private readonly CommitRefsQueryBuilder _commitRefsQueryBuilder;
-        private readonly CommitStatusesQueryBuilder _commitStatusesQueryBuilder;
 
-        internal CommitsClient(GitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder, CommitRefsQueryBuilder commitRefsQueryBuilder, CommitStatusesQueryBuilder commitStatusesQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _commitQueryBuilder = commitQueryBuilder;
-            _commitRefsQueryBuilder = commitRefsQueryBuilder;
-            _commitStatusesQueryBuilder = commitStatusesQueryBuilder;
-        }
+        internal CommitsClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Get a commit from commit sha
@@ -45,7 +36,7 @@ namespace GitLabApiClient
             var queryOptions = new CommitQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _commitQueryBuilder.Build($"projects/{projectId}/repository/commits", queryOptions);
+            string url = new CommitQueryBuilder().Build($"projects/{projectId}/repository/commits", queryOptions);
             return await _httpFacade.GetPagedList<Commit>(url);
         }
 
@@ -61,7 +52,7 @@ namespace GitLabApiClient
             var queryOptions = new CommitRefsQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _commitRefsQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/refs", queryOptions);
+            string url = new CommitRefsQueryBuilder().Build($"projects/{projectId}/repository/commits/{sha}/refs", queryOptions);
             return await _httpFacade.GetPagedList<CommitRef>(url);
         }
 
@@ -89,7 +80,7 @@ namespace GitLabApiClient
             var queryOptions = new CommitStatusesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _commitStatusesQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/statuses", queryOptions);
+            string url = new CommitStatusesQueryBuilder().Build($"projects/{projectId}/repository/commits/{sha}/statuses", queryOptions);
             return await _httpFacade.GetPagedList<CommitStatuses>(url);
         }
     }

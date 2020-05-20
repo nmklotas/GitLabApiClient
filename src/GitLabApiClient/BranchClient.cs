@@ -13,15 +13,8 @@ namespace GitLabApiClient
     public sealed class BranchClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly BranchQueryBuilder _branchQueryBuilder;
 
-        internal BranchClient(
-            GitLabHttpFacade httpFacade,
-            BranchQueryBuilder branchQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _branchQueryBuilder = branchQueryBuilder;
-        }
+        internal BranchClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves a single branch
@@ -43,7 +36,7 @@ namespace GitLabApiClient
             var queryOptions = new BranchQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _branchQueryBuilder.Build($"projects/{projectId}/repository/branches", queryOptions);
+            string url = new BranchQueryBuilder().Build($"projects/{projectId}/repository/branches", queryOptions);
             return await _httpFacade.GetPagedList<Branch>(url);
         }
 

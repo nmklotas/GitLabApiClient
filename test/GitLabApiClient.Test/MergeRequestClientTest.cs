@@ -16,9 +16,7 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class MergeRequestClientTest : IAsyncLifetime
     {
-        private readonly MergeRequestsClient _sut = new MergeRequestsClient(
-            GitLabApiHelper.GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder(),
-            new ProjectMergeRequestsNotesQueryBuilder());
+        private readonly MergeRequestsClient _sut = new MergeRequestsClient(GitLabApiHelper.GetFacade());
 
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()

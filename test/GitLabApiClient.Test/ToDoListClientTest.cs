@@ -17,13 +17,11 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class ToDoListClientTest : IAsyncLifetime
     {
-        private readonly MergeRequestsClient mergeRequestsClient = new MergeRequestsClient(GitLabApiHelper.GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder(), new ProjectMergeRequestsNotesQueryBuilder());
-        private readonly IssuesClient issuesClient = new IssuesClient(GitLabApiHelper.GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
+        private readonly MergeRequestsClient mergeRequestsClient = new MergeRequestsClient(GitLabApiHelper.GetFacade());
+        private readonly IssuesClient issuesClient = new IssuesClient(GitLabApiHelper.GetFacade());
 
 
-        private readonly ToDoListClient _sut = new ToDoListClient(
-            GitLabApiHelper.GetFacade(),
-            new ToDoListQueryBuilder());
+        private readonly ToDoListClient _sut = new ToDoListClient(GitLabApiHelper.GetFacade());
 
         [Fact]
         public async Task RetrieveToDoListAndMarkAsDone()

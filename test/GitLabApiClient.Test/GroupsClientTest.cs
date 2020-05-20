@@ -20,12 +20,7 @@ namespace GitLabApiClient.Test
         private readonly List<int> _groupIdsToClean = new List<int>();
         private List<int> MilestoneIdsToClean { get; } = new List<int>();
 
-        private readonly GroupsClient _sut = new GroupsClient(
-            GetFacade(),
-            new GroupsQueryBuilder(),
-            new ProjectsGroupQueryBuilder(),
-            new MilestonesQueryBuilder(),
-            new GroupLabelsQueryBuilder());
+        private readonly GroupsClient _sut = new GroupsClient(GetFacade());
 
         [Fact]
         public async Task GroupCanBeRetrievedByGroupId()

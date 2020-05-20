@@ -27,17 +27,8 @@ namespace GitLabApiClient
     public sealed class ProjectsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly ProjectsQueryBuilder _queryBuilder;
-        private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
-        private readonly JobQueryBuilder _jobQueryBuilder;
 
-        internal ProjectsClient(GitLabHttpFacade httpFacade, ProjectsQueryBuilder queryBuilder, MilestonesQueryBuilder queryMilestonesBuilder, JobQueryBuilder jobQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _queryBuilder = queryBuilder;
-            _queryMilestonesBuilder = queryMilestonesBuilder;
-            _jobQueryBuilder = jobQueryBuilder;
-        }
+        internal ProjectsClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves project by its id, path or <see cref="Project"/>.
@@ -56,7 +47,7 @@ namespace GitLabApiClient
             var queryOptions = new ProjectQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryBuilder.Build("projects", queryOptions);
+            string url = new ProjectsQueryBuilder().Build("projects", queryOptions);
             return await _httpFacade.GetPagedList<Project>(url);
         }
 
@@ -91,7 +82,7 @@ namespace GitLabApiClient
             var queryOptions = new MilestonesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryMilestonesBuilder.Build($"projects/{projectId}/milestones", queryOptions);
+            string url = new MilestonesQueryBuilder().Build($"projects/{projectId}/milestones", queryOptions);
             return await _httpFacade.GetPagedList<Milestone>(url);
         }
 
@@ -105,7 +96,7 @@ namespace GitLabApiClient
             var queryOptions = new JobQueryOptions();
             options?.Invoke(queryOptions);
 
-            var url = _jobQueryBuilder.Build($"projects/{projectId}/jobs", queryOptions);
+            string url = new JobQueryBuilder().Build($"projects/{projectId}/jobs", queryOptions);
             return await _httpFacade.GetPagedList<Job>(url);
         }
 

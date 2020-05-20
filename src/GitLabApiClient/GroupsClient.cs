@@ -23,24 +23,8 @@ namespace GitLabApiClient
     public sealed class GroupsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly GroupsQueryBuilder _queryBuilder;
-        private readonly ProjectsGroupQueryBuilder _projectsQueryBuilder;
-        private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
-        private readonly GroupLabelsQueryBuilder _queryGroupLabelBuilder;
 
-        internal GroupsClient(
-            GitLabHttpFacade httpFacade,
-            GroupsQueryBuilder queryBuilder,
-            ProjectsGroupQueryBuilder projectsQueryBuilder,
-            MilestonesQueryBuilder queryMilestonesBuilder,
-            GroupLabelsQueryBuilder queryGroupLabelBuilder)
-        {
-            _httpFacade = httpFacade;
-            _queryBuilder = queryBuilder;
-            _projectsQueryBuilder = projectsQueryBuilder;
-            _queryMilestonesBuilder = queryMilestonesBuilder;
-            _queryGroupLabelBuilder = queryGroupLabelBuilder;
-        }
+        internal GroupsClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Get all details of a group.
@@ -75,7 +59,7 @@ namespace GitLabApiClient
             var queryOptions = new GroupsQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryBuilder.Build("groups", queryOptions);
+            string url = new GroupsQueryBuilder().Build("groups", queryOptions);
             return await _httpFacade.GetPagedList<Group>(url);
         }
 
@@ -91,7 +75,7 @@ namespace GitLabApiClient
             var queryOptions = new ProjectsGroupQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _projectsQueryBuilder.Build($"groups/{groupId}/projects", queryOptions);
+            string url = new ProjectsGroupQueryBuilder().Build($"groups/{groupId}/projects", queryOptions);
             return await _httpFacade.GetPagedList<Project>(url);
         }
 
@@ -153,7 +137,7 @@ namespace GitLabApiClient
             var queryOptions = new MilestonesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryMilestonesBuilder.Build($"groups/{groupId}/milestones", queryOptions);
+            string url = new MilestonesQueryBuilder().Build($"groups/{groupId}/milestones", queryOptions);
             return await _httpFacade.GetPagedList<Milestone>(url);
         }
 
@@ -301,7 +285,7 @@ namespace GitLabApiClient
             var labelOptions = new GroupLabelsQueryOptions();
             options?.Invoke(labelOptions);
 
-            string url = _queryGroupLabelBuilder.Build($"groups/{groupId}/labels", labelOptions);
+            string url = new GroupLabelsQueryBuilder().Build($"groups/{groupId}/labels", labelOptions);
             return await _httpFacade.GetPagedList<GroupLabel>(url);
         }
 

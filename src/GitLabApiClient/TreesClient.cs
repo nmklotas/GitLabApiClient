@@ -12,20 +12,14 @@ namespace GitLabApiClient
     public sealed class TreesClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly TreeQueryBuilder _treeQueryBuilder;
 
-        internal TreesClient(GitLabHttpFacade httpFacade, TreeQueryBuilder treeQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _treeQueryBuilder = treeQueryBuilder;
-        }
+        internal TreesClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         public async Task<IList<Tree>> GetAsync(ProjectId projectId, Action<TreeQueryOptions> options = null)
         {
             var queryOptions = new TreeQueryOptions();
             options?.Invoke(queryOptions);
-
-            string url = _treeQueryBuilder.Build($"projects/{projectId}/repository/tree", queryOptions);
+            string url = new TreeQueryBuilder().Build($"projects/{projectId}/repository/tree", queryOptions);
             return await _httpFacade.GetPagedList<Tree>(url);
         }
     }

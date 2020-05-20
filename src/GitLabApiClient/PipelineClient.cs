@@ -13,15 +13,8 @@ namespace GitLabApiClient
     public sealed class PipelineClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly PipelineQueryBuilder _queryBuilder;
-        private readonly JobQueryBuilder _jobQueryBuilder;
 
-        internal PipelineClient(GitLabHttpFacade httpFacade, PipelineQueryBuilder queryBuilder, JobQueryBuilder jobQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _queryBuilder = queryBuilder;
-            _jobQueryBuilder = jobQueryBuilder;
-        }
+        internal PipelineClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         public async Task<PipelineDetail> GetAsync(ProjectId projectId, int pipelineId) =>
             await _httpFacade.Get<PipelineDetail>($"projects/{projectId}/pipelines/{pipelineId}");
@@ -31,7 +24,7 @@ namespace GitLabApiClient
             var queryOptions = new PipelineQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryBuilder.Build($"projects/{projectId}/pipelines", queryOptions);
+            string url = new PipelineQueryBuilder().Build($"projects/{projectId}/pipelines", queryOptions);
             return await _httpFacade.GetPagedList<Pipeline>(url);
         }
 
@@ -43,7 +36,7 @@ namespace GitLabApiClient
             var queryOptions = new JobQueryOptions();
             options?.Invoke(queryOptions);
 
-            var url = _jobQueryBuilder.Build($"projects/{projectId}/pipelines/{pipelineId}/jobs", queryOptions);
+            string url = new JobQueryBuilder().Build($"projects/{projectId}/pipelines/{pipelineId}/jobs", queryOptions);
             return await _httpFacade.GetPagedList<Job>(url);
         }
 

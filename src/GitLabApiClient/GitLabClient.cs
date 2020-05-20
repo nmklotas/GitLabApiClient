@@ -2,12 +2,9 @@ using System;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
-using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
-using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
-using GitLabApiClient.Models.Pipelines.Requests;
 
 namespace GitLabApiClient
 {
@@ -36,44 +33,23 @@ namespace GitLabApiClient
                 jsonSerializer,
                 authenticationToken);
 
-            var projectQueryBuilder = new ProjectsQueryBuilder();
-            var projectIssueNotesQueryBuilder = new ProjectIssueNotesQueryBuilder();
-            var projectMergeRequestsNotesQueryBuilder = new ProjectMergeRequestsNotesQueryBuilder();
-            var issuesQueryBuilder = new IssuesQueryBuilder();
-            var mergeRequestsQueryBuilder = new MergeRequestsQueryBuilder();
-            var projectMilestonesQueryBuilder = new MilestonesQueryBuilder();
-            var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
-            var groupsQueryBuilder = new GroupsQueryBuilder();
-            var groupLabelsQueryBuilder = new GroupLabelsQueryBuilder();
-            var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
-            var branchQueryBuilder = new BranchQueryBuilder();
-            var releaseQueryBuilder = new ReleaseQueryBuilder();
-            var tagQueryBuilder = new TagQueryBuilder();
-            var commitQueryBuilder = new CommitQueryBuilder();
-            var commitRefsQueryBuilder = new CommitRefsQueryBuilder();
-            var commitStatusesQueryBuilder = new CommitStatusesQueryBuilder();
-            var pipelineQueryBuilder = new PipelineQueryBuilder();
-            var treeQueryBuilder = new TreeQueryBuilder();
-            var jobQueryBuilder = new JobQueryBuilder();
-            var toDoListBuilder = new ToDoListQueryBuilder();
-
-            Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssueNotesQueryBuilder);
+            Issues = new IssuesClient(_httpFacade);
             Uploads = new UploadsClient(_httpFacade);
-            MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder, projectMergeRequestsNotesQueryBuilder);
-            Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder, jobQueryBuilder);
+            MergeRequests = new MergeRequestsClient(_httpFacade);
+            Projects = new ProjectsClient(_httpFacade);
             Users = new UsersClient(_httpFacade);
-            Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder, groupLabelsQueryBuilder);
-            Branches = new BranchClient(_httpFacade, branchQueryBuilder);
-            Releases = new ReleaseClient(_httpFacade, releaseQueryBuilder);
-            Tags = new TagClient(_httpFacade, tagQueryBuilder);
+            Groups = new GroupsClient(_httpFacade);
+            Branches = new BranchClient(_httpFacade);
+            Releases = new ReleaseClient(_httpFacade);
+            Tags = new TagClient(_httpFacade);
             Webhooks = new WebhookClient(_httpFacade);
-            Commits = new CommitsClient(_httpFacade, commitQueryBuilder, commitRefsQueryBuilder, commitStatusesQueryBuilder);
+            Commits = new CommitsClient(_httpFacade);
             Markdown = new MarkdownClient(_httpFacade);
-            Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
-            Trees = new TreesClient(_httpFacade, treeQueryBuilder);
+            Pipelines = new PipelineClient(_httpFacade);
+            Trees = new TreesClient(_httpFacade);
             Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
-            ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
+            ToDoList = new ToDoListClient(_httpFacade);
         }
 
         /// <summary>

@@ -18,8 +18,7 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class IssuesClientTest
     {
-        private readonly IssuesClient _sut = new IssuesClient(
-            GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
+        private readonly IssuesClient _sut = new IssuesClient(GetFacade());
 
         [Fact]
         public async Task CreatedIssueCanBeUpdated()

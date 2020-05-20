@@ -24,11 +24,7 @@ namespace GitLabApiClient.Test
         private List<int> MilestoneIdsToClean { get; } = new List<int>();
         private List<string> VariableIdsToClean { get; } = new List<string>();
 
-        private readonly ProjectsClient _sut = new ProjectsClient(
-            GitLabApiHelper.GetFacade(),
-            new ProjectsQueryBuilder(),
-            new MilestonesQueryBuilder(),
-            new JobQueryBuilder());
+        private readonly ProjectsClient _sut = new ProjectsClient(GitLabApiHelper.GetFacade());
 
         [Fact]
         public async Task ProjectRetrieved()

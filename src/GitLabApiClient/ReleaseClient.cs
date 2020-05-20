@@ -14,15 +14,8 @@ namespace GitLabApiClient
     public sealed class ReleaseClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly ReleaseQueryBuilder _releaseQueryBuilder;
 
-        internal ReleaseClient(
-            GitLabHttpFacade httpFacade,
-            ReleaseQueryBuilder releaseQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _releaseQueryBuilder = releaseQueryBuilder;
-        }
+        internal ReleaseClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves a release by its name
@@ -44,7 +37,7 @@ namespace GitLabApiClient
             var queryOptions = new ReleaseQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _releaseQueryBuilder.Build($"projects/{projectId}/releases", queryOptions);
+            string url = new ReleaseQueryBuilder().Build($"projects/{projectId}/releases", queryOptions);
             return await _httpFacade.GetPagedList<Release>(url);
         }
 

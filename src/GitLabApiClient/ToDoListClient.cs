@@ -17,13 +17,8 @@ namespace GitLabApiClient
     public sealed class ToDoListClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly ToDoListQueryBuilder _queryBuilder;
 
-        internal ToDoListClient(GitLabHttpFacade httpFacade, ToDoListQueryBuilder queryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _queryBuilder = queryBuilder;
-        }
+        internal ToDoListClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Get a list of ToDos for current user.
@@ -34,7 +29,7 @@ namespace GitLabApiClient
             var queryOptions = new ToDoListQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _queryBuilder.Build("todos", queryOptions);
+            string url = new ToDoListQueryBuilder().Build("todos", queryOptions);
             return await _httpFacade.GetPagedList<IToDo>(url);
         }
 

@@ -22,21 +22,8 @@ namespace GitLabApiClient
     public sealed class MergeRequestsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly MergeRequestsQueryBuilder _mergeRequestsQueryBuilder;
-        private readonly ProjectMergeRequestsQueryBuilder _projectMergeRequestsQueryBuilder;
-        private readonly ProjectMergeRequestsNotesQueryBuilder _projectMergeRequestNotesQueryBuilder;
 
-        internal MergeRequestsClient(
-            GitLabHttpFacade httpFacade,
-            MergeRequestsQueryBuilder mergeRequestsQueryBuilder,
-            ProjectMergeRequestsQueryBuilder projectMergeRequestsQueryBuilder,
-            ProjectMergeRequestsNotesQueryBuilder projectMergeRequestNotesQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _mergeRequestsQueryBuilder = mergeRequestsQueryBuilder;
-            _projectMergeRequestsQueryBuilder = projectMergeRequestsQueryBuilder;
-            _projectMergeRequestNotesQueryBuilder = projectMergeRequestNotesQueryBuilder;
-        }
+        internal MergeRequestsClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves merge request from a project.
@@ -50,7 +37,7 @@ namespace GitLabApiClient
             var projectMergeRequestOptions = new ProjectMergeRequestsQueryOptions();
             options?.Invoke(projectMergeRequestOptions);
 
-            string query = _projectMergeRequestsQueryBuilder.
+            string query = new MergeRequestsQueryBuilder().
                 Build($"projects/{projectId}/merge_requests", projectMergeRequestOptions);
 
             return await _httpFacade.GetPagedList<MergeRequest>(query);
@@ -67,7 +54,7 @@ namespace GitLabApiClient
             var mergeRequestOptions = new MergeRequestsQueryOptions();
             options?.Invoke(mergeRequestOptions);
 
-            string query = _mergeRequestsQueryBuilder.
+            string query = new MergeRequestsQueryBuilder().
                 Build("merge_requests", mergeRequestOptions);
 
             return await _httpFacade.GetPagedList<MergeRequest>(query);
@@ -125,7 +112,7 @@ namespace GitLabApiClient
             var queryOptions = new MergeRequestNotesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _projectMergeRequestNotesQueryBuilder.Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
+            string url = new ProjectMergeRequestsNotesQueryBuilder().Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
     }

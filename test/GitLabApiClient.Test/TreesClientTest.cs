@@ -10,7 +10,7 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class TreesClientTest
     {
-        private readonly TreesClient _sut = new TreesClient(GetFacade(), new TreeQueryBuilder());
+        private readonly TreesClient _sut = new TreesClient(GetFacade());
 
         [Fact]
         public async Task GetTrees()

@@ -23,18 +23,8 @@ namespace GitLabApiClient
     public sealed class IssuesClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly IssuesQueryBuilder _queryBuilder;
-        private readonly ProjectIssueNotesQueryBuilder _projectIssueNotesQueryBuilder;
 
-        internal IssuesClient(
-            GitLabHttpFacade httpFacade,
-            IssuesQueryBuilder queryBuilder,
-            ProjectIssueNotesQueryBuilder projectIssueNotesQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _queryBuilder = queryBuilder;
-            _projectIssueNotesQueryBuilder = projectIssueNotesQueryBuilder;
-        }
+        internal IssuesClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves issues.
@@ -89,7 +79,7 @@ namespace GitLabApiClient
                 path = $"groups/{groupId}/issues";
             }
 
-            string url = _queryBuilder.Build(path, queryOptions);
+            string url = new IssuesQueryBuilder().Build(path, queryOptions);
 
             return await _httpFacade.GetPagedList<Issue>(url);
         }
@@ -143,7 +133,7 @@ namespace GitLabApiClient
             var queryOptions = new IssueNotesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _projectIssueNotesQueryBuilder.Build($"projects/{projectId}/issues/{issueIid}/notes", queryOptions);
+            string url = new ProjectIssueNotesQueryBuilder().Build($"projects/{projectId}/issues/{issueIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
 

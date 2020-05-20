@@ -15,7 +15,7 @@ namespace GitLabApiClient.Test
     [Collection("GitLabContainerFixture")]
     public class ReleasesTest
     {
-        private readonly ReleaseClient _sut = new ReleaseClient(GetFacade(), new ReleaseQueryBuilder());
+        private readonly ReleaseClient _sut = new ReleaseClient(GetFacade());
 
         [Fact]
         public async Task CreatedReleaseCanBeUpdated()

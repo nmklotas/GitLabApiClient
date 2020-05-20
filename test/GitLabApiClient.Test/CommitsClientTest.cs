@@ -6,7 +6,6 @@ using FakeItEasy;
 using FluentAssertions;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
-using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Test.TestUtilities;
 using Xunit;
 
@@ -30,7 +29,7 @@ namespace GitLabApiClient.Test
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
-                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder(), new CommitStatusesQueryBuilder());
+                var commitsClient = new CommitsClient(gitlabHttpFacade);
 
                 var commitFromClient = await commitsClient.GetAsync(projectId, sha);
                 commitFromClient.Id.Should().BeEquivalentTo(sha);
@@ -52,7 +51,7 @@ namespace GitLabApiClient.Test
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
-                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder(), new CommitStatusesQueryBuilder());
+                var commitsClient = new CommitsClient(gitlabHttpFacade);
 
                 var commitsFromClient = await commitsClient.GetAsync(projectId, o => o.RefName = refName);
                 commitsFromClient[0].Id.Should().BeEquivalentTo("id1");
@@ -76,7 +75,7 @@ namespace GitLabApiClient.Test
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
-                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder(), new CommitStatusesQueryBuilder());
+                var commitsClient = new CommitsClient(gitlabHttpFacade);
 
                 var diffsFromClient = await commitsClient.GetDiffsAsync(projectId, sha);
                 diffsFromClient[0].DiffText.Should().BeEquivalentTo("diff1");
@@ -116,7 +115,7 @@ namespace GitLabApiClient.Test
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(gitlabServer) })
             {
                 var gitlabHttpFacade = new GitLabHttpFacade(new RequestsJsonSerializer(), client);
-                var commitsClient = new CommitsClient(gitlabHttpFacade, new CommitQueryBuilder(), new CommitRefsQueryBuilder(), new CommitStatusesQueryBuilder());
+                var commitsClient = new CommitsClient(gitlabHttpFacade);
 
                 var statusesFromClient = await commitsClient.GetStatusesAsync(projectId, sha, o => o.Name = Name);
                 statusesFromClient[0].Status.Should().BeEquivalentTo("success");

@@ -13,15 +13,8 @@ namespace GitLabApiClient
     public sealed class TagClient
     {
         private readonly GitLabHttpFacade _httpFacade;
-        private readonly TagQueryBuilder _tagQueryBuilder;
 
-        internal TagClient(
-            GitLabHttpFacade httpFacade,
-            TagQueryBuilder tagQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _tagQueryBuilder = tagQueryBuilder;
-        }
+        internal TagClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         /// <summary>
         /// Retrieves a tag by its name
@@ -43,7 +36,7 @@ namespace GitLabApiClient
             var queryOptions = new TagQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _tagQueryBuilder.Build($"projects/{projectId}/repository/tags", queryOptions);
+            string url = new TagQueryBuilder().Build($"projects/{projectId}/repository/tags", queryOptions);
             return await _httpFacade.GetPagedList<Tag>(url);
         }
 
