@@ -63,7 +63,7 @@ namespace GitLabApiClient
         /// <param name="request">Create hook request.</param>
         /// <returns>newly created hook</returns>
         public async Task<Webhook> UpdateAsync(ProjectId projectId, long hookId, CreateWebhookRequest request) =>
-            await _httpFacade.Post<Webhook>($"projects/{projectId}/hooks/{hookId}", request);
+            await _httpFacade.Put<Webhook>($"projects/{projectId}/hooks/{hookId}", request);
     }
 
 
