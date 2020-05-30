@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.AwardEmojis.Responses;
+using GitLabApiClient.Models.Discussions.Responses;
 using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
 using GitLabApiClient.Models.Notes.Requests;
@@ -128,5 +130,22 @@ namespace GitLabApiClient
             string url = _projectMergeRequestNotesQueryBuilder.Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
+
+        /// <summary>
+        /// Retrieves discussions of a merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">Iid of the merge request.</param>
+        public async Task<IList<Discussion>> GetDiscussionsAsync(ProjectId projectId, int mergeRequestIid) =>
+            await _httpFacade.GetPagedList<Discussion>($"projects/{projectId}/merge_requests/{mergeRequestIid}/discussions");
+
+        /// <summary>
+        /// Retrieves a list of all award emoji for a specified merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
+        public async Task<IList<AwardEmoji>> GetAwardEmojisAsync(ProjectId projectId, int mergeRequestIid) =>
+            await _httpFacade.GetPagedList<AwardEmoji>($"projects/{projectId}/merge_requests/{mergeRequestIid}/award_emoji");
+
     }
 }
