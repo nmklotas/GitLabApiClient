@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
@@ -23,7 +24,8 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="hostUrl">Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/ </param>
         /// <param name="authenticationToken">Personal access token. Obtained from GitLab profile settings.</param>
-        public GitLabClient(string hostUrl, string authenticationToken = "")
+        /// <param name="httpMessageHandler">Optional handler for HTTP messages. Used for SSL pinning or canceling validation for example.</param>
+        public GitLabClient(string hostUrl, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null)
         {
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
@@ -34,7 +36,8 @@ namespace GitLabApiClient
             _httpFacade = new GitLabHttpFacade(
                 HostUrl,
                 jsonSerializer,
-                authenticationToken);
+                authenticationToken,
+                httpMessageHandler);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
             var projectIssueNotesQueryBuilder = new ProjectIssueNotesQueryBuilder();
@@ -74,6 +77,7 @@ namespace GitLabApiClient
             Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
             ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
+            Connection = new ConnectionClient(_httpFacade);
         }
 
         /// <summary>
@@ -160,6 +164,11 @@ namespace GitLabApiClient
         /// Access GitLab's ToDo-List API.
         /// </summary>
         public ToDoListClient ToDoList { get; }
+
+        /// <summary>
+        /// Provides a client connection to make rest requests to HTTP endpoints.
+        /// </summary>
+        public ConnectionClient Connection { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
