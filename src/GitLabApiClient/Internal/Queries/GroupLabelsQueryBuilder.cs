@@ -7,16 +7,16 @@ namespace GitLabApiClient.Internal.Queries
         #region Overrides of QueryBuilder<GroupLabelsQueryOptions>
 
         /// <inheritdoc />
-        protected override void BuildCore(GroupLabelsQueryOptions options)
+        protected override void BuildCore(Query query, GroupLabelsQueryOptions options)
         {
             if (options.WithCounts)
             {
-                Add("with_counts", true);
+                query.Add("with_counts", true);
             }
 
             if (!options.IncludeAncestorGroups)
             {
-                Add("include_ancestor_groups", false);
+                query.Add("include_ancestor_groups", false);
             }
         }
 

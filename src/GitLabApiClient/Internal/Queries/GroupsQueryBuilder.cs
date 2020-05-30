@@ -6,33 +6,33 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal sealed class GroupsQueryBuilder : QueryBuilder<GroupsQueryOptions>
     {
-        protected override void BuildCore(GroupsQueryOptions options)
+        protected override void BuildCore(Query query, GroupsQueryOptions options)
         {
-            Add("skip_groups", options.SkipGroups);
+            query.Add("skip_groups", options.SkipGroups);
 
             if (options.AllAvailable)
-                Add("all_available", options.AllAvailable);
+                query.Add("all_available", options.AllAvailable);
 
             if (!options.Search.IsNullOrEmpty())
-                Add("search", options.Search);
+                query.Add("search", options.Search);
 
             if (options.Order != GroupsOrder.Name)
-                Add("order_by", GetOrderQueryValue(options.Order));
+                query.Add("order_by", GetOrderQueryValue(options.Order));
 
             if (options.Sort != GroupsSort.Ascending)
-                Add("sort", GetSortQueryValue(options.Sort));
+                query.Add("sort", GetSortQueryValue(options.Sort));
 
             if (options.Statistics)
-                Add("statistics", options.Statistics);
+                query.Add("statistics", options.Statistics);
 
             if (options.WithCustomAttributes)
-                Add("with_custom_attributes", options.WithCustomAttributes);
+                query.Add("with_custom_attributes", options.WithCustomAttributes);
 
             if (options.Owned)
-                Add("owned", options.Owned);
+                query.Add("owned", options.Owned);
 
             if (options.MinAccessLevel.HasValue)
-                Add("min_access_level", (int)options.MinAccessLevel.Value);
+                query.Add("min_access_level", (int)options.MinAccessLevel.Value);
         }
 
         private static string GetOrderQueryValue(GroupsOrder order)

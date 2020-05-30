@@ -1,64 +1,66 @@
 using System;
-using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
+using GitLabApiClient.Models.Pipelines;
+using GitLabApiClient.Models.Pipelines.Requests;
 
-namespace GitLabApiClient.Models.Pipelines.Requests
+namespace GitLabApiClient.Internal.Queries
 {
     internal sealed class PipelineQueryBuilder : QueryBuilder<PipelineQueryOptions>
     {
         #region Overrides of QueryBuilder<PipelineQueryOptions>
 
         /// <inheritdoc />
-        protected override void BuildCore(PipelineQueryOptions options)
+        protected override void BuildCore(Query query, PipelineQueryOptions options)
         {
             if (!options.Ref.IsNullOrEmpty())
             {
-                Add("ref", options.Ref);
+                query.Add("ref", options.Ref);
             }
 
             if (options.YamlErrors.HasValue)
             {
-                Add("yaml_errors", options.YamlErrors.Value);
+                query.Add("yaml_errors", options.YamlErrors.Value);
             }
 
             if (!options.Sha.IsNullOrEmpty())
             {
-                Add("sha", options.Sha);
+                query.Add("sha", options.Sha);
             }
 
             if (options.Status != PipelineStatus.All)
             {
-                Add("status", options.Status.ToLowerCaseString());
+                query.Add("status", options.Status.ToLowerCaseString());
             }
 
             if (options.Scope != PipelineScope.All)
             {
-                Add("scope", options.Scope.ToLowerCaseString());
+                query.Add("scope", options.Scope.ToLowerCaseString());
             }
 
             if (options.Order != PipelineOrder.Id)
             {
-                Add("order_by", AsString(options.Order));
+                query.Add("order_by", AsString(options.Order));
             }
 
             if (options.SortOrder != SortOrder.Descending)
             {
-                Add("sort", "asc");
+                query.Add("sort", "asc");
             }
 
             if (options.UpdatedAfter.HasValue)
             {
-                Add("updated_after", options.UpdatedAfter.Value);
+                query.Add("updated_after", options.UpdatedAfter.Value);
             }
 
             if (options.UpdatedBefore.HasValue)
             {
-                Add("updated_before", options.UpdatedBefore.Value);
+                query.Add("updated_before", options.UpdatedBefore.Value);
             }
 
             if (!options.TriggeredBy.IsNullOrEmpty())
             {
-                Add("username", options.TriggeredBy);
+                query.Add("username", options.TriggeredBy);
             }
         }
 

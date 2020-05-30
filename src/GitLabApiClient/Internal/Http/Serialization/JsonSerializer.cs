@@ -5,20 +5,18 @@ namespace GitLabApiClient.Internal.Http.Serialization
 {
     internal sealed class RequestsJsonSerializer
     {
-        static RequestsJsonSerializer() => JsonConvert.DefaultSettings = () =>
-        {
-            var settings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings Settings;
+
+        static RequestsJsonSerializer()
+            => Settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new EmptyCollectionContractResolver()
+                ContractResolver = new EmptyCollectionContractResolver(),
+                Converters = { new StringEnumConverter() }
             };
 
-            settings.Converters.Add(new StringEnumConverter());
-            return settings;
-        };
+        public string Serialize(object obj) => JsonConvert.SerializeObject(obj, Settings);
 
-        public string Serialize(object obj) => JsonConvert.SerializeObject(obj);
-
-        public T Deserialize<T>(string serializeJson) => JsonConvert.DeserializeObject<T>(serializeJson);
+        public T Deserialize<T>(string serializeJson) => JsonConvert.DeserializeObject<T>(serializeJson, Settings);
     }
 }
