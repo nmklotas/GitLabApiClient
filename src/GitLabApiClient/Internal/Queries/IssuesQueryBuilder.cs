@@ -9,55 +9,55 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal class IssuesQueryBuilder : QueryBuilder<IssuesQueryOptions>
     {
-        protected override void BuildCore(IssuesQueryOptions options)
+        protected override void BuildCore(Query query, IssuesQueryOptions options)
         {
             string stateQueryValue = GetStateQueryValue(options.State);
             if (!stateQueryValue.IsNullOrEmpty())
-                Add("state", stateQueryValue);
+                query.Add("state", stateQueryValue);
 
             if (options.Labels.Any())
-                Add("labels", options.Labels);
+                query.Add("labels", options.Labels);
 
             if (!options.MilestoneTitle.IsNullOrEmpty())
-                Add("milestone", options.MilestoneTitle);
+                query.Add("milestone", options.MilestoneTitle);
 
-            Add("scope", GetScopeQueryValue(options.Scope));
+            query.Add("scope", GetScopeQueryValue(options.Scope));
 
             if (options.AuthorId.HasValue)
-                Add("author_id", options.AuthorId.Value);
+                query.Add("author_id", options.AuthorId.Value);
             else if (!string.IsNullOrWhiteSpace(options.AuthorUsername))
-                Add("author_username", options.AuthorUsername);
+                query.Add("author_username", options.AuthorUsername);
 
             if (options.AssigneeId.HasValue)
-                Add("assignee_id", options.AssigneeId.Value);
+                query.Add("assignee_id", options.AssigneeId.Value);
             else if (options.AssigneeUsername.Any())
-                Add("assignee_username", options.AssigneeUsername);
+                query.Add("assignee_username", options.AssigneeUsername);
 
-            Add(options.IssueIds);
+            query.Add(options.IssueIds);
 
             if (options.Order != IssuesOrder.CreatedAt)
-                Add("order_by", GetIssuesOrderQueryValue(options.Order));
+                query.Add("order_by", GetIssuesOrderQueryValue(options.Order));
 
             if (options.SortOrder != SortOrder.Descending)
-                Add("sort", GetSortOrderQueryValue(options.SortOrder));
+                query.Add("sort", GetSortOrderQueryValue(options.SortOrder));
 
             if (!options.Filter.IsNullOrEmpty())
-                Add("search", options.Filter);
+                query.Add("search", options.Filter);
 
             if (options.IsConfidential)
-                Add("confidential", true);
+                query.Add("confidential", true);
 
             if (options.CreatedBefore.HasValue)
-                Add("created_before", options.CreatedBefore.Value);
+                query.Add("created_before", options.CreatedBefore.Value);
 
             if (options.CreatedAfter.HasValue)
-                Add("created_after", options.CreatedAfter.Value);
+                query.Add("created_after", options.CreatedAfter.Value);
 
             if (options.UpdatedBefore.HasValue)
-                Add("updated_before", options.UpdatedBefore.Value);
+                query.Add("updated_before", options.UpdatedBefore.Value);
 
             if (options.UpdatedAfter.HasValue)
-                Add("updated_after", options.UpdatedAfter.Value);
+                query.Add("updated_after", options.UpdatedAfter.Value);
         }
 
         private static string GetStateQueryValue(IssueState state)

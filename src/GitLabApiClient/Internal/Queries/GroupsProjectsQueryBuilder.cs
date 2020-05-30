@@ -6,53 +6,52 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal class ProjectsGroupQueryBuilder : QueryBuilder<ProjectsGroupQueryOptions>
     {
-        protected override void BuildCore(ProjectsGroupQueryOptions options)
+        protected override void BuildCore(Query query, ProjectsGroupQueryOptions options)
         {
             if (options.Archived)
-                Add("archived", options.Archived);
+                query.Add("archived", options.Archived);
 
             if (options.Visibility != GroupsVisibility.Public)
-                Add("visibility", GetVisibilityQueryValue(options.Visibility));
+                query.Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
             if (options.Order != GroupsProjectsOrder.CreatedAt)
-                Add("order_by", GetOrderQueryValue(options.Order));
+                query.Add("order_by", GetOrderQueryValue(options.Order));
 
             if (options.Sort != GroupsSort.Ascending)
-                Add("sort", GetSortQueryValue(options.Sort));
+                query.Add("sort", GetSortQueryValue(options.Sort));
 
             if (!options.Search.IsNullOrEmpty())
-                Add("search", options.Search);
+                query.Add("search", options.Search);
 
             if (options.Simple)
-                Add("simple", options.Simple);
+                query.Add("simple", options.Simple);
 
             if (options.Owned)
-                Add("owned", options.Owned);
+                query.Add("owned", options.Owned);
 
             if (options.Starred)
-                Add("starred", options.Starred);
+                query.Add("starred", options.Starred);
 
             if (options.WithIssuesEnabled)
-                Add("with_issues_enabled", options.WithIssuesEnabled);
+                query.Add("with_issues_enabled", options.WithIssuesEnabled);
 
             if (options.WithMergeRequestsEnabled)
-                Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
+                query.Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
 
             if (!options.WithShared)
-                Add("with_shared", options.WithShared);
+                query.Add("with_shared", options.WithShared);
 
             if (options.IncludeSubgroups)
-                Add("include_subgroups", options.IncludeSubgroups);
+                query.Add("include_subgroups", options.IncludeSubgroups);
 
             if (options.MinAccessLevel != null)
-                Add("min_access_level", (int)options.MinAccessLevel);
+                query.Add("min_access_level", (int)options.MinAccessLevel);
 
             if (options.WithCustomAttributes)
-                Add("with_custom_attributes", options.WithCustomAttributes);
+                query.Add("with_custom_attributes", options.WithCustomAttributes);
 
             if (options.WithSecurityReports)
-                Add("with_security_reports", options.WithSecurityReports);
-
+                query.Add("with_security_reports", options.WithSecurityReports);
         }
 
         private static string GetVisibilityQueryValue(GroupsVisibility visibility)
