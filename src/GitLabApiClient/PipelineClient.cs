@@ -11,7 +11,7 @@ using GitLabApiClient.Models.Pipelines.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class PipelineClient
+    public sealed class PipelineClient : IPipelineClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly PipelineQueryBuilder _queryBuilder;

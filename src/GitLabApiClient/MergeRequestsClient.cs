@@ -21,7 +21,7 @@ namespace GitLabApiClient
     /// <exception cref="GitLabException">Thrown if request to GitLab API does not indicate success</exception>
     /// <exception cref="HttpRequestException">Thrown if request to GitLab API fails</exception>
     /// </summary>
-    public sealed class MergeRequestsClient
+    public sealed class MergeRequestsClient : IMergeRequestsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly MergeRequestsQueryBuilder _mergeRequestsQueryBuilder;

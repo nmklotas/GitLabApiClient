@@ -11,7 +11,7 @@ namespace GitLabApiClient
     /// Uploads a file to a project. This file can later be used in issues or everywhere else, where you can write markdown.
     /// After uploading the file, use the <see cref="Upload.Markdown"/> property.
     /// </summary>
-    public sealed class UploadsClient
+    public sealed class UploadsClient : IUploadsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 

@@ -11,27 +11,15 @@ using GitLabApiClient.Models.Releases.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class ReleaseClient : IReleaseClient
+    public interface IReleaseClient
     {
-        private readonly GitLabHttpFacade _httpFacade;
-        private readonly ReleaseQueryBuilder _releaseQueryBuilder;
-
-        internal ReleaseClient(
-            GitLabHttpFacade httpFacade,
-            ReleaseQueryBuilder releaseQueryBuilder)
-        {
-            _httpFacade = httpFacade;
-            _releaseQueryBuilder = releaseQueryBuilder;
-        }
-
         /// <summary>
         /// Retrieves a release by its name
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The release, you want to retrieve.</param>
         /// <returns></returns>
-        public async Task<Release> GetAsync(ProjectId projectId, string tagName) =>
-            await _httpFacade.Get<Release>($"projects/{projectId}/releases/{tagName}");
+        Task<Release> GetAsync(ProjectId projectId, string tagName);
 
         /// <summary>
         /// Get a list of releases
@@ -39,14 +27,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="options">Query options <see cref="ReleaseQueryOptions"/>.</param>
         /// <returns></returns>
-        public async Task<IList<Release>> GetAsync(ProjectId projectId, Action<ReleaseQueryOptions> options = null)
-        {
-            var queryOptions = new ReleaseQueryOptions();
-            options?.Invoke(queryOptions);
-
-            string url = _releaseQueryBuilder.Build($"projects/{projectId}/releases", queryOptions);
-            return await _httpFacade.GetPagedList<Release>(url);
-        }
+        Task<IList<Release>> GetAsync(ProjectId projectId, Action<ReleaseQueryOptions> options = null);
 
         /// <summary>
         /// Create a release
@@ -54,8 +35,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create release request.</param>
         /// <returns></returns>
-        public async Task<Release> CreateAsync(ProjectId projectId, CreateReleaseRequest request) =>
-            await _httpFacade.Post<Release>($"projects/{projectId}/releases", request);
+        Task<Release> CreateAsync(ProjectId projectId, CreateReleaseRequest request);
 
         /// <summary>
         /// Update a release
@@ -64,8 +44,7 @@ namespace GitLabApiClient
         /// <param name="tagName">The tag name of the release, you want to update.</param>
         /// <param name="request">Update release request</param>
         /// <returns></returns>
-        public async Task<Release> UpdateAsync(ProjectId projectId, string tagName, UpdateReleaseRequest request) =>
-            await _httpFacade.Put<Release>($"projects/{projectId}/releases/{tagName.UrlEncode()}", request);
+        Task<Release> UpdateAsync(ProjectId projectId, string tagName, UpdateReleaseRequest request);
 
         /// <summary>
         /// Delete a release
@@ -73,7 +52,6 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name of the release, you want to delete.</param>
         /// <returns></returns>
-        public async Task DeleteAsync(ProjectId projectId, string tagName) =>
-            await _httpFacade.Delete($"projects/{projectId}/releases/{tagName.UrlEncode()}");
+        Task DeleteAsync(ProjectId projectId, string tagName);
     }
 }
