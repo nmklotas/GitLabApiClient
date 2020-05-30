@@ -11,6 +11,7 @@ using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
 using GitLabApiClient.Models.Notes.Requests;
 using GitLabApiClient.Models.Notes.Responses;
+using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
@@ -76,6 +77,14 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Get single Merge requests by id
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
+        /// <returns>Shows information about a single merge request.</returns>
+        public async Task<MergeRequest> GetAsync(ProjectId projectId, int mergeRequestId)
+            => await _httpFacade.Get<MergeRequest>($"projects/{projectId}/merge_requests/{mergeRequestId}");
+        /// <summary>
         /// Creates merge request.
         /// </summary>
         /// <returns>The newly created merge request.</returns>
@@ -116,6 +125,16 @@ namespace GitLabApiClient
             await _httpFacade.Delete($"projects/{projectId}/merge_requests/{mergeRequestId}");
 
         /// <summary>
+        /// Creates a new note (comment) to a single Merge Request.
+        /// </summary>
+        /// <returns>The newly created issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The IID of an Merge Request.</param>
+        /// <param name="request">Create Merge Request note request.</param>
+        public async Task<Note> CreateNoteAsync(ProjectId projectId, int mergeRequestId, CreateMergeRequestNoteRequest request) =>
+            await _httpFacade.Post<Note>($"projects/{projectId}/merge_requests/{mergeRequestId}/notes", request);
+
+        /// <summary>
         /// Retrieves notes (comments) of a merge request.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
@@ -130,6 +149,15 @@ namespace GitLabApiClient
             string url = _projectMergeRequestNotesQueryBuilder.Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
+
+        /// <summary>
+        /// List erge request pipelines
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
+        /// <returns>Get a list of merge request pipelines.</returns>
+        public async Task<IList<Pipeline>> GetPipelinesAsync(ProjectId projectId, int mergeRequestId)
+            => await _httpFacade.Get<List<Pipeline>>($"projects/{projectId}/merge_requests/{mergeRequestId}/pipelines");
 
         /// <summary>
         /// Retrieves discussions of a merge request.
