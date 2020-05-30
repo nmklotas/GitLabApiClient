@@ -17,7 +17,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="hookId">The hook ID, you want to retrieve.</param>
         /// <returns></returns>
-        Task<Webhook> GetAsync(ProjectId projectId, int hookId);
+        Task<Webhook> GetAsync(ProjectId projectId, long hookId);
 
         /// <summary>
         /// Retrieves all project hooks
@@ -39,6 +39,15 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="hookId">The hook ID, you want to delete.</param>
-        Task DeleteAsync(ProjectId projectId, int hookId);
+        Task DeleteAsync(ProjectId projectId, long hookId);
+
+        /// <summary>
+        /// Update new webhook
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="hookId">The hook ID, you want to update.</param>
+        /// <param name="request">Create hook request.</param>
+        /// <returns>newly created hook</returns>
+        Task<Webhook> UpdateAsync(ProjectId projectId, long hookId, CreateWebhookRequest request);
     }
 }

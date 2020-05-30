@@ -8,6 +8,7 @@ using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
 using GitLabApiClient.Models.Notes.Requests;
 using GitLabApiClient.Models.Notes.Responses;
+using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
@@ -30,6 +31,14 @@ namespace GitLabApiClient
         /// <param name="options">Merge requests retrieval options.</param>
         /// <returns>Merge requests satisfying options.</returns>
         Task<IList<MergeRequest>> GetAsync(Action<MergeRequestsQueryOptions> options = null);
+
+        /// <summary>
+        /// Get single Merge requests by id
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
+        /// <returns>Shows information about a single merge request.</returns>
+        Task<MergeRequest> GetAsync(ProjectId projectId, int mergeRequestId);
 
         /// <summary>
         /// Creates merge request.
@@ -64,6 +73,14 @@ namespace GitLabApiClient
         /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
         Task DeleteAsync(ProjectId projectId, int mergeRequestId);
 
+        /// <summary>
+        /// Creates a new note (comment) to a single Merge Request.
+        /// </summary>
+        /// <returns>The newly created issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The IID of an Merge Request.</param>
+        /// <param name="request">Create Merge Request note request.</param>
+        Task<Note> CreateNoteAsync(ProjectId projectId, int mergeRequestId, CreateMergeRequestNoteRequest request);
 
         /// <summary>
         /// Retrieves notes (comments) of a merge request.
@@ -73,6 +90,14 @@ namespace GitLabApiClient
         /// <param name="options">MergeRequestNotes retrieval options.</param>
         /// <returns>Merge requests satisfying options.</returns>
         Task<IList<Note>> GetNotesAsync(ProjectId projectId, int mergeRequestIid, Action<MergeRequestNotesQueryOptions> options = null);
+
+        /// <summary>
+        /// List erge request pipelines
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestId">The Internal Merge Request Id.</param>
+        /// <returns>Get a list of merge request pipelines.</returns>
+        Task<IList<Pipeline>> GetPipelinesAsync(ProjectId projectId, int mergeRequestId);
 
         /// <summary>
         /// Retrieves discussions of a merge request.
