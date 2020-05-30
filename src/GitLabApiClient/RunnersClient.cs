@@ -14,7 +14,7 @@ namespace GitLabApiClient
     /// <exception cref="GitLabException">Thrown if request to GitLab API fails</exception>
     /// <exception cref="HttpRequestException">Thrown if request to GitLab API fails</exception>
     /// </summary>
-    public sealed class RunnersClient
+    public sealed class RunnersClient : IRunnersClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 

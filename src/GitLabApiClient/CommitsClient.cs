@@ -10,7 +10,7 @@ using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class CommitsClient
+    public sealed class CommitsClient : ICommitsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly CommitQueryBuilder _commitQueryBuilder;

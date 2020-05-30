@@ -9,7 +9,7 @@ using GitLabApiClient.Models.Trees.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class TreesClient
+    public sealed class TreesClient : ITreesClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly TreeQueryBuilder _treeQueryBuilder;

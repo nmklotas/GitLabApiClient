@@ -9,34 +9,22 @@ using GitLabApiClient.Models.Webhooks.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class WebhookClient : IWebhookClient
+    public interface IWebhookClient
     {
-        private readonly GitLabHttpFacade _httpFacade;
-
-        internal WebhookClient(
-            GitLabHttpFacade httpFacade)
-        {
-            _httpFacade = httpFacade;
-        }
-
         /// <summary>
         /// Retrieves a hook by its id
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="hookId">The hook ID, you want to retrieve.</param>
         /// <returns></returns>
-        public async Task<Webhook> GetAsync(ProjectId projectId, int hookId) =>
-            await _httpFacade.Get<Webhook>($"projects/{projectId}/hooks/{hookId}");
+        Task<Webhook> GetAsync(ProjectId projectId, int hookId);
 
         /// <summary>
         /// Retrieves all project hooks
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns></returns>
-        public async Task<IList<Webhook>> GetAsync(ProjectId projectId)
-        {
-            return await _httpFacade.GetPagedList<Webhook>($"projects/{projectId}/hooks");
-        }
+        Task<IList<Webhook>> GetAsync(ProjectId projectId);
 
         /// <summary>
         /// Create new webhook
@@ -44,17 +32,13 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create hook request.</param>
         /// <returns>newly created hook</returns>
-        public async Task<Webhook> CreateAsync(ProjectId projectId, CreateWebhookRequest request) =>
-            await _httpFacade.Post<Webhook>($"projects/{projectId}/hooks", request);
+        Task<Webhook> CreateAsync(ProjectId projectId, CreateWebhookRequest request);
 
         /// <summary>
         /// Delete a webhook
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="hookId">The hook ID, you want to delete.</param>
-        public async Task DeleteAsync(ProjectId projectId, int hookId) =>
-            await _httpFacade.Delete($"projects/{projectId}/hooks/{hookId}");
+        Task DeleteAsync(ProjectId projectId, int hookId);
     }
-
-
 }

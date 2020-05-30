@@ -16,7 +16,6 @@ namespace GitLabApiClient.Internal.Http
     {
         private const string PrivateToken = "PRIVATE-TOKEN";
 
-        private readonly object _locker = new object();
         private readonly HttpClient _httpClient;
         private GitLabApiRequestor _requestor;
         private GitLabApiPagedRequestor _pagedRequestor;
@@ -91,13 +90,10 @@ namespace GitLabApiClient.Internal.Http
             string url = $"{_httpClient.BaseAddress.GetLeftPart(UriPartial.Authority)}/oauth/token";
             var accessTokenResponse = await _requestor.Post<AccessTokenResponse>(url, accessTokenRequest);
 
-            lock (_locker)
-            {
-                if (_httpClient.DefaultRequestHeaders.Contains(PrivateToken))
-                    _httpClient.DefaultRequestHeaders.Remove(PrivateToken);
+            if (_httpClient.DefaultRequestHeaders.Contains(PrivateToken))
+                _httpClient.DefaultRequestHeaders.Remove(PrivateToken);
 
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessTokenResponse.AccessToken);
-            }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessTokenResponse.AccessToken);
 
             return accessTokenResponse;
         }
