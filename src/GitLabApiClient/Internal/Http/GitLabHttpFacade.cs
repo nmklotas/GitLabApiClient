@@ -21,15 +21,15 @@ namespace GitLabApiClient.Internal.Http
         private GitLabApiRequestor _requestor;
         private GitLabApiPagedRequestor _pagedRequestor;
 
-        private GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer)
+        private GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, HttpMessageHandler httpMessageHandler)
         {
-            _httpClient = new HttpClient { BaseAddress = new Uri(hostUrl) };
+            _httpClient = new HttpClient(httpMessageHandler ?? new HttpClientHandler()) { BaseAddress = new Uri(hostUrl) };
 
             Setup(jsonSerializer);
         }
 
-        public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "") :
-            this(hostUrl, jsonSerializer)
+        public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null) :
+            this(hostUrl, jsonSerializer, httpMessageHandler)
         {
             switch (authenticationToken.Length)
             {
