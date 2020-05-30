@@ -4,16 +4,16 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal sealed class ProjectMergeRequestsQueryBuilder : MergeRequestsQueryBuilder
     {
-        protected override void BuildCore(MergeRequestsQueryOptions options)
+        protected override void BuildCore(Query query, MergeRequestsQueryOptions options)
         {
             if (!(options is ProjectMergeRequestsQueryOptions projectOptions))
             {
-                base.BuildCore(options);
+                base.BuildCore(query, options);
                 return;
             }
 
-            Add(projectOptions.MergeRequestsIds);
-            base.BuildCore(options);
+            query.Add(projectOptions.MergeRequestsIds);
+            base.BuildCore(query, options);
         }
     }
 }

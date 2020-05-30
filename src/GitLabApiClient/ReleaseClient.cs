@@ -11,7 +11,7 @@ using GitLabApiClient.Models.Releases.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class ReleaseClient
+    public sealed class ReleaseClient : IReleaseClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly ReleaseQueryBuilder _releaseQueryBuilder;

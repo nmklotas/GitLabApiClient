@@ -23,5 +23,7 @@ namespace GitLabApiClient.Models.Pipelines
         Scheduled,
         [EnumMember(Value = "created")]
         Created,
+        [EnumMember(Value = "manual")]
+        Manual,
     }
 }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models.AwardEmojis.Responses;
+using GitLabApiClient.Models.Discussions.Responses;
 using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
 using GitLabApiClient.Models.Notes.Requests;
@@ -20,7 +22,7 @@ namespace GitLabApiClient
     /// <exception cref="GitLabException">Thrown if request to GitLab API does not indicate success</exception>
     /// <exception cref="HttpRequestException">Thrown if request to GitLab API fails</exception>
     /// </summary>
-    public sealed class MergeRequestsClient
+    public sealed class MergeRequestsClient : IMergeRequestsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly MergeRequestsQueryBuilder _mergeRequestsQueryBuilder;
@@ -156,5 +158,22 @@ namespace GitLabApiClient
         /// <returns>Get a list of merge request pipelines.</returns>
         public async Task<IList<Pipeline>> GetPipelinesAsync(ProjectId projectId, int mergeRequestId)
             => await _httpFacade.Get<List<Pipeline>>($"projects/{projectId}/merge_requests/{mergeRequestId}/pipelines");
+
+        /// <summary>
+        /// Retrieves discussions of a merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">Iid of the merge request.</param>
+        public async Task<IList<Discussion>> GetDiscussionsAsync(ProjectId projectId, int mergeRequestIid) =>
+            await _httpFacade.GetPagedList<Discussion>($"projects/{projectId}/merge_requests/{mergeRequestIid}/discussions");
+
+        /// <summary>
+        /// Retrieves a list of all award emoji for a specified merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
+        public async Task<IList<AwardEmoji>> GetAwardEmojisAsync(ProjectId projectId, int mergeRequestIid) =>
+            await _httpFacade.GetPagedList<AwardEmoji>($"projects/{projectId}/merge_requests/{mergeRequestIid}/award_emoji");
+
     }
 }

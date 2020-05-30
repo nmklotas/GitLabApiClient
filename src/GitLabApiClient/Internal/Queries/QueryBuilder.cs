@@ -9,48 +9,61 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal abstract class QueryBuilder<T>
     {
-        private readonly NameValueCollection _nameValues = new NameValueCollection();
+        protected class Query
+        {
+            private readonly NameValueCollection _nameValues = new NameValueCollection();
+
+            public void Add(string name, string value)
+                => _nameValues.Add(name, value);
+
+            public void Add(string name, bool value)
+                => Add(name, value.ToLowerCaseString());
+
+            public void Add(string name, int value)
+                => Add(name, value.ToLowerCaseString());
+
+            public void Add(string name, DateTime value)
+                => Add(name, value.ToString("o"));
+
+            public void Add(string name, IList<string> values)
+            {
+                if (!values.Any())
+                    return;
+
+                Add(name, string.Join(",", values));
+            }
+
+            public void Add(string name, IList<int> values)
+            {
+                foreach (int val in values)
+                    Add($"{name}[]", val.ToString());
+            }
+
+            public void Add(IList<int> values)
+            {
+                foreach (int iid in values)
+                    Add("iids[]", iid.ToString());
+            }
+
+            public string ToQueryString()
+            {
+                var array = _nameValues.AllKeys.SelectMany(
+                        key => _nameValues.GetValues(key)
+                            ?.Select(value => $"{key.UrlEncode()}={value.UrlEncode()}")
+                    )
+                    .ToArray();
+                return array.Any() ? "?" + string.Join("&", array) : "";
+            }
+        }
 
         public string Build(string baseUrl, T options)
         {
-            _nameValues.Clear();
-            BuildCore(options);
-            return baseUrl + ToQueryString(_nameValues);
+            var query = new Query();
+            BuildCore(query, options);
+            return baseUrl + query.ToQueryString();
         }
 
-        protected abstract void BuildCore(T options);
-
-        protected void Add(string name, string value)
-            => _nameValues.Add(name, value);
-
-        protected void Add(string name, bool value)
-            => Add(name, value.ToLowerCaseString());
-
-        protected void Add(string name, int value)
-            => Add(name, value.ToLowerCaseString());
-
-        protected void Add(string name, DateTime value)
-            => Add(name, value.ToString("o"));
-
-        protected void Add(string name, IList<string> values)
-        {
-            if (!values.Any())
-                return;
-
-            Add(name, string.Join(",", values));
-        }
-
-        protected void Add(string name, IList<int> values)
-        {
-            foreach (int val in values)
-                Add($"{name}[]", val.ToString());
-        }
-
-        protected void Add(IList<int> values)
-        {
-            foreach (int iid in values)
-                Add("iids[]", iid.ToString());
-        }
+        protected abstract void BuildCore(Query query, T options);
 
         protected static string GetSortOrderQueryValue(SortOrder order)
         {
@@ -78,16 +91,6 @@ namespace GitLabApiClient.Internal.Queries
                 default:
                     throw new NotSupportedException($"Scope {scope} is not supported");
             }
-        }
-
-        private static string ToQueryString(NameValueCollection nvc)
-        {
-            var array =
-                from key in nvc.AllKeys
-                from value in nvc.GetValues(key)
-                select $"{key.UrlEncode()}={value.UrlEncode()}";
-
-            return $"?{string.Join("&", array)}";
         }
     }
 }

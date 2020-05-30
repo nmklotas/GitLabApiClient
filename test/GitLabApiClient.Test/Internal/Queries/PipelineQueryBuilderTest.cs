@@ -1,4 +1,5 @@
 using FluentAssertions;
+using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Pipelines;
 using GitLabApiClient.Models.Pipelines.Requests;

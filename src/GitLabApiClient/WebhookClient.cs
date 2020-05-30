@@ -9,7 +9,7 @@ using GitLabApiClient.Models.Webhooks.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class WebhookClient
+    public sealed class WebhookClient : IWebhookClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 

@@ -24,7 +24,7 @@ namespace GitLabApiClient
     /// <exception cref="GitLabException">Thrown if request to GitLab API fails</exception>
     /// <exception cref="HttpRequestException">Thrown if request to GitLab API fails</exception>
     /// </summary>
-    public sealed class ProjectsClient
+    public sealed class ProjectsClient : IProjectsClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly ProjectsQueryBuilder _queryBuilder;
@@ -71,7 +71,7 @@ namespace GitLabApiClient
         /// Retrieves project variables by its id.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
-        public async Task<IList<Variable>> GetVariablesAsync(int projectId) =>
+        public async Task<IList<Variable>> GetVariablesAsync(ProjectId projectId) =>
             await _httpFacade.GetPagedList<Variable>($"projects/{projectId}/variables");
 
         /// <summary>

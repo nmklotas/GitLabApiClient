@@ -6,11 +6,11 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal sealed class CommitRefsQueryBuilder : QueryBuilder<CommitRefsQueryOptions>
     {
-        protected override void BuildCore(CommitRefsQueryOptions options)
+        protected override void BuildCore(Query query, CommitRefsQueryOptions options)
         {
             if (options.Type != CommitRefType.All)
             {
-                Add("type", options.Type.ToLowerCaseString());
+                query.Add("type", options.Type.ToLowerCaseString());
             }
         }
     }

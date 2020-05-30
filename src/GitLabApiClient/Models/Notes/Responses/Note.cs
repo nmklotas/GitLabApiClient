@@ -24,5 +24,15 @@ namespace GitLabApiClient.Models.Notes.Responses
 
         [JsonProperty("resolvable")]
         public bool Resolvable { get; set; }
+
+        [JsonProperty("resolved")]
+        public bool? Resolved { get; set; }
+
+        [JsonProperty("resolved_by")]
+        public Author ResolvedBy { get; set; }
+
+        [JsonProperty("position")]
+        public Position Position { get; set; }
+
     }
 }
