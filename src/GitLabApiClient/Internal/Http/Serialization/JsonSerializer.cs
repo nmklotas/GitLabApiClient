@@ -12,7 +12,7 @@ namespace GitLabApiClient.Internal.Http.Serialization
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 ContractResolver = new EmptyCollectionContractResolver(),
-                Converters = {new StringEnumConverter()}
+                Converters = { new StringEnumConverter() }
             };
 
         public string Serialize(object obj) => JsonConvert.SerializeObject(obj, Settings);
