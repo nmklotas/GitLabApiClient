@@ -14,7 +14,7 @@ namespace GitLabApiClient
     /// <exception cref="GitLabException">Thrown if request to GitLab API fails</exception>
     /// <exception cref="HttpRequestException">Thrown if request to GitLab API fails</exception>
     /// </summary>
-    public sealed class ToDoListClient
+    public sealed class ToDoListClient : IToDoListClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly ToDoListQueryBuilder _queryBuilder;
