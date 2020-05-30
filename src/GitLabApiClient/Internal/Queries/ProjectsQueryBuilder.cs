@@ -47,6 +47,12 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.WithMergeRequestsEnabled)
                 query.Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
+
+            if (options.LastActivityAfter.Year != 0001) //Not Default year
+                query.Add("last_activity_after", options.LastActivityAfter.ToUniversalTime().ToString("o")); //Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
+
+            if (options.LastActivityBefore.Year != 0001) //Not Default year
+                query.Add("last_activity_before", options.LastActivityBefore.ToUniversalTime().ToString("o")); //Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
         }
 
         private static string GetProjectOrderQueryValue(ProjectsOrder order)
