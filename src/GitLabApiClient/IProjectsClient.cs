@@ -40,7 +40,7 @@ namespace GitLabApiClient
         /// Retrieves project variables by its id.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
-        Task<IList<Variable>> GetVariablesAsync(int projectId);
+        Task<IList<Variable>> GetVariablesAsync(ProjectId projectId);
 
         /// <summary>
         /// Get the labels list of a project.

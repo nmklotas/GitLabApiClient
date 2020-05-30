@@ -218,5 +218,34 @@ namespace GitLabApiClient
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="name">Name of the label.</param>
         Task DeleteLabelAsync(GroupId groupId, string name);
+
+        /// <summary>
+        /// Retrieves group variables by its id.
+        /// </summary>
+        /// <param name="groupId">Id of the group.</param>
+        Task<IList<Variable>> GetVariablesAsync(GroupId groupId);
+
+        /// <summary>
+        /// Creates new project variable.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="request">Create variable request.</param>
+        /// <returns>Newly created variable.</returns>
+        Task<Variable> CreateVariableAsync(GroupId groupId, CreateGroupVariableRequest request);
+
+        /// <summary>
+        /// Updates an existing group variable.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="request">Update variable request.</param>
+        /// <returns>Newly modified variable.</returns>
+        Task<Variable> UpdateVariableAsync(GroupId groupId, UpdateGroupVariableRequest request);
+
+        /// <summary>
+        /// Deletes group variable
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="key">The Key ID of the variable.</param>
+        Task DeleteVariableAsync(GroupId groupId, string key);
     }
 }
