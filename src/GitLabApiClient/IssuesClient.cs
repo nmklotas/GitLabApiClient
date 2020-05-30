@@ -137,7 +137,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">Iid of the issue.</param>
         /// <param name="options">IssueNotes retrieval options.</param>
-        /// <returns>Issues satisfying options.</returns>
+        /// <returns>Notes satisfying options.</returns>
         public async Task<IList<Note>> GetNotesAsync(ProjectId projectId, int issueIid, Action<IssueNotesQueryOptions> options = null)
         {
             var queryOptions = new IssueNotesQueryOptions();
