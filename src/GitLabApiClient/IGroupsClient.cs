@@ -8,6 +8,8 @@ using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Runners.Requests;
+using GitLabApiClient.Models.Runners.Responses;
 
 namespace GitLabApiClient
 {
@@ -86,6 +88,12 @@ namespace GitLabApiClient
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="milestoneId">Id of the milestone.</param>
         Task<Milestone> GetMilestoneAsync(GroupId groupId, int milestoneId);
+
+        /// <summary>
+        /// Get a list of runners in a group.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        Task<IList<Runner>> GetRunnersAsync(GroupId groupId);
 
         /// <summary>
         /// Creates a new project group.
