@@ -17,7 +17,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
         /// <returns>Runner or NULL if it was not found.</returns>
-        Task<Runner> GetAsync(int runnerId);
+        Task<RunnerDetails> GetAsync(int runnerId);
 
         /// <summary>
         /// Updates existing runner
@@ -28,9 +28,23 @@ namespace GitLabApiClient
         Task<Runner> UpdateAsync(int runnerId, UpdateRunnerRequest request);
 
         /// <summary>
+        /// Creates a new runner registration.
+        /// </summary>
+        /// <returns>The newly created runner.</returns>
+        /// <param name="request">Create runner request.</param>
+        Task<RunnerToken> CreateAsync(CreateRunnerRequest request);
+
+        /// <summary>
         /// Deletes a runner.
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
         Task DeleteAsync(int runnerId);
+
+        /// <summary>
+        /// Checks if a runner token can authenticate with GitLab
+        /// </summary>
+        /// <returns>True is token is valid, false if not valid.</returns>
+        /// <param name="token">Token to check.</param>
+        Task<bool> VerifyAuthenticationAsync(string token);
     }
 }

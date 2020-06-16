@@ -18,6 +18,7 @@ namespace GitLabApiClient.Test.Utilities
         private static readonly TemplateString SolutionRootFolder = "${PWD}/../../../../..";
 
         public static string Token { get; private set; }
+        public static string RunnerRegistrationToken { get; private set; }
         public static string GitlabHost { get; private set; }
 
         private IContainerService _gitlabContainer;
@@ -66,8 +67,15 @@ namespace GitLabApiClient.Test.Utilities
         {
             string command = $"/opt/gitlab/bin/gitlab-rails r {InitRb}";
             var output = ExecuteCommandAgainstDockerWithOutput(_gitlabContainer, command);
+
+            output.Count().Should().BeGreaterOrEqualTo(2);
+
             string token = output.FirstOrDefault();
             token.Should().NotBeNullOrEmpty();
+
+            RunnerRegistrationToken = output.ElementAt(1);
+            RunnerRegistrationToken.Should().NotBeNullOrEmpty();
+
             return token;
         }
 

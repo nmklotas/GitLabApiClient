@@ -6,10 +6,13 @@ using Newtonsoft.Json;
 namespace GitLabApiClient.Models.Runners.Requests
 {
     /// <summary>
-    /// Modifies an existing user.
+    /// Registers a new runner with gitlab.
     /// </summary>
-    public sealed class UpdateRunnerRequest
+    public sealed class CreateRunnerRequest
     {
+        [JsonProperty("token")]
+        public string Token { get; set;}
+
         /// <summary>
         /// The description of a runner.
         /// </summary>
@@ -23,10 +26,10 @@ namespace GitLabApiClient.Models.Runners.Requests
         public bool? Active { get; set; }
 
         /// <summary>
-        /// The list of tags for a runner; put array of tags, that should be finally assigned to a runner.
+        ///	Flag indicating the runner is locked.
         /// </summary>
-        [JsonProperty("tag_list")]
-        public List<string> TagList { get; set; }
+        [JsonProperty("locked")]
+        public bool? Locked { get; set; }
 
         /// <summary>
         /// Flag indicating the runner can execute untagged jobs.
@@ -35,10 +38,10 @@ namespace GitLabApiClient.Models.Runners.Requests
         public bool? RunUntagged { get; set; }
 
         /// <summary>
-        ///	Flag indicating the runner is locked.
+        /// The list of tags for a runner; put array of tags, that should be finally assigned to a runner.
         /// </summary>
-        [JsonProperty("locked")]
-        public bool? Locked { get; set; }
+        [JsonProperty("tag_list")]
+        public List<string> TagList { get; set; }
 
         /// <summary>
         /// The access_level of the runner; not_protected or ref_protected.
