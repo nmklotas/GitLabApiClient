@@ -10,8 +10,11 @@ namespace GitLabApiClient.Models.Runners.Requests
     /// </summary>
     public sealed class CreateRunnerRequest
     {
+        /// <summary>
+        /// GitLab token to register runner
+        /// </summary>
         [JsonProperty("token")]
-        public string Token { get; set;}
+        public string Token { get; set; }
 
         /// <summary>
         /// The description of a runner.

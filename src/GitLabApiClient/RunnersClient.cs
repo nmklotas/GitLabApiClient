@@ -86,7 +86,8 @@ namespace GitLabApiClient
             {
                 await _httpFacade.Post("runners/verify", new Dictionary<string, string>() { { "token", token } });
                 return true;
-            } catch(GitLabException e)
+            }
+            catch (GitLabException e)
             {
                 if (e.HttpStatusCode == System.Net.HttpStatusCode.Forbidden)
                     return false;
@@ -94,7 +95,5 @@ namespace GitLabApiClient
                     throw e;
             }
         }
-            
-
     }
 }

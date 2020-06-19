@@ -1,11 +1,11 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
-using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
-using Xunit;
 using GitLabApiClient.Models.Runners.Requests;
-using GitLabApiClient.Test.Utilities;
 using GitLabApiClient.Models.Runners.Responses;
-using System.Collections.Generic;
+using GitLabApiClient.Test.Utilities;
+using Xunit;
+using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
 namespace GitLabApiClient.Test
 {
@@ -97,7 +97,7 @@ namespace GitLabApiClient.Test
             runnerToken.Should().NotBeNull();
 
             var runner = await _sut.GetAsync(runnerToken.Id);
-            runner.Should().Match<RunnerDetails>(r => 
+            runner.Should().Match<RunnerDetails>(r =>
                 r.Description == request.Description &&
                 r.Active == request.Active
                 );
@@ -124,7 +124,7 @@ namespace GitLabApiClient.Test
                 var runner = await _sut.GetAsync(runnerToken.Id);
                 runner.Should().BeNull();
             }
-            catch(GitLabException e)
+            catch (GitLabException e)
             {
                 e.HttpStatusCode.Should().Be(404);
             }
