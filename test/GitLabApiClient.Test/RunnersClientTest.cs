@@ -20,6 +20,15 @@ namespace GitLabApiClient.Test
         {
             var runners = await _sut.GetAsync();
 
+            runners.Count.Should().BeGreaterOrEqualTo(1);
+            runners.Should().Contain(r => r.Description == TestProjectRunnerName);
+        }
+
+        [Fact]
+        public async Task RunnersCanAllBeRetrieved()
+        {
+            var runners = await _sut.GetAllAsync();
+
             runners.Count.Should().BeGreaterOrEqualTo(3);
             runners.Should().Contain(r => r.Description == TestRunnerName)
                 .And.Contain(r => r.Description == TestProjectRunnerName)
@@ -35,6 +44,11 @@ namespace GitLabApiClient.Test
             var runner = await _sut.GetAsync(runners[0].Id);
 
             runner.Should().BeEquivalentTo(runners[0]);
+            runner.Projects.Should().Contain(p =>
+                p.Id == TestProjectId &&
+                p.Path == TestProjectName &&
+                p.PathWithNamespace == TestGroupName + "/" + TestProjectName
+                );
         }
 
         [Fact]
@@ -91,23 +105,55 @@ namespace GitLabApiClient.Test
 
         }
 
-        //[Fact]
-        //public async Task RunnersCanBeDeleted()
-        //{
-        //    var request = new CreateRunnerRequest()
-        //    {
-        //        Token = GitLabContainerFixture.RunnerRegistrationToken,
-        //        Description = "RunnersCanBeDeleted"
-        //    };
+        [Fact]
+        public async Task RunnersCanBeDeleted()
+        {
+            var request = new CreateRunnerRequest()
+            {
+                Token = GitLabContainerFixture.RunnerRegistrationToken,
+                Description = "RunnersCanBeDeleted"
+            };
 
-        //    var runnerToken = await _sut.CreateAsync(request);
-        //    runnerToken.Should().NotBeNull();
+            var runnerToken = await _sut.CreateAsync(request);
+            runnerToken.Should().NotBeNull();
 
-        //    await _sut.DeleteAsync(runnerToken.Id);
+            await _sut.DeleteAsync(runnerToken.Token);
 
-        //    var runner = await _sut.GetAsync(runnerToken.Id);
-        //    runner.Should().BeNull();
-        //}
+            try
+            {
+                var runner = await _sut.GetAsync(runnerToken.Id);
+                runner.Should().BeNull();
+            }
+            catch(GitLabException e)
+            {
+                e.HttpStatusCode.Should().Be(404);
+            }
+        }
+
+        [Fact]
+        public async Task RunnersCanBeDeletedById()
+        {
+            var request = new CreateRunnerRequest()
+            {
+                Token = GitLabContainerFixture.RunnerRegistrationToken,
+                Description = "RunnersCanBeDeleted"
+            };
+
+            var runnerToken = await _sut.CreateAsync(request);
+            runnerToken.Should().NotBeNull();
+
+            await _sut.DeleteAsync(runnerToken.Id);
+
+            try
+            {
+                var runner = await _sut.GetAsync(runnerToken.Id);
+                runner.Should().BeNull();
+            }
+            catch (GitLabException e)
+            {
+                e.HttpStatusCode.Should().Be(404);
+            }
+        }
 
         [Fact]
         public async Task RunnerCanCheckAuthentication()

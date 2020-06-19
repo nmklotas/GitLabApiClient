@@ -23,9 +23,15 @@ namespace GitLabApiClient
             _httpFacade = httpFacade;
 
         /// <summary>
-        /// Retrieves registered runners.
+        /// Retrieves registered project runners.
         /// </summary>
         public async Task<IList<Runner>> GetAsync() =>
+            await _httpFacade.GetPagedList<Runner>("runners");
+
+        /// <summary>
+        /// Retrieves all registered runners.
+        /// </summary>
+        public async Task<IList<Runner>> GetAllAsync() =>
             await _httpFacade.GetPagedList<Runner>("runners/all");
 
         /// <summary>
@@ -61,6 +67,13 @@ namespace GitLabApiClient
         /// <param name="runnerId">Id of the runner.</param>
         public async Task DeleteAsync(int runnerId) =>
             await _httpFacade.Delete($"runners/{runnerId}");
+
+        /// <summary>
+        /// Deletes a runner.
+        /// </summary>
+        /// <param name="runnerToken">Token of the runner.</param>
+        public async Task DeleteAsync(string runnerToken) =>
+            await _httpFacade.Delete($"runners", new Dictionary<string, string>() { { "token", runnerToken } });
 
         /// <summary>
         /// Checks if a runner token can authenticate with GitLab

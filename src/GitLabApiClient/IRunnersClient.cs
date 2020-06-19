@@ -13,6 +13,11 @@ namespace GitLabApiClient
         Task<IList<Runner>> GetAsync();
 
         /// <summary>
+        /// Retrieves all registered runners.
+        /// </summary>
+        Task<IList<Runner>> GetAllAsync();
+
+        /// <summary>
         /// Retrieves a runner matched by id.
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
@@ -39,6 +44,12 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
         Task DeleteAsync(int runnerId);
+
+        /// <summary>
+        /// Deletes a runner.
+        /// </summary>
+        /// <param name="runnerToken">Token of the runner.</param>
+        Task DeleteAsync(string runnerToken);
 
         /// <summary>
         /// Checks if a runner token can authenticate with GitLab
