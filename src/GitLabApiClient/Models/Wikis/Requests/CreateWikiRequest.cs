@@ -1,8 +1,5 @@
 using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GitLabApiClient.Models.Wikis.Requests
 {

@@ -1,8 +1,5 @@
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Wikis.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GitLabApiClient.Internal.Queries
 {
