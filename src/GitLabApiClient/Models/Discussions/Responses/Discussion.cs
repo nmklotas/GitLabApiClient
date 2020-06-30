@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using GitLabApiClient.Models.Notes.Responses;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace GitLabApiClient.Models.Discussions.Responses
 {

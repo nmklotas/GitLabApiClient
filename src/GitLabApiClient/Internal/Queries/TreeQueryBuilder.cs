@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using GitLabApiClient.Models.Trees.Requests;
 using GitLabApiClient.Models.Tags.Requests;
+using GitLabApiClient.Models.Trees.Requests;
 
 namespace GitLabApiClient.Internal.Queries
 {
