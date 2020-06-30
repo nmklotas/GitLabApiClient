@@ -1,15 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
-using GitLabApiClient.Test.Utilities;
-using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.Issues.Requests;
-using GitLabApiClient.Models.ToDoList.Responses;
-using Xunit;
-using System;
+using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.ToDoList.Requests;
+using GitLabApiClient.Models.ToDoList.Responses;
+using GitLabApiClient.Test.Utilities;
+using Xunit;
 
 namespace GitLabApiClient.Test
 {
