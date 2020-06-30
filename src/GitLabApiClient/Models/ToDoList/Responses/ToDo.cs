@@ -1,7 +1,7 @@
 using System;
 using GitLabApiClient.Models.Issues.Responses;
-using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.MergeRequests.Responses;
+using GitLabApiClient.Models.Projects.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
