@@ -1,6 +1,6 @@
+using System;
 using GitLabApiClient.Models.Users.Responses;
 using Newtonsoft.Json;
-using System;
 
 namespace GitLabApiClient.Models.AwardEmojis.Responses
 {
