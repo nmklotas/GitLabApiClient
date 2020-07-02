@@ -5,12 +5,10 @@ namespace GitLabApiClient.Test.Utilities
 {
     internal static class GitLabApiHelper
     {
-        private const string PrivateAuthenticationToken = "ElijahBaley";
-
         public static GitLabHttpFacade GetFacade()
         {
             var facade = new GitLabHttpFacade(
-                "http://localhost:9190/api/v4/", new RequestsJsonSerializer(), PrivateAuthenticationToken);
+                GitLabContainerFixture.GitlabHost, new RequestsJsonSerializer(), GitLabContainerFixture.Token);
 
             return facade;
         }
@@ -19,22 +17,22 @@ namespace GitLabApiClient.Test.Utilities
 
         public static int TestProjectId { get; set; } = 1;
 
-        public static string TestGroupTextId { get; set; } = "1";
+        public static string TestGroupTextId { get; set; } = "2";
 
-        public static int TestGroupId { get; set; } = 1;
+        public static int TestGroupId { get; set; } = 2;
 
         public static string TestGroupName { get; set; } = "txxxestgrouxxxp";
 
         public static string TestProjectName { get; set; } = "txxxestprojecxxxt";
 
+        public static int TestUserId { get; set; } = 1;
+
         public static string TestUserName { get; set; } = "root";
+
+        public static string TestUserPassword { get; set; } = "password";
 
         public static string TestName { get; set; } = "Administrator";
 
-        public static string TestPassword { get; set; } = "hariseldon";
-
-        public static string TestRelease { get; set; } = "release-test";
-        public static string TestTagName { get; set; } = "tag/test";
         public static string TestDescription { get; set; } = "This is just a test-description";
     }
 }

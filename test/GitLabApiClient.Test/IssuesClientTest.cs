@@ -19,7 +19,7 @@ namespace GitLabApiClient.Test
     public class IssuesClientTest
     {
         private readonly IssuesClient _sut = new IssuesClient(
-            GetFacade(), new IssuesQueryBuilder(), new ProjectIssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
+            GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
 
         [Fact]
         public async Task CreatedIssueCanBeUpdated()
@@ -33,8 +33,7 @@ namespace GitLabApiClient.Test
                 Labels = new[] { "Label1" },
                 MilestoneId = 2,
                 DiscussionToResolveId = 3,
-                MergeRequestIdToResolveDiscussions = 4,
-                Weight = 3
+                MergeRequestIdToResolveDiscussions = 4
             });
 
             //act
@@ -45,8 +44,7 @@ namespace GitLabApiClient.Test
                 Description = "Description11",
                 Labels = new[] { "Label11" },
                 Title = "Title11",
-                MilestoneId = 22,
-                Weight = 33
+                MilestoneId = 22
             });
 
             //assert
@@ -55,8 +53,7 @@ namespace GitLabApiClient.Test
                 i.Confidential == false &&
                 i.Description == "Description11" &&
                 i.Labels.SequenceEqual(new[] { "Label11" }) &&
-                i.Title == "Title11" &&
-                i.Weight == 33);
+                i.Title == "Title11");
         }
 
         [Fact]
@@ -83,7 +80,7 @@ namespace GitLabApiClient.Test
             await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest(title));
 
             //act
-            var listedIssues = await _sut.GetAsync(TestProjectTextId, o => o.Filter = title);
+            var listedIssues = await _sut.GetAllAsync(projectId: TestProjectTextId, options: o => o.Filter = title);
 
             //assert
             listedIssues.Single().Should().Match<Issue>(i =>
@@ -108,8 +105,8 @@ namespace GitLabApiClient.Test
 
             //act
             var issueById = await _sut.GetAsync(TestProjectId, issue.Iid);
-            var issueByProjectId = (await _sut.GetAsync(o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
-            var ownedIssue = (await _sut.GetAsync(o => o.Scope = Scope.CreatedByMe)).FirstOrDefault(i => i.Title == title);
+            var issueByProjectId = (await _sut.GetAllAsync(options: o => o.IssueIds = new[] { issue.Iid })).FirstOrDefault(i => i.Title == title);
+            var ownedIssue = (await _sut.GetAllAsync(options: o => o.Scope = Scope.CreatedByMe)).FirstOrDefault(i => i.Title == title);
 
             //assert
             issue.Should().Match<Issue>(i =>
@@ -165,6 +162,33 @@ namespace GitLabApiClient.Test
             //assert
             updatedIssueNote.Should().Match<Note>(n =>
                 n.Body == "comment22");
+        }
+
+        [Fact]
+        public async Task CreateIssueWithTasks()
+        {
+            //arrange
+            string title = Guid.NewGuid().ToString();
+            await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest(title)
+            {
+                Description = @"Description1
+- [ ] Task 1
+- [ ] Task 2
+- [x] Task 3
+"
+            });
+
+            //act
+            var listedIssues = await _sut.GetAllAsync(projectId: TestProjectTextId, options: o => o.Filter = title);
+
+            //assert
+            listedIssues.Single().Should().Match<Issue>(i =>
+                i.ProjectId == TestProjectTextId &&
+                i.Title == title &&
+                i.TaskCompletionStatus != null &&
+                i.TaskCompletionStatus.Count == 3 &&
+                i.TaskCompletionStatus.Completed == 1 &&
+                i.TimeStats != null);
         }
     }
 }

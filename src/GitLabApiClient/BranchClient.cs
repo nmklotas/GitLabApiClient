@@ -10,7 +10,7 @@ using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
 {
-    public sealed class BranchClient
+    public sealed class BranchClient : IBranchClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly BranchQueryBuilder _branchQueryBuilder;

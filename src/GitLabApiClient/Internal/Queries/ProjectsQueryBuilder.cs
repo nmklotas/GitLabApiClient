@@ -7,46 +7,52 @@ namespace GitLabApiClient.Internal.Queries
 {
     internal sealed class ProjectsQueryBuilder : QueryBuilder<ProjectQueryOptions>
     {
-        protected override void BuildCore(ProjectQueryOptions options)
+        protected override void BuildCore(Query query, ProjectQueryOptions options)
         {
             if (!options.UserId.IsNullOrEmpty())
-                Add("user_id", options.UserId);
+                query.Add("user_id", options.UserId);
 
             if (options.Archived)
-                Add("archived", options.Archived);
+                query.Add("archived", options.Archived);
 
             if (options.Visibility != QueryProjectVisibilityLevel.All)
-                Add("visibility", GetVisibilityQueryValue(options.Visibility));
+                query.Add("visibility", GetVisibilityQueryValue(options.Visibility));
 
             if (options.Order != ProjectsOrder.CreatedAt)
-                Add("order_by", GetProjectOrderQueryValue(options.Order));
+                query.Add("order_by", GetProjectOrderQueryValue(options.Order));
 
             if (options.SortOrder != SortOrder.Descending)
-                Add("sort", GetSortOrderQueryValue(options.SortOrder));
+                query.Add("sort", GetSortOrderQueryValue(options.SortOrder));
 
             if (!options.Filter.IsNullOrEmpty())
-                Add("search", options.Filter);
+                query.Add("search", options.Filter);
 
             if (options.Simple)
-                Add("simple", options.Simple);
+                query.Add("simple", options.Simple);
 
             if (options.Owned)
-                Add("owned", options.Owned);
+                query.Add("owned", options.Owned);
 
             if (options.IsMemberOf)
-                Add("membership", options.IsMemberOf);
+                query.Add("membership", options.IsMemberOf);
 
             if (options.Starred)
-                Add("starred", options.Starred);
+                query.Add("starred", options.Starred);
 
             if (options.IncludeStatistics)
-                Add("statistics", options.IncludeStatistics);
+                query.Add("statistics", options.IncludeStatistics);
 
             if (options.WithIssuesEnabled)
-                Add("with_issues_enabled", options.WithIssuesEnabled);
+                query.Add("with_issues_enabled", options.WithIssuesEnabled);
 
             if (options.WithMergeRequestsEnabled)
-                Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
+                query.Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
+
+            if (options.LastActivityAfter.Year != 0001) //Not Default year
+                query.Add("last_activity_after", options.LastActivityAfter.ToUniversalTime().ToString("o")); //Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
+
+            if (options.LastActivityBefore.Year != 0001) //Not Default year
+                query.Add("last_activity_before", options.LastActivityBefore.ToUniversalTime().ToString("o")); //Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
         }
 
         private static string GetProjectOrderQueryValue(ProjectsOrder order)

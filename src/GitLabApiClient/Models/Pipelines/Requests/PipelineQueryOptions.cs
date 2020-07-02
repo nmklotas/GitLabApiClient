@@ -1,3 +1,5 @@
+using System;
+
 namespace GitLabApiClient.Models.Pipelines.Requests
 {
     public class PipelineQueryOptions
@@ -38,5 +40,20 @@ namespace GitLabApiClient.Models.Pipelines.Requests
         ///     Sort pipelines in asc or desc order (default: desc)
         /// </summary>
         public SortOrder SortOrder { get; set; } = SortOrder.Descending;
+
+        /// <summary>
+        ///     Return pipelines updated after the specified date.
+        /// </summary>
+        public DateTime? UpdatedAfter { get; set; }
+
+        /// <summary>
+        ///     Return pipelines updated before the specified date
+        /// </summary>
+        public DateTime? UpdatedBefore { get; set; }
+
+        /// <summary>
+        ///     The username of the user who triggered pipelines
+        /// </summary>
+        public string TriggeredBy { get; set; }
     }
 }

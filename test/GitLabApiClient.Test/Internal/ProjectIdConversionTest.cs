@@ -20,7 +20,7 @@ namespace GitLabApiClient.Test.Internal
         [Fact]
         public void ProjectId_String_Conversion()
         {
-            string expected = "projects/group%2fmy_awe-some.project";
+            string expected = "projects/group%2Fmy_awe-some.project";
             ProjectId sut = "group/my_awe-some.project";
             string result = $"projects/{sut}";
             result.Should().Be(expected);
@@ -38,7 +38,7 @@ namespace GitLabApiClient.Test.Internal
         [Fact]
         public void ProjectId_Project_Path_Conversion()
         {
-            string expected = "projects/group%2fmy_awe-some.project";
+            string expected = "projects/group%2Fmy_awe-some.project";
             ProjectId sut = new Project { PathWithNamespace = "group/my_awe-some.project" };
             string result = $"projects/{sut}";
             result.Should().Be(expected);

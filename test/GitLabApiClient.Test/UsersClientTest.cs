@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
-using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 using Xunit;
+using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
 namespace GitLabApiClient.Test
 {

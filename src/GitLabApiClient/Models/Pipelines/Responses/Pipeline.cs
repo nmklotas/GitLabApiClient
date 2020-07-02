@@ -19,5 +19,11 @@ namespace GitLabApiClient.Models.Pipelines.Responses
 
         [JsonProperty("web_url")]
         public Uri WebUrl { get; set; }
+
+        [JsonProperty("created_at")]
+        public DateTime? CreatedAt { get; set; }
+
+        [JsonProperty("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
     }
 }

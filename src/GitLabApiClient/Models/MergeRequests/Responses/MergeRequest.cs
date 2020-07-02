@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GitLabApiClient.Models.Issues.Responses;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Pipelines.Responses;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.MergeRequests.Responses
@@ -82,5 +83,11 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
 
         [JsonProperty("work_in_progress")]
         public bool WorkInProgress { get; set; }
+
+        [JsonProperty("time_stats")]
+        public MergeRequestTimeStatistic TimeStats { get; set; }
+
+        [JsonProperty("pipeline")]
+        public Pipeline Pipeline { get; set; }
     }
 }

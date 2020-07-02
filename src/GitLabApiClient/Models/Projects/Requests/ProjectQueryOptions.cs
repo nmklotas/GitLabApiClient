@@ -1,3 +1,5 @@
+using System;
+
 namespace GitLabApiClient.Models.Projects.Requests
 {
     /// <summary>
@@ -71,5 +73,17 @@ namespace GitLabApiClient.Models.Projects.Requests
         /// Limit by enabled merge requests feature
         /// </summary>
         public bool WithMergeRequestsEnabled { get; set; }
+
+        /// <summary>
+        /// Limit by Last Activity After specified datetime
+        /// Note: You would need GitLab 12.10 or later
+        /// </summary>
+        public DateTime LastActivityAfter { get; set; }
+
+        /// <summary>
+        /// Limit by Last Activity Before specified datetime
+        /// Note: You would need GitLab 12.10 or later
+        /// </summary>
+        public DateTime LastActivityBefore { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using GitLabApiClient.Internal.Utilities;
 
 namespace GitLabApiClient.Models.Issues.Requests
 {
@@ -7,6 +6,7 @@ namespace GitLabApiClient.Models.Issues.Requests
     /// <summary>
     /// Options for project issues listing
     /// </summary>
+    [Obsolete("Use IssuesQueryOptions instead")]
     public sealed class ProjectIssuesQueryOptions : IssuesQueryOptions
     {
         /// <summary>
@@ -15,15 +15,5 @@ namespace GitLabApiClient.Models.Issues.Requests
         internal ProjectIssuesQueryOptions()
         {
         }
-
-        /// <summary>
-        /// Return issues created after the given time (inclusive)
-        /// </summary>
-        public DateTime? CreatedAfter { get; set; }
-
-        /// <summary>
-        /// Return issues created before the given time (inclusive)
-        /// </summary>
-        public DateTime? CreatedBefore { get; set; }
     }
 }

@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Groups.Requests;
+using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Test.Utilities;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
@@ -16,13 +19,15 @@ namespace GitLabApiClient.Test
     public class GroupsClientTest
     {
         private readonly List<int> _groupIdsToClean = new List<int>();
-        private List<int> _milestoneIdsToClean { get; } = new List<int>();
+        private List<int> MilestoneIdsToClean { get; } = new List<int>();
+        private List<string> VariableIdsToClean { get; } = new List<string>();
 
         private readonly GroupsClient _sut = new GroupsClient(
             GetFacade(),
             new GroupsQueryBuilder(),
             new ProjectsGroupQueryBuilder(),
-            new MilestonesQueryBuilder());
+            new MilestonesQueryBuilder(),
+            new GroupLabelsQueryBuilder());
 
         [Fact]
         public async Task GroupCanBeRetrievedByGroupId()
@@ -32,7 +37,7 @@ namespace GitLabApiClient.Test
             group.FullPath.Should().Be(TestGroupName);
             group.Name.Should().Be(TestGroupName);
             group.Path.Should().Be(TestGroupName);
-            group.Visibility.Should().Be(GroupsVisibility.Private);
+            group.Visibility.Should().Be(GroupsVisibility.Public);
             group.Description.Should().BeEmpty();
         }
 
@@ -55,7 +60,7 @@ namespace GitLabApiClient.Test
         {
             var group = await _sut.GetAsync(o =>
             {
-                o.Search = "gitlab";
+                o.Search = "txxxest";
                 o.Order = GroupsOrder.Name;
                 o.Sort = GroupsSort.Descending;
                 o.AllAvailable = true;
@@ -75,7 +80,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-11-30",
                 Description = "description1"
             });
-            _milestoneIdsToClean.Add(createdMilestone.Id);
+            MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var milestones = await _sut.GetMilestonesAsync(TestGroupId);
@@ -86,8 +91,8 @@ namespace GitLabApiClient.Test
             milestone.Should().Match<Milestone>(m =>
                 m.GroupId == TestGroupId &&
                 m.Title == "milestone1" &&
-                m.StartDate == "2018-11-05" &&
-                m.DueDate == "2018-11-10" &&
+                m.StartDate == "2018-11-01" &&
+                m.DueDate == "2018-11-30" &&
                 m.Description == "description1");
         }
 
@@ -150,6 +155,31 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
+        public async Task CreatedGroupLabelCanBeUpdated()
+        {
+            //arrange
+            var createdLabel = await _sut.CreateLabelAsync(GitLabApiHelper.TestGroupId, new CreateGroupLabelRequest("Label 1")
+            {
+                Color = "#FFFFFF",
+                Description = "description1"
+            });
+
+            //act
+            var updateRequest = UpdateGroupLabelRequest.FromNewName(createdLabel.Name, "Label 11");
+            updateRequest.Color = "#000000";
+            updateRequest.Description = "description11";
+
+            var updatedLabel = await _sut.UpdateLabelAsync(GitLabApiHelper.TestGroupId, updateRequest);
+            await _sut.DeleteLabelAsync(GitLabApiHelper.TestGroupId, updatedLabel.Name);
+
+            //assert
+            updatedLabel.Should().Match<GroupLabel>(l =>
+                l.Name == "Label 11" &&
+                l.Color == "#000000" &&
+                l.Description == "description11");
+        }
+
+        [Fact]
         public async Task CreatedGroupMilestoneCanBeUpdated()
         {
             //arrange
@@ -159,7 +189,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-11-30",
                 Description = "description2"
             });
-            _milestoneIdsToClean.Add(createdMilestone.Id);
+            MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var updatedMilestone = await _sut.UpdateMilestoneAsync(TestGroupTextId, createdMilestone.Id, new UpdateGroupMilestoneRequest()
@@ -189,7 +219,7 @@ namespace GitLabApiClient.Test
                 DueDate = "2018-12-31",
                 Description = "description3"
             });
-            _milestoneIdsToClean.Add(createdMilestone.Id);
+            MilestoneIdsToClean.Add(createdMilestone.Id);
 
             //act
             var updatedMilestone = await _sut.UpdateMilestoneAsync(TestGroupTextId, createdMilestone.Id, new UpdateGroupMilestoneRequest()
@@ -202,6 +232,92 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
+        public async Task GroupVariablesRetrieved()
+        {
+            //arrange
+            var createdVariable = await _sut.CreateVariableAsync(GitLabApiHelper.TestGroupId, new CreateGroupVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_RETRIEVE",
+                Value = "VALUE_VAR",
+                Masked = true,
+                Protected = true
+            });
+
+            VariableIdsToClean.Add(createdVariable.Key);
+
+            //act
+            var variables = await _sut.GetVariablesAsync(GitLabApiHelper.TestGroupId);
+            var variable = variables.First(v => v.Key == createdVariable.Key);
+
+            //assert
+            variables.Should().NotBeEmpty();
+            variable.Should().Match<Variable>(v =>
+                v.VariableType == createdVariable.VariableType &&
+                v.Key == createdVariable.Key &&
+                v.Value == createdVariable.Value &&
+                v.Masked == createdVariable.Masked &&
+                v.Protected == createdVariable.Protected);
+        }
+
+        [Fact]
+        public async Task GroupVariablesCreated()
+        {
+            var request = new CreateGroupVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_CREATED",
+                Value = "VALUE_VAR",
+                Masked = true,
+                Protected = true
+            };
+
+            var variable = await _sut.CreateVariableAsync(GitLabApiHelper.TestGroupId, request);
+
+            variable.Should().Match<Variable>(v => v.VariableType == request.VariableType
+                                                   && v.Key == request.Key
+                                                   && v.Value == request.Value
+                                                   && v.Masked == request.Masked
+                                                   && v.Protected == request.Protected);
+
+            VariableIdsToClean.Add(request.Key);
+        }
+
+        [Fact]
+        public async Task GroupVariableCanBeUpdated()
+        {
+            var request = new CreateGroupVariableRequest
+            {
+                VariableType = "env_var",
+                Key = "SOME_VAR_KEY_TO_UPDATE",
+                Value = "VALUE_VAR",
+                Masked = true,
+                Protected = true
+            };
+
+            var variable = await _sut.CreateVariableAsync(GitLabApiHelper.TestGroupId, request);
+
+            VariableIdsToClean.Add(request.Key);
+
+            var updateRequest = new UpdateGroupVariableRequest
+            {
+                VariableType = "file",
+                Key = request.Key,
+                Value = "UpdatedValue",
+                Masked = request.Masked,
+                Protected = request.Protected,
+            };
+
+            var variableUpdated = await _sut.UpdateVariableAsync(GitLabApiHelper.TestGroupId, updateRequest);
+
+            variableUpdated.Should().Match<Variable>(v => v.VariableType == updateRequest.VariableType
+                                                          && v.Key == updateRequest.Key
+                                                          && v.Value == updateRequest.Value
+                                                          && v.Masked == updateRequest.Masked
+                                                          && v.Protected == updateRequest.Protected);
+        }
+
+        [Fact]
         public Task InitializeAsync()
             => CleanupGroups();
 
@@ -211,11 +327,14 @@ namespace GitLabApiClient.Test
 
         private async Task CleanupGroups()
         {
-            foreach (int milestoneId in _milestoneIdsToClean)
+            foreach (int milestoneId in MilestoneIdsToClean)
                 await _sut.DeleteMilestoneAsync(TestGroupId, milestoneId);
 
             foreach (int groupId in _groupIdsToClean)
                 await _sut.DeleteAsync(groupId.ToString());
+
+            foreach (string variableId in VariableIdsToClean)
+                await _sut.DeleteVariableAsync(GitLabApiHelper.TestGroupId, variableId);
         }
 
         private static string GetRandomGroupName()
