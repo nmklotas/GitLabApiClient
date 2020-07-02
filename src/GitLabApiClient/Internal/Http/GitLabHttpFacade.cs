@@ -30,7 +30,7 @@ namespace GitLabApiClient.Internal.Http
         }
 
         public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null, TimeSpan? clientTimeout = null) :
-            this(hostUrl, jsonSerializer, httpMessageHandler)
+            this(hostUrl, jsonSerializer, httpMessageHandler, clientTimeout)
         {
             switch (authenticationToken.Length)
             {
