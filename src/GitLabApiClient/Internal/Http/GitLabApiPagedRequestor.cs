@@ -40,6 +40,14 @@ namespace GitLabApiClient.Internal.Http
             }
         }
 
+        public async Task<int> GetTotalPageCount<T>(string url)
+        {
+            var response = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
+            var headers = response.Item2;
+            int totalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages");
+            return totalPages;
+        }
+
         private async Task<IList<T>> GetNextPageList<T>(string url, int nextPage, List<T> result)
         {
             do
@@ -79,6 +87,14 @@ namespace GitLabApiClient.Internal.Http
             return result;
         }
 
+        public async Task<IList<T>> GetPage<T>(string url, int pageNumber, int? maxItemsPerPage)
+        {
+            int maxItems = maxItemsPerPage ?? MaxItemsPerPage;
+            string pagedUrl = GetPagedUrl(url, pageNumber, maxItems);
+            var results = await _requestor.Get<IList<T>>(pagedUrl);
+            return results;
+        }
+
         private static List<string> GetPagedUrls(string originalUrl, int totalPages)
         {
             var pagedUrls = new List<string>();
@@ -89,10 +105,10 @@ namespace GitLabApiClient.Internal.Http
             return pagedUrls;
         }
 
-        private static string GetPagedUrl(string url, int pageNumber)
+        private static string GetPagedUrl(string url, int pageNumber, int maxItemsPerPage = MaxItemsPerPage)
         {
             string parameterSymbol = url.Contains("?") ? "&" : "?";
-            return $"{url}{parameterSymbol}per_page={MaxItemsPerPage}&page={pageNumber}";
+            return $"{url}{parameterSymbol}per_page={maxItemsPerPage}&page={pageNumber}";
         }
     }
 

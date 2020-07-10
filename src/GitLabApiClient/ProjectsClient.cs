@@ -60,6 +60,24 @@ namespace GitLabApiClient
             return await _httpFacade.GetPagedList<Project>(url);
         }
 
+        public async Task<IList<Project>> GetPageAsync(int pageNumber = 1,
+            int? maxItemsPerPage = null,
+            Action<ProjectQueryOptions> options = null)
+        {
+            var queryOptions = new ProjectQueryOptions();
+            options?.Invoke(queryOptions);
+            string url = _queryBuilder.Build("projects", queryOptions);
+            return await _httpFacade.GetPage<Project>(url, pageNumber, maxItemsPerPage);
+        }
+
+        public async Task<int> GetTotalPageCount<T>(Action<ProjectQueryOptions> options = null)
+        {
+            var queryOptions = new ProjectQueryOptions();
+            options?.Invoke(queryOptions);
+            string url = _queryBuilder.Build("projects", queryOptions);
+            return await _httpFacade.GetTotalPageCount<T>(url);
+        }
+
         /// <summary>
         /// Get the users list of a project.
         /// </summary>
@@ -105,7 +123,7 @@ namespace GitLabApiClient
             var queryOptions = new JobQueryOptions();
             options?.Invoke(queryOptions);
 
-            var url = _jobQueryBuilder.Build($"projects/{projectId}/jobs", queryOptions);
+            string url = _jobQueryBuilder.Build($"projects/{projectId}/jobs", queryOptions);
             return await _httpFacade.GetPagedList<Job>(url);
         }
 
