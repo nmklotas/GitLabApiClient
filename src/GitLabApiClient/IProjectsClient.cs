@@ -31,6 +31,22 @@ namespace GitLabApiClient
         Task<IList<Project>> GetAsync(Action<ProjectQueryOptions> options = null);
 
         /// <summary>
+        /// Get a specified page of projects for authenticated user.
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="maxItemsPerPage"></param>
+        /// <param name="options"></param>
+        Task<IList<Project>> GetPageAsync(int pageNumber = 1,
+            int? maxItemsPerPage = null,
+            Action<ProjectQueryOptions> options = null);
+
+        /// <summary>
+        /// Get the total number of pages available for authenticated user.
+        /// </summary>
+        /// <param name="options"></param>
+        Task<int> GetTotalPageCount(Action<ProjectQueryOptions> options = null);
+
+        /// <summary>
         /// Get the users list of a project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>

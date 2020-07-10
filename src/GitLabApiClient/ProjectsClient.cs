@@ -70,12 +70,12 @@ namespace GitLabApiClient
             return await _httpFacade.GetPage<Project>(url, pageNumber, maxItemsPerPage);
         }
 
-        public async Task<int> GetTotalPageCount<T>(Action<ProjectQueryOptions> options = null)
+        public async Task<int> GetTotalPageCount(Action<ProjectQueryOptions> options = null)
         {
             var queryOptions = new ProjectQueryOptions();
             options?.Invoke(queryOptions);
             string url = _queryBuilder.Build("projects", queryOptions);
-            return await _httpFacade.GetTotalPageCount<T>(url);
+            return await _httpFacade.GetTotalPageCount<Project>(url);
         }
 
         /// <summary>
