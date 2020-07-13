@@ -6,6 +6,7 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -47,7 +48,7 @@ namespace GitLabApiClient
             await _httpFacade.Get<Project>($"projects/{projectId}");
 
         /// <summary>
-        /// Get a list of visible projects for authenticated user.
+        /// Get a list of all visible projects for authenticated user.
         /// When accessed without authentication, only public projects are returned.
         /// </summary>
         /// <param name="options">Query options.</param>
@@ -60,22 +61,20 @@ namespace GitLabApiClient
             return await _httpFacade.GetPagedList<Project>(url);
         }
 
-        public async Task<IList<Project>> GetPageAsync(int pageNumber = 1,
-            int? maxItemsPerPage = null,
+        /// <summary>
+        /// Get a list of visible projects for authenticated user.
+        /// List size is based on pagination options.
+        /// When accessed without authentication, only public projects are returned.
+        /// </summary>
+        /// <param name="paginationOptions"></param>
+        /// <param name="options"></param>
+        public async Task<IList<Project>> GetAsync(PaginationOptions paginationOptions,
             Action<ProjectQueryOptions> options = null)
         {
             var queryOptions = new ProjectQueryOptions();
             options?.Invoke(queryOptions);
             string url = _queryBuilder.Build("projects", queryOptions);
-            return await _httpFacade.GetPage<Project>(url, pageNumber, maxItemsPerPage);
-        }
-
-        public async Task<int> GetTotalPageCount(Action<ProjectQueryOptions> options = null)
-        {
-            var queryOptions = new ProjectQueryOptions();
-            options?.Invoke(queryOptions);
-            string url = _queryBuilder.Build("projects", queryOptions);
-            return await _httpFacade.GetTotalPageCount<Project>(url);
+            return await _httpFacade.GetPage<Project>(url, paginationOptions);
         }
 
         /// <summary>

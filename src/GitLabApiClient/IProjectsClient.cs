@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Paths;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -33,18 +34,10 @@ namespace GitLabApiClient
         /// <summary>
         /// Get a specified page of projects for authenticated user.
         /// </summary>
-        /// <param name="pageNumber"></param>
-        /// <param name="maxItemsPerPage"></param>
+        /// <param name="pageOptions"></param>
         /// <param name="options"></param>
-        Task<IList<Project>> GetPageAsync(int pageNumber = 1,
-            int? maxItemsPerPage = null,
-            Action<ProjectQueryOptions> options = null);
-
-        /// <summary>
-        /// Get the total number of pages available for authenticated user.
-        /// </summary>
-        /// <param name="options"></param>
-        Task<int> GetTotalPageCount(Action<ProjectQueryOptions> options = null);
+        /// <returns></returns>
+        Task<IList<Project>> GetAsync(PaginationOptions pageOptions, Action<ProjectQueryOptions> options = null);
 
         /// <summary>
         /// Get the users list of a project.

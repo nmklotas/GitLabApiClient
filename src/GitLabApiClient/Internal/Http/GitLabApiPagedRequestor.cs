@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
 
 namespace GitLabApiClient.Internal.Http
 {
@@ -38,14 +39,6 @@ namespace GitLabApiClient.Internal.Http
                 default:
                     return await GetTotalPagedList(url, totalPages, result);
             }
-        }
-
-        public async Task<int> GetTotalPageCount<T>(string url)
-        {
-            var response = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
-            var headers = response.Item2;
-            int totalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages");
-            return totalPages;
         }
 
         private async Task<IList<T>> GetNextPageList<T>(string url, int nextPage, List<T> result)
@@ -87,10 +80,10 @@ namespace GitLabApiClient.Internal.Http
             return result;
         }
 
-        public async Task<IList<T>> GetPage<T>(string url, int pageNumber, int? maxItemsPerPage)
+        public async Task<IList<T>> GetPage<T>(string url, PaginationOptions paginationOptions)
         {
-            int maxItems = maxItemsPerPage ?? MaxItemsPerPage;
-            string pagedUrl = GetPagedUrl(url, pageNumber, maxItems);
+            int maxItems = paginationOptions.MaxItemsPerPage ?? MaxItemsPerPage;
+            string pagedUrl = GetPagedUrl(url, paginationOptions.PageNumber, maxItems);
             var results = await _requestor.Get<IList<T>>(pagedUrl);
             return results;
         }
