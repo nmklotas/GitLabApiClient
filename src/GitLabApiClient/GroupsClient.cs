@@ -132,7 +132,7 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        /// Adds a member to the group.
+        /// Add a new milestone to a group.
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="request">Create milestone request.</param>
