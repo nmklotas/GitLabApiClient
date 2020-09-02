@@ -12,6 +12,7 @@ using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Runners.Responses;
 
 namespace GitLabApiClient
 {
@@ -164,6 +165,13 @@ namespace GitLabApiClient
         /// <param name="milestoneId">Id of the milestone.</param>
         public async Task<Milestone> GetMilestoneAsync(GroupId groupId, int milestoneId) =>
             await _httpFacade.Get<Milestone>($"groups/{groupId}/milestones/{milestoneId}");
+
+        /// <summary>
+        /// Get a list of runners in a group.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        public async Task<IList<Runner>> GetRunnersAsync(GroupId groupId) =>
+            await _httpFacade.Get<IList<Runner>>($"groups/{groupId}/runners");
 
         /// <summary>
         /// Creates a new project group.

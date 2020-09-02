@@ -91,6 +91,8 @@ namespace GitLabApiClient.Internal.Http
 
         public Task Delete(string uri) =>
             _requestor.Delete(uri);
+        public Task Delete(string uri, object data) =>
+            _requestor.Delete(uri, data);
 
         public async Task<AccessTokenResponse> LoginAsync(AccessTokenRequest accessTokenRequest)
         {

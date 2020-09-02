@@ -11,6 +11,7 @@ using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
+using GitLabApiClient.Models.Runners.Responses;
 using GitLabApiClient.Models.Variables.Request;
 using GitLabApiClient.Models.Variables.Response;
 using GitLabApiClient.Test.Utilities;
@@ -117,6 +118,17 @@ namespace GitLabApiClient.Test
                 v.EnvironmentScope == createdVariable.EnvironmentScope &&
                 v.Masked == createdVariable.Masked &&
                 v.Protected == createdVariable.Protected);
+        }
+
+        [Fact]
+        public async Task ProjectRunnerCanBeRetrieved()
+        {
+            //act
+            var runners = await _sut.GetRunnersAsync(GitLabApiHelper.TestProjectId);
+
+            //assert
+            runners.Count.Should().BeGreaterOrEqualTo(1);
+            runners.Should().Contain(r => r.Description == GitLabApiHelper.TestProjectRunnerName && r.Active == true);
         }
 
         [Fact]
