@@ -40,5 +40,11 @@ namespace GitLabApiClient.Test.Utilities
         public static string TestExtraName { get; set; } = "Txxxest Usexxxr";
 
         public static string TestDescription { get; set; } = "This is just a test-description";
+
+        public static string TestRunnerName { get; set; } = "txxxestrunnexxxr";
+
+        public static string TestGroupRunnerName { get; set; } = "txxxestrunnexxxr_group";
+
+        public static string TestProjectRunnerName { get; set; } = "txxxestrunnexxxr_project";
     }
 }

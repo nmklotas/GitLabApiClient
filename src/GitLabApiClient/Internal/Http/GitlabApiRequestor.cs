@@ -102,6 +102,16 @@ namespace GitLabApiClient.Internal.Http
             await EnsureSuccessStatusCode(responseMessage);
         }
 
+        public async Task Delete(string url, object data)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
+            {
+                Content = SerializeToString(data)
+            };
+            var responseMessage = await _client.SendAsync(request);
+            await EnsureSuccessStatusCode(responseMessage);
+        }
+
         public async Task<Tuple<T, HttpResponseHeaders>> GetWithHeaders<T>(string url)
         {
             var responseMessage = await _client.GetAsync(url);

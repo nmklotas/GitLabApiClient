@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GitLabApiClient.Models.Runners.Requests;
 using GitLabApiClient.Models.Runners.Responses;
-using GitLabApiClient.Models.Users.Requests;
-using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
 {
@@ -14,24 +13,49 @@ namespace GitLabApiClient
         Task<IList<Runner>> GetAsync();
 
         /// <summary>
-        /// Retrieves an user matched by name.
+        /// Retrieves all registered runners.
+        /// </summary>
+        Task<IList<Runner>> GetAllAsync();
+
+        /// <summary>
+        /// Retrieves a runner matched by id.
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
         /// <returns>Runner or NULL if it was not found.</returns>
-        Task<Runner> GetAsync(int runnerId);
+        Task<RunnerDetails> GetAsync(int runnerId);
 
         /// <summary>
-        /// Updates existing user
+        /// Updates existing runner
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
-        /// <param name="request">Request to update user.</param>
-        /// <returns>Newly modified user.</returns>
-        Task<User> UpdateAsync(int runnerId, UpdateUserRequest request);
+        /// <param name="request">Request to update runner.</param>
+        /// <returns>Newly modified runner.</returns>
+        Task<Runner> UpdateAsync(int runnerId, UpdateRunnerRequest request);
 
         /// <summary>
-        /// Deletes user.
+        /// Creates a new runner registration.
+        /// </summary>
+        /// <returns>The newly created runner.</returns>
+        /// <param name="request">Create runner request.</param>
+        Task<RunnerToken> CreateAsync(CreateRunnerRequest request);
+
+        /// <summary>
+        /// Deletes a runner.
         /// </summary>
         /// <param name="runnerId">Id of the runner.</param>
         Task DeleteAsync(int runnerId);
+
+        /// <summary>
+        /// Deletes a runner.
+        /// </summary>
+        /// <param name="runnerToken">Token of the runner.</param>
+        Task DeleteAsync(string runnerToken);
+
+        /// <summary>
+        /// Checks if a runner token can authenticate with GitLab
+        /// </summary>
+        /// <returns>True is token is valid, false if not valid.</returns>
+        /// <param name="token">Token to check.</param>
+        Task<bool> VerifyAuthenticationAsync(string token);
     }
 }

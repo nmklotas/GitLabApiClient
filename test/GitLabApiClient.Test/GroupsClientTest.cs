@@ -9,6 +9,7 @@ using GitLabApiClient.Models.Groups.Requests;
 using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Runners.Responses;
 using GitLabApiClient.Test.Utilities;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
@@ -95,6 +96,19 @@ namespace GitLabApiClient.Test
                 m.StartDate == "2018-11-01" &&
                 m.DueDate == "2018-11-30" &&
                 m.Description == "description1");
+        }
+
+        [Fact]
+        public async Task GroupRunnerCanBeRetrieved()
+        {
+            //act
+            var runners = await _sut.GetRunnersAsync(TestGroupId);
+
+            //assert
+            runners.Count.Should().Be(1);
+            runners[0].Should().Match<Runner>(r =>
+                r.Description == TestGroupRunnerName &&
+                r.Active == true);
         }
 
         [Fact]
