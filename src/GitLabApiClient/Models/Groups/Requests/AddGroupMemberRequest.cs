@@ -1,3 +1,4 @@
+using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
@@ -12,13 +13,23 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// Initializes a new instance of the <see cref="AddGroupMemberRequest"/> class.
         /// </summary>
         /// <param name="accessLevel">The access level of the new member.</param>
-        public AddGroupMemberRequest(AccessLevel accessLevel) => AccessLevel = (int)accessLevel;
+        public AddGroupMemberRequest(AccessLevel accessLevel, UserId userId)
+        {
+            AccessLevel = (int)accessLevel;
+            UserId = System.Convert.ToInt32(userId.ToString());
+        }
 
         /// <summary>
         /// The desired access level
         /// </summary>
         [JsonProperty("access_level")]
         public int AccessLevel { get; private set; }
+
+        /// <summary>
+        /// The UserID to add
+        /// </summary>
+        [JsonProperty("user_id")]
+        public int UserId { get; private set; }
 
         /// <summary>
         /// The membership expiration date. Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11.
