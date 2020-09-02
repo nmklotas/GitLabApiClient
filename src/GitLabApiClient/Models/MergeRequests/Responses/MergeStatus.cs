@@ -9,6 +9,8 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         [EnumMember(Value = "can_be_merged")]
         CanBeMerged,
         [EnumMember(Value = "cannot_be_merged")]
-        CannotBeMerged
+        CannotBeMerged,
+        [EnumMember(Value = "checking")]
+        Checking
     }
 }
