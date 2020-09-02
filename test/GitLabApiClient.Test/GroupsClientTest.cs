@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Groups.Requests;
 using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -229,6 +230,17 @@ namespace GitLabApiClient.Test
 
             //assert
             updatedMilestone.Should().Match<Milestone>(i => i.State == MilestoneState.Closed);
+        }
+
+        [Fact]
+        public async Task CreatedGroupCanHaveMemberAdded()
+        {
+            //act
+            var member = await _sut.AddMemberAsync(TestGroupTextId, new AddGroupMemberRequest(AccessLevel.Developer, TestExtraUserId));
+
+            //assert
+            member.Should().NotBeNull();
+            member.Id.Should().Be(TestExtraUserId);
         }
 
         [Fact]

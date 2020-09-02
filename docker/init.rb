@@ -15,7 +15,7 @@ Hello world
 }
 p.repository.create_file(u, 'README.md', content, message: 'Add README.md', branch_name: 'master')
 c = p.repository.create_dir(u, 'newdir', message: 'Create newdir', branch_name: 'master')
-
+u2 = User.create!(username: 'txxxestusexxxr', password: 'txxxestusexxxr_password', name: 'Txxxest Usexxxr', email: 'txxxestusexxxr@example.com')
 t = PersonalAccessToken.new({ user: u, name: 'gitlab-api-client', scopes: ['api']})
 t.save!
 
