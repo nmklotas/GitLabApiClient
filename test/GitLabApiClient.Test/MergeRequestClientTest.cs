@@ -41,6 +41,7 @@ namespace GitLabApiClient.Test
             {
                 return m =>
                     m.Assignee.Id == 1 &&
+                    m.MergedBy == null &&
                     m.ForceRemoveSourceBranch == true &&
                     m.Title == "Title" &&
                     m.Description == "Description" &&

@@ -89,5 +89,8 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
 
         [JsonProperty("pipeline")]
         public Pipeline Pipeline { get; set; }
+
+        [JsonProperty("merged_by")]
+        public Assignee MergedBy { get; set; }
     }
 }
