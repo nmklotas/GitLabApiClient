@@ -13,6 +13,8 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         [EnumMember(Value = "closed")]
         Closed,
         [EnumMember(Value = "reopened")]
-        Reopened
+        Reopened,
+        [EnumMember(Value = "cannot_be_merged_recheck")]
+        CannotBeMerged
     }
 }
