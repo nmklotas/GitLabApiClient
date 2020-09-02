@@ -25,7 +25,8 @@ namespace GitLabApiClient
         /// <param name="hostUrl">Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/ </param>
         /// <param name="authenticationToken">Personal access token. Obtained from GitLab profile settings.</param>
         /// <param name="httpMessageHandler">Optional handler for HTTP messages. Used for SSL pinning or canceling validation for example.</param>
-        public GitLabClient(string hostUrl, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null)
+        /// <param name="clientTimeout">Timespan with the HTTP client timeout if null default timeout is used. Sometimes required to upload files to a gitlab instance depending on filesize and networkspeed.</param>
+        public GitLabClient(string hostUrl, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null, TimeSpan? clientTimeout = null)
         {
             Guard.NotEmpty(hostUrl, nameof(hostUrl));
             Guard.NotNull(authenticationToken, nameof(authenticationToken));
@@ -37,7 +38,8 @@ namespace GitLabApiClient
                 HostUrl,
                 jsonSerializer,
                 authenticationToken,
-                httpMessageHandler);
+                httpMessageHandler,
+                clientTimeout);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
             var projectIssueNotesQueryBuilder = new ProjectIssueNotesQueryBuilder();

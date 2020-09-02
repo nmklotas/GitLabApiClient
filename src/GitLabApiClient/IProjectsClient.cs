@@ -179,5 +179,39 @@ namespace GitLabApiClient
         Task UnArchiveAsync(ProjectId projectId);
 
         Task<Project> Transfer(ProjectId projectId, TransferProjectRequest request);
+        /// <summary>
+        /// Request the export of a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        Task ExportAsync(ProjectId projectId);
+
+        /// <summary>
+        /// Get status of the export.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>Status of the export</returns>
+        Task<ExportStatus> GetExportStatusAsync(ProjectId projectId);
+
+        /// <summary>
+        /// Download an exported project if it exists
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="outputPath">The filename that should contain the contents of the download after the download completes</param>
+        /// <returns>Status of the export</returns>
+        Task ExportDownloadAsync(ProjectId projectId, string outputPath);
+
+        /// <summary>
+        /// Request the import of a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>Status of the import (including the id of the new project)</returns>
+        Task<ImportStatus> ImportAsync(ImportProjectRequest request);
+
+        /// <summary>
+        /// Get status of the import.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>Status of the import</returns>
+        Task<ImportStatus> GetImportStatusAsync(ProjectId projectId);
     }
 }

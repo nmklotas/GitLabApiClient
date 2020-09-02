@@ -20,15 +20,17 @@ namespace GitLabApiClient.Internal.Http
         private GitLabApiRequestor _requestor;
         private GitLabApiPagedRequestor _pagedRequestor;
 
-        private GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, HttpMessageHandler httpMessageHandler)
+        private GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, HttpMessageHandler httpMessageHandler, TimeSpan? clientTimeout = null)
         {
             _httpClient = new HttpClient(httpMessageHandler ?? new HttpClientHandler()) { BaseAddress = new Uri(hostUrl) };
+            if (clientTimeout.HasValue)
+                _httpClient.Timeout = clientTimeout.Value;
 
             Setup(jsonSerializer);
         }
 
-        public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null) :
-            this(hostUrl, jsonSerializer, httpMessageHandler)
+        public GitLabHttpFacade(string hostUrl, RequestsJsonSerializer jsonSerializer, string authenticationToken = "", HttpMessageHandler httpMessageHandler = null, TimeSpan? clientTimeout = null) :
+            this(hostUrl, jsonSerializer, httpMessageHandler, clientTimeout)
         {
             switch (authenticationToken.Length)
             {
@@ -66,6 +68,9 @@ namespace GitLabApiClient.Internal.Http
         public Task<T> Get<T>(string uri) =>
             _requestor.Get<T>(uri);
 
+        public Task GetFile(string uri, string outputPath) =>
+            _requestor.GetFile(uri, outputPath);
+
         public Task<T> Post<T>(string uri, object data = null) where T : class =>
             _requestor.Post<T>(uri, data);
 
@@ -74,6 +79,9 @@ namespace GitLabApiClient.Internal.Http
 
         public Task<Upload> PostFile(string uri, CreateUploadRequest uploadRequest) =>
             _requestor.PostFile(uri, uploadRequest);
+
+        public Task<T> PostFile<T>(string uri, Dictionary<string, string> keyValues, CreateUploadRequest uploadRequest) =>
+            _requestor.PostFile<T>(uri, keyValues, uploadRequest);
 
         public Task<T> Put<T>(string uri, object data) =>
             _requestor.Put<T>(uri, data);
