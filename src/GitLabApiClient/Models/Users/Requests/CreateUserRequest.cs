@@ -57,6 +57,12 @@ namespace GitLabApiClient.Models.Users.Requests
         public bool? ResetPassword { get; set; } = true;
 
         /// <summary>
+        /// Generate random password on the server.
+        /// </summary>
+        [JsonProperty("force_random_password")]
+        public bool? ForceRandomPassword { get; set; } = true;
+
+        /// <summary>
         /// Skype ID
         /// </summary>
         [JsonProperty("skype")]
