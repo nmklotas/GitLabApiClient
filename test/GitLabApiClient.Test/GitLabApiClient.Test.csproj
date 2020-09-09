@@ -4,10 +4,10 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Ressources\gitlabtest.png" />
+    <None Remove="Resources\gitlabtest.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Ressources\gitlabtest.png" />
+    <EmbeddedResource Include="Resources\gitlabtest.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="1.1.0" />
