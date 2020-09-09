@@ -27,7 +27,7 @@ namespace GitLabApiClient.Internal.Queries
                 query.Add("view", "simple");
 
             if (options.Labels.Any())
-                query.Add("labels", options.Labels);
+                query.AddCommaSeparatedList("labels", options.Labels);
 
             if (options.CreatedAfter.HasValue)
                 query.Add("created_after", options.CreatedAfter.Value);
