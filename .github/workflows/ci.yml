@@ -7,8 +7,8 @@ on:
   push:
     branches:
       - master
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 jobs:
   test:
@@ -47,10 +47,8 @@ jobs:
 
       - name: Push NuGet
         if: |
-          github.event_name == 'push' && (
-            startsWith(github.event.ref, 'refs/tags/')
-            || endsWith(github.event.ref, '/master')
-          )
+          startsWith(github.event.ref, 'refs/tags/')
+          || endsWith(github.event.ref, '/master')
         shell: pwsh
         run: dotnet nuget push **/*.nupkg --source $Env:SOURCE --api-key $Env:TOKEN
         env:
