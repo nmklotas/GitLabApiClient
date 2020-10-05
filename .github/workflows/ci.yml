@@ -1,6 +1,14 @@
 name: DotNet
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
 
 jobs:
   test:
