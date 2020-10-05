@@ -11,6 +11,7 @@
     <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
     <PackageTags>GitLab REST API CI Client</PackageTags>
     <PackageId>GitLabApiClient</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>nmklotas</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
