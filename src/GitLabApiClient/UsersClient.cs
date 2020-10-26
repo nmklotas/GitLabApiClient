@@ -71,7 +71,7 @@ namespace GitLabApiClient
             string propstring = string.Empty;
             foreach (System.Reflection.PropertyInfo pi in typeof(UpdateUserRequest).GetProperties())
             {
-                var attr = System.Attribute.GetCustomAttribute(typeof(UpdateUserRequest), typeof(Newtonsoft.Json.Serialization.JsonProperty));
+                Newtonsoft.Json.JsonPropertyAttribute attr = (Newtonsoft.Json.JsonPropertyAttribute)System.Attribute.GetCustomAttribute(pi, typeof(Newtonsoft.Json.JsonPropertyAttribute));
                 if (attr == null)
                     continue;
                 object value = pi.GetValue(properties);
@@ -98,7 +98,7 @@ namespace GitLabApiClient
                     continue;
                 if (propstring.Length > 0)
                     propstring += "&";
-                propstring += ((Newtonsoft.Json.JsonPropertyAttribute)attr).PropertyName + "=" + value.ToString();
+                propstring += attr.PropertyName + "=" + value.ToString();
             }
             Guard.NotEmpty(propstring, nameof(propstring));
             return await _httpFacade.GetPagedList<User>($"users?{propstring}");
