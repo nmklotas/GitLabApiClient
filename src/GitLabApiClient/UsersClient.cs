@@ -51,6 +51,61 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Retrieves users by properties.
+        /// </summary>
+        /// <param name="properties">Filter used for user properties.</param>
+        /// <returns>Users list satisfying the selected properties.</returns>
+        public async Task<IList<User>> GetByPropertiesAsync(string properties)
+        {
+            Guard.NotEmpty(properties, nameof(properties));
+            return await _httpFacade.GetPagedList<User>($"users?{properties}");
+        }
+
+        /// <summary>
+        /// Retrieves users by properties.
+        /// </summary>
+        /// <param name="properties">Filter used for user properties.</param>
+        /// <returns>Users list satisfying the selected properties.</returns>
+        public async Task<IList<User>> GetByPropertiesAsync(UpdateUserRequest properties)
+        {
+            string propstring = string.Empty;
+            foreach (System.Reflection.PropertyInfo pi in typeof(UpdateUserRequest).GetProperties())
+            {
+                var attr = System.Attribute.GetCustomAttribute(typeof(UpdateUserRequest), typeof(Newtonsoft.Json.Serialization.JsonProperty));
+                if (attr == null)
+                    continue;
+                object value = pi.GetValue(properties);
+                if (value == null)
+                    continue;
+                if (value.GetType() == typeof(string))
+                {
+                    if (string.IsNullOrEmpty(value as string) || string.IsNullOrWhiteSpace(value as string))
+                        continue;
+                }
+                else if (value.GetType() == typeof(int?))
+                {
+                    if (!((int?)value).HasValue)
+                        continue;
+                    value = ((int?)value).Value;
+                }
+                else if (value.GetType() == typeof(bool?))
+                {
+                    if (!((bool?)value).HasValue)
+                        continue;
+                    value = ((bool?)value).Value;
+                }
+                else
+                    continue;
+                if (propstring.Length > 0)
+                    propstring += "&";
+                propstring += ((Newtonsoft.Json.JsonPropertyAttribute)attr).PropertyName + "=" + value.ToString();
+            }
+            Guard.NotEmpty(propstring, nameof(propstring));
+            return await _httpFacade.GetPagedList<User>($"users?{propstring}");
+        }
+
+
+        /// <summary>
         /// Creates new user
         /// </summary>
         /// <param name="request">Request to create user.</param>

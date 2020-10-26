@@ -28,6 +28,20 @@ namespace GitLabApiClient
         Task<IList<User>> GetByFilterAsync(string filter);
 
         /// <summary>
+        /// Retrieves users by properties.
+        /// </summary>
+        /// <param name="properties">Filter used for user properties.</param>
+        /// <returns>Users list satisfying the selected properties.</returns>
+        Task<IList<User>> GetByPropertiesAsync(string properties);
+
+        /// <summary>
+        /// Retrieves users by properties.
+        /// </summary>
+        /// <param name="properties">Filter used for user properties.</param>
+        /// <returns>Users list satisfying the selected properties.</returns>
+        Task<IList<User>> GetByPropertiesAsync(UpdateUserRequest properties);
+
+        /// <summary>
         /// Creates new user
         /// </summary>
         /// <param name="request">Request to create user.</param>
