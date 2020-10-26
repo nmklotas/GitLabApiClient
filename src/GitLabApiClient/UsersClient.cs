@@ -133,7 +133,8 @@ namespace GitLabApiClient
         /// Deletes user.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        public async Task DeleteAsync(UserId userId) =>
-            await _httpFacade.Delete($"users/{userId}");
+        /// <param name="hard_delete">(optional) - If true, contributions that would usually be moved to the ghost user will be deleted instead, as well as groups owned solely by this user.</param>
+        public async Task DeleteAsync(UserId userId, bool hard_delete = false) =>
+            await _httpFacade.Delete($"users/{userId}" + (hard_delete ? "?hard_delete=true" : ""));
     }
 }
