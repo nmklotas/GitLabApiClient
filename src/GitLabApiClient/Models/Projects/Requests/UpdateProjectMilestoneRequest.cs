@@ -1,4 +1,3 @@
-using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Milestones.Requests;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
