@@ -33,7 +33,7 @@ namespace GitLabApiClient.Models.Commits.Responses
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
         [JsonProperty("stats")]
-        public string CommitStats { get; set; }
+        public CommitStats CommitStats { get; set; }
 
     }
 }
