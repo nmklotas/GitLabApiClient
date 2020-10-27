@@ -19,17 +19,17 @@ namespace GitLabApiClient.Models.Commits.Responses
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("target_url")]
-        public string Target_url { get; set; }
+        public string TargetUrl { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
         [JsonProperty("created_at")]
-        public DateTime Created_at { get; set; }
+        public DateTime CreatedAt { get; set; }
         [JsonProperty("started_at")]
-        public DateTime Started_at { get; set; }
+        public DateTime StartedAt { get; set; }
         [JsonProperty("finished_at")]
-        public DateTime Finished_at { get; set; }
+        public DateTime FinishedAt { get; set; }
         [JsonProperty("allow_failure")]
-        public bool Allow_failure { get; set; }
+        public bool AllowFailure { get; set; }
         [JsonProperty("coverage")]
         public float Coverage { get; set; }
         [JsonProperty("author")]

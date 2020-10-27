@@ -22,9 +22,9 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// <param name="unprotectAccessLevel">Access levels allowed to unprotect.</param>
         public ProtectBranchRequest(
             string name,
-            ProtectedRefAccessLevels? pushAccessLevel = ProtectedRefAccessLevels.MAINTAINER_ACCESS,
-            ProtectedRefAccessLevels? mergeAccessLevel = ProtectedRefAccessLevels.MAINTAINER_ACCESS,
-            ProtectedRefAccessLevels? unprotectAccessLevel = ProtectedRefAccessLevels.MAINTAINER_ACCESS)
+            ProtectedRefAccessLevels? pushAccessLevel = ProtectedRefAccessLevels.MaintainerAccess,
+            ProtectedRefAccessLevels? mergeAccessLevel = ProtectedRefAccessLevels.MaintainerAccess,
+            ProtectedRefAccessLevels? unprotectAccessLevel = ProtectedRefAccessLevels.MaintainerAccess)
         {
             Guard.NotEmpty(name, nameof(name));
 
