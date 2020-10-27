@@ -92,7 +92,7 @@ namespace GitLabApiClient
                 if (e.HttpStatusCode == System.Net.HttpStatusCode.Forbidden)
                     return false;
                 else
-                    throw e;
+                    throw;
             }
         }
     }
