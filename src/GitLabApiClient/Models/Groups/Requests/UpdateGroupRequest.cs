@@ -67,5 +67,17 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// </summary>
         [JsonProperty("shared_runners_minutes_limit")]
         public int? SharedRunnersMinutesLimit { get; set; }
+
+        /// <summary>
+        /// Allowed to create subgroups. Can be owner (Owners), or maintainer (Maintainers).
+        /// </summary>
+        [JsonProperty("subgroup_creation_level")]
+        public SubgroupCreationLevel? SubgroupCreationLevel { get; set; }
+
+        /// <summary>
+        /// Determine if developers can create projects in the group. Can be noone (No one), maintainer (Maintainers), or developer (Developers + Maintainers).
+        /// </summary>
+        [JsonProperty("project_creation_level")]
+        public ProjectCreationLevel? ProjectCreationLevel { get; set; }
     }
 }
