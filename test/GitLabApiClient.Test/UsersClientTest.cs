@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using FluentAssertions;
+using GitLabApiClient.Models.Users.Requests;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
@@ -33,5 +34,18 @@ namespace GitLabApiClient.Test
             var user = await _sut.GetAsync("nonexistingusername");
             user.Should().BeNull();
         }
+
+        [Fact]
+        public async Task CreateImpersonationToken()
+        {
+            var token = await _sut.CreateImpersonationTokenAsync(TestUserId, new CreateUserImpersonationTokenRequest("test_token", new ApiScope[] { ApiScope.Api }));
+            token.Name.Should().Be("test_token");
+            token.Revoked.Should().Be(false);
+            token.Active.Should().Be(true);
+            token.Impersonation.Should().Be(true);
+            token.Scopes.Should().Contain(Models.Users.Requests.ApiScope.Api);
+            token.Token.Should().NotBeNull();
+        }
+
     }
 }
