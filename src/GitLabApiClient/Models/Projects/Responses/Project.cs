@@ -122,5 +122,8 @@ namespace GitLabApiClient.Models.Projects.Responses
 
         [JsonProperty("wiki_enabled")]
         public bool WikiEnabled { get; set; }
+
+        [JsonProperty("empty_repo")]
+        public bool EmptyRepository { get; set; }
     }
 }
