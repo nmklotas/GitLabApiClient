@@ -1,21 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net48;netcoreapp3.1</TargetFrameworks>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Copyright />
-    <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
-    <Authors>nmklotas</Authors>
-    <PackageProjectUrl>https://github.com/nmklotas/GitLabApiClient</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
-    <PackageTags>GitLab REST API CI Client</PackageTags>
-    <PackageId>GitLabApiClient</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Company>nmklotas</Company>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <UseFullSemVerForNuGet>true</UseFullSemVerForNuGet>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>8</LangVersion>
+    <PackageId>Apiiro.GitLabApiClient</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Apiiro</Authors>
+    <Company>Apiiro</Company>
+    <PackageDescription>GitLabApiClient</PackageDescription>
+    <RepositoryUrl>https://github.com/apiiro/GitLabApiClient</RepositoryUrl>
+    <PackageIconUrl>https://i.imgur.com/5fg74ch.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(GITHUB_ACTIONS)' == 'true'">
