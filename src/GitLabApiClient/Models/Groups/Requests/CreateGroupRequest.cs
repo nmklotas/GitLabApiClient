@@ -79,5 +79,11 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// </summary>
         [JsonProperty("shared_runners_minutes_limit")]
         public int? SharedRunnersMinutesLimit { get; set; }
+
+        /// <summary>
+        /// Determine if developers can create projects in the group
+        /// </summary>
+        [JsonProperty("project_creation_level")]
+        public GroupsProjectCreationLevel? ProjectCreationLevel { get; set; }
     }
 }
