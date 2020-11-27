@@ -27,6 +27,7 @@ namespace GitLabApiClient.Models.Branches.Requests
             ProtectedRefAccessLevels? unprotectAccessLevel = ProtectedRefAccessLevels.MAINTAINER_ACCESS)
         {
             Guard.NotEmpty(name, nameof(name));
+            Name = name;
 
             PushAccessLevel = pushAccessLevel.ToString();
             MergeAccessLevel = mergeAccessLevel.ToString();
