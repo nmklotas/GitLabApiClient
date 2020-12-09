@@ -70,6 +70,15 @@ namespace GitLabApiClient
             await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
 
         /// <summary>
+        /// Removes a user as a member of the project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="userId">The user ID of the member.</param>
+        public async Task RemoveMemberAsync(ProjectId projectId, int userId) =>
+            await _httpFacade.Delete($"projects/{projectId}/members/{userId}");
+	
+
+        /// <summary>
         /// Retrieves project variables by its id.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>

@@ -37,6 +37,13 @@ namespace GitLabApiClient
         Task<IList<User>> GetUsersAsync(ProjectId projectId);
 
         /// <summary>
+        /// Removes a user as a member of the project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="userId">The user ID of the member.</param>
+        Task RemoveMemberAsync(ProjectId projectId, int userId);
+
+        /// <summary>
         /// Retrieves project variables by its id.
         /// </summary>
         /// <param name="projectId">Id of the project.</param>
