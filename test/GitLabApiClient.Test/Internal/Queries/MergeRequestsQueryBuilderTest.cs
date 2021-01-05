@@ -28,7 +28,8 @@ namespace GitLabApiClient.Test.Internal.Queries
                     CreatedBefore = new DateTime(1991, 12, 12, 2, 2, 2),
                     Scope = Scope.All,
                     AuthorId = 1,
-                    AssigneeId = 2
+                    AssigneeId = 2,
+                    TargetBranch = "targetBranch1"
                 });
 
             query.Should().Be("https://gitlab.com/api/v4/merge_requests?" +
@@ -42,7 +43,8 @@ namespace GitLabApiClient.Test.Internal.Queries
                               "created_before=1991-12-12T02%3A02%3A02.0000000&" +
                               "scope=all&" +
                               "author_id=1&" +
-                              "assignee_id=2");
+                              "assignee_id=2&" +
+                              "target_branch=targetBranch1");
         }
     }
 }

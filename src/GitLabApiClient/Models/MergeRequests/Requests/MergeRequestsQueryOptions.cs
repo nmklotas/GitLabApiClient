@@ -66,5 +66,10 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// Returns merge requests assigned to the given user id.
         /// </summary>
         public int? AssigneeId { get; set; }
+
+        /// <summary>
+        /// Returns merge requests targetting the given branch.
+        /// </summary>
+        public string TargetBranch { get; set; }
     }
 }
