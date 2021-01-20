@@ -7,8 +7,10 @@ using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models;
 using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Issues.Responses;
+using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.Notes.Requests;
 using GitLabApiClient.Models.Notes.Responses;
+using GitLabApiClient.Test.Utilities;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
@@ -189,6 +191,23 @@ namespace GitLabApiClient.Test
                 i.TaskCompletionStatus.Count == 3 &&
                 i.TaskCompletionStatus.Completed == 1 &&
                 i.TimeStats != null);
+        }
+
+        [Fact]
+        public async Task CreatedIssueCanBeLinkedToAMergeRequest()
+        {
+            //arrange
+            var createdIssue = await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest("Title1"));
+            await new MergeRequestsClient(GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder(), new ProjectMergeRequestsNotesQueryBuilder()).CreateAsync(TestProjectTextId, new CreateMergeRequest("sourcebranch1", "master", "Title")
+            {
+                Description = $"Closes #{createdIssue.Iid}",
+            });
+
+            //act
+            var updatedIssue = await _sut.GetAsync(TestProjectTextId, createdIssue.Iid);
+
+            //assert
+            updatedIssue.Should().Match<Issue>(i => i.MergeRequestsCount == 1);
         }
     }
 }
