@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
@@ -13,8 +12,7 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 
-        internal WebhookClient(
-            GitLabHttpFacade httpFacade)
+        internal WebhookClient(GitLabHttpFacade httpFacade)
         {
             _httpFacade = httpFacade;
         }

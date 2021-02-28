@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using GitLabApiClient.Models.Projects.Requests;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects.Responses

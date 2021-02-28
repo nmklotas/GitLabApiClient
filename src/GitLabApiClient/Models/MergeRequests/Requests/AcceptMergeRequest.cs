@@ -1,4 +1,3 @@
-using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.MergeRequests.Requests

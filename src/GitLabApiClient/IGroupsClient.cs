@@ -8,7 +8,6 @@ using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Projects.Responses;
-using GitLabApiClient.Models.Runners.Requests;
 using GitLabApiClient.Models.Runners.Responses;
 
 namespace GitLabApiClient

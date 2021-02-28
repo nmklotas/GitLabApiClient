@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GitLabApiClient.Models.Uploads.Requests;
-using GitLabApiClient.Test.Utilities;
 using Xunit;
 using static GitLabApiClient.Test.Utilities.GitLabApiHelper;
 
