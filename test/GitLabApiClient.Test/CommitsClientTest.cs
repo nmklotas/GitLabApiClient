@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Net.Http;
 using FakeItEasy;
 using FluentAssertions;
@@ -121,12 +120,12 @@ namespace GitLabApiClient.Test
                 var statusesFromClient = await commitsClient.GetStatusesAsync(projectId, sha, o => o.Name = Name);
                 statusesFromClient[0].Status.Should().BeEquivalentTo("success");
                 statusesFromClient[0].Name.Should().BeEquivalentTo("name1");
-                statusesFromClient[0].Target_url.Should().BeEquivalentTo("target_url1");
+                statusesFromClient[0].TargetUrl.Should().BeEquivalentTo("target_url1");
                 statusesFromClient[0].Id.Should().BeEquivalentTo("1");
 
                 statusesFromClient[1].Status.Should().BeEquivalentTo("success");
                 statusesFromClient[1].Name.Should().BeEquivalentTo("name2");
-                statusesFromClient[1].Target_url.Should().BeEquivalentTo("target_url2");
+                statusesFromClient[1].TargetUrl.Should().BeEquivalentTo("target_url2");
                 statusesFromClient[1].Id.Should().BeEquivalentTo("2");
 
             }

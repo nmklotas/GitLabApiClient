@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GitLabApiClient.Internal.Http.Serialization;
-using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.MergeRequests.Requests

@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Webhooks.Requests;

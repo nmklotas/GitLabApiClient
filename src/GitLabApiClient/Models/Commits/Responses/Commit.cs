@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using GitLabApiClient.Models.Releases.Responses;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Commits.Responses
@@ -34,6 +32,8 @@ namespace GitLabApiClient.Models.Commits.Responses
         public List<string> ParentIds { get; } = new List<string>();
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
+        [JsonProperty("stats")]
+        public CommitStats CommitStats { get; set; }
 
     }
 }
