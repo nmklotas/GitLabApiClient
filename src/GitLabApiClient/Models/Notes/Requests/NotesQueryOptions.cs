@@ -3,9 +3,9 @@ namespace GitLabApiClient.Models.Notes.Requests
     /// <summary>
     /// Options for note (comment) listing
     /// </summary>
-    public sealed class IssueNotesQueryOptions
+    public sealed class NotesQueryOptions
     {
-        internal IssueNotesQueryOptions() { }
+        internal NotesQueryOptions() { }
 
         /// <summary>
         /// Return issue notes sorted in asc or desc order. Default is desc

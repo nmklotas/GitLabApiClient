@@ -29,7 +29,8 @@ namespace GitLabApiClient.Test
             new GroupsQueryBuilder(),
             new ProjectsGroupQueryBuilder(),
             new MilestonesQueryBuilder(),
-            new GroupLabelsQueryBuilder());
+            new GroupLabelsQueryBuilder(),
+            new EpicsGroupQueryBuilder());
 
         [Fact]
         public async Task GroupCanBeRetrievedByGroupId()

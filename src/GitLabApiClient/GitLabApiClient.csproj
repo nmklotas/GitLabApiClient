@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Copyright />
     <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
-    <Authors>nmklotas</Authors>
+    <Authors>nmklotas (mhobl)</Authors>
     <PackageProjectUrl>https://github.com/nmklotas/GitLabApiClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nmklotas/GitLabApiClient</RepositoryUrl>
     <PackageTags>GitLab REST API CI Client</PackageTags>
@@ -16,10 +16,12 @@
     <IncludeSymbols>true</IncludeSymbols>
     <UseFullSemVerForNuGet>true</UseFullSemVerForNuGet>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(GITHUB_ACTIONS)' == 'true'">
-    <ContinuousIntegrationBuild >true</ContinuousIntegrationBuild>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 

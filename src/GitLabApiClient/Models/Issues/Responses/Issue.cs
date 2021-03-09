@@ -47,7 +47,7 @@ namespace GitLabApiClient.Models.Issues.Responses
         public int UserNotesCount { get; set; }
 
         [JsonProperty("state")]
-        public IssueState State { get; set; }
+        public EpicIssueState State { get; set; }
 
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
