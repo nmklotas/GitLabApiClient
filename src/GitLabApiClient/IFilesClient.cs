@@ -7,5 +7,6 @@ namespace GitLabApiClient
     public interface IFilesClient
     {
         Task<File> GetAsync(ProjectId projectId, string filePath, string reference = "master");
+        Task<string> GetRawAsync(ProjectId projectId, string filePath, string reference = "master");
     }
 }

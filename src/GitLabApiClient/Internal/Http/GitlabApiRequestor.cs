@@ -28,6 +28,14 @@ namespace GitLabApiClient.Internal.Http
             return await ReadResponse<T>(responseMessage);
         }
 
+        public async Task<string> GetString(string url)
+        {
+            var responseMessage = await _client.GetAsync(url);
+            await EnsureSuccessStatusCode(responseMessage);
+            string response = await responseMessage.Content.ReadAsStringAsync();
+            return response;
+        }
+
         public async Task GetFile(string url, string outputPath)
         {
             var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
