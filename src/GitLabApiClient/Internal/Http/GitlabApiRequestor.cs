@@ -32,8 +32,7 @@ namespace GitLabApiClient.Internal.Http
         {
             var responseMessage = await _client.GetAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
-            string response = await responseMessage.Content.ReadAsStringAsync();
-            return response;
+            return await responseMessage.Content.ReadAsStringAsync();
         }
 
         public async Task GetFile(string url, string outputPath)
