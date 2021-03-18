@@ -13,7 +13,7 @@ namespace GitLabApiClient.Models.Pipelines.Responses {
         public string ClassName { get; set; }
 
         [JsonProperty("execution_time")]
-        public int ExecutionTime { get; set; }
+        public float ExecutionTime { get; set; }
 
         [JsonProperty("system_output")]
         public string SystemOutput { get; set; }

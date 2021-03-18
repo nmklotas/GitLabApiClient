@@ -9,7 +9,7 @@ namespace GitLabApiClient.Models.Pipelines.Responses
         public string Name { get; set; }
 
         [JsonProperty("total_time")]
-        public int TotalTime { get; set; }
+        public float TotalTime { get; set; }
 
         [JsonProperty("total_count")]
         public int TotalCount { get; set; }
