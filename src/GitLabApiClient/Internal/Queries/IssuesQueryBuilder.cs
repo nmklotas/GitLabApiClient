@@ -44,6 +44,9 @@ namespace GitLabApiClient.Internal.Queries
             if (!options.Filter.IsNullOrEmpty())
                 query.Add("search", options.Filter);
 
+            if (options.In != SearchIn.TitleAndDescription)
+                query.Add("in", GetSearchInQueryValue(options.In));
+
             if (options.IsConfidential)
                 query.Add("confidential", true);
 
@@ -85,6 +88,21 @@ namespace GitLabApiClient.Internal.Queries
                     return "updated_at";
                 default:
                     throw new NotSupportedException($"Order {order} is not supported");
+            }
+        }
+
+        private static string GetSearchInQueryValue(SearchIn searchIn)
+        {
+            switch (searchIn)
+            {
+                case SearchIn.Title:
+                    return "title";
+                case SearchIn.Description:
+                    return "description";
+                case SearchIn.TitleAndDescription:
+                    return "title,description";
+                default:
+                    throw new NotSupportedException($"SearchIn {searchIn} is not supported");
             }
         }
     }
