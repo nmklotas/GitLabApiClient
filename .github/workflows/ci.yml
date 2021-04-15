@@ -26,11 +26,14 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-
-      - name: Setup dotnet
+      - name: Setup dotnet 3.1
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '3.1'
+      - name: Setup dotnet 5
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0'
 
       - run: dotnet tool install -g Codecov.Tool
 

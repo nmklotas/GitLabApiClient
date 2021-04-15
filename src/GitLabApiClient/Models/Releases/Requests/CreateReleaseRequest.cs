@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Releases.Responses;
 using Newtonsoft.Json;

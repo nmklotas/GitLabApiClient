@@ -1,5 +1,3 @@
-using System;
-
 namespace GitLabApiClient.Models
 {
     public enum AccessLevel

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
-using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
 using GitLabApiClient.Models.Projects.Responses;
