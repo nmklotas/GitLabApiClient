@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net48;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net48;netcoreapp3.1;net5.0</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Copyright />
     <Description>GitLabApiClient is a .NET rest client for GitLab API v4.</Description>
