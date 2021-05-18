@@ -76,7 +76,6 @@ namespace GitLabApiClient
         public async Task RemoveMemberAsync(ProjectId projectId, int userId) =>
             await _httpFacade.Delete($"projects/{projectId}/members/{userId}");
 	
-
         /// <summary>
         /// Retrieves project variables by its id.
         /// </summary>
