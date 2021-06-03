@@ -5,6 +5,8 @@ namespace GitLabApiClient.Models.Pipelines.Responses {
     {
         Unknown,
         [EnumMember(Value = "success")]
-        Success
+        Success,
+        [EnumMember(Value = "failed")]
+        Failed
     }
 }
