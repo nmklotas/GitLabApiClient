@@ -7,6 +7,8 @@ namespace GitLabApiClient.Models.Pipelines.Responses {
         [EnumMember(Value = "success")]
         Success,
         [EnumMember(Value = "failed")]
-        Failed
+        Failed,
+        [EnumMember(Value = "skipped")]
+        Skipped
     }
 }
