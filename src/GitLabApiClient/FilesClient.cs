@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
@@ -21,6 +22,11 @@ namespace GitLabApiClient
         public async Task<UpdateFileResponse> UpdateAsync(ProjectId projectId, string filePath, UpdateFileRequest request)
         {
             return await _httpFacade.Put<UpdateFileResponse>($"projects/{projectId}/repository/files/{filePath}", request);
+        }
+        public async Task<string> GetRawAsync(ProjectId projectId, string filePath, string reference = "master")
+        {
+            return await _httpFacade.GetString($"projects/{projectId}/repository/files/{filePath.UrlEncode()}/raw?ref={reference}");
+
         }
     }
 }

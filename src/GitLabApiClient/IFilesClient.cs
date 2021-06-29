@@ -11,5 +11,6 @@ namespace GitLabApiClient
 
         Task<UpdateFileResponse> UpdateAsync(ProjectId projectId, string filePath, UpdateFileRequest request);
 
+        Task<string> GetRawAsync(ProjectId projectId, string filePath, string reference = "master");
     }
 }
