@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http.Serialization;
+using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Uploads.Requests;
 using GitLabApiClient.Models.Uploads.Responses;
 
@@ -41,6 +42,14 @@ namespace GitLabApiClient.Internal.Http
         public async Task<T> Post<T>(string url, object data = null)
         {
             StringContent content = SerializeToString(data);
+            var responseMessage = await _client.PostAsync(url, content);
+            await EnsureSuccessStatusCode(responseMessage);
+            return await ReadResponse<T>(responseMessage);
+        }
+
+        public async Task<T> PostFormData<T>(string url, object data = null)
+        {
+            MultipartFormDataContent content = SerializeToFormData(data);
             var responseMessage = await _client.PostAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
@@ -143,6 +152,21 @@ namespace GitLabApiClient.Internal.Http
                 new StringContent(string.Empty);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return content;
+        }
+
+        private MultipartFormDataContent SerializeToFormData(object data)
+        {
+            var content = new MultipartFormDataContent();
+            if(data is MoveIssueRequest req)
+            {
+                //Todo: Needs to be refactored!
+                content.Add(new StringContent(req.ToProjectId), "to_project_id");
+            }
+            else
+            {
+                content.Add(new StringContent(string.Empty));
+            }
             return content;
         }
     }

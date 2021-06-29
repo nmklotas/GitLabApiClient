@@ -11,11 +11,11 @@ namespace GitLabApiClient.Test.Internal.Queries
         [Fact]
         public void NonDefaultQueryBuilt()
         {
-            var sut = new ProjectIssueNotesQueryBuilder();
+            var sut = new NotesQueryBuilder();
 
             string query = sut.Build(
                 "https://gitlab.com/api/v4/project/1/issues/1/notes",
-                new IssueNotesQueryOptions()
+                new NotesQueryOptions()
                 {
                     SortOrder = SortOrder.Ascending,
                     Order = NoteOrder.UpdatedAt

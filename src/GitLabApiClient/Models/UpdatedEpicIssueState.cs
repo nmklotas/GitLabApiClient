@@ -1,8 +1,8 @@
 using System.Runtime.Serialization;
 
-namespace GitLabApiClient.Models.Issues.Requests
+namespace GitLabApiClient.Models
 {
-    public enum UpdatedIssueState
+    public enum UpdatedEpicIssueState
     {
         [EnumMember(Value = "close")]
         Close,

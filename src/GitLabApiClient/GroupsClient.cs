@@ -7,6 +7,7 @@ using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models;
+using GitLabApiClient.Models.Epics.Responses;
 using GitLabApiClient.Models.Groups.Requests;
 using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -28,19 +29,22 @@ namespace GitLabApiClient
         private readonly ProjectsGroupQueryBuilder _projectsQueryBuilder;
         private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
         private readonly GroupLabelsQueryBuilder _queryGroupLabelBuilder;
+        private readonly EpicsGroupQueryBuilder _epicsGroupQueryBuilder;
 
         internal GroupsClient(
             GitLabHttpFacade httpFacade,
             GroupsQueryBuilder queryBuilder,
             ProjectsGroupQueryBuilder projectsQueryBuilder,
             MilestonesQueryBuilder queryMilestonesBuilder,
-            GroupLabelsQueryBuilder queryGroupLabelBuilder)
+            GroupLabelsQueryBuilder queryGroupLabelBuilder,
+            EpicsGroupQueryBuilder epicsGroupQueryBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
             _projectsQueryBuilder = projectsQueryBuilder;
             _queryMilestonesBuilder = queryMilestonesBuilder;
             _queryGroupLabelBuilder = queryGroupLabelBuilder;
+            _epicsGroupQueryBuilder = epicsGroupQueryBuilder;
         }
 
         /// <summary>
@@ -94,6 +98,22 @@ namespace GitLabApiClient
 
             string url = _projectsQueryBuilder.Build($"groups/{groupId}/projects", queryOptions);
             return await _httpFacade.GetPagedList<Project>(url);
+        }
+
+        /// <summary>
+        /// Get a list of epics in this group.
+        /// When accessed without authentication, only public epics are returned.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="options">Epics projects retrieval options.</param>
+        /// <returns>Epics satisfying options.</returns>
+        public async Task<IList<Epic>> GetEpicsAsync(GroupId groupId, Action<EpicsGroupQueryOptions> options = null)
+        {
+            var queryOptions = new EpicsGroupQueryOptions();
+            options?.Invoke(queryOptions);
+
+            string url = _epicsGroupQueryBuilder.Build($"groups/{groupId}/epics", queryOptions);
+            return await _httpFacade.GetPagedList<Epic>(url);
         }
 
         /// <summary>

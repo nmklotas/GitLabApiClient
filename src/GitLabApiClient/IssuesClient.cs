@@ -24,16 +24,16 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly IssuesQueryBuilder _queryBuilder;
-        private readonly ProjectIssueNotesQueryBuilder _projectIssueNotesQueryBuilder;
+        private readonly NotesQueryBuilder _notesQueryBuilder;
 
         internal IssuesClient(
             GitLabHttpFacade httpFacade,
             IssuesQueryBuilder queryBuilder,
-            ProjectIssueNotesQueryBuilder projectIssueNotesQueryBuilder)
+            NotesQueryBuilder notesQueryBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
-            _projectIssueNotesQueryBuilder = projectIssueNotesQueryBuilder;
+            _notesQueryBuilder = notesQueryBuilder;
         }
 
         /// <summary>
@@ -138,12 +138,12 @@ namespace GitLabApiClient
         /// <param name="issueIid">Iid of the issue.</param>
         /// <param name="options">IssueNotes retrieval options.</param>
         /// <returns>Notes satisfying options.</returns>
-        public async Task<IList<Note>> GetNotesAsync(ProjectId projectId, int issueIid, Action<IssueNotesQueryOptions> options = null)
+        public async Task<IList<Note>> GetNotesAsync(ProjectId projectId, int issueIid, Action<NotesQueryOptions> options = null)
         {
-            var queryOptions = new IssueNotesQueryOptions();
+            var queryOptions = new NotesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _projectIssueNotesQueryBuilder.Build($"projects/{projectId}/issues/{issueIid}/notes", queryOptions);
+            string url = _notesQueryBuilder.Build($"projects/{projectId}/issues/{issueIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
 
@@ -163,8 +163,18 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">The IID of an issue.</param>
         /// <param name="request">Create issue note request.</param>
-        public async Task<Note> CreateNoteAsync(ProjectId projectId, int issueIid, CreateIssueNoteRequest request) =>
+        public async Task<Note> CreateNoteAsync(ProjectId projectId, int issueIid, CreateNoteRequest request) =>
             await _httpFacade.Post<Note>($"projects/{projectId}/issues/{issueIid}/notes", request);
+
+        /// <summary>
+        /// Moves an issues to a new project
+        /// </summary>
+        /// <returns>The newly created issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="request">Create issue note request.</param>
+        public async Task<Issue> MoveIssueAsync(ProjectId projectId, int issueIid, MoveIssueRequest request) =>
+            await _httpFacade.PostFormData<Issue>($"projects/{projectId}/issues/{issueIid}/move", request);
 
         /// <summary>
         /// Updated existing issue.

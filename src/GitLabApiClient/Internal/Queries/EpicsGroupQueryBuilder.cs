@@ -1,39 +1,26 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models;
+using GitLabApiClient.Models.Groups.Requests;
 using GitLabApiClient.Models.Issues.Requests;
-using GitLabApiClient.Models.Issues.Responses;
 
 namespace GitLabApiClient.Internal.Queries
 {
-    internal class IssuesQueryBuilder : QueryBuilder<IssuesQueryOptions>
+    internal class EpicsGroupQueryBuilder : QueryBuilder<EpicsGroupQueryOptions>
     {
-        protected override void BuildCore(Query query, IssuesQueryOptions options)
+        protected override void BuildCore(Query query, EpicsGroupQueryOptions options)
         {
-            string stateQueryValue = State.GetStateQueryValue(options.State);
-            if (!stateQueryValue.IsNullOrEmpty())
-                query.Add("state", stateQueryValue);
+            if (options.AuthorId.HasValue)
+                query.Add("author_id", options.AuthorId.Value);
 
             if (options.Labels.Any())
                 query.Add("labels", options.Labels);
 
-            if (!options.MilestoneTitle.IsNullOrEmpty())
-                query.Add("milestone", options.MilestoneTitle);
-
-            query.Add("scope", GetScopeQueryValue(options.Scope));
-
-            if (options.AuthorId.HasValue)
-                query.Add("author_id", options.AuthorId.Value);
-            else if (!string.IsNullOrWhiteSpace(options.AuthorUsername))
-                query.Add("author_username", options.AuthorUsername);
-
-            if (options.AssigneeId.HasValue)
-                query.Add("assignee_id", options.AssigneeId.Value);
-            else if (options.AssigneeUsername.Any())
-                query.Add("assignee_username", options.AssigneeUsername);
-
-            query.Add(options.IssueIds);
+            if(options.WithLabelsDetails)
+                query.Add("with_labels_details", options.WithLabelsDetails);
 
             if (options.Order != EpicsIssuesOrder.CreatedAt)
                 query.Add("order_by", Order.GetIssuesOrderQueryValue(options.Order));
@@ -44,8 +31,9 @@ namespace GitLabApiClient.Internal.Queries
             if (!options.Filter.IsNullOrEmpty())
                 query.Add("search", options.Filter);
 
-            if (options.IsConfidential)
-                query.Add("confidential", true);
+            string stateQueryValue = State.GetStateQueryValue(options.State);
+            if (!stateQueryValue.IsNullOrEmpty())
+                query.Add("state", stateQueryValue);
 
             if (options.CreatedBefore.HasValue)
                 query.Add("created_before", options.CreatedBefore.Value);
@@ -58,6 +46,12 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.UpdatedAfter.HasValue)
                 query.Add("updated_after", options.UpdatedAfter.Value);
+
+            if (options.IncludeAncestorGroups)
+                query.Add("include_ancestor_groups", options.IncludeAncestorGroups);
+
+            if (options.IncludeDescendantGroups)
+                query.Add("include_descendant_groups", options.IncludeDescendantGroups);
         }
     }
 }
