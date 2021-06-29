@@ -80,5 +80,44 @@ namespace GitLabApiClient
         /// <param name="userId">Id of the user.</param>
         public async Task DeleteAsync(UserId userId) =>
             await _httpFacade.Delete($"users/{userId}");
+        
+        /// <summary>
+        /// Activates the specified user. Available only for admin.
+        /// Introduced in GitLab 12.4.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        public async Task ActivatAsync(UserId userId) =>
+            await _httpFacade.Post($"users/{userId}/activate");
+
+        /// <summary>
+        /// Deactivates the specified user. Available only for admin.
+        /// Introduced in GitLab 12.4.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        public async Task DeactivatAsync(UserId userId) =>
+            await _httpFacade.Post($"users/{userId}/deactivate");
+
+        /// <summary>
+        /// Block the specified user. Available only for admin.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        public async Task BlockAsync(UserId userId) =>
+            await _httpFacade.Post($"users/{userId}/block");
+
+        /// <summary>
+        /// Unblocks the specified user. Available only for admin.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        public async Task UnblockAsync(UserId userId) =>
+            await _httpFacade.Post($"users/{userId}/unblock");
+
+        /// <summary>
+        /// Approves the specified user. Available only for administrators.
+        /// Introduced in GitLab 13.7.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        public async Task ApproveAsync(UserId userId) =>
+            await _httpFacade.Post($"users/{userId}/approve");
+
     }
 }
