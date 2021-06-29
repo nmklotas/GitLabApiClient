@@ -58,14 +58,14 @@ namespace GitLabApiClient
         /// Introduced in GitLab 12.4.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        Task ActivatAsync(UserId userId);
+        Task ActivateAsync(UserId userId);
 
         /// <summary>
         /// Deactivates the specified user. Available only for admin.
         /// Introduced in GitLab 12.4.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        Task DeactivatAsync(UserId userId);
+        Task DeactivateAsync(UserId userId);
 
         /// <summary>
         /// Block the specified user. Available only for admin.

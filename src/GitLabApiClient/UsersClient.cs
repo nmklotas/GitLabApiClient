@@ -86,7 +86,7 @@ namespace GitLabApiClient
         /// Introduced in GitLab 12.4.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        public async Task ActivatAsync(UserId userId) =>
+        public async Task ActivateAsync(UserId userId) =>
             await _httpFacade.Post($"users/{userId}/activate");
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace GitLabApiClient
         /// Introduced in GitLab 12.4.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        public async Task DeactivatAsync(UserId userId) =>
+        public async Task DeactivateAsync(UserId userId) =>
             await _httpFacade.Post($"users/{userId}/deactivate");
 
         /// <summary>
