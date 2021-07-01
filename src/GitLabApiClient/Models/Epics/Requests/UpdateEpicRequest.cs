@@ -4,52 +4,40 @@ using GitLabApiClient.Internal.Http.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace GitLabApiClient.Models.Issues.Requests
+namespace GitLabApiClient.Models.Epics.Requests
 {
     /// <summary>
-    /// Used to update issues in a project.
+    /// Used to update epics in a group.
     /// </summary>
-    public sealed class UpdateIssueRequest
+    public sealed class UpdateEpicRequest
     {
         /// <summary>
-        /// The title of an issue.
+        /// The title of an epic.
         /// </summary>
         [JsonProperty("title")]
         public string Title { get; set; }
 
         /// <summary>
-        /// The description of an issue.
+        /// The description of an epic.
         /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Updates an issue to be confidential.
+        /// Updates an epic to be confidential.
         /// </summary>
         [JsonProperty("confidential")]
         public bool? Confidential { get; set; }
 
         /// <summary>
-        /// The ID of the users to assign the issue to.
-        /// </summary>
-        [JsonProperty("assignee_ids")]
-        public List<int> Assignees { get; set; } = new List<int>();
-
-        /// <summary>
-        /// The ID of a milestone to assign the issue to.
-        /// </summary>
-        [JsonProperty("milestone_id")]
-        public int? MilestoneId { get; set; }
-
-        /// <summary>
-        /// Label names for an issue.
+        /// Label names for an epic.
         /// </summary>
         [JsonProperty("labels")]
         [JsonConverter(typeof(CollectionToCommaSeparatedValuesConverter))]
         public IList<string> Labels { get; set; } = new List<string>();
 
         /// <summary>
-        /// The state event of an issue. Set close to close the issue and reopen to reopen it.
+        /// The state event of an epic. Set close to close the epic and reopen to reopen it.
         /// </summary>
         [JsonProperty("state_event")]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -62,15 +50,28 @@ namespace GitLabApiClient.Models.Issues.Requests
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
-        /// Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11.
+        /// Whether start date should be sourced from start_date_fixed or from milestones
         /// </summary>
-        [JsonProperty("due_date")]
-        public string DueDate { get; set; }
+        [JsonProperty("start_date_is_fixed")]
+        public bool? StartDateIsFixed { get; set; }
 
         /// <summary>
-        /// The weight of an issue. Valid values are greater than or equal to 0.
+        /// Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11.
         /// </summary>
-        [JsonProperty("weight")]
-        public int? Weight { get; set; }
+        [JsonProperty("start_date_fixed")]
+        public string StartDateFixed { get; set; }
+
+        /// <summary>
+        /// Whether due date should be sourced from due_date_fixed or from milestones
+        /// </summary>
+        [JsonProperty("due_date_is_fixed")]
+        public bool? DueDateIsFixed { get; set; }
+
+        /// <summary>
+        /// Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11.
+        /// </summary>
+        [JsonProperty("due_date_fixed")]
+        public string DueDateFixed { get; set; }
+
     }
 }

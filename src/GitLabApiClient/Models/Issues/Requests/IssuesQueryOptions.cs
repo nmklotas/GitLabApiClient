@@ -15,7 +15,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// Return all issues or just those that are opened or closed.
         /// Default is Opened.
         /// </summary>
-        public IssueState State { get; set; }
+        public EpicIssueState State { get; set; }
 
         /// <summary>
         /// List of label names, issues must have all labels to be returned.
@@ -63,7 +63,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// <summary>
         /// Specifies issues order. Default is Creation time.
         /// </summary>
-        public IssuesOrder Order { get; set; }
+        public EpicsIssuesOrder Order { get; set; }
 
         /// <summary>
         /// Specifies project sort order. Default is descending.

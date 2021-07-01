@@ -19,7 +19,7 @@ namespace GitLabApiClient.Test
     public class IssuesClientTest
     {
         private readonly IssuesClient _sut = new IssuesClient(
-            GetFacade(), new IssuesQueryBuilder(), new ProjectIssueNotesQueryBuilder());
+            GetFacade(), new IssuesQueryBuilder(), new NotesQueryBuilder());
 
         [Fact]
         public async Task CreatedIssueCanBeUpdated()
@@ -65,11 +65,11 @@ namespace GitLabApiClient.Test
             //act
             var updatedIssue = await _sut.UpdateAsync(TestProjectTextId, createdIssue.Iid, new UpdateIssueRequest()
             {
-                State = UpdatedIssueState.Close
+                State = UpdatedEpicIssueState.Close
             });
 
             //assert
-            updatedIssue.Should().Match<Issue>(i => i.State == IssueState.Closed);
+            updatedIssue.Should().Match<Issue>(i => i.State == EpicIssueState.Closed);
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace GitLabApiClient.Test
             });
 
             //act
-            var note = await _sut.CreateNoteAsync(TestProjectTextId, issue.Iid, new CreateIssueNoteRequest
+            var note = await _sut.CreateNoteAsync(TestProjectTextId, issue.Iid, new CreateNoteRequest
             {
                 Body = body,
                 CreatedAt = DateTime.Now
@@ -154,7 +154,7 @@ namespace GitLabApiClient.Test
             {
                 Description = "Description1"
             });
-            var createdIssueNote = await _sut.CreateNoteAsync(TestProjectTextId, createdIssue.Iid, new CreateIssueNoteRequest("comment2"));
+            var createdIssueNote = await _sut.CreateNoteAsync(TestProjectTextId, createdIssue.Iid, new CreateNoteRequest("comment2"));
 
             //act
             var updatedIssueNote = await _sut.UpdateNoteAsync(TestProjectTextId, createdIssue.Iid, createdIssueNote.Id, new UpdateIssueNoteRequest("comment22"));

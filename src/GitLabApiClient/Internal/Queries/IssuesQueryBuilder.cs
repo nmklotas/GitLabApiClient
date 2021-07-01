@@ -11,7 +11,7 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(Query query, IssuesQueryOptions options)
         {
-            string stateQueryValue = GetStateQueryValue(options.State);
+            string stateQueryValue = State.GetStateQueryValue(options.State);
             if (!stateQueryValue.IsNullOrEmpty())
                 query.Add("state", stateQueryValue);
 
@@ -35,8 +35,8 @@ namespace GitLabApiClient.Internal.Queries
 
             query.Add(options.IssueIds);
 
-            if (options.Order != IssuesOrder.CreatedAt)
-                query.Add("order_by", GetIssuesOrderQueryValue(options.Order));
+            if (options.Order != EpicsIssuesOrder.CreatedAt)
+                query.Add("order_by", Order.GetIssuesOrderQueryValue(options.Order));
 
             if (options.SortOrder != SortOrder.Descending)
                 query.Add("sort", GetSortOrderQueryValue(options.SortOrder));

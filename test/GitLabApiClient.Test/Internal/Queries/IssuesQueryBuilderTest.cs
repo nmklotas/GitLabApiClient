@@ -20,14 +20,14 @@ namespace GitLabApiClient.Test.Internal.Queries
                 "https://gitlab.com/api/v4/issues",
                 new IssuesQueryOptions
                 {
-                    State = IssueState.Opened,
+                    State = EpicIssueState.Opened,
                     Labels = { "label1", "label2" },
                     MilestoneTitle = "milestone1",
                     Scope = Scope.All,
                     AuthorId = 1,
                     AssigneeId = 2,
                     IssueIds = { 3, 4 },
-                    Order = IssuesOrder.UpdatedAt,
+                    Order = EpicsIssuesOrder.UpdatedAt,
                     SortOrder = SortOrder.Ascending,
                     Filter = "filter",
                     In = SearchIn.Description,
@@ -68,14 +68,14 @@ namespace GitLabApiClient.Test.Internal.Queries
                 "https://gitlab.com/api/v4/issues",
                 new IssuesQueryOptions
                 {
-                    State = IssueState.Opened,
+                    State = EpicIssueState.Opened,
                     Labels = { "label1", "label2" },
                     MilestoneTitle = "milestone1",
                     Scope = Scope.All,
                     AuthorId = null,
                     AssigneeId = null,
                     IssueIds = { 3, 4 },
-                    Order = IssuesOrder.UpdatedAt,
+                    Order = EpicsIssuesOrder.UpdatedAt,
                     SortOrder = SortOrder.Ascending,
                     Filter = "filter",
                     In = SearchIn.Title,

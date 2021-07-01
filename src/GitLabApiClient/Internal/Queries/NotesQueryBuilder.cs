@@ -4,9 +4,9 @@ using GitLabApiClient.Models.Notes.Requests;
 
 namespace GitLabApiClient.Internal.Queries
 {
-    internal class ProjectIssueNotesQueryBuilder : QueryBuilder<IssueNotesQueryOptions>
+    internal class NotesQueryBuilder : QueryBuilder<NotesQueryOptions>
     {
-        protected override void BuildCore(Query query, IssueNotesQueryOptions options)
+        protected override void BuildCore(Query query, NotesQueryOptions options)
         {
             if (options.SortOrder != SortOrder.Descending)
                 query.Add("sort", GetSortOrderQueryValue(options.SortOrder));
