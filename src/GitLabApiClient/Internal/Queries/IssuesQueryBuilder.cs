@@ -44,6 +44,9 @@ namespace GitLabApiClient.Internal.Queries
             if (!options.Filter.IsNullOrEmpty())
                 query.Add("search", options.Filter);
 
+            if (options.In != SearchIn.TitleAndDescription)
+                query.Add("in", GetSearchInQueryValue(options.In));
+
             if (options.IsConfidential)
                 query.Add("confidential", true);
 
@@ -58,6 +61,49 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.UpdatedAfter.HasValue)
                 query.Add("updated_after", options.UpdatedAfter.Value);
+        }
+
+        private static string GetStateQueryValue(IssueState state)
+        {
+            switch (state)
+            {
+                case IssueState.Opened:
+                    return "opened";
+                case IssueState.Closed:
+                    return "closed";
+                case IssueState.All:
+                    return "";
+                default:
+                    throw new NotSupportedException($"State {state} is not supported");
+            }
+        }
+
+        private static string GetIssuesOrderQueryValue(IssuesOrder order)
+        {
+            switch (order)
+            {
+                case IssuesOrder.CreatedAt:
+                    return "created_at";
+                case IssuesOrder.UpdatedAt:
+                    return "updated_at";
+                default:
+                    throw new NotSupportedException($"Order {order} is not supported");
+            }
+        }
+
+        private static string GetSearchInQueryValue(SearchIn searchIn)
+        {
+            switch (searchIn)
+            {
+                case SearchIn.Title:
+                    return "title";
+                case SearchIn.Description:
+                    return "description";
+                case SearchIn.TitleAndDescription:
+                    return "title,description";
+                default:
+                    throw new NotSupportedException($"SearchIn {searchIn} is not supported");
+            }
         }
     }
 }

@@ -190,5 +190,49 @@ namespace GitLabApiClient.Test
                 i.TaskCompletionStatus.Completed == 1 &&
                 i.TimeStats != null);
         }
+
+        [Fact]
+        public async Task CreatedIssueCanBeRetrievedByTitleOrDescription()
+        {
+            //arrange
+            string title = Guid.NewGuid().ToString();
+            string description = "Description";
+            var issue = await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest(title)
+            {
+                Description = description
+            });
+
+            //act
+            var issueSearchedInTitle = (await _sut.GetAllAsync(TestProjectTextId, options: o =>
+                {
+                    o.In = SearchIn.Title;
+                    o.Filter = title;
+                }))
+                .FirstOrDefault();
+
+            var issueSearchedInDescription = (await _sut.GetAllAsync(TestProjectTextId, options: o =>
+                {
+                    o.In = SearchIn.Description;
+                    o.Filter = description;
+                }))
+                .FirstOrDefault();
+
+            var issueSearchedInTitleAndDescription = (await _sut.GetAllAsync(TestProjectTextId, options: o =>
+                {
+                    o.In = SearchIn.TitleAndDescription;
+                    o.Filter = description;
+                }))
+                .FirstOrDefault();
+
+            //assert
+            issue.Should().Match<Issue>(i =>
+                i.ProjectId == TestProjectTextId &&
+                i.Title == title &&
+                i.Description == description);
+
+            issueSearchedInTitle.Should().BeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
+            issueSearchedInDescription.Should().BeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
+            issueSearchedInTitleAndDescription.Should().BeEquivalentTo(issue, o => o.Excluding(s => s.UpdatedAt));
+        }
     }
 }

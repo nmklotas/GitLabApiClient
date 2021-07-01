@@ -1,6 +1,14 @@
 # GitLabApiClient
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/nmklotas/GitLabApiClient/DotNet/master?logo=github)](https://github.com/nmklotas/GitLabApiClient/actions?query=workflow%3A%22DotNet%22+branch%3Amaster)
+This is NOT the version from NuGet - this is an independant fork with slightly different features.  
+
+### Whats added in this fork:  
+**User**: Activate, Deactivate, Block, Unblock    
+**Files**: GetRaw, Update    
+**IssuesQuery**: added support for "in"-searches  
+**Project**: RemoveMember, Fork, DeleteForkedRelationship  
+
+The NuGet version may still solve your needs, in which case it's an easier option.  
 [![NuGet](https://img.shields.io/nuget/v/GitLabApiClient.svg)](https://nuget.org/packages/GitLabApiClient)
 
 GitLabApiClient is a .NET rest client for [GitLab API v4](https://docs.gitlab.com/ce/api/README.html).

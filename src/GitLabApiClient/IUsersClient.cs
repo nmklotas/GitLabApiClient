@@ -53,5 +53,37 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="userId">Id of the user.</param>
         Task DeleteAsync(UserId userId);
+        /// <summary>
+        /// Activates the specified user. Available only for admin.
+        /// Introduced in GitLab 12.4.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        Task ActivateAsync(UserId userId);
+
+        /// <summary>
+        /// Deactivates the specified user. Available only for admin.
+        /// Introduced in GitLab 12.4.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        Task DeactivateAsync(UserId userId);
+
+        /// <summary>
+        /// Block the specified user. Available only for admin.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        Task BlockAsync(UserId userId);
+
+        /// <summary>
+        /// Unblocks the specified user. Available only for admin.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        Task UnblockAsync(UserId userId);
+
+        /// <summary>
+        /// Approves the specified user. Available only for administrators.
+        /// Introduced in GitLab 13.7.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        Task ApproveAsync(UserId userId);        
     }
 }
