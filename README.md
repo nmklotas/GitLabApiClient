@@ -2,7 +2,7 @@
 
 This is NOT the version from NuGet - this is an independant fork with slightly different features.  
 
-### Whats added in this fork:  
+### What's added in this fork:  
 **User**: Activate, Deactivate, Block, Unblock    
 **Files**: GetRaw, Update    
 **IssuesQuery**: added support for "in"-searches  
