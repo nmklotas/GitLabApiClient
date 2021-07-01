@@ -63,28 +63,28 @@ namespace GitLabApiClient.Internal.Queries
                 query.Add("updated_after", options.UpdatedAfter.Value);
         }
 
-        private static string GetStateQueryValue(IssueState state)
+        private static string GetStateQueryValue(EpicIssueState state)
         {
             switch (state)
             {
-                case IssueState.Opened:
+                case EpicIssueState.Opened:
                     return "opened";
-                case IssueState.Closed:
+                case EpicIssueState.Closed:
                     return "closed";
-                case IssueState.All:
+                case EpicIssueState.All:
                     return "";
                 default:
                     throw new NotSupportedException($"State {state} is not supported");
             }
         }
 
-        private static string GetIssuesOrderQueryValue(IssuesOrder order)
+        private static string GetIssuesOrderQueryValue(EpicsIssuesOrder order)
         {
             switch (order)
             {
-                case IssuesOrder.CreatedAt:
+                case EpicsIssuesOrder.CreatedAt:
                     return "created_at";
-                case IssuesOrder.UpdatedAt:
+                case EpicsIssuesOrder.UpdatedAt:
                     return "updated_at";
                 default:
                     throw new NotSupportedException($"Order {order} is not supported");
