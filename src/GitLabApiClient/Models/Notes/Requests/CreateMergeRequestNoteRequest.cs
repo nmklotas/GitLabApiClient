@@ -1,5 +1,4 @@
 using System;
-using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Notes.Requests

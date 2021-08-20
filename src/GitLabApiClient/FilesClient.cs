@@ -3,7 +3,6 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Files.Responses;
-using GitLabApiClient.Models.Projects.Responses;
 
 namespace GitLabApiClient
 {

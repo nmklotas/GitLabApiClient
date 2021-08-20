@@ -1,5 +1,4 @@
 using GitLabApiClient.Internal.Paths;
-using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Groups.Requests

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using GitLabApiClient.Internal.Http.Serialization;
-using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

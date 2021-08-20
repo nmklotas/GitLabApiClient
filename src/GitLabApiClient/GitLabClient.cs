@@ -5,10 +5,8 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
-using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
-using GitLabApiClient.Models.Pipelines.Requests;
 
 namespace GitLabApiClient
 {
