@@ -5,7 +5,7 @@ This is NOT the version from NuGet - this is an independant fork with slightly d
 ### What's added in this fork:  
 **User**: Activate, Deactivate, Block, Unblock    
 **Files**: GetRaw, Update    
-**Issues**: Support for Epics  
+**Issues**: Support for Epics, Setting/Impersonating "author / created by-user" using "sudo" - essential for migrations
 **IssuesQuery**: added support for "in"-searches  
 **Project**: RemoveMember, Fork, DeleteForkedRelationship  
 
