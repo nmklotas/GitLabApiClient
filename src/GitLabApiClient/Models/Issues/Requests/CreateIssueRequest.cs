@@ -22,6 +22,11 @@ namespace GitLabApiClient.Models.Issues.Requests
         }
 
         /// <summary>
+        /// Requires your token to be "admin"
+        /// </summary>
+        public string Sudo_ImpersonateUsername;
+
+        /// <summary>
         /// The title of an issue.
         /// </summary>
         [JsonProperty("title")]

@@ -153,8 +153,12 @@ namespace GitLabApiClient
         /// <returns>The newly created issue.</returns>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create issue request.</param>
-        public async Task<Issue> CreateAsync(ProjectId projectId, CreateIssueRequest request) =>
-            await _httpFacade.Post<Issue>($"projects/{projectId}/issues", request);
+        public async Task<Issue> CreateAsync(ProjectId projectId, CreateIssueRequest request) { 
+            string impersonate = "";
+            if (request.Sudo_ImpersonateUsername != null)
+                impersonate = "?username=" + request.Sudo_ImpersonateUsername;
+            return (await _httpFacade.Post<Issue>($"projects/{projectId}/issues" + impersonate, request));
+        }
 
         /// <summary>
         /// Creates a new note (comment) to a single project issue.
