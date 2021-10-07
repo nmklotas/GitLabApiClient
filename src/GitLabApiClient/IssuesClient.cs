@@ -156,7 +156,7 @@ namespace GitLabApiClient
         public async Task<Issue> CreateAsync(ProjectId projectId, CreateIssueRequest request) { 
             string impersonate = "";
             if (request.Sudo_ImpersonateUsername != null)
-                impersonate = "?username=" + request.Sudo_ImpersonateUsername;
+                impersonate = "?sudo=" + request.Sudo_ImpersonateUsername;
             return (await _httpFacade.Post<Issue>($"projects/{projectId}/issues" + impersonate, request));
         }
 
