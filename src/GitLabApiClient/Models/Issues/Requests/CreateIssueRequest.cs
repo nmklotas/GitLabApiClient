@@ -22,6 +22,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         }
 
         /// <summary>
+        /// Set the Author / Created-by field on the issue using the provided username
         /// Requires your token to be "admin"
         /// </summary>
         public string Sudo_ImpersonateUsername;
