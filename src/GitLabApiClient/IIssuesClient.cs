@@ -150,6 +150,6 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">The IID of an issue.</param>
-        Task DeleteAsync(ProjectId projectId, int issueIid)
+        Task DeleteAsync(ProjectId projectId, int issueIid);
     }
 }
