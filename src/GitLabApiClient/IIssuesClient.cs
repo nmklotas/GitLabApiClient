@@ -144,5 +144,12 @@ namespace GitLabApiClient
         /// <param name="issueIid">The IID of an issue.</param>
         /// <param name="noteId">The ID of a note.</param>
         Task DeleteNoteAsync(ProjectId projectId, int issueIid, int noteId);
+
+        /// <summary>
+        /// Deletes an issue. (Only for administrators and project owners.)  
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        Task DeleteAsync(ProjectId projectId, int issueIid)
     }
 }
