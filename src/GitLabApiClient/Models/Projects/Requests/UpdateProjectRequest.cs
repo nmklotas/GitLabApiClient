@@ -18,6 +18,15 @@ namespace GitLabApiClient.Models.Projects.Requests
             Guard.NotEmpty(name, nameof(name));
             Name = name;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateProjectRequest"/> class.
+        /// </summary>
+        public UpdateProjectRequest()
+        {
+
+        }
+
         /// <summary>
         /// The name of the project.
         /// </summary>
