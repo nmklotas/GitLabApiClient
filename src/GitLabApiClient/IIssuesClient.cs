@@ -151,5 +151,22 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">The IID of an issue.</param>
         Task DeleteAsync(ProjectId projectId, int issueIid);
+
+        /// <summary>
+        /// Used to create a two way link between issues
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="request">CreateIssueLinkRequest containing the target issue</param>
+        Task CreateIssueLinkAsync(ProjectId projectId, int issueIid, CreateIssueLinkRequest request);
+
+        /// <summary>
+        /// Deletes an issue link, thus removes the two-way relationship.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="issue_link_id">The ID of an issue relationship</param>
+        /// <returns></returns>
+        Task DeleteIssueLinkAsync(ProjectId projectId, int issueIid, string issue_link_id);
     }
 }

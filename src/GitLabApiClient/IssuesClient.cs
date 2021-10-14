@@ -217,5 +217,26 @@ namespace GitLabApiClient
         /// <param name="issueIid">The IID of an issue.</param>
         public async Task DeleteAsync(ProjectId projectId, int issueIid) =>
             await _httpFacade.Delete($"projects/{projectId}/issues/{issueIid}");
+
+        /// <summary>
+        /// Used to create a two way link between issues
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="request">CreateIssueLinkRequest containing the target issue</param>
+        /// <returns></returns>
+        public async Task CreateIssueLinkAsync(ProjectId projectId, int issueIid, CreateIssueLinkRequest request) =>
+            await _httpFacade.Post($"projects/{projectId}/issues/{issueIid}/links", request);
+
+        /// <summary>
+        /// Deletes an issue link, thus removes the two-way relationship.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="issue_link_id">The ID of an issue relationship</param>
+        /// <returns></returns>
+        public async Task DeleteIssueLinkAsync(ProjectId projectId, int issueIid, string issue_link_id) =>
+            await _httpFacade.Delete($"projects/{projectId}/issues/{issueIid}/links/{issue_link_id}");
+
     }
 }
