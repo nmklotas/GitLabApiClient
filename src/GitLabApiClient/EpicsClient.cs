@@ -41,39 +41,39 @@ namespace GitLabApiClient
         /// Retrieves epic by its id from a group.
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
-        /// <param name="epicId">The ID of the epic.</param>
+        /// <param name="epicIid">The Iid of the epic.</param>
         /// <returns></returns>
-        public async Task<Epic> GetAsync(GroupId groupId, int epicId) =>
-            await _httpFacade.Get<Epic>($"groups/{groupId}/epics/{epicId}");
+        public async Task<Epic> GetAsync(GroupId groupId, int epicIid) =>
+            await _httpFacade.Get<Epic>($"groups/{groupId}/epics/{epicIid}");
 
         /// <summary>
         /// Retrieves notes (comments) of an epic.
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
-        /// <param name="epicId">Id of the epic.</param>
+        /// <param name="epicIid">Iid of the epic.</param>
         /// <param name="options">Notes retrieval options.</param>
         /// <returns>Epic satisfying options.</returns>
-        public async Task<IList<Note>> GetNotesAsync(GroupId groupId, int epicId, Action<NotesQueryOptions> options = null)
+        public async Task<IList<Note>> GetNotesAsync(GroupId groupId, int epicIid, Action<NotesQueryOptions> options = null)
         {
             var queryOptions = new NotesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _notesQueryBuilder.Build($"groups/{groupId}/epics/{epicId}/notes", queryOptions);
+            string url = _notesQueryBuilder.Build($"groups/{groupId}/epics/{epicIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
         /// <summary>
         /// Retrieves issues linked to an epic.
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
-        /// <param name="epicId">Id of the epic.</param>
+        /// <param name="epicIid">Iid of the epic.</param>
         /// <param name="options">Issues retrieval options.</param>
         /// <returns>Epic satisfying options.</returns>
-        public async Task<IList<Issue>> GetIssusAsync(GroupId groupId, int epicId, Action<IssuesQueryOptions> options = null)
+        public async Task<IList<Issue>> GetIssusAsync(GroupId groupId, int epicIid, Action<IssuesQueryOptions> options = null)
         {
             var queryOptions = new IssuesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _issuesQueryBuilder.Build($"groups/{groupId}/epics/{epicId}/issues", queryOptions);
+            string url = _issuesQueryBuilder.Build($"groups/{groupId}/epics/{epicIid}/issues", queryOptions);
             return await _httpFacade.GetPagedList<Issue>(url);
         }
 
@@ -84,8 +84,8 @@ namespace GitLabApiClient
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="epicIid">The IID of an epic.</param>
         /// <param name="request">Create epic note request.</param>
-        public async Task<Note> CreateNoteAsync(GroupId groupId, int epicId, CreateNoteRequest request) =>
-                    await _httpFacade.Post<Note>($"groups/{groupId}/epics/{epicId}/notes", request);
+        public async Task<Note> CreateNoteAsync(GroupId groupId, int epicIid, CreateNoteRequest request) =>
+                    await _httpFacade.Post<Note>($"groups/{groupId}/epics/{epicIid}/notes", request);
 
 
         /// <summary>
@@ -104,18 +104,29 @@ namespace GitLabApiClient
         /// <summary>
         /// Assigns an issue to an epic
         /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="epicIid">The Iid of an epic</param>
+        /// <param name="issueId">The Id of the Issue</param>
         /// <returns>Assigned issue</returns>
-        public async Task<Issue> AssignIssueAsync(GroupId groupId, int epicId, int issueId) =>
-            await _httpFacade.Post<Issue>($"groups/{groupId}/epics/{epicId}/issues/{issueId}");
+        public async Task<Issue> AssignIssueAsync(GroupId groupId, int epicIid, int issueId) =>
+            await _httpFacade.Post<Issue>($"groups/{groupId}/epics/{epicIid}/issues/{issueId}");
 
         /// <summary>
         /// Updates an epic.
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
-        /// <param name="epicId">The ID of an epic.</param>
+        /// <param name="epicIid">The Iid of an epic.</param>
         /// <param name="request">Update epic request.</param>
         /// <returns>The updated epic.</returns>
-        public async Task<Epic> UpdateAsync(GroupId groupId, int epicId, UpdateEpicRequest request) =>
-            await _httpFacade.Put<Epic>($"groups/{groupId}/epics/{epicId}", request);
+        public async Task<Epic> UpdateAsync(GroupId groupId, int epicIid, UpdateEpicRequest request) =>
+            await _httpFacade.Put<Epic>($"groups/{groupId}/epics/{epicIid}", request);
+
+        /// <summary>
+        /// Delete an epic.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="epicIid">The Iid of an epic.</param>
+        public async Task DeleteAsync(GroupId groupId, int epicIid) =>
+            await _httpFacade.Delete($"groups/{groupId}/epics/{epicIid}");
     }
 }
