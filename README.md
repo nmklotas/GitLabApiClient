@@ -10,7 +10,7 @@ This is NOT the version from NuGet - this is an independant fork with slightly d
  - Creating and deleting Issue Links  
  - Setting/Impersonating "author / created by-user" using "sudo" (Notice! Using this breaks 'Created On'-date!)  
 
-**Epics**: Get, Create, Update  
+**Epics**: Get, Create, Update, Delete 
 **IssuesQuery**: added support for "in"-searches  
 **Project**: RemoveMember, Fork, DeleteForkedRelationship  
 
