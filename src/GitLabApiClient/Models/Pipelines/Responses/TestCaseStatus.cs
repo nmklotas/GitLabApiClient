@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 
 namespace GitLabApiClient.Models.Pipelines.Responses {
     public enum TestCaseStatus
