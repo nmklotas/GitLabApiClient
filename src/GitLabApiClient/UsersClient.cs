@@ -51,6 +51,61 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Retrieves users by properties.
+        /// </summary>
+        /// <param name="properties">Filter used for user properties.</param>
+        /// <returns>Users list satisfying the selected properties.</returns>
+        public async Task<IList<User>> GetByPropertiesAsync(string properties)
+        {
+            Guard.NotEmpty(properties, nameof(properties));
+            return await _httpFacade.GetPagedList<User>($"users?{properties}");
+        }
+
+        /// <summary>
+        /// Retrieves users by properties.
+        /// </summary>
+        /// <param name="properties">Filter used for user properties.</param>
+        /// <returns>Users list satisfying the selected properties.</returns>
+        public async Task<IList<User>> GetByPropertiesAsync(UpdateUserRequest properties)
+        {
+            string propstring = string.Empty;
+            foreach (System.Reflection.PropertyInfo pi in typeof(UpdateUserRequest).GetProperties())
+            {
+                Newtonsoft.Json.JsonPropertyAttribute attr = (Newtonsoft.Json.JsonPropertyAttribute)System.Attribute.GetCustomAttribute(pi, typeof(Newtonsoft.Json.JsonPropertyAttribute));
+                if (attr == null)
+                    continue;
+                object value = pi.GetValue(properties);
+                if (value == null)
+                    continue;
+                if (value.GetType() == typeof(string))
+                {
+                    if (string.IsNullOrEmpty(value as string) || string.IsNullOrWhiteSpace(value as string))
+                        continue;
+                }
+                else if (value.GetType() == typeof(int?))
+                {
+                    if (!((int?)value).HasValue)
+                        continue;
+                    value = ((int?)value).Value;
+                }
+                else if (value.GetType() == typeof(bool?))
+                {
+                    if (!((bool?)value).HasValue)
+                        continue;
+                    value = ((bool?)value).Value;
+                }
+                else
+                    continue;
+                if (propstring.Length > 0)
+                    propstring += "&";
+                propstring += attr.PropertyName + "=" + value.ToString();
+            }
+            Guard.NotEmpty(propstring, nameof(propstring));
+            return await _httpFacade.GetPagedList<User>($"users?{propstring}");
+        }
+
+
+        /// <summary>
         /// Creates new user
         /// </summary>
         /// <param name="request">Request to create user.</param>
@@ -78,7 +133,8 @@ namespace GitLabApiClient
         /// Deletes user.
         /// </summary>
         /// <param name="userId">Id of the user.</param>
-        public async Task DeleteAsync(UserId userId) =>
-            await _httpFacade.Delete($"users/{userId}");
+        /// <param name="hard_delete">(optional) - If true, contributions that would usually be moved to the ghost user will be deleted instead, as well as groups owned solely by this user.</param>
+        public async Task DeleteAsync(UserId userId, bool hard_delete = false) =>
+            await _httpFacade.Delete($"users/{userId}" + (hard_delete ? "?hard_delete=true" : ""));
     }
 }
