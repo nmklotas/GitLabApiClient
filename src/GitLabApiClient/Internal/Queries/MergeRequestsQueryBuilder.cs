@@ -42,6 +42,9 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.AssigneeId.HasValue)
                 query.Add("assignee_id", options.AssigneeId.Value);
+
+            if (!string.IsNullOrEmpty(options.TargetBranch))
+                query.Add("target_branch", options.TargetBranch);
         }
 
         private static string GetStateQueryValue(QueryMergeRequestState state)
