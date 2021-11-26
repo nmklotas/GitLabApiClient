@@ -6,6 +6,7 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.AwardEmojis.Responses;
+using GitLabApiClient.Models.Commits.Responses;
 using GitLabApiClient.Models.Discussions.Responses;
 using GitLabApiClient.Models.MergeRequests.Requests;
 using GitLabApiClient.Models.MergeRequests.Responses;
@@ -174,6 +175,14 @@ namespace GitLabApiClient
         /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
         public async Task<IList<AwardEmoji>> GetAwardEmojisAsync(ProjectId projectId, int mergeRequestIid) =>
             await _httpFacade.GetPagedList<AwardEmoji>($"projects/{projectId}/merge_requests/{mergeRequestIid}/award_emoji");
+
+        /// <summary>
+        /// Retrieves a list of all commits for a specified merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
+        public async Task<IList<Commit>> GetCommitsAsync(ProjectId projectId, int mergeRequestId) =>
+            await _httpFacade.GetPagedList<Commit>($"projects/{projectId}/merge_requests/{mergeRequestId}/commits");
 
     }
 }
