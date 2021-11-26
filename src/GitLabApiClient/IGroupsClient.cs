@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Models;
+using GitLabApiClient.Models.Epics.Responses;
 using GitLabApiClient.Models.Groups.Requests;
 using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -47,8 +48,17 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="options">Groups projects retrieval options.</param>
-        /// <returns>Issues satisfying options.</returns>
+        /// <returns>Projecs satisfying options.</returns>
         Task<IList<Project>> GetProjectsAsync(GroupId groupId, Action<ProjectsGroupQueryOptions> options = null);
+
+        /// <summary>
+        /// Get a list of epics in this group.
+        /// When accessed without authentication, only public epics are returned.
+        /// </summary>
+        /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
+        /// <param name="options">Epics projects retrieval options.</param>
+        /// <returns>Epics satisfying options.</returns>
+        Task<IList<Epic>> GetEpicsAsync(GroupId groupId, Action<EpicsGroupQueryOptions> options = null);
 
         /// <summary>
         /// Get a list of members in this group.
@@ -254,5 +264,6 @@ namespace GitLabApiClient
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="key">The Key ID of the variable.</param>
         Task DeleteVariableAsync(GroupId groupId, string key);
+
     }
 }

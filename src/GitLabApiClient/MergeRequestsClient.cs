@@ -27,18 +27,18 @@ namespace GitLabApiClient
         private readonly GitLabHttpFacade _httpFacade;
         private readonly MergeRequestsQueryBuilder _mergeRequestsQueryBuilder;
         private readonly ProjectMergeRequestsQueryBuilder _projectMergeRequestsQueryBuilder;
-        private readonly ProjectMergeRequestsNotesQueryBuilder _projectMergeRequestNotesQueryBuilder;
+        private readonly NotesQueryBuilder _notesQueryBuilder;
 
         internal MergeRequestsClient(
             GitLabHttpFacade httpFacade,
             MergeRequestsQueryBuilder mergeRequestsQueryBuilder,
             ProjectMergeRequestsQueryBuilder projectMergeRequestsQueryBuilder,
-            ProjectMergeRequestsNotesQueryBuilder projectMergeRequestNotesQueryBuilder)
+            NotesQueryBuilder notesQueryBuilder)
         {
             _httpFacade = httpFacade;
             _mergeRequestsQueryBuilder = mergeRequestsQueryBuilder;
             _projectMergeRequestsQueryBuilder = projectMergeRequestsQueryBuilder;
-            _projectMergeRequestNotesQueryBuilder = projectMergeRequestNotesQueryBuilder;
+            _notesQueryBuilder = notesQueryBuilder;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestId">The IID of an Merge Request.</param>
         /// <param name="request">Create Merge Request note request.</param>
-        public async Task<Note> CreateNoteAsync(ProjectId projectId, int mergeRequestId, CreateMergeRequestNoteRequest request) =>
+        public async Task<Note> CreateNoteAsync(ProjectId projectId, int mergeRequestId, CreateNoteRequest request) =>
             await _httpFacade.Post<Note>($"projects/{projectId}/merge_requests/{mergeRequestId}/notes", request);
 
         /// <summary>
@@ -141,12 +141,12 @@ namespace GitLabApiClient
         /// <param name="mergeRequestIid">Iid of the merge request.</param>
         /// <param name="options">MergeRequestNotes retrieval options.</param>
         /// <returns>Merge requests satisfying options.</returns>
-        public async Task<IList<Note>> GetNotesAsync(ProjectId projectId, int mergeRequestIid, Action<MergeRequestNotesQueryOptions> options = null)
+        public async Task<IList<Note>> GetNotesAsync(ProjectId projectId, int mergeRequestIid, Action<NotesQueryOptions> options = null)
         {
-            var queryOptions = new MergeRequestNotesQueryOptions();
+            var queryOptions = new NotesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _projectMergeRequestNotesQueryBuilder.Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
+            string url = _notesQueryBuilder.Build($"projects/{projectId}/merge_requests/{mergeRequestIid}/notes", queryOptions);
             return await _httpFacade.GetPagedList<Note>(url);
         }
 

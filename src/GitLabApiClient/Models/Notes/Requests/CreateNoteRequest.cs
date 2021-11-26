@@ -6,15 +6,15 @@ namespace GitLabApiClient.Models.Notes.Requests
     /// <summary>
     /// Used to create issue notes in a project.
     /// </summary>
-    public sealed class CreateMergeRequestNoteRequest
+    public sealed class CreateNoteRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateMergeRequestNoteRequest "/> class.
+        /// Initializes a new instance of the <see cref="CreateNoteRequest"/> class.
         /// </summary>
         /// <param name="body">The content of a note.</param>
-        public CreateMergeRequestNoteRequest(string body) => Body = body;
+        public CreateNoteRequest(string body) => Body = body;
 
-        public CreateMergeRequestNoteRequest()
+        public CreateNoteRequest()
         {
         }
 

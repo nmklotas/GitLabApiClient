@@ -74,6 +74,9 @@ namespace GitLabApiClient.Internal.Http
         public Task<T> Post<T>(string uri, object data = null) where T : class =>
             _requestor.Post<T>(uri, data);
 
+        public Task<T> PostFormData<T>(string uri, object data = null) where T : class =>
+            _requestor.PostFormData<T>(uri, data);
+
         public Task Post(string uri, object data = null) =>
             _requestor.Post(uri, data);
 

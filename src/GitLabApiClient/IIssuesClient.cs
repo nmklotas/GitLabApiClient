@@ -90,7 +90,7 @@ namespace GitLabApiClient
         /// <param name="issueIid">Iid of the issue.</param>
         /// <param name="options">IssueNotes retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
-        Task<IList<Note>> GetNotesAsync(ProjectId projectId, int issueIid, Action<IssueNotesQueryOptions> options = null);
+        Task<IList<Note>> GetNotesAsync(ProjectId projectId, int issueIid, Action<NotesQueryOptions> options = null);
 
         /// <summary>
         /// Creates new issue.
@@ -107,7 +107,16 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="issueIid">The IID of an issue.</param>
         /// <param name="request">Create issue note request.</param>
-        Task<Note> CreateNoteAsync(ProjectId projectId, int issueIid, CreateIssueNoteRequest request);
+        Task<Note> CreateNoteAsync(ProjectId projectId, int issueIid, CreateNoteRequest request);
+
+        /// <summary>
+        /// Moves an issues to a new project
+        /// </summary>
+        /// <returns>The newly created issue note.</returns>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="issueIid">The IID of an issue.</param>
+        /// <param name="request">Create issue note request.</param>
+        Task<Issue> MoveIssueAsync(ProjectId projectId, int issueIid, MoveIssueRequest request);
 
         /// <summary>
         /// Updated existing issue.

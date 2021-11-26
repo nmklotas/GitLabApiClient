@@ -18,7 +18,7 @@ namespace GitLabApiClient.Test
     {
         private readonly MergeRequestsClient _sut = new MergeRequestsClient(
             GitLabApiHelper.GetFacade(), new MergeRequestsQueryBuilder(), new ProjectMergeRequestsQueryBuilder(),
-            new ProjectMergeRequestsNotesQueryBuilder());
+            new NotesQueryBuilder());
 
         [Fact]
         public async Task CreatedMergeRequestCanBeRetrieved()
