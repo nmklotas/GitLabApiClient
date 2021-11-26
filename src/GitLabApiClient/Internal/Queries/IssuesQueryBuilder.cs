@@ -16,7 +16,7 @@ namespace GitLabApiClient.Internal.Queries
                 query.Add("state", stateQueryValue);
 
             if (options.Labels.Any())
-                query.Add("labels", options.Labels);
+                query.AddCommaSeparatedList("labels", options.Labels);
 
             if (!options.MilestoneTitle.IsNullOrEmpty())
                 query.Add("milestone", options.MilestoneTitle);
@@ -31,7 +31,7 @@ namespace GitLabApiClient.Internal.Queries
             if (options.AssigneeId.HasValue)
                 query.Add("assignee_id", options.AssigneeId.Value);
             else if (options.AssigneeUsername.Any())
-                query.Add("assignee_username", options.AssigneeUsername);
+                query.AddCommaSeparatedList("assignee_username", options.AssigneeUsername);
 
             query.Add(options.IssueIds);
 

@@ -17,9 +17,6 @@ namespace GitLabApiClient.Models
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
-
         [JsonProperty("username")]
         public string Username { get; set; }
 

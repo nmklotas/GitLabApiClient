@@ -77,6 +77,7 @@ namespace GitLabApiClient
             Files = new FilesClient(_httpFacade);
             Runners = new RunnersClient(_httpFacade);
             ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
+            MergeRequestApprovals = new MergeRequestApprovalsClient(_httpFacade);
             Connection = new ConnectionClient(_httpFacade);
         }
 
@@ -164,6 +165,11 @@ namespace GitLabApiClient
         /// Access GitLab's ToDo-List API.
         /// </summary>
         public IToDoListClient ToDoList { get; }
+
+        /// <summary>
+        /// Access GitLab's Merge Request Approvals API
+        /// </summary>
+        public IMergeRequestApprovalsClient MergeRequestApprovals { get; set; }
 
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
