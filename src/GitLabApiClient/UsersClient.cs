@@ -80,5 +80,14 @@ namespace GitLabApiClient
         /// <param name="userId">Id of the user.</param>
         public async Task DeleteAsync(UserId userId) =>
             await _httpFacade.Delete($"users/{userId}");
+
+        /// <summary>
+        /// Creates impersonation token
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        /// <param name="request">Request to create impersonation token for user.</param>
+        /// <returns>Newly created impersonation token.</returns>
+        public async Task<ImpersonationToken> CreateImpersonationTokenAsync(UserId userId, CreateUserImpersonationTokenRequest request) =>
+            await _httpFacade.Post<ImpersonationToken>($"users/{userId}/impersonation_tokens", request);
     }
 }

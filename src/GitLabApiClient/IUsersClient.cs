@@ -53,5 +53,13 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="userId">Id of the user.</param>
         Task DeleteAsync(UserId userId);
+
+        /// <summary>
+        /// Creates impersonation token
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        /// <param name="request">Request to create impersonation token for user.</param>
+        /// <returns>Newly created impersonation token.</returns>
+        Task<ImpersonationToken> CreateImpersonationTokenAsync(UserId userId, CreateUserImpersonationTokenRequest request);
     }
 }
