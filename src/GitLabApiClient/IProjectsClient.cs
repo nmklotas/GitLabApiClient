@@ -107,6 +107,19 @@ namespace GitLabApiClient
         Task<Milestone> CreateMilestoneAsync(ProjectId projectId, CreateProjectMilestoneRequest request);
 
         /// <summary>
+        /// Forks a project into the user namespace of the authenticated user or the one provided.
+        /// </summary>
+        /// <param name="request">Fork Project request.</param>
+        /// <returns></returns>
+        Task<Project> ForkAsync(ForkProjectRequest request);
+
+        /// <summary>
+        /// Delete an existing forked from relationship
+        /// </summary>
+        /// <param name="projectId">The ID or URL-encoded path of the project.</param>
+        Task DeleteForkedRelationshipAsync(ProjectId projectId);
+
+        /// <summary>
         /// Updates existing project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>

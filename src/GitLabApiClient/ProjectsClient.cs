@@ -173,6 +173,27 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Forks a project into the user namespace of the authenticated user or the one provided.
+        /// </summary>
+        /// <param name="request">Fork Project request.</param>
+        /// <returns>Newly Project</returns>
+        public async Task<Project> ForkAsync(ForkProjectRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Project>($"projects/{request.Id}/fork", request);
+        }
+
+        /// <summary>
+        /// Delete an existing forked from relationship
+        /// </summary>
+        /// <param name="projectId">The ID or URL-encoded path of the project.</param>
+        public async Task DeleteForkedRelationshipAsync(ProjectId projectId)
+        {
+            Guard.NotNull(projectId, nameof(projectId));
+            await _httpFacade.Delete($"projects/{projectId}/fork");
+        }
+
+        /// <summary>
         /// Updates existing project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
