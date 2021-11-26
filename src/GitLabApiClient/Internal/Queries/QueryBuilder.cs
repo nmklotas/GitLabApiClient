@@ -25,7 +25,7 @@ namespace GitLabApiClient.Internal.Queries
             public void Add(string name, DateTime value)
                 => Add(name, value.ToString("o"));
 
-            public void Add(string name, IList<string> values)
+            public void AddCommaSeparatedList(string name, IList<string> values)
             {
                 if (!values.Any())
                     return;
@@ -33,10 +33,15 @@ namespace GitLabApiClient.Internal.Queries
                 Add(name, string.Join(",", values));
             }
 
-            public void Add(string name, IList<int> values)
+            public void Add(string name, IEnumerable<string> values)
             {
-                foreach (int val in values)
-                    Add($"{name}[]", val.ToString());
+                foreach (string val in values)
+                    Add($"{name}[]", val);
+            }
+
+            public void Add(string name, IEnumerable<int> values)
+            {
+                Add(name, values.Select(e => e.ToString()));
             }
 
             public void Add(IList<int> values)
