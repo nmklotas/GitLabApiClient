@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
 
 namespace GitLabApiClient.Internal.Http
 {
@@ -79,6 +80,14 @@ namespace GitLabApiClient.Internal.Http
             return result;
         }
 
+        public async Task<IList<T>> GetPage<T>(string url, PaginationOptions paginationOptions)
+        {
+            int maxItems = paginationOptions.MaxItemsPerPage ?? MaxItemsPerPage;
+            string pagedUrl = GetPagedUrl(url, paginationOptions.PageNumber, maxItems);
+            var results = await _requestor.Get<IList<T>>(pagedUrl);
+            return results;
+        }
+
         private static List<string> GetPagedUrls(string originalUrl, int totalPages)
         {
             var pagedUrls = new List<string>();
@@ -89,10 +98,10 @@ namespace GitLabApiClient.Internal.Http
             return pagedUrls;
         }
 
-        private static string GetPagedUrl(string url, int pageNumber)
+        private static string GetPagedUrl(string url, int pageNumber, int maxItemsPerPage = MaxItemsPerPage)
         {
             string parameterSymbol = url.Contains("?") ? "&" : "?";
-            return $"{url}{parameterSymbol}per_page={MaxItemsPerPage}&page={pageNumber}";
+            return $"{url}{parameterSymbol}per_page={maxItemsPerPage}&page={pageNumber}";
         }
     }
 
