@@ -18,7 +18,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         public IssueState State { get; set; }
 
         /// <summary>
-        /// List of label names, issues must have all labels to be returned. 
+        /// List of label names, issues must have all labels to be returned.
         /// No+Label lists all issues with no labels.
         /// </summary>
         public IList<string> Labels { get; set; } = new List<string>();
@@ -74,6 +74,11 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// Search issues against their title and description
         /// </summary>
         public string Filter { get; set; }
+
+        /// <summary>
+        /// Modify the scope of the search attribute. Title, Description, or TitleAndDescription. Default is TitleAndDescription
+        /// </summary>
+        public SearchIn In { get; set; }
 
         /// <summary>
         /// Return issues created after the given time (inclusive)

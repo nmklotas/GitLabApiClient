@@ -30,6 +30,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                     Order = IssuesOrder.UpdatedAt,
                     SortOrder = SortOrder.Ascending,
                     Filter = "filter",
+                    In = SearchIn.Description,
                     CreatedAfter = new DateTime(1991, 11, 11, 1, 1, 1),
                     CreatedBefore = new DateTime(1991, 12, 12, 2, 2, 2),
                     UpdatedAfter = new DateTime(1991, 4, 4, 4, 4, 4),
@@ -50,6 +51,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                               "order_by=updated_at&" +
                               "sort=asc&" +
                               "search=filter&" +
+                              "in=description&" +
                               "confidential=true&" +
                               "created_before=1991-12-12T02%3a02%3a02.0000000&" +
                               "created_after=1991-11-11T01%3a01%3a01.0000000&" +
@@ -76,6 +78,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                     Order = IssuesOrder.UpdatedAt,
                     SortOrder = SortOrder.Ascending,
                     Filter = "filter",
+                    In = SearchIn.Title,
                     CreatedAfter = new DateTime(1991, 11, 11, 1, 1, 1),
                     CreatedBefore = new DateTime(1991, 12, 12, 2, 2, 2),
                     UpdatedAfter = new DateTime(1991, 4, 4, 4, 4, 4),
@@ -96,6 +99,7 @@ namespace GitLabApiClient.Test.Internal.Queries
                               "order_by=updated_at&" +
                               "sort=asc&" +
                               "search=filter&" +
+                              "in=title&" +
                               "confidential=true&" +
                               "created_before=1991-12-12T02%3a02%3a02.0000000&" +
                               "created_after=1991-11-11T01%3a01%3a01.0000000&" +
