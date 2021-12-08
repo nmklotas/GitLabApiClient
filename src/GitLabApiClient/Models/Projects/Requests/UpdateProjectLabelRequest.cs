@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using GitLabApiClient.Internal.Utilities;
 using Newtonsoft.Json;
 

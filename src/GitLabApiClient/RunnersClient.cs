@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Models.Runners.Requests;
 using GitLabApiClient.Models.Runners.Responses;
-using GitLabApiClient.Models.Users.Requests;
-using GitLabApiClient.Models.Users.Responses;
 
 namespace GitLabApiClient
 {
@@ -92,7 +89,7 @@ namespace GitLabApiClient
                 if (e.HttpStatusCode == System.Net.HttpStatusCode.Forbidden)
                     return false;
                 else
-                    throw e;
+                    throw;
             }
         }
     }
