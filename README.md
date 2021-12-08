@@ -13,9 +13,10 @@ This package is managed with Nuget, in order to update it, follow the next steps
   * go to [GitLabApiClient.csproj]
   * increase the value of `PropertyGroup:Version`
 * pack the new code and push it to Nuget using the following lines:
-  * cd to the repository directory
+  * `cd src/GitLabApiClient`
+  * `rm bin/Release/Apiiro.GitLabApiClient.*.nupkg`
   * `dotnet pack --configuration Release`
-  * `dotnet nuget push src/GitLabApiClient/bin/Release/Apiiro.GitLabApiClient.0.1.0.nupkg --source "github" --skip-duplicate --no-symbols true`
+  * `dotnet nuget push bin/Release/Apiiro.GitLabApiClient.*.nupkg --source "github" --skip-duplicate --no-symbols true`
 
 
 [GitLabApiClient.csproj]: https://github.com/apiiro/GitLabApiClient/blob/master/src/GitLabApiClient/GitLabApiClient.csproj
