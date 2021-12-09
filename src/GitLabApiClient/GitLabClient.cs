@@ -60,6 +60,7 @@ namespace GitLabApiClient
             var treeQueryBuilder = new TreeQueryBuilder();
             var jobQueryBuilder = new JobQueryBuilder();
             var toDoListBuilder = new ToDoListQueryBuilder();
+            var iterationsBuilder = new IterationsQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -79,6 +80,7 @@ namespace GitLabApiClient
             Packages = new PackagesClient(_httpFacade, packagesQueryBuilder);
             Runners = new RunnersClient(_httpFacade);
             ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
+            Iterations = new IterationsClient(_httpFacade, iterationsBuilder);
             Connection = new ConnectionClient(_httpFacade);
         }
 
@@ -176,6 +178,9 @@ namespace GitLabApiClient
         /// Provides a client connection to make rest requests to HTTP endpoints.
         /// </summary>
         public ConnectionClient Connection { get; }
+
+        /// <inheritdoc/>
+        public IIterationsClient Iterations { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.

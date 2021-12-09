@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Tags.Requests;
 using GitLabApiClient.Models.Tags.Responses;
@@ -62,6 +63,6 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name, you want to delete.</param>
         public async Task DeleteAsync(ProjectId projectId, string tagName) =>
-            await _httpFacade.Delete($"projects/{projectId}/repository/tags/{tagName}");
+            await _httpFacade.Delete($"projects/{projectId}/repository/tags/{tagName.UrlEncode()}");
     }
 }
