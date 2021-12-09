@@ -89,6 +89,9 @@ namespace GitLabApiClient.Internal.Http
         public Task Put(string uri, object data) =>
             _requestor.Put(uri, data);
 
+        public Task PutFileBody(string uri, CreateUploadRequest uploadRequest) =>
+            _requestor.PutFileBody(uri, uploadRequest);
+
         public Task Delete(string uri) =>
             _requestor.Delete(uri);
         public Task Delete(string uri, object data) =>

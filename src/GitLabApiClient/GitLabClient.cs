@@ -43,6 +43,7 @@ namespace GitLabApiClient
             var projectIssueNotesQueryBuilder = new ProjectIssueNotesQueryBuilder();
             var projectMergeRequestsNotesQueryBuilder = new ProjectMergeRequestsNotesQueryBuilder();
             var issuesQueryBuilder = new IssuesQueryBuilder();
+            var packagesQueryBuilder = new PackagesQueryBuilder();
             var mergeRequestsQueryBuilder = new MergeRequestsQueryBuilder();
             var projectMilestonesQueryBuilder = new MilestonesQueryBuilder();
             var projectMergeRequestsQueryBuilder = new ProjectMergeRequestsQueryBuilder();
@@ -76,6 +77,7 @@ namespace GitLabApiClient
             Pipelines = new PipelineClient(_httpFacade, pipelineQueryBuilder, jobQueryBuilder);
             Trees = new TreesClient(_httpFacade, treeQueryBuilder);
             Files = new FilesClient(_httpFacade);
+            Packages = new PackagesClient(_httpFacade, packagesQueryBuilder);
             Runners = new RunnersClient(_httpFacade);
             ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
             Iterations = new IterationsClient(_httpFacade, iterationsBuilder);
@@ -146,6 +148,11 @@ namespace GitLabApiClient
         /// Access GitLab's files API.
         /// </summary>
         public IFilesClient Files { get; }
+
+        /// <summary>
+        /// Access GitLab's packages API.
+        /// </summary>
+        public IPackagesClient Packages { get; }
 
         /// <summary>
         /// Access GitLab's Markdown API.

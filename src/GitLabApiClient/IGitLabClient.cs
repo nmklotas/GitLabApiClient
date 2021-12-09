@@ -71,6 +71,11 @@ namespace GitLabApiClient
         IFilesClient Files { get; }
 
         /// <summary>
+        /// Access GitLab's packages API.
+        /// </summary>
+        IPackagesClient Packages { get; }
+
+        /// <summary>
         /// Access GitLab's Markdown API.
         /// </summary>
         IMarkdownClient Markdown { get; }

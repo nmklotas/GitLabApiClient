@@ -95,6 +95,13 @@ namespace GitLabApiClient.Internal.Http
             await EnsureSuccessStatusCode(responseMessage);
         }
 
+        public async Task PutFileBody(string url, CreateUploadRequest uploadRequest)
+        {
+            var content = new StreamContent(uploadRequest.Stream);
+            var responseMessage = await _client.PutAsync(url, content);
+            await EnsureSuccessStatusCode(responseMessage);
+        }
+
         public async Task Delete(string url)
         {
             var responseMessage = await _client.DeleteAsync(url);
