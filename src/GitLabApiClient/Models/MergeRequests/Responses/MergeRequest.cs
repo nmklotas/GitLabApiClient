@@ -92,5 +92,8 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
 
         [JsonProperty("merged_by")]
         public Assignee MergedBy { get; set; }
+
+        [JsonProperty("merged_at")]
+        public DateTime? MergedAt { get; set; }
     }
 }
