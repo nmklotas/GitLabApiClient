@@ -19,15 +19,15 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// <param name="unprotectAccessLevel">Access levels allowed to unprotect.</param>
         public ProtectBranchRequest(
             string name,
-            ProtectedRefAccessLevels? pushAccessLevel = ProtectedRefAccessLevels.MaintainerAccess,
-            ProtectedRefAccessLevels? mergeAccessLevel = ProtectedRefAccessLevels.MaintainerAccess,
-            ProtectedRefAccessLevels? unprotectAccessLevel = ProtectedRefAccessLevels.MaintainerAccess)
+            ProtectedRefAccessLevels pushAccessLevel = ProtectedRefAccessLevels.MaintainerAccess,
+            ProtectedRefAccessLevels mergeAccessLevel = ProtectedRefAccessLevels.MaintainerAccess,
+            ProtectedRefAccessLevels unprotectAccessLevel = ProtectedRefAccessLevels.MaintainerAccess)
         {
             Guard.NotEmpty(name, nameof(name));
-
-            PushAccessLevel = pushAccessLevel.ToString();
-            MergeAccessLevel = mergeAccessLevel.ToString();
-            UnprotectAccessLevel = unprotectAccessLevel.ToString();
+            Name = name;
+            PushAccessLevel = pushAccessLevel;
+            MergeAccessLevel = mergeAccessLevel;
+            UnprotectAccessLevel = unprotectAccessLevel;
         }
 
         /// <summary>
@@ -40,18 +40,18 @@ namespace GitLabApiClient.Models.Branches.Requests
         /// Access levels allowed to push (defaults: 40, maintainer access level).
         /// </summary>
         [JsonProperty("push_access_level")]
-        public string PushAccessLevel { get; set; }
+        public ProtectedRefAccessLevels PushAccessLevel { get; set; }
 
         /// <summary>
         /// Access levels allowed to merge (defaults: 40, maintainer access level).
         /// </summary>
         [JsonProperty("merge_access_level")]
-        public string MergeAccessLevel { get; set; }
+        public ProtectedRefAccessLevels MergeAccessLevel { get; set; }
 
         /// <summary>
         /// Access levels allowed to unprotect (defaults: 40, maintainer access level).
         /// </summary>
         [JsonProperty("unprotect_access_level")]
-        public string UnprotectAccessLevel { get; set; }
+        public ProtectedRefAccessLevels UnprotectAccessLevel { get; set; }
     }
 }
