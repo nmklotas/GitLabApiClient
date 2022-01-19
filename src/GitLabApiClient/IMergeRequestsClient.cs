@@ -112,5 +112,12 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
         Task<IList<AwardEmoji>> GetAwardEmojisAsync(ProjectId projectId, int mergeRequestIid);
+
+        /// <summary>
+        /// Retrieves a list of all merge request diff versions for specified merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
+        Task<IList<MergeRequestDiffVersion>> GetDiffVersionsAsync(ProjectId projectId, int mergeRequestIid);
     }
 }
