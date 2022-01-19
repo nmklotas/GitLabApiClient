@@ -37,7 +37,7 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// Assignees user IDs.
         /// </summary>
         [JsonProperty("assignee_ids")]
-        public int? AssigneeIds { get; set; }
+        public int[] AssigneeIds { get; set; }
 
         /// <summary>
         /// The ID of a milestone.
