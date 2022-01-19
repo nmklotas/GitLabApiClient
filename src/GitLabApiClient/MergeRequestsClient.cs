@@ -180,7 +180,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="mergeRequestIid">The Internal Merge Request Id.</param>
-        public async Task<IList<MergeRequestDiffVersion>> GetDiffVersions(ProjectId projectId, int mergeRequestIid) =>
+        public async Task<IList<MergeRequestDiffVersion>> GetDiffVersionsAsync(ProjectId projectId, int mergeRequestIid) =>
             await _httpFacade.GetPagedList<MergeRequestDiffVersion>($"projects/{projectId}/merge_requests/{mergeRequestIid}/versions");
 
     }
