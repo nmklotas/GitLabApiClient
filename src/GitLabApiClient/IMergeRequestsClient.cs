@@ -92,6 +92,14 @@ namespace GitLabApiClient
         Task<IList<Note>> GetNotesAsync(ProjectId projectId, int mergeRequestIid, Action<MergeRequestNotesQueryOptions> options = null);
 
         /// <summary>
+        /// Deletes a note of a merge request.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="mergeRequestIid">Iid of the merge request.</param>
+        /// <param name="noteId">ID of the merge request note.</param>
+        Task DeleteNoteAsync(ProjectId projectId, int mergeRequestIid, int noteId);
+
+        /// <summary>
         /// List erge request pipelines
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
