@@ -24,6 +24,9 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         [JsonProperty("assignee")]
         public Assignee Assignee { get; set; }
 
+        [JsonProperty("reviewers")]
+        public List<Assignee> Reviewers { get; set; }
+
         [JsonProperty("description")]
         public string Description { get; set; }
 
