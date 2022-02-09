@@ -28,5 +28,5 @@ public class MergeRequestDiffVersion
     public string State { get; set; }
 
     [JsonProperty("real_size")]
-    public int RealSize { get; set; }
+    public string RealSize { get; set; }
 }
