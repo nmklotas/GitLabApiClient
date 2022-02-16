@@ -8,8 +8,8 @@ namespace GitLabApiClient.Internal.Queries
     {
         protected override void BuildCore(Query query, ProjectsGroupQueryOptions options)
         {
-            if (options.Archived)
-                query.Add("archived", options.Archived);
+            if (options.Archived.HasValue)
+                query.Add("archived", options.Archived.Value);
 
             if (options.Visibility != GroupsVisibility.Public)
                 query.Add("visibility", GetVisibilityQueryValue(options.Visibility));

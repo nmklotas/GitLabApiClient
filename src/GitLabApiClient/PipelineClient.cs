@@ -60,5 +60,8 @@ namespace GitLabApiClient
 
         public async Task<PipelineDetail> RetryAsync(ProjectId projectId, int pipelineId) =>
             await _httpFacade.Post<PipelineDetail>($"projects/{projectId}/pipelines/{pipelineId}/retry");
+
+        public async Task<TestReport> GetTestReportAsync(ProjectId projectId, int pipelineId) =>
+            await _httpFacade.Get<TestReport>($"projects/{projectId}/pipelines/{pipelineId}/test_report");
     }
 }

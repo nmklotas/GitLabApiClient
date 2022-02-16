@@ -19,5 +19,6 @@ namespace GitLabApiClient
         Task<IList<Job>> GetJobsAsync(ProjectId projectId, int pipelineId, Action<JobQueryOptions> options = null);
         Task<IList<PipelineVariable>> GetVariablesAsync(ProjectId projectId, int pipelineId);
         Task<PipelineDetail> RetryAsync(ProjectId projectId, int pipelineId);
+        Task<TestReport> GetTestReportAsync(ProjectId projectId, int pipelineId);
     }
 }

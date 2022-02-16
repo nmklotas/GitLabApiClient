@@ -12,7 +12,7 @@ namespace GitLabApiClient.Models.Groups.Requests
         /// <summary>
         /// Limit by archived status
         /// </summary>
-        public bool Archived { get; set; }
+        public bool? Archived { get; set; }
 
         /// <summary>
         /// Limit by visibility public, internal, or private
