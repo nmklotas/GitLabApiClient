@@ -48,7 +48,7 @@ namespace GitLabApiClient
         /// <param name="groupId">The ID, path or <see cref="Group"/> of the group.</param>
         /// <param name="options">Issues retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
-        Task<IList<Issue>> GetAllAsync(ProjectId projectId = null, GroupId groupId = null, Action<IssuesQueryOptions> options = null);
+        Task<IList<Issue>> GetAllAsync(ProjectId projectId = null, GroupId groupId = null, int? milestoneId = null, Action<IssuesQueryOptions> options = null);
 
         /// <summary>
         /// Retrieves project issue.

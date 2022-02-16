@@ -8,6 +8,7 @@ using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Groups.Responses;
 using GitLabApiClient.Models.Issues.Requests;
 using GitLabApiClient.Models.Issues.Responses;
+using GitLabApiClient.Models.Milestones.Responses;
 using GitLabApiClient.Models.Notes.Requests;
 using GitLabApiClient.Models.Notes.Responses;
 using GitLabApiClient.Models.Projects.Responses;
@@ -74,7 +75,7 @@ namespace GitLabApiClient
         /// <param name="options">Issues retrieval options.</param>
         /// <returns>Issues satisfying options.</returns>
         public async Task<IList<Issue>> GetAllAsync(ProjectId projectId = null, GroupId groupId = null,
-            Action<IssuesQueryOptions> options = null)
+            int? milestoneId = null, Action<IssuesQueryOptions> options = null)
         {
             var queryOptions = new IssuesQueryOptions();
             options?.Invoke(queryOptions);
@@ -82,11 +83,20 @@ namespace GitLabApiClient
             string path = "issues";
             if (projectId != null)
             {
-                path = $"projects/{projectId}/issues";
+                path = $"projects/{projectId}";
             }
             else if (groupId != null)
             {
-                path = $"groups/{groupId}/issues";
+                path = $"groups/{groupId}";
+            }
+
+            if (milestoneId.HasValue)
+            {
+                path += $"/milestones/{milestoneId}/issues";
+            }
+            else
+            {
+                path += "/issues";
             }
 
             string url = _queryBuilder.Build(path, queryOptions);
