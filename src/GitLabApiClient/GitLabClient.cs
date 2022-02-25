@@ -60,6 +60,7 @@ namespace GitLabApiClient
             var jobQueryBuilder = new JobQueryBuilder();
             var toDoListBuilder = new ToDoListQueryBuilder();
             var iterationsBuilder = new IterationsQueryBuilder();
+            var environmentBuilder = new EnvironmentsQueryBuilder();
 
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssueNotesQueryBuilder);
             Uploads = new UploadsClient(_httpFacade);
@@ -80,6 +81,7 @@ namespace GitLabApiClient
             ToDoList = new ToDoListClient(_httpFacade, toDoListBuilder);
             Iterations = new IterationsClient(_httpFacade, iterationsBuilder);
             Connection = new ConnectionClient(_httpFacade);
+            Environments = new EnvironmentClient(_httpFacade, environmentBuilder);
         }
 
         /// <summary>
@@ -174,6 +176,11 @@ namespace GitLabApiClient
 
         /// <inheritdoc/>
         public IIterationsClient Iterations { get; }
+
+        /// <summary>
+        /// Access GitLab's Environments API.
+        /// </summary>
+        public IEnvironmentsClient Environments { get; }
 
         /// <summary>
         /// Host address of GitLab instance. For example https://gitlab.example.com or https://gitlab.example.com/api/v4/.
