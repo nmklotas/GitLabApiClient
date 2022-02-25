@@ -26,7 +26,7 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        /// Retrieves a environment by its name
+        /// Retrieves an environment by its name
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="environmentId">The ID of the environment to retrieve.</param>
@@ -74,7 +74,7 @@ namespace GitLabApiClient
         /// <param name="tagName">The ID of the environment to stop.</param>
         /// <returns></returns>
         public async Task StopAsync(ProjectId projectId, int environmentId) =>
-            await _httpFacade.Delete($"projects/{projectId}/environments/{environmentId}/stop");
+            await _httpFacade.Post($"projects/{projectId}/environments/{environmentId}/stop");
 
         /// <summary>
         /// Delete an environment
