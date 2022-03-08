@@ -94,6 +94,6 @@ namespace GitLabApiClient.Models.MergeRequests.Responses
         public Assignee MergedBy { get; set; }
 
         [JsonProperty("diff_refs")]
-        public MergeRequestDiffRefs? DiffRefs { get; set; }
+        public MergeRequestDiffRefs DiffRefs { get; set; }
     }
 }
