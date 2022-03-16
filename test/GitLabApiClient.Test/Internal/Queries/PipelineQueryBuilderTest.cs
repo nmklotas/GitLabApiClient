@@ -24,7 +24,8 @@ namespace GitLabApiClient.Test.Internal.Queries
                     Status = PipelineStatus.Failed,
                     Scope = PipelineScope.Pending,
                     Order = PipelineOrder.UserId,
-                    SortOrder = SortOrder.Ascending
+                    SortOrder = SortOrder.Ascending,
+                    Source = PipelineSource.MergeRequestEvent
                 });
 
             query.Should().Be("https://https://gitlab.com/api/v4/pipelines?" +
@@ -34,7 +35,9 @@ namespace GitLabApiClient.Test.Internal.Queries
                               "&status=failed" +
                               "&scope=pending" +
                               "&order_by=user_id" +
-                              "&sort=asc");
+                              "&sort=asc" +
+                              "&source=merge_request_event"
+            );
         }
     }
 }

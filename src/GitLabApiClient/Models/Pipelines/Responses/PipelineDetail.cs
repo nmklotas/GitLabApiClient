@@ -52,5 +52,8 @@ namespace GitLabApiClient.Models.Pipelines.Responses
 
         [JsonProperty("coverage")]
         public string Coverage { get; set; }
+
+        [JsonProperty("source")]
+        public PipelineSource? Source { get; set; }
     }
 }
