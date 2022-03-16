@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GitLabApiClient.Models.Commits.Responses;
 using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Runners.Responses;
@@ -56,5 +57,8 @@ namespace GitLabApiClient.Models.Job.Responses
 
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
+
+        [JsonProperty("tag_list")]
+        public IList<string> TagList { get; set; }
     }
 }
