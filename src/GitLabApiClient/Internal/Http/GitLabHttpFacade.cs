@@ -36,6 +36,7 @@ namespace GitLabApiClient.Internal.Http
             {
                 case int i when i == 0:
                     break;
+                case 64:
                 case int i when i >= 20 && i < 64:
                     _httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
                     break;
@@ -43,7 +44,9 @@ namespace GitLabApiClient.Internal.Http
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authenticationToken);
                     break;
                 default:
-                    throw new ArgumentException("Unsupported authentication token provide, please private an oauth or private token");
+                    _httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
+                    break;
+
             }
         }
 
