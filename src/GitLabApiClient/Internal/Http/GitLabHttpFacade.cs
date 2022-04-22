@@ -34,9 +34,13 @@ namespace GitLabApiClient.Internal.Http
         {
             switch (authenticationToken.Length)
             {
-                case 0:
+                case int i when i == 0:
                     break;
                 case 64:
+                case int i when i >= 20 && i < 64:
+                    _httpClient.DefaultRequestHeaders.Add(PrivateToken, authenticationToken);
+                    break;
+                case int i when i == 64:
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authenticationToken);
                     break;
                 default:

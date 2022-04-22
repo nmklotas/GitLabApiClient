@@ -58,6 +58,12 @@ namespace GitLabApiClient.Internal.Queries
 
             if (options.UpdatedAfter.HasValue)
                 query.Add("updated_after", options.UpdatedAfter.Value);
+
+            if (!string.IsNullOrEmpty(options.IterationId))
+                query.Add("iteration_id", options.IterationId);
+
+            if (!string.IsNullOrEmpty(options.IterationTitle))
+                query.Add("iteration_title", options.IterationTitle);
         }
 
         private static string GetStateQueryValue(IssueState state)
