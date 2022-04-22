@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Commits.Requests;
+using GitLabApiClient.Models.Commits.Requests.CreateCommitRequest;
 using GitLabApiClient.Models.Commits.Responses;
 using GitLabApiClient.Models.Projects.Responses;
 
@@ -91,6 +94,25 @@ namespace GitLabApiClient
 
             string url = _commitStatusesQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/statuses", queryOptions);
             return await _httpFacade.GetPagedList<CommitStatuses>(url);
+        }
+
+        /// <summary>
+        /// Creates a commit with multiple files and actions.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Create commit request.</param>
+        /// <param name="autoEncodeToBase64">Automatically encode contents to base64 (default false).</param>
+        public async Task<Commit> CreateAsync(ProjectId projectId, CreateCommitRequest request, bool autoEncodeToBase64 = false)
+        {
+            if (autoEncodeToBase64)
+            {
+                foreach (var action in request.Actions.Where(action => !string.IsNullOrEmpty(action.Content)))
+                {
+                    action.Encoding = CreateCommitRequestActionEncoding.Base64;
+                    action.Content = Convert.ToBase64String(Encoding.UTF8.GetBytes(action.Content));
+                }
+            }
+            return await _httpFacade.Post<Commit>($"projects/{projectId}/repository/commits", request);
         }
     }
 }

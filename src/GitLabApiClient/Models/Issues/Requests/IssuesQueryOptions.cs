@@ -99,5 +99,18 @@ namespace GitLabApiClient.Models.Issues.Requests
         /// Filter confidential or public issues.
         /// </summary>
         public bool IsConfidential { get; set; } = false;
+
+        /// <summary>
+        /// Filter for issues assigned to the given iteration ID. None returns
+        /// issues that do not belong to an iteration. Any returns issues that
+        /// belong to an iteration. Mutually exclusive with iteration_title.
+        /// </summary>
+        public string IterationId { get; set; }
+
+        /// <summary>
+        /// Filter for issues assigned to the iteration with the given title.
+        /// Similar to iteration_id and mutually exclusive with iteration_id.
+        /// </summary>
+        public string IterationTitle { get; set; }
     }
 }
