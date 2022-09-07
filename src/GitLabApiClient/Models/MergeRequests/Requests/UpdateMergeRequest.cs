@@ -60,5 +60,11 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// </summary>
         [JsonProperty("remove_source_branch")]
         public bool? RemoveSourceBranch { get; set; }
+
+        /// <summary>
+        /// Reviewer user IDs.
+        /// </summary>
+        [JsonProperty("reviewer_ids")]
+        public List<int> ReviewerIds { get; set; }
     }
 }
