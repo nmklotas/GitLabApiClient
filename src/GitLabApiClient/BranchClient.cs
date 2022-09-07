@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
 using GitLabApiClient.Models.Projects.Responses;
@@ -62,7 +63,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="branchName">The branch, you want deleted.</param>
         public async Task DeleteBranch(ProjectId projectId, string branchName) =>
-            await _httpFacade.Delete($"projects/{projectId}/repository/branches/{branchName}");
+            await _httpFacade.Delete($"projects/{projectId}/repository/branches/{branchName.UrlEncode()}");
 
         /// <summary>
         /// Deletes the merged branches
