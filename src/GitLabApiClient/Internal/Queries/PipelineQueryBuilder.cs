@@ -62,6 +62,11 @@ namespace GitLabApiClient.Internal.Queries
             {
                 query.Add("username", options.TriggeredBy);
             }
+
+            if (options.Source.HasValue)
+            {
+                query.Add("source", options.Source.ToLowerCaseString());
+            }
         }
 
         #endregion

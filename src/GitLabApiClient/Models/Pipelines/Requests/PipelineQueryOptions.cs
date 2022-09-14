@@ -55,5 +55,10 @@ namespace GitLabApiClient.Models.Pipelines.Requests
         ///     The username of the user who triggered pipelines
         /// </summary>
         public string TriggeredBy { get; set; }
+
+        /// <summary>
+        ///     How the pipeline was triggered
+        /// </summary>
+        public PipelineSource? Source { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace GitLabApiClient.Models.Job.Responses
         public DateTime? FinishedAt { get; set; }
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
