@@ -126,7 +126,7 @@ namespace GitLabApiClient.Test
             }
             catch (GitLabException e)
             {
-                e.HttpStatusCode.Should().Be(404);
+                e.HttpStatusCode.Should().Be((System.Net.HttpStatusCode)404);
             }
         }
 
@@ -151,7 +151,7 @@ namespace GitLabApiClient.Test
             }
             catch (GitLabException e)
             {
-                e.HttpStatusCode.Should().Be(404);
+                e.HttpStatusCode.Should().Be((System.Net.HttpStatusCode)404);
             }
         }
 

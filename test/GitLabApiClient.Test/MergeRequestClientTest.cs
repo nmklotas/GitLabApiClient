@@ -98,7 +98,7 @@ namespace GitLabApiClient.Test
             Func<Task<MergeRequest>> acceptAction = () =>
                 _sut.AcceptAsync(GitLabApiHelper.TestProjectTextId, createdMergeRequest.Iid, new AcceptMergeRequest());
 
-            acceptAction.Should().Throw<GitLabException>().
+            await acceptAction.Should().ThrowAsync<GitLabException>().
                 WithMessage("{\"message\":\"405 Method Not Allowed\"}").
                 Where(e => e.HttpStatusCode == HttpStatusCode.MethodNotAllowed);
         }
