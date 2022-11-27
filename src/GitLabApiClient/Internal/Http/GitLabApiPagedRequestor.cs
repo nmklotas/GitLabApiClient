@@ -9,15 +9,20 @@ namespace GitLabApiClient.Internal.Http
 {
     internal sealed class GitLabApiPagedRequestor
     {
-        private const int MaxItemsPerPage = 100;
+        internal const int MaxItemsPerPage = 100;
 
         private readonly GitLabApiRequestor _requestor;
 
         public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
 
-        public async Task<IList<T>> GetPagedList<T>(string url)
+        public async Task<IList<T>> GetPagedList<T>(string url, PageOptions pageOptions)
         {
             var result = new List<T>();
+
+            if (pageOptions != null)
+            {
+                return await _requestor.Get<IList<T>>(GetPagedUrl(url, pageOptions.Page, pageOptions.ItemsPerPage));
+            }
 
             //make first request and it will get available pages in the headers
             var response = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
@@ -89,10 +94,10 @@ namespace GitLabApiClient.Internal.Http
             return pagedUrls;
         }
 
-        private static string GetPagedUrl(string url, int pageNumber)
+        private static string GetPagedUrl(string url, int pageNumber, int? itemsPerPage = null)
         {
             string parameterSymbol = url.Contains("?") ? "&" : "?";
-            return $"{url}{parameterSymbol}per_page={MaxItemsPerPage}&page={pageNumber}";
+            return $"{url}{parameterSymbol}per_page={itemsPerPage ?? MaxItemsPerPage}&page={pageNumber}";
         }
     }
 

@@ -5,7 +5,7 @@ namespace GitLabApiClient.Models.Projects.Requests
     /// <summary>
     /// Options for projects listing
     /// </summary>
-    public sealed class ProjectQueryOptions
+    public sealed class ProjectQueryOptions : PagingQueryOptions
     {
         internal ProjectQueryOptions() { }
 
