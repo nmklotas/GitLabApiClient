@@ -62,8 +62,8 @@ namespace GitLabApiClient.Internal.Http
             _pagedRequestor = new GitLabApiPagedRequestor(_requestor);
         }
 
-        public Task<IList<T>> GetPagedList<T>(string uri) =>
-            _pagedRequestor.GetPagedList<T>(uri);
+        public Task<IList<T>> GetPagedList<T>(string uri, PageOptions pageOptions = null) =>
+            _pagedRequestor.GetPagedList<T>(uri, pageOptions);
 
         public Task<T> Get<T>(string uri) =>
             _requestor.Get<T>(uri);

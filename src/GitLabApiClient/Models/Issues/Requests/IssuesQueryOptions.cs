@@ -7,7 +7,7 @@ namespace GitLabApiClient.Models.Issues.Requests
     /// <summary>
     /// Options for issues listing
     /// </summary>
-    public class IssuesQueryOptions
+    public class IssuesQueryOptions : PagingQueryOptions
     {
         internal IssuesQueryOptions() { }
 
@@ -18,7 +18,7 @@ namespace GitLabApiClient.Models.Issues.Requests
         public IssueState State { get; set; }
 
         /// <summary>
-        /// List of label names, issues must have all labels to be returned. 
+        /// List of label names, issues must have all labels to be returned.
         /// No+Label lists all issues with no labels.
         /// </summary>
         public IList<string> Labels { get; set; } = new List<string>();

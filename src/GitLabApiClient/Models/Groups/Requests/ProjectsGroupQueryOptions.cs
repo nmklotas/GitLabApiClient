@@ -3,7 +3,7 @@ namespace GitLabApiClient.Models.Groups.Requests
     /// <summary>
     /// Options for Groups listing
     /// </summary>
-    public class ProjectsGroupQueryOptions
+    public class ProjectsGroupQueryOptions : PagingQueryOptions
     {
         internal ProjectsGroupQueryOptions()
         {

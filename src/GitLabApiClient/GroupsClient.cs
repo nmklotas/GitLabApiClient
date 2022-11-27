@@ -93,7 +93,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _projectsQueryBuilder.Build($"groups/{groupId}/projects", queryOptions);
-            return await _httpFacade.GetPagedList<Project>(url);
+            return await _httpFacade.GetPagedList<Project>(url, queryOptions.PageOptions);
         }
 
         /// <summary>
