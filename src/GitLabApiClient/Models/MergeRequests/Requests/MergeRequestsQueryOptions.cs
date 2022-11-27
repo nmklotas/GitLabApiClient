@@ -6,7 +6,7 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
     /// <summary>
     /// Options for merge requests listing
     /// </summary>
-    public class MergeRequestsQueryOptions
+    public class MergeRequestsQueryOptions : PagingQueryOptions
     {
         internal MergeRequestsQueryOptions() { }
 
@@ -16,7 +16,7 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         public QueryMergeRequestState State { get; set; }
 
         /// <summary>
-        /// Return requests ordered by CreatedAt or UpdatedAt fields. 
+        /// Return requests ordered by CreatedAt or UpdatedAt fields.
         /// Default is CreatedAt.
         /// </summary>
         public MergeRequestsOrder Order { get; set; }
