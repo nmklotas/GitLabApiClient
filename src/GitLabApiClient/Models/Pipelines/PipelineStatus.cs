@@ -25,5 +25,7 @@ namespace GitLabApiClient.Models.Pipelines
         Created,
         [EnumMember(Value = "manual")]
         Manual,
+        [EnumMember(Value = "waiting_for_resource")]
+        WaitingForResource
     }
 }
