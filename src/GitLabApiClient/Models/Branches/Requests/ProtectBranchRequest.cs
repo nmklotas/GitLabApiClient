@@ -25,9 +25,10 @@ namespace GitLabApiClient.Models.Branches.Requests
         {
             Guard.NotEmpty(name, nameof(name));
 
-            PushAccessLevel = pushAccessLevel.ToString();
-            MergeAccessLevel = mergeAccessLevel.ToString();
-            UnprotectAccessLevel = unprotectAccessLevel.ToString();
+            Name = name;
+            PushAccessLevel = (int)pushAccessLevel;
+            MergeAccessLevel = (int)mergeAccessLevel;
+            UnprotectAccessLevel = (int)unprotectAccessLevel;
         }
 
         /// <summary>
