@@ -120,6 +120,27 @@ namespace GitLabApiClient.Test
         }
 
         [Fact]
+        public async Task CreatedConfidentialIssueWillBeIgnored()
+        {
+            //arrange
+            string title = Guid.NewGuid().ToString();
+
+            var issue = await _sut.CreateAsync(TestProjectTextId, new CreateIssueRequest(title)
+            {
+                Assignees = new List<int> { 1 },
+                Confidential = true,
+                Description = "Description",
+                Labels = new List<string> { "Label1" }
+            });
+
+            //act
+            var commonIssues = await _sut.GetAllAsync(options: o => o.IsConfidential = false);
+
+            //assert
+            commonIssues.Should().HaveCount(0);
+        }
+
+        [Fact]
         public async Task CreatedIssueNoteCanBeRetrieved()
         {
             //arrange
