@@ -44,8 +44,7 @@ namespace GitLabApiClient.Internal.Queries
             if (!options.Filter.IsNullOrEmpty())
                 query.Add("search", options.Filter);
 
-            if (options.IsConfidential)
-                query.Add("confidential", true);
+            query.Add("confidential", options.IsConfidential);
 
             if (options.CreatedBefore.HasValue)
                 query.Add("created_before", options.CreatedBefore.Value);
