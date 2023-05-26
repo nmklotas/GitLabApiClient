@@ -30,5 +30,17 @@ namespace GitLabApiClient.Models.MergeRequests.Requests
         /// </summary>
         [JsonProperty("sha")]
         public string Sha { get; set; }
+
+        /// <summary>
+        /// Custom squash commit message.
+        /// </summary>
+        [JsonProperty("squash_commit_message")]
+        public string SquashCommitMessage { get; set; }
+
+        /// <summary>
+        /// If true, the commits are squashed into a single commit on merge.
+        /// </summary>
+        [JsonProperty("squash")]
+        public bool? Squash { get; set; }
     }
 }
