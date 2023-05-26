@@ -7,6 +7,7 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Models.Commits.Requests;
+using GitLabApiClient.Models.Commits.Requests.CreateCommitRequest;
 using GitLabApiClient.Models.Commits.Responses;
 using GitLabApiClient.Models.Projects.Responses;
 
@@ -96,6 +97,15 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+<<<<<<< HEAD
+        /// Create new commit
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Create Commit request.</param>
+        /// <returns>newly created Commit</returns>
+        public async Task<Commit> CreateAsync(ProjectId projectId, CreateCommitRequest request) =>
+            await _httpFacade.Post<Commit>($"projects/{projectId}/repository/commits", request);
+=======
         /// Creates a commit with multiple files and actions.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
@@ -113,5 +123,6 @@ namespace GitLabApiClient
             }
             return await _httpFacade.Post<Commit>($"projects/{projectId}/repository/commits", request);
         }
+>>>>>>> master
     }
 }
