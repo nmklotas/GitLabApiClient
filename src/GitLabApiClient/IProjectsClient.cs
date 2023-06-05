@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Paths;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -35,6 +36,23 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         Task<IList<User>> GetUsersAsync(ProjectId projectId);
+
+        /// <summary>
+        /// Get a list of members in this project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="search">A query string to search for members.</param>
+        /// <returns>Project members satisfying options.</returns>
+        Task<IList<Member>> GetMembersAsync(ProjectId projectId, string search = null);
+
+        /// <summary>
+        /// Get a list of all members (including inherited) in this project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="search">A query string to search for members.</param>
+        /// <returns>Project members satisfying options.</returns>
+        Task<IList<Member>> GetAllMembersAsync(ProjectId projectId, string search = null);
+
 
         /// <summary>
         /// Retrieves project variables by its id.
