@@ -69,7 +69,7 @@ namespace GitLabApiClient
         public async Task<IList<User>> GetUsersAsync(ProjectId projectId) =>
             await _httpFacade.GetPagedList<User>($"projects/{projectId}/users");
 
-        public async Task<IList<Member>> GetMembersAsync(ProjectId projectId, string search = null)
+        public async Task<IList<Member>> GetMembersAsync(string projectId, string search = null)
         {
             string url = $"projects/{projectId}/members";
 
@@ -81,7 +81,7 @@ namespace GitLabApiClient
             return await _httpFacade.GetPagedList<Member>(url);
         }
 
-        public async Task<IList<Member>> GetAllMembersAsync(ProjectId projectId, string search = null)
+        public async Task<IList<Member>> GetAllMembersAsync(string projectId, string search = null)
         {
             string url = $"projects/{projectId}/members/all";
 

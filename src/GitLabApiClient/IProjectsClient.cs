@@ -40,18 +40,18 @@ namespace GitLabApiClient
         /// <summary>
         /// Get a list of members in this project.
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="projectId">The ID of the project.</param>
         /// <param name="search">A query string to search for members.</param>
         /// <returns>Project members satisfying options.</returns>
-        Task<IList<Member>> GetMembersAsync(ProjectId projectId, string search = null);
+        Task<IList<Member>> GetMembersAsync(string projectId, string search = null);
 
         /// <summary>
         /// Get a list of all members (including inherited) in this project.
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="projectId">The ID of the project.</param>
         /// <param name="search">A query string to search for members.</param>
         /// <returns>Project members satisfying options.</returns>
-        Task<IList<Member>> GetAllMembersAsync(ProjectId projectId, string search = null);
+        Task<IList<Member>> GetAllMembersAsync(string projectId, string search = null);
 
 
         /// <summary>
