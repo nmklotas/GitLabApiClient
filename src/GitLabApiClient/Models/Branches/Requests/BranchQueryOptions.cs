@@ -4,6 +4,10 @@ namespace GitLabApiClient.Models.Branches.Requests
     {
         public string Search { get; set; }
 
+        public string Page { get; set; }
+
+        public string PerPage { get; set; }
+
         internal BranchQueryOptions()
         {
         }
