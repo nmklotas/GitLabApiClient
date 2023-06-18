@@ -8,10 +8,6 @@ namespace GitLabApiClient.Internal.Queries
         {
             if (!string.IsNullOrEmpty(options.Search))
                 query.Add("search", options.Search);
-            if (options.Page != null)
-                query.Add("page", options.Page.ToString());
-            if (options.PerPage != null)
-                query.Add("per_page", options.PerPage.ToString());
         }
     }
 }
