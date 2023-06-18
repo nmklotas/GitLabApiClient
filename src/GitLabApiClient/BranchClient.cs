@@ -44,7 +44,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _branchQueryBuilder.Build($"projects/{projectId}/repository/branches", queryOptions);
-            return await _httpFacade.GetPagedList<Branch>(url);
+            return await _httpFacade.GetPagedList<Branch>(url, queryOptions.PageOptions);
         }
 
         /// <summary>
