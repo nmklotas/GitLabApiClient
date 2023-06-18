@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>10</LangVersion>
     <PackageId>Apiiro.GitLabApiClient</PackageId>
-    <Version>0.1.19</Version>
+    <Version>0.1.20</Version>
     <Authors>Apiiro</Authors>
     <Company>Apiiro</Company>
     <PackageDescription>GitLabApiClient</PackageDescription>
