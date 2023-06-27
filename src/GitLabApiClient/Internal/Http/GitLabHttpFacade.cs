@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http.Serialization;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
 using GitLabApiClient.Models.Uploads.Requests;
@@ -61,6 +62,9 @@ namespace GitLabApiClient.Internal.Http
             _requestor = new GitLabApiRequestor(_httpClient, jsonSerializer);
             _pagedRequestor = new GitLabApiPagedRequestor(_requestor);
         }
+
+        public Task<(RateLimitPagedInfo rateLimitInfo, IList<T>)> GetRateLimitPagedList<T>(string uri, PageOptions pageOptions) =>
+            _pagedRequestor.GetRateLimitPagedList<T>(uri, pageOptions);
 
         public Task<IList<T>> GetPagedList<T>(string uri, PageOptions pageOptions = null) =>
             _pagedRequestor.GetPagedList<T>(uri, pageOptions);

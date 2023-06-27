@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Models;
+using GitLabApiClient.Models.AuditEvents.Requests;
+using GitLabApiClient.Models.AuditEvents.Responses;
 using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -18,6 +20,13 @@ namespace GitLabApiClient
 {
     public interface IProjectsClient
     {
+        /// <summary>
+        /// Retrieves project audit events by its id, path or <see cref="Project"/>.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query options.</param>
+        Task<(RateLimitPagedInfo rateLimitInfo, IList<AuditEvent>)> GetAuditEventsAsync(ProjectId projectId, AuditEventQueryOptions options);
+
         /// <summary>
         /// Retrieves project by its id, path or <see cref="Project"/>.
         /// </summary>
