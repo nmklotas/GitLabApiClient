@@ -1,7 +1,7 @@
 
 namespace GitLabApiClient.Models;
 
-public class RateLimitPagedInfo
+public class RateLimitPagingInfo
 {
     public PagingInfo PagingInfo { get; set; }
 

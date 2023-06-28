@@ -16,13 +16,13 @@ namespace GitLabApiClient.Internal.Http
 
         public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
 
-        public async Task<(RateLimitPagedInfo rateLimitInfo, IList<T>)> GetRateLimitPagedList<T>(string url, PageOptions pageOptions)
+        public async Task<(RateLimitPagingInfo rateLimitInfo, IList<T>)> GetRateLimitPagedList<T>(string url, PageOptions pageOptions)
         {
             var (results, headers) = await _requestor.GetWithHeaders<IList<T>>(
                 GetPagedUrl(url, pageOptions.Page, pageOptions.ItemsPerPage));
 
 
-            var rateLimitInfo = new RateLimitPagedInfo
+            var rateLimitPagingInfo = new RateLimitPagingInfo
             {
                 PagingInfo = new PagingInfo
                 {
@@ -42,7 +42,7 @@ namespace GitLabApiClient.Internal.Http
                 }
             };
 
-            return new (rateLimitInfo, results);
+            return new (rateLimitPagingInfo, results);
         }
 
         public async Task<IList<T>> GetPagedList<T>(string url, PageOptions pageOptions)
