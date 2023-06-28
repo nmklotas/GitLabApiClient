@@ -16,7 +16,7 @@ namespace GitLabApiClient.Internal.Http
 
         public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
 
-        public async Task<(RateLimitPagingInfo rateLimitInfo, IList<T>)> GetRateLimitPagedList<T>(string url, PageOptions pageOptions)
+        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<T>)> GetRateLimitPagedList<T>(string url, PageOptions pageOptions)
         {
             var (results, headers) = await _requestor.GetWithHeaders<IList<T>>(
                 GetPagedUrl(url, pageOptions.Page, pageOptions.ItemsPerPage));

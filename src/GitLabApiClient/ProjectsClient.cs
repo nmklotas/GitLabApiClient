@@ -49,7 +49,7 @@ namespace GitLabApiClient
             _auditEventsQueryBuilder = auditEventsQueryBuilder;
         }
 
-        public async Task<(RateLimitPagingInfo rateLimitInfo, IList<AuditEvent>)> GetAuditEventsAsync(ProjectId projectId, AuditEventQueryOptions options)
+        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<AuditEvent>)> GetAuditEventsAsync(ProjectId projectId, AuditEventQueryOptions options)
         {
             var baseUrl = $"projects/{projectId}/audit_events";
 

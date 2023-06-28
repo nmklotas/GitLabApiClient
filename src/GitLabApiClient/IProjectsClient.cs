@@ -25,7 +25,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="options">Query options.</param>
-        Task<(RateLimitPagingInfo rateLimitInfo, IList<AuditEvent>)> GetAuditEventsAsync(ProjectId projectId, AuditEventQueryOptions options);
+        Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<AuditEvent>)> GetAuditEventsAsync(ProjectId projectId, AuditEventQueryOptions options);
 
         /// <summary>
         /// Retrieves project by its id, path or <see cref="Project"/>.
