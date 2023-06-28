@@ -18,24 +18,28 @@ namespace GitLabApiClient.Internal.Http
 
         public async Task<(RateLimitPagedInfo rateLimitInfo, IList<T>)> GetRateLimitPagedList<T>(string url, PageOptions pageOptions)
         {
-            var response = await _requestor.GetWithHeaders<IList<T>>(
+            var (results, headers) = await _requestor.GetWithHeaders<IList<T>>(
                 GetPagedUrl(url, pageOptions.Page, pageOptions.ItemsPerPage));
 
-            var results = response.Item1;
-            var headers = response.Item2;
 
             var rateLimitInfo = new RateLimitPagedInfo
             {
-                NextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page"),
-                Page = headers.GetFirstHeaderValueOrDefault<int>("X-Page"),
-                PerPage = headers.GetFirstHeaderValueOrDefault<int>("X-Per-Page"),
-                PrevPage = headers.GetFirstHeaderValueOrDefault<int>("X-Prev-Page"),
-                Total = headers.GetFirstHeaderValueOrDefault<int>("X-Total"),
-                TotalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages"),
-                RateLimitObserved = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Observed"),
-                RateLimitRemaining = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Remaining"),
-                RateLimitResetTime = headers.GetFirstHeaderValueOrDefault<DateTime>("RateLimit-ResetTime"),
-                RateLimitLimit = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Limit"),
+                PagingInfo = new PagingInfo
+                {
+                    NextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page"),
+                    Page = headers.GetFirstHeaderValueOrDefault<int>("X-Page"),
+                    PerPage = headers.GetFirstHeaderValueOrDefault<int>("X-Per-Page"),
+                    PrevPage = headers.GetFirstHeaderValueOrDefault<int>("X-Prev-Page"),
+                    Total = headers.GetFirstHeaderValueOrDefault<int>("X-Total"),
+                    TotalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages"),
+                },
+                RateLimitInfo = new RateLimitInfo
+                {
+                    RateLimitObserved = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Observed"),
+                    RateLimitRemaining = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Remaining"),
+                    RateLimitResetTime = headers.GetFirstHeaderValueOrDefault<DateTime>("RateLimit-ResetTime"),
+                    RateLimitLimit = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Limit"),
+                }
             };
 
             return new (rateLimitInfo, results);
