@@ -7,6 +7,8 @@ using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models;
+using GitLabApiClient.Models.AuditEvents.Requests;
+using GitLabApiClient.Models.AuditEvents.Responses;
 using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
@@ -30,15 +32,29 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
         private readonly ProjectsQueryBuilder _queryBuilder;
+        private readonly AuditEventsQueryBuilder _auditEventsQueryBuilder;
         private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
         private readonly JobQueryBuilder _jobQueryBuilder;
 
-        internal ProjectsClient(GitLabHttpFacade httpFacade, ProjectsQueryBuilder queryBuilder, MilestonesQueryBuilder queryMilestonesBuilder, JobQueryBuilder jobQueryBuilder)
+        internal ProjectsClient(GitLabHttpFacade httpFacade,
+            ProjectsQueryBuilder queryBuilder,
+            MilestonesQueryBuilder queryMilestonesBuilder,
+            JobQueryBuilder jobQueryBuilder,
+            AuditEventsQueryBuilder auditEventsQueryBuilder)
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
             _queryMilestonesBuilder = queryMilestonesBuilder;
             _jobQueryBuilder = jobQueryBuilder;
+            _auditEventsQueryBuilder = auditEventsQueryBuilder;
+        }
+
+        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<AuditEvent>)> GetAuditEventsAsync(ProjectId projectId, AuditEventQueryOptions options)
+        {
+            var baseUrl = $"projects/{projectId}/audit_events";
+
+            var url = _auditEventsQueryBuilder.Build(baseUrl, options);
+            return await _httpFacade.GetRateLimitPagedList<AuditEvent>(url, options.PageOptions);
         }
 
         /// <summary>

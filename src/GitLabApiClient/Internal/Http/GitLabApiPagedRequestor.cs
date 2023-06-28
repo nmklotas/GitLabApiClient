@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
 
 namespace GitLabApiClient.Internal.Http
 {
@@ -14,6 +15,35 @@ namespace GitLabApiClient.Internal.Http
         private readonly GitLabApiRequestor _requestor;
 
         public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
+
+        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<T>)> GetRateLimitPagedList<T>(string url, PageOptions pageOptions)
+        {
+            var (results, headers) = await _requestor.GetWithHeaders<IList<T>>(
+                GetPagedUrl(url, pageOptions.Page, pageOptions.ItemsPerPage));
+
+
+            var rateLimitPagingInfo = new RateLimitPagingInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    NextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page"),
+                    Page = headers.GetFirstHeaderValueOrDefault<int>("X-Page"),
+                    PerPage = headers.GetFirstHeaderValueOrDefault<int>("X-Per-Page"),
+                    PrevPage = headers.GetFirstHeaderValueOrDefault<int>("X-Prev-Page"),
+                    Total = headers.GetFirstHeaderValueOrDefault<int>("X-Total"),
+                    TotalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages"),
+                },
+                RateLimitInfo = new RateLimitInfo
+                {
+                    RateLimitObserved = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Observed"),
+                    RateLimitRemaining = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Remaining"),
+                    RateLimitResetTime = headers.GetFirstHeaderValueOrDefault<DateTime>("RateLimit-ResetTime"),
+                    RateLimitLimit = headers.GetFirstHeaderValueOrDefault<int>("RateLimit-Limit"),
+                }
+            };
+
+            return new (rateLimitPagingInfo, results);
+        }
 
         public async Task<IList<T>> GetPagedList<T>(string url, PageOptions pageOptions)
         {
