@@ -29,7 +29,8 @@ namespace GitLabApiClient.Test
             GitLabApiHelper.GetFacade(),
             new ProjectsQueryBuilder(),
             new MilestonesQueryBuilder(),
-            new JobQueryBuilder());
+            new JobQueryBuilder(),
+            new AuditEventsQueryBuilder());
 
         [Fact]
         public async Task ProjectRetrieved()
