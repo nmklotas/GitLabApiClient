@@ -61,8 +61,17 @@ namespace GitLabApiClient
         /// Retrieves project by its id, path or <see cref="Project"/>.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        public async Task<Project> GetAsync(ProjectId projectId) =>
-            await _httpFacade.Get<Project>($"projects/{projectId}");
+        /// <param name="options">Query options</param>
+        public async Task<Project> GetAsync(ProjectId projectId, string options = null)
+        {
+            var formattedOptions = string.IsNullOrEmpty(options)
+                ? string.Empty
+                : options.StartsWith("?")
+                    ? options
+                    : $"?{options}";
+
+            return await _httpFacade.Get<Project>($"projects/{projectId}{formattedOptions}");
+        }
 
         /// <summary>
         /// Get a list of visible projects for authenticated user.
