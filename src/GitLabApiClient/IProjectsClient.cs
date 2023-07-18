@@ -31,7 +31,8 @@ namespace GitLabApiClient
         /// Retrieves project by its id, path or <see cref="Project"/>.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
-        Task<Project> GetAsync(ProjectId projectId);
+        /// <param name="options">Query options</param>
+        Task<Project> GetAsync(ProjectId projectId, string options = null);
 
         /// <summary>
         /// Get a list of visible projects for authenticated user.
