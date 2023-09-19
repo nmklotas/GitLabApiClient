@@ -9,6 +9,8 @@ using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Pipelines;
+using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Runners.Responses;
@@ -241,5 +243,8 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>Status of the import</returns>
         Task<ImportStatus> GetImportStatusAsync(ProjectId projectId);
+
+        Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status);
+
     }
 }

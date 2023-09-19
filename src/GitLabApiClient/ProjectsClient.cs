@@ -13,6 +13,8 @@ using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Pipelines;
+using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Runners.Responses;
@@ -384,6 +386,11 @@ namespace GitLabApiClient
         public async Task<ImportStatus> GetImportStatusAsync(ProjectId projectId)
         {
             return await _httpFacade.Get<ImportStatus>($"projects/{projectId}/import");
+        }
+
+        public async Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status)
+        {
+            return await _httpFacade.Post<Pipeline>($"projects/{projectId}/statuses/{commitSha}?state={status.ToString().ToLower()}");
         }
     }
 }
