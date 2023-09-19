@@ -244,7 +244,7 @@ namespace GitLabApiClient
         /// <returns>Status of the import</returns>
         Task<ImportStatus> GetImportStatusAsync(ProjectId projectId);
 
-        Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status);
+        Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status, string description = "");
 
     }
 }
