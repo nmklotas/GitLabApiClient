@@ -13,6 +13,8 @@ using GitLabApiClient.Models.Job.Requests;
 using GitLabApiClient.Models.Job.Responses;
 using GitLabApiClient.Models.Milestones.Requests;
 using GitLabApiClient.Models.Milestones.Responses;
+using GitLabApiClient.Models.Pipelines;
+using GitLabApiClient.Models.Pipelines.Responses;
 using GitLabApiClient.Models.Projects.Requests;
 using GitLabApiClient.Models.Projects.Responses;
 using GitLabApiClient.Models.Runners.Responses;
@@ -36,11 +38,13 @@ namespace GitLabApiClient
         private readonly MilestonesQueryBuilder _queryMilestonesBuilder;
         private readonly JobQueryBuilder _jobQueryBuilder;
 
-        internal ProjectsClient(GitLabHttpFacade httpFacade,
+        internal ProjectsClient(
+            GitLabHttpFacade httpFacade,
             ProjectsQueryBuilder queryBuilder,
             MilestonesQueryBuilder queryMilestonesBuilder,
             JobQueryBuilder jobQueryBuilder,
-            AuditEventsQueryBuilder auditEventsQueryBuilder)
+            AuditEventsQueryBuilder auditEventsQueryBuilder
+        )
         {
             _httpFacade = httpFacade;
             _queryBuilder = queryBuilder;
@@ -362,17 +366,26 @@ namespace GitLabApiClient
             Guard.NotNull(request, nameof(request));
 
             var parameters = new Dictionary<string, string>();
-            foreach (var prop in request.GetType().GetProperties())
+            foreach (var prop in request.GetType()
+                         .GetProperties())
             {
                 if (prop.GetValue(request) != null && prop.Name != nameof(ImportProjectRequest.File))
                 {
-                    parameters.Add((prop.GetCustomAttributes(typeof(Newtonsoft.Json.JsonPropertyAttribute), false)[0] as Newtonsoft.Json.JsonPropertyAttribute).PropertyName, prop.GetValue(request).ToString());
+                    parameters.Add(
+                        (prop.GetCustomAttributes(typeof(Newtonsoft.Json.JsonPropertyAttribute), false)[0] as Newtonsoft.Json.JsonPropertyAttribute).PropertyName,
+                        prop.GetValue(request)
+                            .ToString()
+                    );
                 }
             }
 
             using (var stream = System.IO.File.OpenRead(request.File))
             {
-                return await _httpFacade.PostFile<ImportStatus>($"projects/import", parameters, new CreateUploadRequest(stream, request.Path + ".tar.gz"));
+                return await _httpFacade.PostFile<ImportStatus>(
+                    $"projects/import",
+                    parameters,
+                    new CreateUploadRequest(stream, request.Path + ".tar.gz")
+                );
             }
         }
 
@@ -384,6 +397,11 @@ namespace GitLabApiClient
         public async Task<ImportStatus> GetImportStatusAsync(ProjectId projectId)
         {
             return await _httpFacade.Get<ImportStatus>($"projects/{projectId}/import");
+        }
+
+        public async Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status, string description)
+        {
+            return await _httpFacade.Post<Pipeline>($"projects/{projectId}/statuses/{commitSha}?state={status.ToString().ToLower()}&name=Apiiro pull request scan - hover for details&description={description}");
         }
     }
 }
