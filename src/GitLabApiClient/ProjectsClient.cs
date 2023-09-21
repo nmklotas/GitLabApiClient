@@ -399,7 +399,7 @@ namespace GitLabApiClient
             return await _httpFacade.Get<ImportStatus>($"projects/{projectId}/import");
         }
 
-        public async Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status, string description = "")
+        public async Task<Pipeline> UpdatePipelineAsync(ProjectId projectId, string commitSha, PipelineStatus status, string description)
         {
             return await _httpFacade.Post<Pipeline>($"projects/{projectId}/statuses/{commitSha}?state={status.ToString().ToLower()}&name=Apiiro pull request scan - hover for details&description={description}");
         }
