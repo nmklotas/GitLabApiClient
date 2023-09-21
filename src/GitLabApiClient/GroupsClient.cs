@@ -77,7 +77,7 @@ namespace GitLabApiClient
             options?.Invoke(queryOptions);
 
             string url = _queryBuilder.Build("groups", queryOptions);
-            return await _httpFacade.GetPagedList<Group>(url);
+            return await _httpFacade.GetPagedList<Group>(url, queryOptions.PageOptions);
         }
 
         /// <summary>
