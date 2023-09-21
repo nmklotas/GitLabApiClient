@@ -5,7 +5,7 @@ namespace GitLabApiClient.Models.Groups.Requests
     /// <summary>
     /// Options for Groups listing
     /// </summary>
-    public class GroupsQueryOptions
+    public class GroupsQueryOptions : PagingQueryOptions
     {
         internal GroupsQueryOptions() { }
 
