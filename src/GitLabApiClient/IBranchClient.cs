@@ -75,5 +75,12 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="branchName">The Branch, you want to unprotect.</param>
         Task UnprotectBranchAsync(ProjectId projectId, string branchName);
+
+        /// <summary>
+        /// Retrieves a list of Branches merge request approval rules from a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>List of branches merge request approval rules.</returns>
+        Task<IList<ApprovalRules>> GetMergeRequestApprovalRulesAsync(ProjectId projectId);
     }
 }

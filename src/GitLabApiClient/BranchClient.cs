@@ -104,5 +104,13 @@ namespace GitLabApiClient
         /// <param name="branchName">The Branch, you want to unprotect.</param>
         public async Task UnprotectBranchAsync(ProjectId projectId, string branchName) =>
             await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName}");
+
+        /// <summary>
+        /// Retrieves a list of Branches merge request approval rules from a project.
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <returns>List of branches merge request approval rules.</returns>
+        public async Task<IList<ApprovalRules>> GetMergeRequestApprovalRulesAsync(ProjectId projectId) =>
+            await _httpFacade.GetPagedList<ApprovalRules>($"projects/{projectId}/approval_rules");
     }
 }
