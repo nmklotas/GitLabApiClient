@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabApiClient.Internal.Paths;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
 using GitLabApiClient.Models.Projects.Responses;
@@ -59,7 +60,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>List of protected branches.</returns>
-        Task<IList<ProtectedBranch>> GetProtectedBranchesAsync(ProjectId projectId);
+        Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ProtectedBranch>)> GetProtectedBranchesAsync(ProjectId projectId);
 
         /// <summary>
         /// Protect a branch
@@ -81,6 +82,6 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>List of branches merge request approval rules.</returns>
-        Task<IList<ApprovalRules>> GetMergeRequestApprovalRulesAsync(ProjectId projectId);
+        Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ApprovalRules>)> GetMergeRequestApprovalRulesAsync(ProjectId projectId);
     }
 }
