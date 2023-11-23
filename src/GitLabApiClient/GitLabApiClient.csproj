@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>10</LangVersion>
     <PackageId>Apiiro.GitLabApiClient</PackageId>
-    <Version>0.1.26</Version>
+    <Version>0.1.27</Version>
     <Authors>Apiiro</Authors>
     <Company>Apiiro</Company>
     <PackageDescription>GitLabApiClient</PackageDescription>
@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="All" Version="1.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
