@@ -16,7 +16,7 @@ This package is managed with Nuget, in order to update it, follow the next steps
   * `cd src/GitLabApiClient`
   * `rm bin/Release/Apiiro.GitLabApiClient.*.nupkg`
   * `dotnet pack --configuration Release`
-  * `dotnet nuget push bin/Release/Apiiro.GitLabApiClient.*.nupkg --source "github" --skip-duplicate --no-symbols true --api-key <YOUR GITHUB PAT HERE>`
+  * `dotnet nuget push bin/Release/Apiiro.GitLabApiClient.*.nupkg --source "github" --skip-duplicate --no-symbols`
 
 
 [GitLabApiClient.csproj]: https://github.com/apiiro/GitLabApiClient/blob/master/src/GitLabApiClient/GitLabApiClient.csproj
