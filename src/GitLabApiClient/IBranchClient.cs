@@ -60,7 +60,7 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>List of protected branches.</returns>
-        Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ProtectedBranch>)> GetProtectedBranchesAsync(ProjectId projectId);
+        Task<(RateLimitInfo rateLimitInfo, IList<ProtectedBranch>)> GetProtectedBranchesAsync(ProjectId projectId);
 
         /// <summary>
         /// Protect a branch
@@ -81,7 +81,8 @@ namespace GitLabApiClient
         /// Retrieves a list of Branches merge request approval rules from a project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="pageOptions">Page options <see cref="PageOptions"/></param>
         /// <returns>List of branches merge request approval rules.</returns>
-        Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ApprovalRules>)> GetMergeRequestApprovalRulesAsync(ProjectId projectId);
+        Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ApprovalRules>)> GetMergeRequestApprovalRulesAsync(ProjectId projectId, PageOptions pageOptions);
     }
 }

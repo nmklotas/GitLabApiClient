@@ -86,8 +86,8 @@ namespace GitLabApiClient
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>List of protected branches.</returns>
-        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ProtectedBranch>)> GetProtectedBranchesAsync(ProjectId projectId) =>
-            await _httpFacade.GetRateLimitPagedList<ProtectedBranch>($"projects/{projectId}/protected_branches", new PageOptions(Page: 1));
+        public async Task<(RateLimitInfo rateLimitInfo, IList<ProtectedBranch>)> GetProtectedBranchesAsync(ProjectId projectId) =>
+            await _httpFacade.GetWithRateLimitInfoAsync<IList<ProtectedBranch>>($"projects/{projectId}/protected_branches");
 
         /// <summary>
         /// Protect a branch
@@ -110,8 +110,9 @@ namespace GitLabApiClient
         /// Retrieves a list of Branches merge request approval rules from a project.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="pageOptions">Page options <see cref="PageOptions"/></param>
         /// <returns>List of branches merge request approval rules.</returns>
-        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ApprovalRules>)> GetMergeRequestApprovalRulesAsync(ProjectId projectId) =>
-            await _httpFacade.GetRateLimitPagedList<ApprovalRules>($"projects/{projectId}/approval_rules", new PageOptions(Page: 1));
+        public async Task<(RateLimitPagingInfo rateLimitPagingInfo, IList<ApprovalRules>)> GetMergeRequestApprovalRulesAsync(ProjectId projectId, PageOptions pageOptions) =>
+            await _httpFacade.GetRateLimitPagedList<ApprovalRules>($"projects/{projectId}/approval_rules", pageOptions);
     }
 }
