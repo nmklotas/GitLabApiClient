@@ -14,9 +14,9 @@ public class RateLimitInfo
     public static RateLimitInfo FromHeaders(HttpResponseHeaders headers)
         => new()
         {
-            RateLimitObserved = headers.GetFirstHeaderValueOrDefault<int?>("RateLimit-Observed"),
-            RateLimitRemaining = headers.GetFirstHeaderValueOrDefault<int?>("RateLimit-Remaining"),
-            RateLimitResetTime = headers.GetFirstHeaderValueOrDefault<DateTime?>("RateLimit-ResetTime"),
-            RateLimitLimit = headers.GetFirstHeaderValueOrDefault<int?>("RateLimit-Limit")
+            RateLimitObserved = headers.GetFirstHeaderIntValueOrNull("RateLimit-Observed"),
+            RateLimitRemaining = headers.GetFirstHeaderIntValueOrNull("RateLimit-Remaining"),
+            RateLimitResetTime = headers.GetFirstHeaderDateTimeValueOrNull("RateLimit-ResetTime"),
+            RateLimitLimit = headers.GetFirstHeaderIntValueOrNull("RateLimit-Limit")
         };
 }

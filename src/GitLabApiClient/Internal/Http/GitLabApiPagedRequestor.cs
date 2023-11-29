@@ -112,17 +112,25 @@ namespace GitLabApiClient.Internal.Http
 
     internal static class HttpResponseHeadersExtensions
     {
-        public static T GetFirstHeaderValueOrDefault<T>(
-            this HttpResponseHeaders headers,
-            string headerKey)
+        public static T GetFirstHeaderValueOrDefault<T>(this HttpResponseHeaders headers, string headerKey)
+            => headers.TryGetFirstHeaderValue<T>(headerKey, out var result) ? result : default;
+
+        public static int? GetFirstHeaderIntValueOrNull(this HttpResponseHeaders headers, string headerKey)
+            => headers.TryGetFirstHeaderValue(headerKey, out int result) ? result : null;
+
+        public static DateTime? GetFirstHeaderDateTimeValueOrNull(this HttpResponseHeaders headers, string headerKey)
+            => headers.TryGetFirstHeaderValue(headerKey, out DateTime result) ? result : null;
+
+        private static bool TryGetFirstHeaderValue<T>(this HttpHeaders headers, string headerKey, out T result)
         {
-            var toReturn = default(T);
+            if (headers.TryGetValues(headerKey, out var headerValues) && headerValues.FirstOrDefault() is { } valueString && !valueString.IsNullOrEmpty())
+            {
+                result = (T)Convert.ChangeType(valueString, typeof(T));
+                return true;
+            }
 
-            if (!headers.TryGetValues(headerKey, out var headerValues))
-                return toReturn;
-
-            string valueString = headerValues.FirstOrDefault();
-            return valueString.IsNullOrEmpty() ? toReturn : (T)Convert.ChangeType(valueString, typeof(T));
+            result = default;
+            return false;
         }
     }
 }

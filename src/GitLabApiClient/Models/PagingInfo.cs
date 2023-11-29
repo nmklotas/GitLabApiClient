@@ -15,11 +15,11 @@ public class PagingInfo
     public static PagingInfo FromHeaders(HttpResponseHeaders headers)
         => new()
         {
-            NextPage = headers.GetFirstHeaderValueOrDefault<int?>("X-Next-Page"),
-            Page = headers.GetFirstHeaderValueOrDefault<int?>("X-Page"),
-            PerPage = headers.GetFirstHeaderValueOrDefault<int?>("X-Per-Page"),
-            PrevPage = headers.GetFirstHeaderValueOrDefault<int?>("X-Prev-Page"),
-            Total = headers.GetFirstHeaderValueOrDefault<int?>("X-Total"),
-            TotalPages = headers.GetFirstHeaderValueOrDefault<int?>("X-Total-Pages")
+            NextPage = headers.GetFirstHeaderIntValueOrNull("X-Next-Page"),
+            Page = headers.GetFirstHeaderIntValueOrNull("X-Page"),
+            PerPage = headers.GetFirstHeaderIntValueOrNull("X-Per-Page"),
+            PrevPage = headers.GetFirstHeaderIntValueOrNull("X-Prev-Page"),
+            Total = headers.GetFirstHeaderIntValueOrNull("X-Total"),
+            TotalPages = headers.GetFirstHeaderIntValueOrNull("X-Total-Pages")
         };
 }
