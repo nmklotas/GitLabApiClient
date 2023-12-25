@@ -5,6 +5,7 @@ using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Http.Serialization;
 using GitLabApiClient.Internal.Queries;
 using GitLabApiClient.Internal.Utilities;
+using GitLabApiClient.Models;
 using GitLabApiClient.Models.Oauth.Requests;
 using GitLabApiClient.Models.Oauth.Responses;
 
@@ -192,6 +193,8 @@ namespace GitLabApiClient
             };
             return _httpFacade.LoginAsync(accessTokenRequest);
         }
+
+        public async Task<Metadata> GetMetadata() => await _httpFacade.Get<Metadata>("metadata");
 
         private static string FixBaseUrl(string url)
         {
