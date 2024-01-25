@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>10</LangVersion>
     <PackageId>Apiiro.GitLabApiClient</PackageId>
-    <Version>0.1.30</Version>
+    <Version>0.2.30</Version>
     <Authors>Apiiro</Authors>
     <Company>Apiiro</Company>
     <PackageDescription>GitLabApiClient</PackageDescription>

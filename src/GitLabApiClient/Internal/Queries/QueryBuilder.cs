@@ -47,7 +47,7 @@ namespace GitLabApiClient.Internal.Queries
 
             public string ToQueryString()
             {
-                var array = _nameValues.AllKeys.SelectMany(
+                string[] array = _nameValues.AllKeys.SelectMany(
                         key => _nameValues.GetValues(key)
                             ?.Select(value => $"{key.UrlEncode()}={value.UrlEncode()}")
                     )
