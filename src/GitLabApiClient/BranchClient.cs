@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GitLabApiClient.Internal.Http;
 using GitLabApiClient.Internal.Paths;
 using GitLabApiClient.Internal.Queries;
+using GitLabApiClient.Internal.Utilities;
 using GitLabApiClient.Models.Branches.Requests;
 using GitLabApiClient.Models.Branches.Responses;
 using GitLabApiClient.Models.Projects.Responses;
@@ -30,7 +31,7 @@ namespace GitLabApiClient
         /// <param name="branchName">The branch name.</param>
         /// <returns></returns>
         public async Task<Branch> GetAsync(ProjectId projectId, string branchName) =>
-            await _httpFacade.Get<Branch>($"projects/{projectId}/repository/branches/{branchName}");
+            await _httpFacade.Get<Branch>($"projects/{projectId}/repository/branches/{branchName.UrlEncode()}");
 
         /// <summary>
         ///
@@ -62,7 +63,7 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="branchName">The branch, you want deleted.</param>
         public async Task DeleteBranch(ProjectId projectId, string branchName) =>
-            await _httpFacade.Delete($"projects/{projectId}/repository/branches/{branchName}");
+            await _httpFacade.Delete($"projects/{projectId}/repository/branches/{branchName.UrlEncode()}");
 
         /// <summary>
         /// Deletes the merged branches
@@ -78,7 +79,7 @@ namespace GitLabApiClient
         /// <param name="branchName">The protected branch</param>
         /// <returns>A protected branch</returns>
         public async Task<ProtectedBranch> GetProtectedBranchesAsync(ProjectId projectId, string branchName) =>
-            await _httpFacade.Get<ProtectedBranch>($"projects/{projectId}/protected_branches/{branchName}");
+            await _httpFacade.Get<ProtectedBranch>($"projects/{projectId}/protected_branches/{branchName.UrlEncode()}");
 
         /// <summary>
         /// Retrieves a list of Protected Branches from a project.
@@ -103,6 +104,6 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="branchName">The Branch, you want to unprotect.</param>
         public async Task UnprotectBranchAsync(ProjectId projectId, string branchName) =>
-            await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName}");
+            await _httpFacade.Delete($"projects/{projectId}/protected_branches/{branchName.UrlEncode()}");
     }
 }

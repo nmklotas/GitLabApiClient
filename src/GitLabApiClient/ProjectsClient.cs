@@ -137,6 +137,19 @@ namespace GitLabApiClient
         }
 
         /// <summary>
+        /// Create a new fork of a project
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="request">Create fork request</param>
+        /// <returns>Newly created project.
+        /// The forking operation for a project is asynchronous and is completed in a background job. The request returns immediately. To determine whether the fork of the project has completed, query the import_status for the new project.</returns>
+        public async Task<Project> CreateForkAsync(ProjectId projectId, CreateProjectForkRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _httpFacade.Post<Project>($"projects/{projectId}/fork", request);
+        }
+
+        /// <summary>
         /// Creates new project label.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>

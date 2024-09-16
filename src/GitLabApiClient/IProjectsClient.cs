@@ -83,6 +83,14 @@ namespace GitLabApiClient
         Task<Project> CreateAsync(CreateProjectRequest request);
 
         /// <summary>
+        /// Create a new fork of a project
+        /// </summary>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="request">Create fork request</param>
+        /// <returns></returns>
+        Task<Project> CreateForkAsync(ProjectId projectId, CreateProjectForkRequest request);
+
+        /// <summary>
         /// Creates new project label.
         /// </summary>
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
