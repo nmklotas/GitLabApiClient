@@ -15,15 +15,9 @@ namespace GitLabApiClient.Internal.Paths
         /// </summary>
         /// <param name="projectPath">The project path ie. 'group/project'</param>
         /// <returns></returns>
-        public static implicit operator ProjectId(string projectPath)
-        {
-            return new ProjectId(projectPath.UrlEncode());
-        }
+        public static implicit operator ProjectId(string projectPath) => new ProjectId(projectPath.UrlEncode());
 
-        public static implicit operator ProjectId(int projectId)
-        {
-            return new ProjectId(projectId.ToString());
-        }
+        public static implicit operator ProjectId(int projectId) => new ProjectId(projectId.ToString());
 
         public static implicit operator ProjectId(Project project)
         {

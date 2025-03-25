@@ -213,5 +213,30 @@ namespace GitLabApiClient
         /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <returns>Status of the import</returns>
         Task<ImportStatus> GetImportStatusAsync(ProjectId projectId);
+
+        /// <summary>
+        /// Gets the remote mirrors for a project.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <returns>List of remote mirrors</returns>
+        Task<IList<RemoteMirror>> GetRemoteMirrorsAsync(ProjectId projectId);
+
+        /// <summary>
+        /// Creates a remote mirror in a project.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="request">The request <see cref="CreateRemoteMirrorRequest"/>.</param>
+        /// <returns>An instance of <see cref="RemoteMirror"/></returns>
+
+        Task<RemoteMirror> CreateRemoteMirrorAsync(ProjectId projectId, CreateRemoteMirrorRequest request);
+
+        /// <summary>
+        /// Forces the mirror to sync.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="mirrorId">The mirror identifier.</param>
+
+        Task ForceSyncMirrorAsync(ProjectId projectId, int mirrorId);
+
     }
 }

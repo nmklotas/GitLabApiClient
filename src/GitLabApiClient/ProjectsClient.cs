@@ -106,7 +106,7 @@ namespace GitLabApiClient
             var queryOptions = new JobQueryOptions();
             options?.Invoke(queryOptions);
 
-            var url = _jobQueryBuilder.Build($"projects/{projectId}/jobs", queryOptions);
+            string url = _jobQueryBuilder.Build($"projects/{projectId}/jobs", queryOptions);
             return await _httpFacade.GetPagedList<Job>(url);
         }
 
@@ -335,5 +335,33 @@ namespace GitLabApiClient
         {
             return await _httpFacade.Get<ImportStatus>($"projects/{projectId}/import");
         }
+
+        /// <summary>
+        /// Gets the remote mirrors for a project.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <returns>List of remote mirrors</returns>
+        public async Task<IList<RemoteMirror>> GetRemoteMirrorsAsync(ProjectId projectId)
+        {
+            return await _httpFacade.Get<IList<RemoteMirror>>($"projects/{projectId}/remote_mirrors");
+        }
+
+        /// <summary>
+        /// Creates a remote mirror in a project.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="request">The request <see cref="CreateRemoteMirrorRequest"/>.</param>
+        /// <returns></returns>
+        public async Task<RemoteMirror> CreateRemoteMirrorAsync(ProjectId projectId, CreateRemoteMirrorRequest request)
+        {
+            return await _httpFacade.Post<RemoteMirror>($"projects/{projectId}/remote_mirrors", request);
+        }
+
+        /// <summary>
+        /// Forces the mirror to sync.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="mirrorId">The mirror identifier.</param>
+        public async Task ForceSyncMirrorAsync(ProjectId projectId, int mirrorId) => await _httpFacade.Post($"projects/{projectId}/remote_mirrors/{mirrorId}/sync");
     }
 }
