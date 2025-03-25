@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace GitLabApiClient.Models.Projects.Responses
@@ -28,4 +29,5 @@ namespace GitLabApiClient.Models.Projects.Responses
         [JsonProperty("import_status")]
         public ImportStatusEnum Status { get; set; }
     }
+
 }
